@@ -1,0 +1,25 @@
+a<-2
+a=2 # = 與 <-同義
+3 -> b
+my_108_total_credits <- 15
+_108_total_credits <- 15
+108_total_credits <- 15
+_my_108_total_credits <- 15
+my.108.total_credits <- 15
+.108.total_credits <- 15 # 隱藏變數
+.my.108.total_credits <- 15
+我的108學年總學分數 <- 15
+`我的108學年總學分數` <- 15 # 特殊名稱處理，`不是名稱的一部份
+`.108.total_credits` <- 15
+num1<-5 # 非整數
+num2<-5L # 整數
+dialogue <- c('小明說："明天不用上課。"',
+              '小花說："真的嗎？"')
+cat(dialogue, sep="\n")
+dialogue_1 <- c("小明說：'明天不用上課。'",
+              "小花說：'真的嗎？'")
+cat(dialogue_1, sep="\n")
+logi1 <- c(T,TRUE,F,FALSE,FALSE)
+class(logi1)
+sum(logi1)
+studentMajors <- factor(c("經濟系", "經濟系", "法律系"))
