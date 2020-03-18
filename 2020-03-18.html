@@ -184,11 +184,17 @@ summary {
 </div>
 
 
+<blockquote>
+<h1 id="第3章-r-basics">第3章 R Basics</h1>
+</blockquote>
 <div id="package" class="section level2">
-<h2>Package</h2>
-<p>安裝package</p>
+<h2>3.1 Package</h2>
+<div id="安裝package" class="section level3">
+<h3>安裝package</h3>
 <pre class="r"><code>#install.packages(c(&quot;dplyr&quot;, &quot;lubridate&quot;, &quot;googlesheets4&quot;))</code></pre>
-<p>啟動package</p>
+</div>
+<div id="啟動package" class="section level3">
+<h3>啟動package</h3>
 <pre class="r"><code>library(googlesheets4)
 library(dplyr)</code></pre>
 <pre><code>## 
@@ -205,26 +211,48 @@ library(dplyr)</code></pre>
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     date</code></pre>
+<hr />
 </div>
-<div id="create-object" class="section level2">
-<h2>Create object</h2>
+</div>
+<div id="create-objects" class="section level2">
+<h2>3.2 Create objects</h2>
 <pre class="r"><code>a &lt;- 2
 a = 2 # = 與 &lt;-同義
 3 -&gt; b</code></pre>
-<p>變數命名規則 (1) 須由字母、數字、點(.)以及底線(_)構成 (2) 開頭必須是字母或是點(但點後不能接數字)</p>
-<p>辨別變數命名規則</p>
+<div id="變數命名規則" class="section level3">
+<h3>變數命名規則</h3>
+<ol style="list-style-type: decimal">
+<li>須由字母、數字、點(.)以及底線(_)構成</li>
+<li><strong>開頭必須是字母或是點(但點後不能接數字)</strong> ###辨別變數命名規則</li>
+</ol>
 <pre class="r"><code>my_108_total_credits &lt;- 15
 #_108_total_credits &lt;- 15
 #108_total_credits &lt;- 15
 #_my_108_total_credits &lt;- 15
 my.108.total_credits &lt;- 15
-#.108.total_credits &lt;- 15 # 隱藏變數
+#.108.total_credits &lt;- 15 
 .my.108.total_credits &lt;- 15
 我的108學年總學分數 &lt;- 15
 `我的108學年總學分數` &lt;- 15 # 特殊名稱處理，`不是名稱的一部份
 `.108.total_credits` &lt;- 15</code></pre>
+</div>
+<div id="常見命名方式" class="section level3">
+<h3>常見命名方式：</h3>
+<ol style="list-style-type: decimal">
+<li>snake: my_total_credits &lt;- 15</li>
+<li><strong>camel</strong>: myTotalCredits &lt;- 15 (推薦使用)</li>
+</ol>
+</div>
+</div>
+<div id="calling-an-object" class="section level2">
+<h2>3.3 Calling an object</h2>
 <pre class="r"><code>`我的年紀` &lt;- 20
 my_age &lt;- `我的年紀`</code></pre>
+<p>要呼叫某物件時，請先確認Environment裡有該物件存在，或執行ls()</p>
+<pre class="r"><code>ls() #確認Environment裡共有哪些物件存在</code></pre>
+<pre><code>## [1] &quot;a&quot;                    &quot;b&quot;                    &quot;my.108.total_credits&quot;
+## [4] &quot;my_108_total_credits&quot; &quot;my_age&quot;               &quot;我的108學年總學分數&quot; 
+## [7] &quot;我的年紀&quot;</code></pre>
 </div>
 
 
