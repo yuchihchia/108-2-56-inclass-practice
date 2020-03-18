@@ -10,10 +10,28 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## package
+安裝package
+
+```{r}
+install.packages(c("dplyr", "lubridate", "googlesheets4"))
+```
+
+啟動package
 
 ```{r}
 library(googlesheets4)
 library(dplyr)
 library(lubridate)
 ```
+
+## Create object
+
+```{r}
+a <- 2
+a = 2 # = 與 <-同義
+
+3 -> b
+```
+
+
 
