@@ -185,7 +185,10 @@ summary {
 
 
 <div id="package" class="section level2">
-<h2>package</h2>
+<h2>Package</h2>
+<p>安裝package</p>
+<pre class="r"><code>#install.packages(c(&quot;dplyr&quot;, &quot;lubridate&quot;, &quot;googlesheets4&quot;))</code></pre>
+<p>啟動package</p>
 <pre class="r"><code>library(googlesheets4)
 library(dplyr)</code></pre>
 <pre><code>## 
@@ -202,6 +205,26 @@ library(dplyr)</code></pre>
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     date</code></pre>
+</div>
+<div id="create-object" class="section level2">
+<h2>Create object</h2>
+<pre class="r"><code>a &lt;- 2
+a = 2 # = 與 &lt;-同義
+3 -&gt; b</code></pre>
+<p>變數命名規則 (1) 須由字母、數字、點(.)以及底線(_)構成 (2) 開頭必須是字母或是點(但點後不能接數字)</p>
+<p>辨別變數命名規則</p>
+<pre class="r"><code>my_108_total_credits &lt;- 15
+#_108_total_credits &lt;- 15
+#108_total_credits &lt;- 15
+#_my_108_total_credits &lt;- 15
+my.108.total_credits &lt;- 15
+#.108.total_credits &lt;- 15 # 隱藏變數
+.my.108.total_credits &lt;- 15
+我的108學年總學分數 &lt;- 15
+`我的108學年總學分數` &lt;- 15 # 特殊名稱處理，`不是名稱的一部份
+`.108.total_credits` &lt;- 15</code></pre>
+<pre class="r"><code>`我的年紀` &lt;- 20
+my_age &lt;- `我的年紀`</code></pre>
 </div>
 
 
