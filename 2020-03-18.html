@@ -189,12 +189,9 @@ summary {
 </blockquote>
 <div id="package" class="section level2">
 <h2>3.1 Package</h2>
-<div id="安裝package" class="section level3">
-<h3>安裝package</h3>
+<p>安裝package</p>
 <pre class="r"><code>#install.packages(c(&quot;dplyr&quot;, &quot;lubridate&quot;, &quot;googlesheets4&quot;))</code></pre>
-</div>
-<div id="啟動package" class="section level3">
-<h3>啟動package</h3>
+<p>啟動package</p>
 <pre class="r"><code>library(googlesheets4)
 library(dplyr)</code></pre>
 <pre><code>## 
@@ -213,18 +210,15 @@ library(dplyr)</code></pre>
 ##     date</code></pre>
 <hr />
 </div>
-</div>
 <div id="create-objects" class="section level2">
 <h2>3.2 Create objects</h2>
 <pre class="r"><code>a &lt;- 2
 a = 2 # = 與 &lt;-同義
 3 -&gt; b</code></pre>
-<div id="變數命名規則" class="section level3">
-<h3>變數命名規則</h3>
-<ol style="list-style-type: decimal">
-<li>須由字母、數字、點(.)以及底線(_)構成</li>
-<li><strong>開頭必須是字母或是點(但點後不能接數字)</strong> ###辨別變數命名規則</li>
-</ol>
+<p>變數命名規則<br />
+1. 須由字母、數字、點(.)以及底線(_)構成<br />
+2. <strong>開頭必須是字母或是點(但點後不能接數字)</strong><br />
+辨別變數命名規則</p>
 <pre class="r"><code>my_108_total_credits &lt;- 15
 #_108_total_credits &lt;- 15
 #108_total_credits &lt;- 15
@@ -235,24 +229,54 @@ my.108.total_credits &lt;- 15
 我的108學年總學分數 &lt;- 15
 `我的108學年總學分數` &lt;- 15 # 特殊名稱處理，`不是名稱的一部份
 `.108.total_credits` &lt;- 15</code></pre>
-</div>
-<div id="常見命名方式" class="section level3">
-<h3>常見命名方式：</h3>
-<ol style="list-style-type: decimal">
-<li>snake: my_total_credits &lt;- 15</li>
-<li><strong>camel</strong>: myTotalCredits &lt;- 15 (推薦使用)</li>
-</ol>
-</div>
+<p>常見命名方式：<br />
+1. snake: my_total_credits &lt;- 15<br />
+2. <strong>camel</strong>: myTotalCredits &lt;- 15 (推薦使用)</p>
+<hr />
 </div>
 <div id="calling-an-object" class="section level2">
 <h2>3.3 Calling an object</h2>
 <pre class="r"><code>`我的年紀` &lt;- 20
 my_age &lt;- `我的年紀`</code></pre>
-<p>要呼叫某物件時，請先確認Environment裡有該物件存在，或執行ls()</p>
+<p>要呼叫某物件時，請先確認Environment裡有該物件存在，或執行<strong>ls()</strong></p>
 <pre class="r"><code>ls() #確認Environment裡共有哪些物件存在</code></pre>
 <pre><code>## [1] &quot;a&quot;                    &quot;b&quot;                    &quot;my.108.total_credits&quot;
 ## [4] &quot;my_108_total_credits&quot; &quot;my_age&quot;               &quot;我的108學年總學分數&quot; 
 ## [7] &quot;我的年紀&quot;</code></pre>
+<hr />
+</div>
+<div id="atomic-vector" class="section level2">
+<h2>3.4 Atomic vector</h2>
+<pre class="r"><code>num1 &lt;- 5
+vNum1 &lt;- c(2,5)
+vNum2 &lt;- c(2, num1)</code></pre>
+<p>以下兩變數值相同：</p>
+<pre class="r"><code>num1 &lt;- 5
+num2 &lt;- c(5)</code></pre>
+<pre class="r"><code>vNum1 &lt;- c(-1,5)
+vNum2 &lt;- c(2,3)
+vNum3 &lt;- c(vNum1,vNum2)
+vNum4 &lt;- c(-1,5,2,3)
+vNum5 &lt;- c(c(-1,5),c(2,3))</code></pre>
+<p>vNum3、vNum4、vNum5變數值相同</p>
+<pre class="r"><code>vNum1 &lt;- c(-1,5)
+vNum2 &lt;- c(2,3)
+vNum4 &lt;- c() # 空向量</code></pre>
+<pre class="r"><code>vNum3 &lt;- c(vNum2, vNum1)
+vNum4 &lt;- c(vNum4, vNum1) # 向量疊代（recursive vector concatenate）</code></pre>
+<p>Atomic vector依其值的型態（type）而分成以下三類型：<br />
+1. Numeric<br />
+2. Character<br />
+3. Logical</p>
+<div id="numeric" class="section level3">
+<h3>3.4.1 Numeric</h3>
+</div>
+<div id="character" class="section level3">
+<h3>3.4.2 Character</h3>
+</div>
+<div id="logical" class="section level3">
+<h3>3.4.3 Logical</h3>
+</div>
 </div>
 
 
