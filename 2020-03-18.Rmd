@@ -2,15 +2,20 @@
 title: "2020-03-18"
 author: "yuchihchia"
 date: "3/18/2020"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-> #第3章 R Basics  
-
+#第3章 R Basics  
 ## 3.1 Package  
 安裝package  
 ```{r}
