@@ -60,23 +60,24 @@ my.108.total_credits <- 15
 `我的年紀` <- 20
 my_age <- `我的年紀`
 ```
-要呼叫某物件時，請先確認Environment裡有該物件存在，或執行**ls()**
+要呼叫某物件時，請先確認Environment裡有該物件存在，或執行**ls()**  
 ```{r}
 ls() #查看Environment裡共有哪些物件存在
 ```
 ***  
-##3.4 Atomic vector
+##3.4 Atomic vector  
 ```{r}
 num1 <- 5
 vNum1 <- c(2,5)
 vNum2 <- c(2, num1)
 ```
-以下兩變數值相同：  
+只有一個值的向量可以不寫`c()`  
+以下兩變數值相同:  
 ```{r}
 num1 <- 5
 num2 <- c(5)
 ```
-
+向量的堆疊依然是向量:  
 ```{r}
 vNum1 <- c(-1,5)
 vNum2 <- c(2,3)
@@ -90,20 +91,46 @@ vNum1 <- c(-1,5)
 vNum2 <- c(2,3)
 vNum4 <- c() # 空向量
 ```
-
+  
 ```{r}
 vNum3 <- c(vNum2, vNum1)
 vNum4 <- c(vNum4, vNum1) # 向量疊代（recursive vector concatenate）
 ```
-Atomic vector依其值的型態（type）而分成以下三類型：  
+Atomic vector依其值的型態（type）而分成以下三類型:  
 1. Numeric  
 2. Character  
 3. Logical  
+### 3.4.1 Numeric  
+```{r}
+num1<-5 # 非整數
+num2<-5L # 整數
+num1Vector<-c(5,6,7)
+num2Vector<-c(5L,6L,7L)
+```
+5會被電腦記成5.0000  
+5L才會被當成整數5  
+### 3.4.2 Character  
+在定義object value時，必須要用「成對」的雙引號`"`或單引號`'`，把每個字串括起來  
+```{r}
+char1<-"你好"
+char2<-'你好'
+char1Vector<-c("你好","How are you?")
+```
+使用`class(物件名稱)`查詢上述物件類別
+```{r}
+dialogue <- c('小明說："明天不用上課。"', '小花說："真的嗎？"')
+#電腦會記錄成"小明說：\"明天不用上課。\"" "小花說：\"真的嗎？\""
+cat(dialogue, sep="\n")
+```
+```{r}
+library(httr)
+library(dplyr)
+GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") %>%
+  content() %>%
+  View()
+```
 
-### 3.4.1 Numeric
+### 3.4.3 Logical  
 
-### 3.4.2 Character
-
-### 3.4.3 Logical
 
 
