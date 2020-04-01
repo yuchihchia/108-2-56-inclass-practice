@@ -372,11 +372,11 @@ char1Vector&lt;-c(&quot;你好&quot;,&quot;How are you?&quot;)</code></pre>
 cat(dialogue, sep=&quot;\n&quot;)  # &quot;\n&quot;是指換行</code></pre>
 <pre><code>## 小明說：&quot;明天不用上課。&quot;
 ## 小花說：&quot;真的嗎？&quot;</code></pre>
-<p>R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有<code>(</code>卻沒看到<code>)</code>）或結尾是<code>,</code> 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。<br />
-以下只有三行指令：</p>
+<p>R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有<code>(</code>卻沒看到<code>)</code>）或結尾是<code>,</code> 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。</p>
 <pre class="r"><code>library(httr)
 library(dplyr)
-GET(&quot;https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits&quot;) %&gt;%
+library(magrittr)</code></pre>
+<pre class="r"><code>GET(&quot;https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits&quot;) %&gt;%
   content() %&gt;%
   View()</code></pre>
 <pre><code>## Error in (function (..., row.names = NULL, check.rows = FALSE, check.names = TRUE, : arguments imply differing number of rows: 1, 0</code></pre>
@@ -391,10 +391,10 @@ cat(c(&quot;小明說：'明天不用上課。'&quot;, &quot;小花說：'真的
 <pre><code>## 小明說：'明天不用上課。'
 ## 小花說：'真的嗎？'</code></pre>
 <pre class="r"><code>#以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
-library(googlesheets4)
-`出席狀況表單網址` &lt;-  &quot;https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645&quot;
-ss &lt;- as_sheets_id(`出席狀況表單網址`)
-homework_sheet &lt;- sheets_read(ss,sheet=1)</code></pre>
+library(googlesheets4)</code></pre>
+<pre class="r"><code>`出席狀況表單網址` &lt;-  &quot;https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645&quot;</code></pre>
+<pre class="r"><code>ss &lt;- as_sheets_id(`出席狀況表單網址`)</code></pre>
+<pre class="r"><code>homework_sheet &lt;- sheets_read(ss, sheet=1)</code></pre>
 <pre><code>## httpuv not installed, defaulting to out-of-band authentication</code></pre>
 <pre><code>## Error: Can't get Google credentials.
 ## Are you running googlesheets4 in a non-interactive session? Consider:

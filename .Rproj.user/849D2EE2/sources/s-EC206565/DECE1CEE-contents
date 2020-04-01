@@ -125,10 +125,14 @@ dialogue <- c('小明說："明天不用上課。"', '小花說："真的嗎？"
 cat(dialogue, sep="\n")  # "\n"是指換行
 ```
 R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有`(`卻沒看到`)`）或結尾是`,` 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。  
-以下只有三行指令：  
-```{r error=TRUE}
+
+```{r}
 library(httr)
 library(dplyr)
+library(magrittr)
+```
+
+```{r error=TRUE}
 GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") %>%
   content() %>%
   View()
@@ -137,16 +141,24 @@ GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") 
 1. Script window: 游標放在函數名稱任何一個位置，按F1。  
 2. Console window: ?函數名稱 按enter。  
 3. 右下角Help tab的放大鏡打函數名稱。  
-```{r error=TRUE}
+```{r}
 #以上對白請把它改成:
 #小明說：'明天不用上課。'
 #小花說：'真的嗎？'
 cat(c("小明說：'明天不用上課。'", "小花說：'真的嗎？'"), sep="\n")  
 #以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
 library(googlesheets4)
+library(httpuv)
+```
+
+```{r}
 `出席狀況表單網址` <-  "https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645"
+```
+```{r}
 ss <- as_sheets_id(`出席狀況表單網址`)
-homework_sheet <- sheets_read(ss,sheet=1)
+```
+```{r}
+homework_sheet <- sheets_read(ss, sheet=1)
 ```
 ### 3.4.3 Logical  
 邏輯：  
