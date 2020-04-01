@@ -1,7 +1,7 @@
 ---
-title: "2020-03-18"
+title: "Programming for Data Science"
 author: "yuchihchia"
-date: "3/18/2020"
+date: "4/01/2020"
 output: 
   html_document:
     toc: true
@@ -51,8 +51,8 @@ my.108.total_credits <- 15
 `.108.total_credits` <- 15
 ```
 常見命名方式：  
-1. snake: my_total_credits <- 15  
-2. **camel**: myTotalCredits <- 15 (推薦使用)  
+1. snake: `my_total_credits <- 15`  
+2. **camel**: `myTotalCredits <- 15` (推薦使用)  
 
 ***  
 ##3.3 Calling an object  
@@ -100,6 +100,7 @@ Atomic vector依其值的型態（type）而分成以下三類型:
 1. Numeric  
 2. Character  
 3. Logical  
+
 ### 3.4.1 Numeric  
 ```{r}
 num1<-5 # 非整數
@@ -109,7 +110,8 @@ num2Vector<-c(5L,6L,7L)
 ```
 5會被電腦記成5.0000  
 5L才會被當成整數5  
-### 3.4.2 Character  
+
+### 3.4.2 Character/String (vector)  
 在定義object value時，必須要用「成對」的雙引號`"`或單引號`'`，把每個字串括起來  
 ```{r}
 char1<-"你好"
@@ -120,10 +122,11 @@ char1Vector<-c("你好","How are you?")
 ```{r}
 dialogue <- c('小明說："明天不用上課。"', '小花說："真的嗎？"')
 #電腦會記錄成"小明說：\"明天不用上課。\"" "小花說：\"真的嗎？\""
-cat(dialogue, sep="\n")
+cat(dialogue, sep="\n")  # "\n"是指換行
 ```
-R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有`(`卻沒看到`)`）或結尾是, 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。  
-```{r}
+R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有`(`卻沒看到`)`）或結尾是`,` 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。  
+以下只有三行指令：  
+```{r error=TRUE}
 library(httr)
 library(dplyr)
 GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") %>%
@@ -134,19 +137,21 @@ GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") 
 1. Script window: 游標放在函數名稱任何一個位置，按F1。  
 2. Console window: ?函數名稱 按enter。  
 3. 右下角Help tab的放大鏡打函數名稱。  
-```{r}
+```{r error=TRUE}
+#以上對白請把它改成:
+#小明說：'明天不用上課。'
+#小花說：'真的嗎？'
+cat(c("小明說：'明天不用上課。'", "小花說：'真的嗎？'"), sep="\n")  
+#以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
 library(googlesheets4)
-`出席狀況表單網址` <-  "https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645" 
+`出席狀況表單網址` <-  "https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645"
 ss <- as_sheets_id(`出席狀況表單網址`)
 homework_sheet <- sheets_read(ss,sheet=1)
 ```
-```{r}
-library(googlesheets4)
-`出席狀況表單網址` <- `ss`
-`ss` <- "https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645"
-homework_sheet <- sheets_read(ss,sheet=1)
-```
 ### 3.4.3 Logical  
+邏輯：  
+* 為「真」： `T`或`TRUE` (要全大寫)。  
+* 為「否」： `F`或`FALSE` (要全大寫)。  
 ```{r}
 logi1 <- c(T,TRUE,F,FALSE,FALSE)
 ```
@@ -155,5 +160,23 @@ logi1 <- c(T,TRUE,F,FALSE,FALSE)
 # 加總向量內的所有元素值。
 sum(logi1)
 ```
-
-
+### 3.4.4 `typeof()`  
+顯示atomic vector元素的基本認定型態，它代表電腦記憶體在儲存時真正看待的型態。  
+```{r}
+num <- c(1.5, 2, 3)
+int <- c(1L, 3L, -2L)
+char <- c("1.5","2","3")
+logi <- c(T,T,F)
+typeof(num)
+typeof(int)
+typeof(char)
+typeof(logi)
+```
+### 3.4.5 `class()`
+依資料的螢幕顯示型態及能對它進行的操作所做的分類。  
+```{r}
+class(num)
+class(int)
+class(char)
+class(logi)
+```
