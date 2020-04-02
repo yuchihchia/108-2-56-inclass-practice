@@ -208,23 +208,23 @@ majors10_factor <- factor(
 typeof(majors10_factor)
 class(majors10_factor)
 ```
-majors10_char及majors10_factor的螢幕顯示型態是不同的：
+majors10_char及majors10_factor的螢幕顯示型態是不同的：  
 ```{r}
 majors10_char
 majors10_factor
 ```
-`as.integer()`將資料的class轉成integer。由於factor被轉成integer後，其螢幕顯示會顯示電腦是用什麼數字在存這些類別資料。
+`as.integer()`將資料的class轉成integer。由於factor被轉成integer後，其螢幕顯示會顯示電腦是用什麼數字在存這些類別資料。  
 ```{r}
 as.integer(majors10_factor) 
 ```
-數字與類別文字的對照表mapping table:
+數字與類別文字的對照表mapping table:  
 ```{r}
 levels(majors10_factor)
 ```
-Factor屬於atomic vector延伸的類別，其基本儲存型態還是會落在先前的基本型態裡，但多了資料顯示的mapping table。
+Factor屬於atomic vector延伸的類別，其基本儲存型態還是會落在先前的基本型態裡，但多了資料顯示的mapping table。  
 ### 3.5.2 Class conversion  
-R有一系列的`as.{class名稱}()`的函數用來轉換物件的class；`as.{type名稱}()`用來轉換物件的type。
-`as.integer(...)`會將…物件（嘗試）轉成integer class/type的物件。例如：
+R有一系列的`as.{class名稱}()`的函數用來轉換物件的class；`as.{type名稱}()`用來轉換物件的type。  
+`as.integer(...)`會將…物件（嘗試）轉成integer class/type的物件。例如：  
 ```{r}
 stringInteger <- c("1","2","-11")
 class(stringInteger) # 無法進行數值運算
@@ -257,8 +257,41 @@ studentId <- as.character(studentId)
 class(studentId)
 ```
 ### 3.5.3 Date/Time
+處理時間所需資訊：  
+* 時間輸入方式  
+* 時間來自時區  
+* 時間儲存以哪個時區為準（進行比較用）  
+其中最後一點通訊協定是採UTC時區為公定標準，故不用煩惱。  
 ```{r}
 library(lubridate)
+```
+#### 3.5.3.1 台北  
+2020-03-18 13:52:40  
+* 時間輸入方式: ymd_hms
+* 時間來自時區: Asia/Taipei
+```{r}
+tpeTime <- ymd_hms("2020-03-18 13:52:40",
+                   tz="Asia/Taipei")
+```
+我們使用lubridate中的ymd_hms函數有以下兩種做法：  
+1. 作法一：使用library()
+```{r}
+library(lubridate)
+tpeTime <- ymd_hms("2020-03-18 13:52:40",
+                   tz="Asia/Taipei")
+```
+2. 作法二：不使用library()
+```{r}
+tpeTime <- lubridate::ymd_hms("2020-03-18 13:52:40",
+              tz="Asia/Taipei")
+```
+#### 3.5.3.2 葡萄牙
+Mar.18, 2020, 05:52:40  
+* 時間輸入方式: mdy_hms  
+* 時間來自時區: Europe/Lisbon  
+```{r}
+pgTime <- mdy_hms("Mar.18, 2020, 05:52:40",
+                  tz="Europe/Lisbon")
 ```
 
 
