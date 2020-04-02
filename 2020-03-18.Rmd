@@ -222,6 +222,7 @@ as.integer(majors10_factor)
 levels(majors10_factor)
 ```
 Factor屬於atomic vector延伸的類別，其基本儲存型態還是會落在先前的基本型態裡，但多了資料顯示的mapping table。  
+
 ### 3.5.2 Class conversion  
 R有一系列的`as.{class名稱}()`的函數用來轉換物件的class；`as.{type名稱}()`用來轉換物件的type。  
 `as.integer(...)`會將…物件（嘗試）轉成integer class/type的物件。例如：  
@@ -270,36 +271,247 @@ library(lubridate)
 * 時間輸入方式: ymd_hms
 * 時間來自時區: Asia/Taipei
 ```{r}
-tpeTime <- ymd_hms("2020-03-18 13:52:40",
-                   tz="Asia/Taipei")
+tpeTime <- ymd_hms("2020-03-18 13:52:40", tz="Asia/Taipei")
 ```
 我們使用lubridate中的ymd_hms函數有以下兩種做法：  
 1. 作法一：使用library()
 ```{r}
 library(lubridate)
-tpeTime <- ymd_hms("2020-03-18 13:52:40",
-                   tz="Asia/Taipei")
+tpeTime <- ymd_hms("2020-03-18 13:52:40", tz="Asia/Taipei")
 ```
 2. 作法二：不使用library()
 ```{r}
-tpeTime <- lubridate::ymd_hms("2020-03-18 13:52:40",
-              tz="Asia/Taipei")
+tpeTime <- lubridate::ymd_hms("2020-03-18 13:52:40", tz="Asia/Taipei")
 ```
 #### 3.5.3.2 葡萄牙
 Mar.18, 2020, 05:52:40  
 * 時間輸入方式: mdy_hms  
 * 時間來自時區: Europe/Lisbon  
 ```{r}
-pgTime <- mdy_hms("Mar.18, 2020, 05:52:40",
-                  tz="Europe/Lisbon")
+pgTime <- mdy_hms("Mar.18, 2020, 05:52:40", tz="Europe/Lisbon")
 ```
+來自相同時區、相同輸入方式的時間文字字串，可以直接套入相同函數轉成Date/Time類別。
+```{r}
+tpeTime <- c("2020-03-18 13:52:40", "2020-03-11 03:12:40")
+tpeTime <-ymd_hms(tpeTime, # 呼叫tpeTime向量值
+    tz="Asia/Taipei")
+```
+相當於
+```{r}
+tpeTime <- 
+  ymd_hms(c("2020-03-18 13:52:40","2020-03-11 03:12:40"), tz="Asia/Taipei")
+```
+若時間字串來自UTC，那可以不設定tz參數，即
+```{r}
+ymd_hms(c("2020-03-18 13:52:40","2020-03-11 03:12:40"))
+```
+若時間字串長得像“2020-03-11T06:56:17Z”，它來自UTC時區：
+```{r}
+ymd_hms("2020-03-11T06:56:17Z")
+```
+```{r  eval=FALSE}
+browseURL("https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645")
+```
+```{r}
+studentTime <- c( ymd_hms("2020-03-04T06:56:29Z"),
+               ymd_hms("2020-03-11 14:16:43", tz="Asia/Taipei"),
+               ymd_hms("2020-03-11 14:34:33", tz="Asia/Taipei")
+               )
+studentTime
+```
+#### 3.5.3.3 以某個時區顯示  
+以UTC表示  
+```{r}
+with_tz(tpeTime, tzone="UTC")
+with_tz(pgTime, tzone="UTC")
+```
+以Europe/Paris表示  
+```{r}
+with_tz(tpeTime, tzone="Europe/Paris")
+with_tz(pgTime, tzone="Europe/Paris")
+```
+```{r}
+with_tz(studentTime, tzone = "Europe/Paris")
+```
+#### 3.5.3.4 type  
+```{r}
+class(tpeTime)
+typeof(tpeTime)
+as.numeric(tpeTime)
+as.numeric(pgTime)
+```
+Date/Time的儲存其實是數值，它的原點是UTC時區的1970-01-01 00:00:00。 as.numeric(tpeTime)的值顯示tpeTime離那個原點已過了多少秒。
+```{r}
+#數於Date/Time class的向量內容是數值，所以它是可以做數值相減。請問台北“2020-03-11 12:55:30”與巴黎“2020-02-13 15:33:10”相減後會出現什麼？
+ymd_hms("2020-03-11 12:55:30", tz="Asia/Taipei")-ymd_hms("2020-02-13 15:33:10", tz="Europe/Paris")
+```
+## 3.6 List  
+特色：  
+1. 每個元素值可以是不同type的物件值。
+```{r}
+`小明交易1` <- list(`時間`=ymd_hms("2020-03-31T13:40:55Z"),
+                `飲料店`="一芳",
+                `數量`=2,
+                `飲料`="水果茶")
+print(`小明交易1`)
+```
+2. 物件值可以是vector形式，也可以list。  
+```{r}
+# list含兩個vectors
+`小明108學年課表A` <- list(
+  c("108-1","高級會計學","高等統計學"),
+  c("108-2","食在拉丁美洲")
+)
+print(`小明108學年課表A`)
+# list含兩個lists
+`小明108學年課表B` <- list(
+  list("108-1","高級會計學","高等統計學"),
+  list("108-2","食在拉丁美洲")
+)
+print(`小明108學年課表B`)
+# list含兩個lists, 子層list又各含兩個vectors
+`小明108學年課表C` <- list(
+  list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表C`)
+```
+3. 物件值可以取名。
+```{r}
+`小明108學年課表D` <- list(
+  `108學年第1學期`=list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  `108學年第2學期`=list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表D`)
+```
+```{r}
+commit <- list(
+  author=list(
+    name="Martin老師",
+    email="mtlin@gm.ntpu.edu.tw",
+    date=ymd_hms("2020-03-25T07:17:40Z")
+  ),
+  comitter=list(
+    name="emilyluckey",
+    email="emily007@gmail.com",
+    date=ymd_hms("2020-03-26T08:18:40Z")
+  ),
+  message="update"
+)
+print(commit)
+```
+網路上的資料回傳大部份時候長得像list的格式。這種回傳資訊格式叫做**JSON**(JavaScript Object Notation)，每個程式語法都會準備一個物件形式用來儲存接收到的JSON資料；R會用list type，Python會用dictionary type。  
+也因為每個程式都可接收JSON形式資料，不同程式開發者若有必要進行網路資訊交換時會將複雜資料結構轉成JSON再交換出去。  
+我們的程式要在網路送出commit資訊時，可以透過以下程序將list轉成JSON：
+```{r}
+library(jsonlite) # 不少同學這行會有Error，還記得如何排除嗎？
+toJSON(commit)
+```
+```{r}
+#學生小明，在108學年第1學期修了Alice老師所授的個體經濟學（得分85分）、Mark老師所授的總體經濟學(得分73分)。在108學年第2學期修了Jason老師所授的作業研究（得分90分）。
+`小明的修課記錄` <- list(
+  name="小明",
+  semesters=list(
+    `108-1`=list(
+      course1_1081=list(
+        name="個體經濟學",
+        teacher="Alice",
+        grade=85
+      ),
+      course2_1081=list(
+        name="總體經濟學",
+        teacher="Mark",
+        grade=78
+      )
+    ),
+    `108-2`=list(
+      course1_1082=list(
+        name="作業研究",
+        teacher="Jason",
+        grade=90
+      )
+    )
+  )
+)
+print(`小明的修課記錄`)
+```
+```{r}
+#今（“2020-03-31”）明（“2020-04-01”）「台北市」氣溫最高25度，最低18度；「新北市」氣溫最高24度，最低15度。
+temperature <- list(
+  date=list(today=ymd("2020-03-31"),tomorrow=ymd("2020-04-01")
+  ),
+  location=list(
+    taipei=list(high=25,low=18),
+    newtaipei=list(high=24,low=15)
+  )
+)
+print(temperature)
+```
+game的定義： A game involves three components:
+1. A list of players
+2. Moves each player can make (strategies)
+3. A listing of payoffs, or benefits, for each player on each eventual outcome (a utility function for outcomes)
+![](./prisoner-s-dillema.png)  
+```{r}
+game=list(
+  players=list(player1="A",player2="B"),
+  strategies=list(
+    player1=list(strategy1="stay_silent",strategy2="betray"),
+    player2=list(strategy1="stay_silent",strategy2="betray")
+  ),
+  `payoffs: (player1, player2)`=list(
+    # mapping from all possible player1 strategy vs player2 strategy
+    player1=list(
+      strategy1=list(
+        player2=list(strategy1=c(-1,-1),strategy2=c(-3,0))
+      ),
+      strategy2=list(
+        player2=list(strategy1=c(0,-3),strategy2=c(-2,-1))
+      )
+    )
+  )
+)
 
+# 查詢strategies
+game$strategies$player1$strategy1
+game$strategies$player2$strategy2
 
+# 查詢payoffs
+## player1:strategy1, player2:strategy2
+game$`payoffs: (player1, player2)`$player1$strategy1$player2$strategy2
+## player1:strategy2, player2:strategy2
+game$`payoffs: (player1, player2)`$player1$strategy2$player2$strategy2
+```
+## 3.7 物件儲存
+* 存下Global Environment中有的物件：
+`save(object1, object2, ..., file="myData.Rda")`
+* 下次取回來Global Environment用：
+`load("myData.Rda")`
 
-
-
-
-
+```{r}
+object1 <- c(2,5)
+object2 <- ymd_hms(
+  c("2015-03-22 12:28:42","2017-12-22 15:33:48"),
+  tz="Asia/Taipei"
+)
+object3 <- list(2, FALSE, c("a","b","c"))
+save(object1, object2, object3, file="threeObjects.Rda")
+```
+```{r}
+load("threeObjects.Rda")
+```
 
 
 
