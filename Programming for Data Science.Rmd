@@ -720,15 +720,17 @@ dance[[2]]$showInfo[[1]][c("time","locationName")] #第2個活動舉辦3次
 dance[[2]]$showInfo[[2]][c("time","locationName")]
 dance[[2]]$showInfo[[2]][c("time","locationName")]
 
-map(dance[[1]]$showInfo,~.x[c("time","locationName")])
+map(dance[[1]]$showInfo,~.x[c("time","locationName")]),
 map(dance[[2]]$showInfo,~.x[c("time","locationName")])
+
 ```
 ```{r eval=FALSE}
+example <- list(1,2,3,4,5)
+map(example, ~.x)
 
-map(dance,~.x$showInfo)
+map(map(dance, ~.x$showInfo),~.x.y[c("time","locationName")])
 
-
-map(dance,~.x$showInfo) -> dance_showInfo
+map(dance,~.x$showInfo]) -> dance_showInfo
 str(dance_showInfo)
 ```
 
