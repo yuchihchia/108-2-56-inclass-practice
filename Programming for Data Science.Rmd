@@ -679,6 +679,66 @@ weather <- list(today=list(taipei=list("`台北市`",
 weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp
 weather[[2]][[2]]$highest_temp # 明天/新北市/highest_temp
 ```
+#### 4.1.3.2 list補充
+```{r}
+library(jsonlite)
+fromJSON("https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1", simplifyDataFrame = F) -> dance
+# 前三筆演出的名稱
+dance[[1]]$title
+dance[[2]]$title
+dance[[3]]$title 
+```
+若要針對向量或list裡的每個元素反覆進行相同操作，purrr是相當方便的套件，最常用的是: `map(向量或串列, 每個元素要做的事)`
+```{r}
+library(purrr)
+map(dance,~.x$title) -> dance_title
+dance[[1]]$showInfo
+length(dance[[1]]$showInfo)
+dance[[2]]$showInfo
+length(dance[[2]]$showInfo)
+```
+
+```{r}
+#length(dance[[1]]$showInfo)
+#length(dance[[2]]$showInfo)
+# ...
+#length(dance[[34]]$showInfo)
+
+map(dance,~length(.x$showInfo)) -> dance_showInfoLength
+```
+
+```{r}
+#選出每個活動的「活動起始日期」
+map(dance,~.x$startDate) -> dance_startDate
+#選出每個活動的「活動名稱」及「活動起始日期」
+map(dance,~list(title=.x$title,startDate=.x$startDate)) -> dance_startDate
+#選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）
+```
+```{r eval=FALSE}
+dance[[1]]$showInfo[[1]][c("time","locationName")] #第1個活動舉辦1次
+dance[[2]]$showInfo[[1]][c("time","locationName")] #第2個活動舉辦3次
+dance[[2]]$showInfo[[2]][c("time","locationName")]
+dance[[2]]$showInfo[[2]][c("time","locationName")]
+
+map(dance[[1]]$showInfo,~.x[c("time","locationName")])
+map(dance[[2]]$showInfo,~.x[c("time","locationName")])
+```
+```{r eval=FALSE}
+
+map(dance,~.x$showInfo)
+
+
+map(dance,~.x$showInfo) -> dance_showInfo
+str(dance_showInfo)
+```
+
+
+
+
+
+
+
+
 
 
 

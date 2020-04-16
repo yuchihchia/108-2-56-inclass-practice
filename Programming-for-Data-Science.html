@@ -1487,6 +1487,158 @@ weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp</code></pre>
 <pre><code>## highest_temp 
 ##           18</code></pre>
 </div>
+<div id="list補充" class="section level4">
+<h4>4.1.3.2 list補充</h4>
+<pre class="r"><code>library(jsonlite)
+fromJSON(&quot;https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1&quot;, simplifyDataFrame = F) -&gt; dance
+# 前三筆演出的名稱
+dance[[1]]$title</code></pre>
+<pre><code>## [1] &quot;傳統藝術接班人－傳統工藝推廣計畫&quot;</code></pre>
+<pre class="r"><code>dance[[2]]$title</code></pre>
+<pre><code>## [1] &quot;2020TIFA 布拉瑞揚舞團《沒有害怕太陽和下雨》─ 延期&quot;</code></pre>
+<pre class="r"><code>dance[[3]]$title </code></pre>
+<pre><code>## [1] &quot;2020TIFA 舞蹈空間與東京 鷹《月球水2.0》─ 延期&quot;</code></pre>
+<p>若要針對向量或list裡的每個元素反覆進行相同操作，purrr是相當方便的套件，最常用的是: <code>map(向量或串列, 每個元素要做的事)</code></p>
+<pre class="r"><code>library(purrr)</code></pre>
+<pre><code>## 
+## Attaching package: 'purrr'</code></pre>
+<pre><code>## The following object is masked from 'package:jsonlite':
+## 
+##     flatten</code></pre>
+<pre><code>## The following object is masked from 'package:magrittr':
+## 
+##     set_names</code></pre>
+<pre class="r"><code>map(dance,~.x$title) -&gt; dance_title
+dance[[1]]$showInfo</code></pre>
+<pre><code>## [[1]]
+## [[1]]$time
+## [1] &quot;2020/01/15 09:00:00&quot;
+## 
+## [[1]]$location
+## [1] &quot;268  宜蘭縣五結鄉五濱路二段201號&quot;
+## 
+## [[1]]$locationName
+## [1] &quot;宜蘭傳藝園區-展示館&quot;
+## 
+## [[1]]$onSales
+## [1] &quot;N&quot;
+## 
+## [[1]]$price
+## [1] &quot;&quot;
+## 
+## [[1]]$latitude
+## NULL
+## 
+## [[1]]$longitude
+## NULL
+## 
+## [[1]]$endTime
+## [1] &quot;2020/12/15 09:00:00&quot;</code></pre>
+<pre class="r"><code>length(dance[[1]]$showInfo)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>dance[[2]]$showInfo</code></pre>
+<pre><code>## [[1]]
+## [[1]]$time
+## [1] &quot;2020/04/17 19:30:00&quot;
+## 
+## [[1]]$location
+## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
+## 
+## [[1]]$locationName
+## [1] &quot;國家戲劇院&quot;
+## 
+## [[1]]$onSales
+## [1] &quot;Y&quot;
+## 
+## [[1]]$price
+## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
+## 
+## [[1]]$latitude
+## NULL
+## 
+## [[1]]$longitude
+## NULL
+## 
+## [[1]]$endTime
+## [1] &quot;&quot;
+## 
+## 
+## [[2]]
+## [[2]]$time
+## [1] &quot;2020/04/18 19:30:00&quot;
+## 
+## [[2]]$location
+## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
+## 
+## [[2]]$locationName
+## [1] &quot;國家戲劇院&quot;
+## 
+## [[2]]$onSales
+## [1] &quot;Y&quot;
+## 
+## [[2]]$price
+## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
+## 
+## [[2]]$latitude
+## NULL
+## 
+## [[2]]$longitude
+## NULL
+## 
+## [[2]]$endTime
+## [1] &quot;&quot;
+## 
+## 
+## [[3]]
+## [[3]]$time
+## [1] &quot;2020/04/19 14:30:00&quot;
+## 
+## [[3]]$location
+## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
+## 
+## [[3]]$locationName
+## [1] &quot;國家戲劇院&quot;
+## 
+## [[3]]$onSales
+## [1] &quot;Y&quot;
+## 
+## [[3]]$price
+## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
+## 
+## [[3]]$latitude
+## NULL
+## 
+## [[3]]$longitude
+## NULL
+## 
+## [[3]]$endTime
+## [1] &quot;&quot;</code></pre>
+<pre class="r"><code>length(dance[[2]]$showInfo)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>#length(dance[[1]]$showInfo)
+#length(dance[[2]]$showInfo)
+# ...
+#length(dance[[34]]$showInfo)
+
+map(dance,~length(.x$showInfo)) -&gt; dance_showInfoLength</code></pre>
+<pre class="r"><code>#選出每個活動的「活動起始日期」
+map(dance,~.x$startDate) -&gt; dance_startDate
+#選出每個活動的「活動名稱」及「活動起始日期」
+map(dance,~list(title=.x$title,startDate=.x$startDate)) -&gt; dance_startDate
+#選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）</code></pre>
+<pre class="r"><code>dance[[1]]$showInfo[[1]][c(&quot;time&quot;,&quot;locationName&quot;)] #第1個活動舉辦1次
+dance[[2]]$showInfo[[1]][c(&quot;time&quot;,&quot;locationName&quot;)] #第2個活動舉辦3次
+dance[[2]]$showInfo[[2]][c(&quot;time&quot;,&quot;locationName&quot;)]
+dance[[2]]$showInfo[[2]][c(&quot;time&quot;,&quot;locationName&quot;)]
+
+map(dance[[1]]$showInfo,~.x[c(&quot;time&quot;,&quot;locationName&quot;)])
+map(dance[[2]]$showInfo,~.x[c(&quot;time&quot;,&quot;locationName&quot;)])</code></pre>
+<pre class="r"><code>map(dance,~.x$showInfo)
+
+
+map(dance,~.x$showInfo) -&gt; dance_showInfo
+str(dance_showInfo)</code></pre>
+</div>
 </div>
 </div>
 </div>
