@@ -35,8 +35,10 @@ a = 2 # = 與 <-同義
 3 -> b
 ```
 變數命名規則:  
+
 1. 須由字母、數字、點(.)以及底線(_)構成  
 2. **開頭必須是字母或是點(但點後不能接數字)**  
+
 辨別變數命名規則  
 ```{r}
 my_108_total_credits <- 15
@@ -47,10 +49,13 @@ my.108.total_credits <- 15
 #.108.total_credits <- 15 
 .my.108.total_credits <- 15
 我的108學年總學分數 <- 15
-`我的108學年總學分數` <- 15 # 特殊名稱處理，`不是名稱的一部份
+
+#針對特殊名稱(不符變數命名規則)的處理: 在名稱前後加上` (並不是名稱的一部份)`
+`我的108學年總學分數` <- 15 
 `.108.total_credits` <- 15
 ```
 常見命名方式：  
+
 1. snake: `my_total_credits <- 15`  
 2. **camel**: `myTotalCredits <- 15` (推薦使用)  
 
@@ -71,8 +76,7 @@ num1 <- 5
 vNum1 <- c(2,5)
 vNum2 <- c(2, num1)
 ```
-只有一個值的向量可以不寫`c()`  
-以下兩變數值相同:  
+只有一個值的向量可以不寫`c()`，以下兩變數值相同:  
 ```{r}
 num1 <- 5
 num2 <- c(5)
@@ -97,19 +101,18 @@ vNum3 <- c(vNum2, vNum1)
 vNum4 <- c(vNum4, vNum1) # 向量疊代（recursive vector concatenate）
 ```
 Atomic vector依其值的型態（type）而分成以下三類型:  
-1. Numeric  
+
+1. Numeric(數值，非整數) / Integer(整數)  
 2. Character  
 3. Logical  
 
-### 3.4.1 Numeric  
+### 3.4.1 Numeric / Integer  
 ```{r}
-num1<-5 # 非整數
-num2<-5L # 整數
+num1<-5 # 非整數，5會被電腦記成5.0000
+num2<-5L # 整數，5L才會被電腦記成整數5
 num1Vector<-c(5,6,7)
 num2Vector<-c(5L,6L,7L)
 ```
-5會被電腦記成5.0000  
-5L才會被當成整數5  
 
 ### 3.4.2 Character/String (vector)  
 在定義object value時，必須要用「成對」的雙引號`"`或單引號`'`，把每個字串括起來  
@@ -122,42 +125,40 @@ char1Vector<-c("你好","How are you?")
 ```{r}
 dialogue <- c('小明說："明天不用上課。"', '小花說："真的嗎？"')
 #電腦會記錄成"小明說：\"明天不用上課。\"" "小花說：\"真的嗎？\""
-cat(dialogue, sep="\n")  # "\n"是指換行
+cat(dialogue, sep="\n")  #\n"是指換行
 ```
 R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有`(`卻沒看到`)`）或結尾是`,` 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。  
-
-```{r}
+```{r error=TRUE}
 library(httr)
 library(dplyr)
 library(magrittr)
-```
-
-```{r error=TRUE}
 GET("https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits") %>%
   content() %>%
   View()
 ```
 查詢函數用法:  
+
 1. Script window: 游標放在函數名稱任何一個位置，按F1。  
 2. Console window: ?函數名稱 按enter。  
 3. 右下角Help tab的放大鏡打函數名稱。  
 ```{r}
-#以上對白請把它改成:
+#請把以上對白改成:
 #小明說：'明天不用上課。'
 #小花說：'真的嗎？'
 cat(c("小明說：'明天不用上課。'", "小花說：'真的嗎？'"), sep="\n")  
-#以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
-library(googlesheets4)
-library(httpuv)
 ```
 
 ```{r eval=FALSE}
+#以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
+library(googlesheets4)
+library(httpuv)
 `出席狀況表單網址` <-  "https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645"
 ss <- as_sheets_id(`出席狀況表單網址`)
 homework_sheet <- sheets_read(ss, sheet=1)
 ```
 ### 3.4.3 Logical  
 邏輯：  
+
 * 為「真」： `T`或`TRUE` (要全大寫)。  
 * 為「否」： `F`或`FALSE` (要全大寫)。  
 ```{r}
@@ -165,7 +166,7 @@ logi1 <- c(T,TRUE,F,FALSE,FALSE)
 ```
 邏輯值遇到數學運算時T會被當成1，而F會被當成0
 ```{r}
-# 加總向量內的所有元素值。
+#sum(向量): 加總向量內所有元素的數值。
 sum(logi1)
 ```
 ### 3.4.4 `typeof()`  
@@ -259,6 +260,7 @@ class(studentId)
 ```
 ### 3.5.3 Date/Time
 處理時間所需資訊：  
+
 * 時間輸入方式  
 * 時間來自時區  
 * 時間儲存以哪個時區為準（進行比較用）  
@@ -268,12 +270,14 @@ library(lubridate)
 ```
 #### 3.5.3.1 台北  
 2020-03-18 13:52:40  
-* 時間輸入方式: ymd_hms
-* 時間來自時區: Asia/Taipei
+
+* 時間輸入方式: ymd_hms  
+* 時間來自時區: Asia/Taipei  
 ```{r}
 tpeTime <- ymd_hms("2020-03-18 13:52:40", tz="Asia/Taipei")
 ```
 我們使用lubridate中的ymd_hms函數有以下兩種做法：  
+
 1. 作法一：使用library()
 ```{r}
 library(lubridate)
@@ -285,6 +289,7 @@ tpeTime <- lubridate::ymd_hms("2020-03-18 13:52:40", tz="Asia/Taipei")
 ```
 #### 3.5.3.2 葡萄牙
 Mar.18, 2020, 05:52:40  
+
 * 時間輸入方式: mdy_hms  
 * 時間來自時區: Europe/Lisbon  
 ```{r}
@@ -347,6 +352,7 @@ ymd_hms("2020-03-11 12:55:30", tz="Asia/Taipei")-ymd_hms("2020-02-13 15:33:10", 
 ```
 ## 3.6 List  
 特色：  
+
 1. 每個元素值可以是不同type的物件值。
 ```{r}
 `小明交易1` <- list(`時間`=ymd_hms("2020-03-31T13:40:55Z"),
@@ -413,7 +419,9 @@ commit <- list(
 print(commit)
 ```
 網路上的資料回傳大部份時候長得像list的格式。這種回傳資訊格式叫做**JSON**(JavaScript Object Notation)，每個程式語法都會準備一個物件形式用來儲存接收到的JSON資料；R會用list type，Python會用dictionary type。  
+
 也因為每個程式都可接收JSON形式資料，不同程式開發者若有必要進行網路資訊交換時會將複雜資料結構轉成JSON再交換出去。  
+
 我們的程式要在網路送出commit資訊時，可以透過以下程序將list轉成JSON：
 ```{r}
 library(jsonlite) # 不少同學這行會有Error，還記得如何排除嗎？
@@ -460,10 +468,11 @@ temperature <- list(
 print(temperature)
 ```
 game的定義： A game involves three components:
-1. A list of players
-2. Moves each player can make (strategies)
-3. A listing of payoffs, or benefits, for each player on each eventual outcome (a utility function for outcomes)
-![](./prisoner-s-dillema.png)  
+
+1. A list of players  
+2. Moves each player can make (strategies)  
+3. A listing of payoffs, or benefits, for each player on each eventual outcome (a utility function for outcomes)  
+<img src="C:/Users/USER/Documents/GitHub/yikahui/gametheory.png" style="display:block; margin:auto; width:50%;">  
 ```{r}
 game=list(
   players=list(player1="A",player2="B"),
@@ -502,10 +511,9 @@ game$`payoffs: (player1, player2)`$player1$strategy2$player2$strategy2
 
 ```{r}
 object1 <- c(2,5)
-object2 <- ymd_hms(
-  c("2015-03-22 12:28:42","2017-12-22 15:33:48"),
-  tz="Asia/Taipei"
-)
+object2 <- ymd_hms(c("2015-03-22 12:28:42","2017-12-22 15:33:48"),
+                   tz="Asia/Taipei"
+                   )
 object3 <- list(2, FALSE, c("a","b","c"))
 save(object1, object2, object3, file="threeObjects.Rda")
 ```
@@ -524,8 +532,6 @@ vectorExample <- c("小明","小英","大雄")
 length(vectorExample)
 vectorExample[[1]]
 vectorExample[[3]]
-```
-```{r}
 listExample <- list(student="小明",
                     `學期`=list(`108-1`=list(list(name="個體經濟學",
                                                   teacher="Alice",
@@ -541,8 +547,6 @@ listExample <- list(student="小明",
 length(listExample)
 listExample[[1]]
 listExample[[2]]
-```
-```{r}
 #臺南市運動地圖
 library(jsonlite)
 fromJSON("https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json", simplifyDataFrame = F) -> tainanSportsMap
@@ -579,9 +583,7 @@ vectorExample[c(1,3)]
 vectorExample[c(3,2,1)] #產生重新排列效果
 str(listExample, max.level=1)
 listExample[c(1,2)]
-```
-```{r}
-str(tainanSportsMap[c(1,501,1001)])
+str(tainanSportsMap[c(87,666)])
 ```
 #### 4.1.2.2 用名字選`[c("name1","name2",...)]`
 ```{r}
@@ -628,8 +630,6 @@ get2[[1]]$`108-1`[[1]]$teacher
 numVector <- c(2,3,6,-1,4,2,6)
 numVector[c(1,4)][[1]]
 numVector[c(T,T,F,T,F,F,T)][c(1,4)]
-```
-```{r}
 majors <- c("經濟學系","經濟學系","社會學系","社工系","經濟學系")
 names <- c("小英", "小美", "大雄","阿華", "阿尼")
 gender <- c("F","F","M","F","M")
@@ -649,13 +649,10 @@ vector1 <- c(a=1,b=3,c=4)
 vector1[["a"]]
 vector1[c("a","c")]
 #vector1$a 不能用
-
 list1 <- list(a=1,b=3,c=4)
 list1[["a"]]
 list1[c("a","c")]
 list1$a
-```
-```{r}
 #今明兩日台北市、新北市氣溫
 weather <- list(today=list(taipei=list("`台北市`",
                                        highest_temp=c(highest_temp=18),
@@ -679,6 +676,147 @@ weather <- list(today=list(taipei=list("`台北市`",
 weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp
 weather[[2]][[2]]$highest_temp # 明天/新北市/highest_temp
 ```
+#### 4.1.3.2 list補充
+```{r}
+library(jsonlite)
+fromJSON("https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1", simplifyDataFrame = F) -> dance
+# 前三筆演出的名稱
+dance[[1]]$title
+dance[[2]]$title
+dance[[3]]$title 
+```
+若要針對向量或list裡的每個元素反覆進行相同操作，purrr是相當方便的套件，最常用的是: `map(向量或串列, 每個元素要做的事)`
+```{r}
+library(purrr)
+map(dance,~.x$title) -> dance_title
+dance[[1]]$showInfo
+length(dance[[1]]$showInfo)
+dance[[2]]$showInfo
+length(dance[[2]]$showInfo)
+#length(dance[[1]]$showInfo)
+#length(dance[[2]]$showInfo)
+# ...
+#length(dance[[34]]$showInfo)
+
+map(dance,~length(.x$showInfo)) -> dance_showInfoLength
+```
+
+```{r}
+#選出每個活動的「活動起始日期」
+map(dance,~.x$startDate) -> dance_startDate
+#選出每個活動的「活動名稱」及「活動起始日期」
+map(dance,~list(title=.x$title,startDate=.x$startDate)) -> dance_startDate
+#選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）
+```
+```{r eval=FALSE}
+dance[[1]]$showInfo[[1]][c("time","locationName")] #第1個活動舉辦1次
+dance[[2]]$showInfo[[1]][c("time","locationName")] #第2個活動舉辦3次
+dance[[2]]$showInfo[[2]][c("time","locationName")]
+dance[[2]]$showInfo[[2]][c("time","locationName")]
+
+map(dance[[1]]$showInfo,~.x[c("time","locationName")]),
+map(dance[[2]]$showInfo,~.x[c("time","locationName")])
+
+```
+```{r}
+#新北市公車路線清單: 找出Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)
+jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json", simplifyDataFrame = F) -> busRoutes
+map(busRoutes,~.x[c("Id","providerId","providerName","nameZh")]) -> busRoutesInfo
+busRoutesInfo[[1]]
+```
+## 4.2 新增/替換/刪除元素  
+### 4.2.1 新增/替換元素  
+元素提取`[.]`,`[[.]]`,`$.`也可用來進行元素「值」的修改與新增, 使用方法為：  
+  
+* `obj[.] <- value`  
+* `obj[[.]] <- value`  
+* `obj$. <- value`  
+
+若`.`所指定的元素不存在，則為「新增」。  
+
+若`.`所指定的元素存在，則為「修改」。  
+```{r}
+a <- c("1","b","TRUE")
+a
+a[[2]] <- "c" # 元素存在: 替換
+a[[4]] <- "7" # 元素不存在： 增加
+a[c(5,6)] <- c("J", "K")
+a
+#增加一個“Johnson”使用[[.]]<-
+a[[7]] <- "Johnson"
+#使用前一章的向量疊代(recursive vector concatenate)法，新增一個“Mary”
+a <- c(a,"Mary")
+a
+library(lubridate)
+list1 <- list(list(name="Jack",
+                   birthday=ymd("1998-03-21"),
+                   status=c(height=177, weight=80)
+                   )
+              )
+str(list1)
+# 更改日期
+list1[[1]]$birthday <- ymd("1997-03-21")
+# 新增資料
+list1[[2]] <- list(name="Mary",
+                   birthday=ymd("1998-08-24")
+                   )
+str(list1)
+#替Mary依Jack的記錄方式增加身高163，體重45
+list1[[2]]$status <- c(height=163, weight=45)
+#將Jack的身高改成176
+list1[[1]]$status[[1]] <- 176 #不要用list1[[1]]$status$hight，這種做法下list1[[1]]$status會變成list格式
+str(list1)
+```
+使用`[.] <- `  
+
+由於`[.]`會保留母層結構，所以`<-`右側要使用和母層相同的型態設定：  
+
+* 母層若為list，則需用`list(...)`方式增加  
+
+* 母層若為atomic vector，則用`c(...)`方式增加  
+```{r}
+list1[[1]][["age"]] <- 21
+list1[[2]]["age"] <- list(21)
+# 改變「一個」時，使用[[ ]]比較不會錯。
+str(list1)
+list1[[1]][c("bloodType","registered")] <- list("AB",TRUE)
+str(list1)
+#由listExample進行以下任務: 
+#108-1新增一個產業經濟學
+str(listExample)
+listExample$`學期`$`108-1`[[2]] <- list(name="產業經濟學")
+#產業經濟學，同時加上教師Wen及成績88
+listExample$`學期`$`108-1`[[2]][c("teacher","grade")] <- list("Wen",88)
+str(listExample)
+```
+### 4.2.2 刪除元素  
+刪除可以使用[- c(數字位置)]  
+
+* 只能「一個」中括號（[[.]]不能接受負數值）  
+* 只能用負數值，不能用元素名稱  
+```{r}
+a[-c(1,3)]
+a[c(-2)]
+print(a)
+a[-c(1,3)] -> a # 要回存才算真的刪除
+#自先前list1範例:刪除Jack的status., blookType.，以及Mary的status
+list1[[1]][-c(3,5)] -> list1[[1]] # 小心回存的位置
+list1[[2]][-3] -> list1[[2]]
+str(list1)
+```
+list元素要刪除時也可以用`[.]<-NULL`, `[[.]]<-NULL`
+```{r}
+list1[[2]][c(1,2)] <- NULL
+str(list1)
+```
+
+
+
+
+
+
+
+
 
 
 

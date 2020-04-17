@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3159475252",
+    "hash" : "2673005766",
     "id" : "14CE7D1",
-    "lastKnownWriteTime" : 1586843584,
+    "lastKnownWriteTime" : 1587108082,
     "last_content_update" : -2147483648,
     "path" : "~/GitHub/108-2-56-inclass-practice/Programming for Data Science.Rmd",
     "project_path" : "Programming for Data Science.Rmd",
     "properties" : {
-        "cursorPosition" : "643,0",
-        "last_setup_crc32" : "F52C018Cbb338d19",
-        "scrollLine" : "624"
+        "cursorPosition" : "178,11",
+        "last_setup_crc32" : "9FCAF5C9bb338d19",
+        "scrollLine" : "161"
     },
     "relative_order" : 1,
     "source_on_save" : false,
