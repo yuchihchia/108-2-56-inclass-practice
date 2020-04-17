@@ -300,9 +300,9 @@ a = 2 # = 與 &lt;-同義
 <ol style="list-style-type: decimal">
 <li>須由字母、數字、點(.)以及底線(_)構成<br />
 </li>
-<li><strong>開頭必須是字母或是點(但點後不能接數字)</strong><br />
-辨別變數命名規則</li>
+<li><strong>開頭必須是字母或是點(但點後不能接數字)</strong></li>
 </ol>
+<p>辨別變數命名規則</p>
 <pre class="r"><code>my_108_total_credits &lt;- 15
 #_108_total_credits &lt;- 15
 #108_total_credits &lt;- 15
@@ -311,11 +311,16 @@ my.108.total_credits &lt;- 15
 #.108.total_credits &lt;- 15 
 .my.108.total_credits &lt;- 15
 我的108學年總學分數 &lt;- 15
-`我的108學年總學分數` &lt;- 15 # 特殊名稱處理，`不是名稱的一部份
+
+#針對特殊名稱(不符變數命名規則)的處理: 在名稱前後加上` (並不是名稱的一部份)`
+`我的108學年總學分數` &lt;- 15 
 `.108.total_credits` &lt;- 15</code></pre>
-<p>常見命名方式：<br />
-1. snake: <code>my_total_credits &lt;- 15</code><br />
-2. <strong>camel</strong>: <code>myTotalCredits &lt;- 15</code> (推薦使用)</p>
+<p>常見命名方式:</p>
+<ol style="list-style-type: decimal">
+<li>snake: <code>my_total_credits &lt;- 15</code><br />
+</li>
+<li><strong>camel</strong>: <code>myTotalCredits &lt;- 15</code> (推薦使用)</li>
+</ol>
 <hr />
 </div>
 <div id="calling-an-object" class="section level2">
@@ -334,8 +339,7 @@ my_age &lt;- `我的年紀`</code></pre>
 <pre class="r"><code>num1 &lt;- 5
 vNum1 &lt;- c(2,5)
 vNum2 &lt;- c(2, num1)</code></pre>
-<p>只有一個值的向量可以不寫<code>c()</code><br />
-以下兩變數值相同:</p>
+<p>只有一個值的向量可以不寫<code>c()</code>，以下兩變數值相同:</p>
 <pre class="r"><code>num1 &lt;- 5
 num2 &lt;- c(5)</code></pre>
 <p>向量的堆疊依然是向量:</p>
@@ -350,21 +354,23 @@ vNum2 &lt;- c(2,3)
 vNum4 &lt;- c() # 空向量</code></pre>
 <pre class="r"><code>vNum3 &lt;- c(vNum2, vNum1)
 vNum4 &lt;- c(vNum4, vNum1) # 向量疊代（recursive vector concatenate）</code></pre>
-<p>Atomic vector依其值的型態（type）而分成以下三類型:<br />
-1. Numeric<br />
-2. Character<br />
-3. Logical</p>
-<div id="numeric" class="section level3">
-<h3>3.4.1 Numeric</h3>
-<pre class="r"><code>num1&lt;-5 # 非整數
-num2&lt;-5L # 整數
+<p>Atomic vector依其值的型態（type）而分成以下三類型:</p>
+<ol style="list-style-type: decimal">
+<li>Numeric(數值，非整數) / Integer(整數)<br />
+</li>
+<li>Character<br />
+</li>
+<li>Logical</li>
+</ol>
+<div id="numeric-integer" class="section level3">
+<h3>3.4.1 Numeric / Integer</h3>
+<pre class="r"><code>num1&lt;-5 # 非整數，5會被電腦記成5.0000
+num2&lt;-5L # 整數，5L才會被電腦記成整數5
 num1Vector&lt;-c(5,6,7)
 num2Vector&lt;-c(5L,6L,7L)</code></pre>
-<p>5會被電腦記成5.0000<br />
-5L才會被當成整數5</p>
 </div>
-<div id="characterstring-vector" class="section level3">
-<h3>3.4.2 Character/String (vector)</h3>
+<div id="character" class="section level3">
+<h3>3.4.2 Character</h3>
 <p>在定義object value時，必須要用「成對」的雙引號<code>&quot;</code>或單引號<code>'</code>，把每個字串括起來</p>
 <pre class="r"><code>char1&lt;-&quot;你好&quot;
 char2&lt;-'你好'
@@ -372,22 +378,25 @@ char1Vector&lt;-c(&quot;你好&quot;,&quot;How are you?&quot;)</code></pre>
 <p>使用<code>class(物件名稱)</code>查詢上述物件類別</p>
 <pre class="r"><code>dialogue &lt;- c('小明說：&quot;明天不用上課。&quot;', '小花說：&quot;真的嗎？&quot;')
 #電腦會記錄成&quot;小明說：\&quot;明天不用上課。\&quot;&quot; &quot;小花說：\&quot;真的嗎？\&quot;&quot;
-cat(dialogue, sep=&quot;\n&quot;)  # &quot;\n&quot;是指換行</code></pre>
+cat(dialogue, sep=&quot;\n&quot;)  #\n&quot;是指換行</code></pre>
 <pre><code>## 小明說：&quot;明天不用上課。&quot;
 ## 小花說：&quot;真的嗎？&quot;</code></pre>
-<p>R的換行原則是：只要指令定義不全，如括號不成對少右半邊（只有<code>(</code>卻沒看到<code>)</code>）或結尾是<code>,</code> 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。</p>
+<p>R的換行原則是: 只要指令定義不全，如括號不成對少右半邊（只有<code>(</code>卻沒看到<code>)</code>）或結尾是<code>,</code> 等等都表示指令不完整，R會再往下一行看，如下一行還是不完整就再往下一行。</p>
 <pre class="r"><code>library(httr)
 library(dplyr)
-library(magrittr)</code></pre>
-<pre class="r"><code>GET(&quot;https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits&quot;) %&gt;%
+library(magrittr)
+GET(&quot;https://api.github.com/repos/tpemartin/108-2-56-inclass-practice/commits&quot;) %&gt;%
   content() %&gt;%
   View()</code></pre>
-<pre><code>## Error in (function (..., row.names = NULL, check.rows = FALSE, check.names = TRUE, : arguments imply differing number of rows: 1, 0</code></pre>
-<p>查詢函數用法:<br />
-1. Script window: 游標放在函數名稱任何一個位置，按F1。<br />
-2. Console window: ?函數名稱 按enter。<br />
-3. 右下角Help tab的放大鏡打函數名稱。</p>
-<pre class="r"><code>#以上對白請把它改成:
+<p>查詢函數用法:</p>
+<ol style="list-style-type: decimal">
+<li>Script window: 游標放在函數名稱任何一個位置，按F1。<br />
+</li>
+<li>Console window: ?函數名稱 按enter。<br />
+</li>
+<li>右下角Help tab的放大鏡打函數名稱。</li>
+</ol>
+<pre class="r"><code>#請把以上對白改成:
 #小明說：'明天不用上課。'
 #小花說：'真的嗎？'
 cat(c(&quot;小明說：'明天不用上課。'&quot;, &quot;小花說：'真的嗎？'&quot;), sep=&quot;\n&quot;)  </code></pre>
@@ -395,8 +404,8 @@ cat(c(&quot;小明說：'明天不用上課。'&quot;, &quot;小花說：'真的
 ## 小花說：'真的嗎？'</code></pre>
 <pre class="r"><code>#以下程式碼中變數出席狀況表單網址缺乏變數值，請貼上本班出席表單網址使該變數值有定義。
 library(googlesheets4)
-library(httpuv)</code></pre>
-<pre class="r"><code>`出席狀況表單網址` &lt;-  &quot;https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645&quot;
+library(httpuv)
+`出席狀況表單網址` &lt;-  &quot;https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645&quot;
 ss &lt;- as_sheets_id(`出席狀況表單網址`)
 homework_sheet &lt;- sheets_read(ss, sheet=1)</code></pre>
 </div>
@@ -404,13 +413,13 @@ homework_sheet &lt;- sheets_read(ss, sheet=1)</code></pre>
 <h3>3.4.3 Logical</h3>
 <p>邏輯：</p>
 <ul>
-<li>為「真」： <code>T</code>或<code>TRUE</code> (要全大寫)。<br />
+<li>為「真」: <code>T</code>或<code>TRUE</code> (要全大寫)。<br />
 </li>
-<li>為「否」： <code>F</code>或<code>FALSE</code> (要全大寫)。</li>
+<li>為「否」: <code>F</code>或<code>FALSE</code> (要全大寫)。</li>
 </ul>
 <pre class="r"><code>logi1 &lt;- c(T,TRUE,F,FALSE,FALSE)</code></pre>
 <p>邏輯值遇到數學運算時T會被當成1，而F會被當成0</p>
-<pre class="r"><code># 加總向量內的所有元素值。
+<pre class="r"><code>#sum(數值向量): 加總向量內所有元素的數值。
 sum(logi1)</code></pre>
 <pre><code>## [1] 2</code></pre>
 </div>
@@ -445,7 +454,7 @@ typeof(num)</code></pre>
 </div>
 <div id="atomic-vector-extended" class="section level2">
 <h2>3.5 Atomic Vector Extended</h2>
-<p>以下介紹兩個數字串向量而延伸的兩個類別：</p>
+<p>以下介紹兩個數字串向量而延伸的兩個類別:</p>
 <ul>
 <li>factor: 類別資料[<code>factor(字串向量)</code>]<br />
 </li>
@@ -453,7 +462,7 @@ typeof(num)</code></pre>
 </ul>
 <div id="factor" class="section level3">
 <h3>3.5.1 Factor</h3>
-<pre class="r"><code># 10位學生的主修科系
+<pre class="r"><code>#10位學生的主修科系
 majors10_char &lt;- c('經濟學系','社會學系','社會學系','經濟學系','經濟學系','社會學系','經濟學系','經濟學系','經濟學系','社會學系')
 typeof(majors10_char)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
@@ -461,14 +470,13 @@ typeof(majors10_char)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <pre class="r"><code>majors10_factor &lt;- factor(majors10_char)
 # 或
-majors10_factor &lt;- factor(
-  c('經濟學系','社會學系','社會學系','經濟學系','經濟學系','社會學系','經濟學系','經濟學系','經濟學系','社會學系')
+majors10_factor &lt;- factor(c('經濟學系','社會學系','社會學系','經濟學系','經濟學系','社會學系','經濟學系','經濟學系','經濟學系','社會學系')
 )
 typeof(majors10_factor)</code></pre>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
 <pre class="r"><code>class(majors10_factor)</code></pre>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<p>majors10_char及majors10_factor的螢幕顯示型態是不同的：</p>
+<p>majors10_char及majors10_factor的螢幕顯示型態是不同的:</p>
 <pre class="r"><code>majors10_char</code></pre>
 <pre><code>##  [1] &quot;經濟學系&quot; &quot;社會學系&quot; &quot;社會學系&quot; &quot;經濟學系&quot; &quot;經濟學系&quot; &quot;社會學系&quot;
 ##  [7] &quot;經濟學系&quot; &quot;經濟學系&quot; &quot;經濟學系&quot; &quot;社會學系&quot;</code></pre>
@@ -486,8 +494,8 @@ typeof(majors10_factor)</code></pre>
 </div>
 <div id="class-conversion" class="section level3">
 <h3>3.5.2 Class conversion</h3>
-<p>R有一系列的<code>as.{class名稱}()</code>的函數用來轉換物件的class；<code>as.{type名稱}()</code>用來轉換物件的type。<br />
-<code>as.integer(...)</code>會將…物件（嘗試）轉成integer class/type的物件。例如：</p>
+<p>R有一系列的<code>as.{class名稱}(物件)</code>的函數用來轉換物件的class；<code>as.{type名稱}(物件)</code>用來轉換物件的type。<br />
+例如: <code>as.integer(物件)</code>會將該物件(嘗試)轉成integer class/type的物件。</p>
 <pre class="r"><code>stringInteger &lt;- c(&quot;1&quot;,&quot;2&quot;,&quot;-11&quot;)
 class(stringInteger) # 無法進行數值運算</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
@@ -518,9 +526,9 @@ studentId &lt;- as.character(studentId)
 class(studentId)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 </div>
-<div id="datetime" class="section level3">
-<h3>3.5.3 Date/Time</h3>
-<p>處理時間所需資訊：</p>
+<div id="date-time" class="section level3">
+<h3>3.5.3 Date / Time</h3>
+<p>處理時間所需資訊:</p>
 <ul>
 <li>時間輸入方式<br />
 </li>
@@ -532,7 +540,7 @@ class(studentId)</code></pre>
 <pre class="r"><code>library(lubridate)</code></pre>
 <div id="台北" class="section level4">
 <h4>3.5.3.1 台北</h4>
-<p>2020-03-18 13:52:40</p>
+<p><strong>2020-03-18 13:52:40</strong></p>
 <ul>
 <li>時間輸入方式: ymd_hms<br />
 </li>
@@ -541,18 +549,18 @@ class(studentId)</code></pre>
 <pre class="r"><code>tpeTime &lt;- ymd_hms(&quot;2020-03-18 13:52:40&quot;, tz=&quot;Asia/Taipei&quot;)</code></pre>
 <p>我們使用lubridate中的ymd_hms函數有以下兩種做法：</p>
 <ol style="list-style-type: decimal">
-<li>作法一：使用library()</li>
+<li>作法一: 使用library()</li>
 </ol>
 <pre class="r"><code>library(lubridate)
 tpeTime &lt;- ymd_hms(&quot;2020-03-18 13:52:40&quot;, tz=&quot;Asia/Taipei&quot;)</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>作法二：不使用library()</li>
+<li>作法二: 不使用library()</li>
 </ol>
 <pre class="r"><code>tpeTime &lt;- lubridate::ymd_hms(&quot;2020-03-18 13:52:40&quot;, tz=&quot;Asia/Taipei&quot;)</code></pre>
 </div>
 <div id="葡萄牙" class="section level4">
 <h4>3.5.3.2 葡萄牙</h4>
-<p>Mar.18, 2020, 05:52:40</p>
+<p><strong>Mar.18, 2020, 05:52:40</strong></p>
 <ul>
 <li>時間輸入方式: mdy_hms<br />
 </li>
@@ -561,22 +569,21 @@ tpeTime &lt;- ymd_hms(&quot;2020-03-18 13:52:40&quot;, tz=&quot;Asia/Taipei&quot
 <pre class="r"><code>pgTime &lt;- mdy_hms(&quot;Mar.18, 2020, 05:52:40&quot;, tz=&quot;Europe/Lisbon&quot;)</code></pre>
 <p>來自相同時區、相同輸入方式的時間文字字串，可以直接套入相同函數轉成Date/Time類別。</p>
 <pre class="r"><code>tpeTime &lt;- c(&quot;2020-03-18 13:52:40&quot;, &quot;2020-03-11 03:12:40&quot;)
-tpeTime &lt;-ymd_hms(tpeTime, # 呼叫tpeTime向量值
-    tz=&quot;Asia/Taipei&quot;)</code></pre>
-<p>相當於</p>
-<pre class="r"><code>tpeTime &lt;- 
-  ymd_hms(c(&quot;2020-03-18 13:52:40&quot;,&quot;2020-03-11 03:12:40&quot;), tz=&quot;Asia/Taipei&quot;)</code></pre>
+tpeTime &lt;-ymd_hms(tpeTime, tz=&quot;Asia/Taipei&quot;)
+#相當於
+tpeTime &lt;- ymd_hms(c(&quot;2020-03-18 13:52:40&quot;,&quot;2020-03-11 03:12:40&quot;), 
+                   tz=&quot;Asia/Taipei&quot;)</code></pre>
 <p>若時間字串來自UTC，那可以不設定tz參數，即</p>
 <pre class="r"><code>ymd_hms(c(&quot;2020-03-18 13:52:40&quot;,&quot;2020-03-11 03:12:40&quot;))</code></pre>
 <pre><code>## [1] &quot;2020-03-18 13:52:40 UTC&quot; &quot;2020-03-11 03:12:40 UTC&quot;</code></pre>
-<p>若時間字串長得像“2020-03-11T06:56:17Z”，它來自UTC時區：</p>
+<p>若時間字串長得像“2020-03-11T06:56:17Z”，它來自UTC時區:</p>
 <pre class="r"><code>ymd_hms(&quot;2020-03-11T06:56:17Z&quot;)</code></pre>
 <pre><code>## [1] &quot;2020-03-11 06:56:17 UTC&quot;</code></pre>
 <pre class="r"><code>browseURL(&quot;https://docs.google.com/spreadsheets/d/1EAG49qDKPWWi0ebkVr29TLrvVnoBPfkvxYY-J3xLAHY/edit#gid=458686645&quot;)</code></pre>
-<pre class="r"><code>studentTime &lt;- c( ymd_hms(&quot;2020-03-04T06:56:29Z&quot;),
-               ymd_hms(&quot;2020-03-11 14:16:43&quot;, tz=&quot;Asia/Taipei&quot;),
-               ymd_hms(&quot;2020-03-11 14:34:33&quot;, tz=&quot;Asia/Taipei&quot;)
-               )
+<pre class="r"><code>studentTime &lt;- c(ymd_hms(&quot;2020-03-04T06:56:29Z&quot;),
+                 ymd_hms(&quot;2020-03-11 14:16:43&quot;, tz=&quot;Asia/Taipei&quot;),
+                 ymd_hms(&quot;2020-03-11 14:34:33&quot;, tz=&quot;Asia/Taipei&quot;)
+                 )
 studentTime</code></pre>
 <pre><code>## [1] &quot;2020-03-04 06:56:29 UTC&quot; &quot;2020-03-11 06:16:43 UTC&quot;
 ## [3] &quot;2020-03-11 06:34:33 UTC&quot;</code></pre>
@@ -616,258 +623,164 @@ ymd_hms(&quot;2020-03-11 12:55:30&quot;, tz=&quot;Asia/Taipei&quot;)-ymd_hms(&qu
 </div>
 <div id="list" class="section level2">
 <h2>3.6 List</h2>
-<p>特色：</p>
+<p>特色:</p>
 <ol style="list-style-type: decimal">
 <li>每個元素值可以是不同type的物件值。</li>
 </ol>
 <pre class="r"><code>`小明交易1` &lt;- list(`時間`=ymd_hms(&quot;2020-03-31T13:40:55Z&quot;),
-                `飲料店`=&quot;一芳&quot;,
-                `數量`=2,
-                `飲料`=&quot;水果茶&quot;)
-print(`小明交易1`)</code></pre>
-<pre><code>## $時間
-## [1] &quot;2020-03-31 13:40:55 UTC&quot;
-## 
-## $飲料店
-## [1] &quot;一芳&quot;
-## 
-## $數量
-## [1] 2
-## 
-## $飲料
-## [1] &quot;水果茶&quot;</code></pre>
+                    `飲料店`=&quot;一芳&quot;,
+                    `數量`=2,
+                    `飲料`=&quot;水果茶&quot;)
+str(`小明交易1`)</code></pre>
+<pre><code>## List of 4
+##  $ 時間  : POSIXct[1:1], format: &quot;2020-03-31 13:40:55&quot;
+##  $ 飲料店: chr &quot;一芳&quot;
+##  $ 數量  : num 2
+##  $ 飲料  : chr &quot;水果茶&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>物件值可以是vector形式，也可以list。</li>
 </ol>
 <pre class="r"><code># list含兩個vectors
-`小明108學年課表A` &lt;- list(
-  c(&quot;108-1&quot;,&quot;高級會計學&quot;,&quot;高等統計學&quot;),
-  c(&quot;108-2&quot;,&quot;食在拉丁美洲&quot;)
-)
-print(`小明108學年課表A`)</code></pre>
-<pre><code>## [[1]]
-## [1] &quot;108-1&quot;      &quot;高級會計學&quot; &quot;高等統計學&quot;
-## 
-## [[2]]
-## [1] &quot;108-2&quot;        &quot;食在拉丁美洲&quot;</code></pre>
+`小明108學年課表A` &lt;- list(c(&quot;108-1&quot;,&quot;高級會計學&quot;,&quot;高等統計學&quot;),
+                           c(&quot;108-2&quot;,&quot;食在拉丁美洲&quot;)
+                          )
+str(`小明108學年課表A`)</code></pre>
+<pre><code>## List of 2
+##  $ : chr [1:3] &quot;108-1&quot; &quot;高級會計學&quot; &quot;高等統計學&quot;
+##  $ : chr [1:2] &quot;108-2&quot; &quot;食在拉丁美洲&quot;</code></pre>
 <pre class="r"><code># list含兩個lists
-`小明108學年課表B` &lt;- list(
-  list(&quot;108-1&quot;,&quot;高級會計學&quot;,&quot;高等統計學&quot;),
-  list(&quot;108-2&quot;,&quot;食在拉丁美洲&quot;)
-)
-print(`小明108學年課表B`)</code></pre>
-<pre><code>## [[1]]
-## [[1]][[1]]
-## [1] &quot;108-1&quot;
-## 
-## [[1]][[2]]
-## [1] &quot;高級會計學&quot;
-## 
-## [[1]][[3]]
-## [1] &quot;高等統計學&quot;
-## 
-## 
-## [[2]]
-## [[2]][[1]]
-## [1] &quot;108-2&quot;
-## 
-## [[2]][[2]]
-## [1] &quot;食在拉丁美洲&quot;</code></pre>
+`小明108學年課表B` &lt;- list(list(&quot;108-1&quot;,&quot;高級會計學&quot;,&quot;高等統計學&quot;),
+                           list(&quot;108-2&quot;,&quot;食在拉丁美洲&quot;)
+                          )
+str(`小明108學年課表B`)</code></pre>
+<pre><code>## List of 2
+##  $ :List of 3
+##   ..$ : chr &quot;108-1&quot;
+##   ..$ : chr &quot;高級會計學&quot;
+##   ..$ : chr &quot;高等統計學&quot;
+##  $ :List of 2
+##   ..$ : chr &quot;108-2&quot;
+##   ..$ : chr &quot;食在拉丁美洲&quot;</code></pre>
 <pre class="r"><code># list含兩個lists, 子層list又各含兩個vectors
-`小明108學年課表C` &lt;- list(
-  list(
-    c(&quot;108-1&quot;), # 可只寫 &quot;108-1&quot;
-    c(&quot;高級會計學&quot;,&quot;高等統計學&quot;)
-       ),
-  list(
-    c(&quot;108-2&quot;),
-    c(&quot;食在拉丁美洲&quot;)
-  )
-)
-print(`小明108學年課表C`)</code></pre>
-<pre><code>## [[1]]
-## [[1]][[1]]
-## [1] &quot;108-1&quot;
-## 
-## [[1]][[2]]
-## [1] &quot;高級會計學&quot; &quot;高等統計學&quot;
-## 
-## 
-## [[2]]
-## [[2]][[1]]
-## [1] &quot;108-2&quot;
-## 
-## [[2]][[2]]
-## [1] &quot;食在拉丁美洲&quot;</code></pre>
+`小明108學年課表C` &lt;- list(list(c(&quot;108-1&quot;), # 可只寫 &quot;108-1&quot;
+                                c(&quot;高級會計學&quot;,&quot;高等統計學&quot;)
+                               ),
+                           list(c(&quot;108-2&quot;),
+                                c(&quot;食在拉丁美洲&quot;)
+                               )
+                           )
+str(`小明108學年課表C`)</code></pre>
+<pre><code>## List of 2
+##  $ :List of 2
+##   ..$ : chr &quot;108-1&quot;
+##   ..$ : chr [1:2] &quot;高級會計學&quot; &quot;高等統計學&quot;
+##  $ :List of 2
+##   ..$ : chr &quot;108-2&quot;
+##   ..$ : chr &quot;食在拉丁美洲&quot;</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>物件值可以取名。</li>
 </ol>
-<pre class="r"><code>`小明108學年課表D` &lt;- list(
-  `108學年第1學期`=list(
-    c(&quot;108-1&quot;), # 可只寫 &quot;108-1&quot;
-    c(&quot;高級會計學&quot;,&quot;高等統計學&quot;)
-       ),
-  `108學年第2學期`=list(
-    c(&quot;108-2&quot;),
-    c(&quot;食在拉丁美洲&quot;)
-  )
-)
-print(`小明108學年課表D`)</code></pre>
-<pre><code>## $`108學年第1學期`
-## $`108學年第1學期`[[1]]
-## [1] &quot;108-1&quot;
-## 
-## $`108學年第1學期`[[2]]
-## [1] &quot;高級會計學&quot; &quot;高等統計學&quot;
-## 
-## 
-## $`108學年第2學期`
-## $`108學年第2學期`[[1]]
-## [1] &quot;108-2&quot;
-## 
-## $`108學年第2學期`[[2]]
-## [1] &quot;食在拉丁美洲&quot;</code></pre>
-<pre class="r"><code>commit &lt;- list(
-  author=list(
-    name=&quot;Martin老師&quot;,
-    email=&quot;mtlin@gm.ntpu.edu.tw&quot;,
-    date=ymd_hms(&quot;2020-03-25T07:17:40Z&quot;)
-  ),
-  comitter=list(
-    name=&quot;emilyluckey&quot;,
-    email=&quot;emily007@gmail.com&quot;,
-    date=ymd_hms(&quot;2020-03-26T08:18:40Z&quot;)
-  ),
-  message=&quot;update&quot;
-)
-print(commit)</code></pre>
-<pre><code>## $author
-## $author$name
-## [1] &quot;Martin老師&quot;
-## 
-## $author$email
-## [1] &quot;mtlin@gm.ntpu.edu.tw&quot;
-## 
-## $author$date
-## [1] &quot;2020-03-25 07:17:40 UTC&quot;
-## 
-## 
-## $comitter
-## $comitter$name
-## [1] &quot;emilyluckey&quot;
-## 
-## $comitter$email
-## [1] &quot;emily007@gmail.com&quot;
-## 
-## $comitter$date
-## [1] &quot;2020-03-26 08:18:40 UTC&quot;
-## 
-## 
-## $message
-## [1] &quot;update&quot;</code></pre>
-<p>網路上的資料回傳大部份時候長得像list的格式。這種回傳資訊格式叫做<strong>JSON</strong>(JavaScript Object Notation)，每個程式語法都會準備一個物件形式用來儲存接收到的JSON資料；R會用list type，Python會用dictionary type。</p>
+<pre class="r"><code>`小明108學年課表D` &lt;- list(`108學年第1學期`=list(c(&quot;108-1&quot;),
+                                                 c(&quot;高級會計學&quot;,&quot;高等統計學&quot;)
+                                                ),
+                           `108學年第2學期`=list(c(&quot;108-2&quot;),
+                                                 c(&quot;食在拉丁美洲&quot;)
+                                                )
+                          )
+str(`小明108學年課表D`)</code></pre>
+<pre><code>## List of 2
+##  $ 108學年第1學期:List of 2
+##   ..$ : chr &quot;108-1&quot;
+##   ..$ : chr [1:2] &quot;高級會計學&quot; &quot;高等統計學&quot;
+##  $ 108學年第2學期:List of 2
+##   ..$ : chr &quot;108-2&quot;
+##   ..$ : chr &quot;食在拉丁美洲&quot;</code></pre>
+<pre class="r"><code>commit &lt;- list(author=list(name=&quot;Martin老師&quot;,
+                           email=&quot;mtlin@gm.ntpu.edu.tw&quot;,
+                           date=ymd_hms(&quot;2020-03-25T07:17:40Z&quot;)
+                           ),
+               comitter=list(name=&quot;emilyluckey&quot;,
+                             email=&quot;emily007@gmail.com&quot;,
+                             date=ymd_hms(&quot;2020-03-26T08:18:40Z&quot;)
+                             ),
+               message=&quot;update&quot;
+               )
+str(commit)</code></pre>
+<pre><code>## List of 3
+##  $ author  :List of 3
+##   ..$ name : chr &quot;Martin老師&quot;
+##   ..$ email: chr &quot;mtlin@gm.ntpu.edu.tw&quot;
+##   ..$ date : POSIXct[1:1], format: &quot;2020-03-25 07:17:40&quot;
+##  $ comitter:List of 3
+##   ..$ name : chr &quot;emilyluckey&quot;
+##   ..$ email: chr &quot;emily007@gmail.com&quot;
+##   ..$ date : POSIXct[1:1], format: &quot;2020-03-26 08:18:40&quot;
+##  $ message : chr &quot;update&quot;</code></pre>
+<p>網路上的資料回傳大部份時候長得像list的格式。</p>
+<p>這種回傳資訊格式叫做<strong>JSON</strong>(JavaScript Object Notation)，每個程式語法都會準備一個物件形式用來儲存接收到的JSON資料；R會用list type，Python會用dictionary type。</p>
 <p>也因為每個程式都可接收JSON形式資料，不同程式開發者若有必要進行網路資訊交換時會將複雜資料結構轉成JSON再交換出去。</p>
-<p>我們的程式要在網路送出commit資訊時，可以透過以下程序將list轉成JSON：</p>
-<pre class="r"><code>library(jsonlite) # 不少同學這行會有Error，還記得如何排除嗎？
+<p>我們的程式要在網路送出commit資訊時，可以透過以下程序將list轉成JSON:</p>
+<pre class="r"><code>library(jsonlite)
 toJSON(commit)</code></pre>
 <pre><code>## {&quot;author&quot;:{&quot;name&quot;:[&quot;Martin老師&quot;],&quot;email&quot;:[&quot;mtlin@gm.ntpu.edu.tw&quot;],&quot;date&quot;:[&quot;2020-03-25 07:17:40&quot;]},&quot;comitter&quot;:{&quot;name&quot;:[&quot;emilyluckey&quot;],&quot;email&quot;:[&quot;emily007@gmail.com&quot;],&quot;date&quot;:[&quot;2020-03-26 08:18:40&quot;]},&quot;message&quot;:[&quot;update&quot;]}</code></pre>
-<pre class="r"><code>#學生小明，在108學年第1學期修了Alice老師所授的個體經濟學（得分85分）、Mark老師所授的總體經濟學(得分73分)。在108學年第2學期修了Jason老師所授的作業研究（得分90分）。
-`小明的修課記錄` &lt;- list(
-  name=&quot;小明&quot;,
-  semesters=list(
-    `108-1`=list(
-      course1_1081=list(
-        name=&quot;個體經濟學&quot;,
-        teacher=&quot;Alice&quot;,
-        grade=85
-      ),
-      course2_1081=list(
-        name=&quot;總體經濟學&quot;,
-        teacher=&quot;Mark&quot;,
-        grade=78
-      )
-    ),
-    `108-2`=list(
-      course1_1082=list(
-        name=&quot;作業研究&quot;,
-        teacher=&quot;Jason&quot;,
-        grade=90
-      )
-    )
-  )
-)
-print(`小明的修課記錄`)</code></pre>
-<pre><code>## $name
-## [1] &quot;小明&quot;
-## 
-## $semesters
-## $semesters$`108-1`
-## $semesters$`108-1`$course1_1081
-## $semesters$`108-1`$course1_1081$name
-## [1] &quot;個體經濟學&quot;
-## 
-## $semesters$`108-1`$course1_1081$teacher
-## [1] &quot;Alice&quot;
-## 
-## $semesters$`108-1`$course1_1081$grade
-## [1] 85
-## 
-## 
-## $semesters$`108-1`$course2_1081
-## $semesters$`108-1`$course2_1081$name
-## [1] &quot;總體經濟學&quot;
-## 
-## $semesters$`108-1`$course2_1081$teacher
-## [1] &quot;Mark&quot;
-## 
-## $semesters$`108-1`$course2_1081$grade
-## [1] 78
-## 
-## 
-## 
-## $semesters$`108-2`
-## $semesters$`108-2`$course1_1082
-## $semesters$`108-2`$course1_1082$name
-## [1] &quot;作業研究&quot;
-## 
-## $semesters$`108-2`$course1_1082$teacher
-## [1] &quot;Jason&quot;
-## 
-## $semesters$`108-2`$course1_1082$grade
-## [1] 90</code></pre>
-<pre class="r"><code>#今（“2020-03-31”）明（“2020-04-01”）「台北市」氣溫最高25度，最低18度；「新北市」氣溫最高24度，最低15度。
-temperature &lt;- list(
-  date=list(today=ymd(&quot;2020-03-31&quot;),tomorrow=ymd(&quot;2020-04-01&quot;)
-  ),
-  location=list(
-    taipei=list(high=25,low=18),
-    newtaipei=list(high=24,low=15)
-  )
-)
-print(temperature)</code></pre>
-<pre><code>## $date
-## $date$today
-## [1] &quot;2020-03-31&quot;
-## 
-## $date$tomorrow
-## [1] &quot;2020-04-01&quot;
-## 
-## 
-## $location
-## $location$taipei
-## $location$taipei$high
-## [1] 25
-## 
-## $location$taipei$low
-## [1] 18
-## 
-## 
-## $location$newtaipei
-## $location$newtaipei$high
-## [1] 24
-## 
-## $location$newtaipei$low
-## [1] 15</code></pre>
+<pre class="r"><code>#學生小明，在108學年第1學期修了Alice老師所授的個體經濟學(得分85分)、Mark老師所授的總體經濟學(得分73分)。在108學年第2學期修了Jason老師所授的作業研究(得分90分)。
+`小明的修課記錄` &lt;- list(name=&quot;小明&quot;,
+                         semesters=list(`108-1`=list(
+                           course1_1081=list(name=&quot;個體經濟學&quot;,
+                                             teacher=&quot;Alice&quot;,
+                                             grade=85
+                                             ),
+                           course2_1081=list(name=&quot;總體經濟學&quot;,
+                                             teacher=&quot;Mark&quot;,
+                                             grade=78
+                                             )
+                                       ),
+                                        `108-2`=list(
+                           course1_1082=list(name=&quot;作業研究&quot;,
+                                             teacher=&quot;Jason&quot;,
+                                             grade=90
+                                             )
+                                                    )
+                                       )
+                        )
+str(`小明的修課記錄`)</code></pre>
+<pre><code>## List of 2
+##  $ name     : chr &quot;小明&quot;
+##  $ semesters:List of 2
+##   ..$ 108-1:List of 2
+##   .. ..$ course1_1081:List of 3
+##   .. .. ..$ name   : chr &quot;個體經濟學&quot;
+##   .. .. ..$ teacher: chr &quot;Alice&quot;
+##   .. .. ..$ grade  : num 85
+##   .. ..$ course2_1081:List of 3
+##   .. .. ..$ name   : chr &quot;總體經濟學&quot;
+##   .. .. ..$ teacher: chr &quot;Mark&quot;
+##   .. .. ..$ grade  : num 78
+##   ..$ 108-2:List of 1
+##   .. ..$ course1_1082:List of 3
+##   .. .. ..$ name   : chr &quot;作業研究&quot;
+##   .. .. ..$ teacher: chr &quot;Jason&quot;
+##   .. .. ..$ grade  : num 90</code></pre>
+<pre class="r"><code>#今(&quot;2020-03-31&quot;)明(&quot;2020-04-01&quot;)兩天「台北市」氣溫最高25度，最低18度；「新北市」氣溫最高24度，最低15度。
+temperature &lt;- list(date=list(today=ymd(&quot;2020-03-31&quot;),
+                              tomorrow=ymd(&quot;2020-04-01&quot;)
+                              ),
+                    location=list(taipei=list(high=25,low=18),
+                                  newtaipei=list(high=24,low=15)
+                                  )
+                    )
+str(temperature)</code></pre>
+<pre><code>## List of 2
+##  $ date    :List of 2
+##   ..$ today   : Date[1:1], format: &quot;2020-03-31&quot;
+##   ..$ tomorrow: Date[1:1], format: &quot;2020-04-01&quot;
+##  $ location:List of 2
+##   ..$ taipei   :List of 2
+##   .. ..$ high: num 25
+##   .. ..$ low : num 18
+##   ..$ newtaipei:List of 2
+##   .. ..$ high: num 24
+##   .. ..$ low : num 15</code></pre>
 <p>game的定義： A game involves three components:</p>
 <ol style="list-style-type: decimal">
 <li>A list of players<br />
@@ -877,26 +790,45 @@ print(temperature)</code></pre>
 <li>A listing of payoffs, or benefits, for each player on each eventual outcome (a utility function for outcomes)<br />
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/QAAAG/CAMAAAG2/FxAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAGAUExURQAAAAhSlAlTlApUlv///wtSlv///wxTlP///////////////wtUlv///////////wxSlv///wpUlP///wtTlf///////////wpTlQtTlf///////wtTlf///wtTlf///////////wtTlQtTlf///wtTlRVbmhdcmiFjnyVloCtrpTFupjh1q0B4rEJ9r0yBsU2FtVmKt1mOu2SWv2eUvW+dxXOdwnqmy4ClyIavz42vzpK41pu405/D3anC2q7N47nO4cHc7cra6Nvv+dzv+dzw+d3w+d7w+d7w+t7x+t/x+uDx+uHq8uHx+uHy+uLy+uPy+uPz+uTz+uTz++Xz++X0++b0++f0++f1++j1++n1++r1++r2++r2/Ov2/Oz2/Oz3/O33/O73/O74/O/4/PD4/PD4/fD5/fH5/fL5/fP5/fP6/fT6/fX6/fX7/fb7/fb7/vf7/ff7/vf8/vj8/vn8/vn9/vr9/vv9/vz9/vz+/vz+//3+//7+//7//////weinbEAAAAldFJOUwAfN0lKWmJpaWpvcXd3gISFh5Ken6Slp627xcfI0tfa4OPk8vLtuxwfAAAACXBIWXMAABcRAAAXEQHKJvM/AABStElEQVR4Xu29i2Mcx7XeCZDh0ptwdxmaicVcLHeXdAMgCIIkQBAEIRAcjiw7EiPZsixHyrUs2bKvFEmWI1uRYut6/vU9j6+qq/o13TM1mAb6/EhMn6qu96lTVf1eMYyALMv4Vx0h3itbyS5BbITC3YDIrNFfRbJFKJaUgYvBm9vZypqU6LZ46b5LK6vZlZVL2UUJi9C6i/5LCrKDcr2qvlfo9xJLqxyyAQnO/27Sj09uhWuSXeYf/ncJvtfgpg1EEtRH/1GtZUPpqERCM7yfA96SoFR7/nd1RVvc5cf5X6MUff7XOIATsuvw9fnzvzWV2+bP/69e9SLnf51VyNpg/ZNfkD+VlsSrKyKQKE7+0fyvXOBfkq+ye1Eg5alVNIz+8H9OvmpJ64BdQq78YDx+ZzJuQ7tQTIeQnL8IumliofkT1bG2swzSovMnKiJuY3sq+ROTtyCA7fEBiiCp0vwojgJZXkwizz/LNukHjgrK+ROTjyAw1P4PVNL8x+vj8VbG5ZBk+Zf+KH/63SOBPYP82SPLDlgQxFN+hTx/ZAK+/iuEAOSPDOWH/u+qU/LfPuK95fxpH2dNZWdx7CpE+PwlYMSHeSqK5k/xJcFDTmhzvMPOw/r8XXCJIdtNbj5Hnj8HLPJmVIRieTjhasohc+I4lfqPyNNqSjWmQ8ip+RNIbmn5E5zigvL/sCWTCYTpdAjZsv7MZBFY/kh9OoiRlp7kj9GvOKC5WU38ESMg081DbBvIJvfltwTyP6Ec3P+8LDSqn+yO1/fq8ndMz1+DPJ48E0eA5o/Rn363NX8UYXt8NB7vJcg/kzD19Q8ZYVsEMdLSk/7XBsRIi+X/RlsQIy3W/kh9OoiRlj7lz6OsDryVIEZO9kQ2L9sO/5PJRilolD8P/NkWlYHmA54SDtQPIMZs1JUxyJ8OYbj+mrWbiag4DsQokFHK2g71ZJOnsrlXLkaQP+V+Ms5O+FBq/VgyfyC/DsTIQcPXVS3gVWzvYpvT2P/yujOIMSMvsS3QmH8MYqTF8kfq00GMtOAspGHQsCsbcUR4L7m4NZ0suxUGu+Z/mqAYXAL6l61c52tYfAlOXFdvZ7c5wDW9tsb/OSRfiVpZJUEik3CFt9jNid0mH+ecWnIOhCJwKpoSX2hjP/7R2l9AI+i/a1RS2neBRBJop4Z0v9kKX6Fk5zX+aUKj5JcW6d/ailyDXOHLefT/guR70aXM/1ApuVZI//jnFdmBQPLDTsqePevRKPT/lmRA/ympyyzpvpXbmtkVTV//XdNLsySJwBuNqb8irXIDoZwLZeEZGEYK2l+cWwQrvJB4QxcUS4CzJya/0e1pg+yJb76CEJPR6n9x5NkTH1ecpefjnsURZU+8XSxBIXt37BNfGpMDpQr2gkOlYgyhmD0TlYDmXkiAnFl2xAeBfCDGO/mHS0muQuC9MZ+rPOBdRxJHrrUFYVz2hXj110pGnJceDbsD4WzEAicbJ8LZH66LwPuoIHkc4LKnY8oC1SWQsnNinBf/2x4/oKNS7xVDjc8XWnUfXwXUf1okBtlTqocqhUx+DqGGUpFbEMep0n3I5PcQFsO07Ikvv4WwAFpkT3xQ3xXnYwUX26bycfsLdx1oV3sBB6VJsexbghhJ6UX2PJAzxWEMbhqtCcTIcVf1Wpzem7yQ3/LJRUk5G9PQfCzZ0ejMN2zwdUUapN1ozSBGQJt8AQd9NnmsjhxkT5lw5pzXeFdE+pPs2TdB9kpN7SM46yoQI6JzAQr0ouu1AjGSMvDsccmuBYiRFNN9SxAjKT3Knoc7Oi4h6GCgDGLkYMjLSndplLjjguomJ8iejwjGuxj4eUN/wa1/peyzyT0ntKYYNMyeq0+1l+xlQ8c+jdlzYvR3R921uMt42eSRuAMi3VNenLdkvynF0ZIoiOHxNSlWqcyGbkq5N3Y9twgBiBEyPWNPdQdpyr4AYiTFsm8JYiQFJxcNwzAAX/W7MOXSX5FSaH62cWXlUqoLbFyc+iJl8pBhGjSnjP5uXGAHcl7NXll5ha/VZhfVCxuUiTavqHhT9si1U649bXiHuPSpVI4izksq6lOaJPJVafjIRh9eDf+ItYwv3L7CzituD19AzVapbNdWrmVXEXA2XGTZ8s8atYUWi394KxvxdWVnPwmhUbgctKXaU5WJNS2hPPcpAeSPw2SX5fFY2cG+zieT7idadY3BIXDFWP+otW66UBqSMujabQu42LKln1tSfhaxcX/qRO3h9GKge4I2dbXnoD7Wqve5LqldYdftPAoR1P6GBJaovvYsUjJnDa2b5yrfLWEYhmEY8/GD8fi/TRJfI13EJdeFpJnfJ/yzyeSXEOflDNYe/GPyB0izc3Zrr3w++Q7SNLYzuTMm4qzXXnm/xYCwzetrPhcecD5qr7w2mbwHsQLWvZx8D8hLWtxZCFhCUgvInRW136O9h9kxi2G0aXnklGpPioRU5O+TzyBFsO7XpQQ5Qe0ZlcbjzWMu2ck61zFbZ5k85W5ArgdfyJA9e+NN+s3G++SpcZnK2nPeIlLv4xvTXNQjijfa5GTzfCoeei3Wnm9og1jNp5PvITUQ696lKG+TkP+sYWTk7+jjq0Zae3HyY8Hi46jRPSfHv4ccFlG19rThAPDdd/mEFGuf66qR9yaT1yFWEese93ruZPvs8WC8JY+gaaG2teOORzJ0aLsccEDUfsePKHW61xvtsvHWDm0kKuXBUcfbfFehz6fihrxi7eWNIW2qr0wm70OKqShpkfX4mbPptEizisZ82ox60/h28gUkx4wlbWQhaSaovfJJMDsOr/bKLyZ8u/tQa6/gGmH/sdonB2n3H6t9cpB2/4lqn/E71XKaVj20muJ1WUj+yAPSbqZw002He3DqobUfpMnDLCs/818krD0t8rRCvIIc8TqSlubqKbdyYREogtb+gMQRrRDZx+0mkHYTT+PqFpyz45O5N5nc11ujGwhqz1XRGnDFpTFOxIdqSs4t7ORqbqL2vJt+9/h4QtbWCtKug+LwrzpKzhm5B7UjnZdU+8dT7+QLap+d8A/Xgeu0o1Uj2M2HUAQfkhyJn9aelf4AtdeoAtJuplDleWvPPMom2QuklD1+Oj3JNqMe17YTSHs68lKQ1HRoxza17wzS7j9W++Qg7f6z8oPX0oO0+4/1/OQg7f5jtU8O0u4/VvsytOTXE+m0iPW0X/Eh7XpoORauyArOGXl6P0rm4ZPpqVbXnlftKoiUrVN7qEwr/W3xyuS4Ty5PlUDa9XCpwpI9y9KseZ/H1Z260q+sPR/HqKb5JX9yECe+LPPFLt5ketmaL0+VQNr1UKmeBQ/FciHx6M483I3T2Jj2uFJ17VFx/s2OdvhiyLGc9ljXS1A763I4KAd8enmqCNJuQB5gzjVzL0Hd+UiZjnKfuVTV2cyso17xxE4E0u4/s9a+EaTdf6z2yUHa/Wdl5d+n55+wTclC0sQ9i4ZhGIZhDBV58pKf8RMKT8lVU37cVp4R1E0SuEB5oYo4/wTZyUuCO6ZzE1sP4icojiDNi2c2y6TKhZHaX6Mfbm1u1tvU6PI6a218pwT1FU/+Rq0IwiqL7MOeboc8MXuNxFXK4Cq/6lpff60bgqWM3+UsPpJWdnXlIrluiac+DMy+LLEPcqKyqjvzDzFLuNng2l/2ifBWn652XvR3IbuhIhfzhjwx6vYGom5u6yajquDp7YqHqCWW7ITPTdrwHzXwRQoa6p7D01/wBLf6+Kd1r+Gx5plQu2ctyPeDOT39iDBlfpWdtKVs5KlibWuGArnuzw/QSjl8gHzDf8FjxCuiXI3FG46qPtq+6qlPMxdqr87reNzZh+Qf/p0V6fmMPF2N9GjDTnmmmrbkZk/ZSFg0mkgaRbZxOPwFtXePkCMGpe0fKqco/EC27qmpPSXMT6s7H/dzVcLNRqn213mTt7CvPQWVtxMIl8Q6RUSvCHR/M3+Anv6C2jtfjkUb6vbO54K8iZ+HH3bW1Z67YfBwPv9Q27E4K6Xaq/IkWTJBV3txiiS4h/QJkXiX7JWRiT8JoGHpL6i9e4A+j+V9/C9v63XPPZ87C0LLn8gzUqo9GRc/2U81JP2qN6e/qs/7+5xu8VghXMkuSA2xVxJkCX9B7TmoZCEuaqTch0dL4jI3eK3d31oTcc1/X12211DeM4QUP6DoPt/EtaWx/Oy9PcIwDMMwDMMwlstk8i0+m5SORXz+KX0pv/qGas83G3yC2w4SsYhnZhfwLan3pfbEt5MvZZuGs1Z74otJsu/inMHaE79P9Mqps1l74oMUDXBma0/8fDJ5E2IL5HQiZMdZrj3x+mTyK4jTkPtZC9U/47VnJpMPITXCFZfv+wScg9oT308+hVTPOez5OX+dfA2phsaeL00TPdXeBH+BHqIj/6BiRe0ldZEa75muZXrtic8mf4dUheRbX3u8D8oxrZSF/cE3OatqL19bZCmq/bQ8PK1qT3xUPw+KAgoZRrVHaSQU/uTRDvm+JD/CTejT7ap7EtcRfDv4JGlN7flVZFx7TYCjspQdZaN1EXw+Fe9cKtX+hINX8uvJ5DWIEZRwoCElqL3byz1A3qImv/yNSvpPmY3k2zjk4hewce1PZI/835ume0Yk1n22E0SlP86HUmA3OyueoijVnpILnkMq8NZk8jbEZiLd77vnWuTjofr8PtX+8IG+3ADh5BEYrj2J/O1QLjU5O/R8iZhHlcSp9pwP75MYMeXaI7laJpP/CqmBqPY+RX2HnPw/Gm/K51HznfL6Oa49TJhDtak9B3S1D6JqN6ONy4efJipSrD0/aVQRLGYy+RhSHUHtGc7+QXZ8yImPxtnBllMa/elSgauO2lOR9bV44sxfDFfX8yX+drYlRdeolId0+x3ZsA+/RUSiRBRrL8kVXpJZxXeTzyFVEtV+k19o4d6gt5uNjzMZXKTYB0658nST1n68qa/aE8XnDz3V1F7jb2f8UVxE5SflqNon5OfyOXL5RFTWXtKZyleTbyCVidKsZHTMo0AXKmrfgsZ8CrVHNxS5BX+Y/ANSgem1V5vtwmy1b8ynNOp15TeVC4H50qxmxto3MXftiV9OJj+D6BhQ7Yk3JpN3IArDqj0zmXwAaYi1J/yZ8UHWnvhm8if6PUO1x9fIk/HN5PtFfC79c2wT8llq3St4zrP3WO3Tg8R7j9U+PUi891jt04PEe4/VPj1IvPdY7T3RB9fH+jWTOjI5VR4ykhPXAhJvZCN+2W3BORtZlj2EiLf0NhPVPtuMToJNO8NV2M9nEgESbyKLq1twzsgGJQSRt1OrH9deT4CSwKc28aeefD6aZeyUc8bszX76emH689VH4o0UXnQ8/b3H7Zi59pv6gR69NkD4X/mvVWcPeama1F6/58OvkGZnt56/kNpnmXthV+faswrdBRY++c6VIuj3QH5xxREv2eba8+5sr2vtKQ79+uoWnLOiycyue65KrmH+j8uC2/Ad+Z1Uca69XiDpje5ffZS/qK5r7aWKfLUJhix1JKijswsXidkhrxjn2ovsa59XH4k3wtUNipei9pPs+RNKUlPNplc+HvVqaXNxKwSJL4nptXa0qb3/kFdrkPhU2pezC37Kn0o73XcFifceq316kHjvsdqnB4n3Hqt9epB476Ha43sHKUHivYdq/0Z6kHjvMbtPDxLvPVb79CDx3mO1Tw8S7z1W+/Qg8d5jta9gHSez+ITlDCDxetxnHEHW4qpTC/Kz+UKWTftsSE3tM36cg4hq374lkHg9VKygvneeJznFR0k8Cc7pkfP+lO/Q1NV+rJc1cG5bHpmSv+1sVz6Ayveyq19VmyDxWriqheomqD0TJ/PiHoQaqmsv9WJBTtWTg35P9Pz9eEzN4rzwoFUJJF5LqfZpen6pDaelWlP7g7E+6aG152tX2aarPf1w7bUB5EGrEki8lrD2WSafDZqz+lQQ/n2pLudURz2VtT/m+mU7JGntYf2ofXbMG/cwGT9oVQKJ18KDU1A07p9z1l4opDE9ycraS73kh+z+JDsaZ1vyPBUJvNnCRU3/oFUJJF5PNnkeDM+PN4ofuJqJzpWvqT2PeHLJ8igbyTeC5Zo2PhRGu3dpI6I+aFUCiTeQPaFK+zHpBTvnRnpsXml1NlJt922ofMYLIPEpvHBWmpQunWjm2jc+V47Ee8/sum8Cifceq316kHjvsdqnB4n3Hqt9epB471lZOSvfslsEeMGiYRiGYRiGYRiGMVDwpVSm+AEy8oI0N5dapEVB+GNpGrJNhNPlApVIPiYZfDOvPfyVuABKQD8Mt0wC1ReVTx6Q5ubsq54/6nltRT/tentlpdN33ihKwawksWUjn6AV+MuNKq2s3gq/v3mB97wiX4cVrt7KbkUFv3QrW/O7X6F65mF9Upp2MSnl6m3+SGvUHLnqr9zMboUfA71wM1vjhr8uH7P03Mhu8Qcfr1BRnFquUN1uFcyNucLfswR1YYTLtNPl4QsUFRNMyZyi5Kq/ERV7meSqJ4El3hCqC3Lr+MZI8Tm8wp/U5TD86WOGFZrvxU6GAl6Q5iokBeDFcCDa0K9rafFm5EOeeWYO8qU8K3yDZNkF4MOwjiAS6hCl8MhOGy4ByEP6+nFApkXm/D1nlehHmkAkqit/VdV9c3oJ5MoiXHPoLhXoN7AKrqcICEa/8plk2lIl3MBBFomdGhiQs2xg5CkdgduhpHr6FTOiLfUs+pX0aEOZuU8tcw3g67aBWZZckhkZvoRVNAwXAA1A4/pVF4JGMRZqrL5V5rSRXF2gPBi6jXyP9tRxqr+9pl8rDwpPEv3q8obQ7+Wq/YW6ETcH0F+HegbtUEwKkNMLaCf61eQDy+PG0988XdrSb03rr3prDMpALi9QueMwqu2bmgnJkpcL2k31ccK0qVG91tB9aviUcWX3kFuVy5IKbtCiKZd+tcywCvqNVY/2EtzOCJ8U8IFIQDvRr7a0/4S6Qq7WqnfDE22CMngXCaulMDQa33RZ0ka2ItFvJ9UXEqaNK3fenTQREggRT51pqudhUKZA2tKRDRsuO3kY5MmdNhKatkFg2nAd3U5QSApwStztaSPNQRv6RUujDVFI+m2terj4Y+Z5XuLLoxtt8kk2D8MemogLIr2PZ6lOqofLJQwnb2PVc6LX2BbqFpoLZZrq8WV4RjxlPme0/iQEqs8Duxk6VH0pKaBet6kknKbudS3NLc+4NWVr1YuTUqWGZQ0C8sEOGWRVDMKwExPfymXZibVMN9UXEtaJTnwj1XPHjpdXxsKY1sa0fzlLLmPRNKmeDbhpv3GmaVLtldvxuSPDMAzDMAzDMAzDMAzDMIy0/AiPnRoDY2XlB5PxRyx9hCek+0rlZ5V7yGQBHyhdAO+r6pVff08d4LPX4OodpvqkRKpX3vqaOsBf3oKrR5jqk1KhevApdYDvfw1HLzDVJ6Ve9cqHvAj4GI4lY6pPyjTVK+/9L+oAn78O17Iw1SelneqVN7+iDvDXn8OVDvmqnNL4lTVTfVK6qB78kTrAP96HIwXum4rjnSw7UqkSU31SZlC98hteBPwOjvlwqt/LsnURajDVJ2Vm1Svvfkcd4IufwjUjwYDf+E1pU31S5lS98saX1AH+5ztwdcYP+GNSPqQqKlSvHUbgV5mX6f6dUo90xLxslWxXddZ2qpfXzQN4NWQ3Rz3qSKJ68AnPAR/A0QFf34OwFcpUq14F9/UO4YRS3JYPOvgAB+wlX+WOONiiPsPvPncEUQVXtoPNbDsPRwXdF6FynGqtel3Y7AffRubsRlvZNr40kOeat8wo2yKvIy7nIbxyDqurWcl01VOm+l2MlnzAHeATOFpBxXV0nespCm9GtEDcEg/ihOQRJ7rNr/Rnxg+ybFe+c8Cv8c+4xWhzMt7kmrG3+6ZDEBVqJVlECkhReGQheX3E30M4RsFLyu+m+qi/c4o7zot+kaurh9tSgG35JsNJVB/62RufkBU0LZY9U1XPX0AJytaWd76lDvDlG3CloXnA9y+p5/ZRmyRIhiQNSm2iPvKBehI3IxMpRHWqp47FHqQssjeNTyF99yjSecDPD2kpO1EbedbkKn7CIemYhgv1kvpQ7PXySFDHNNVTZg+Q+gz89AvqAN++C9e8NA347rMkAlqVxwH1plakvoF25bFFvV3H5rYFUVSnevVjpKlZ20lUD+OkdFVAdgR7SYaCVzDlKj2c5gjSy67OFGF9pKI6DkxlmuolTQx1M/M7ngNatUcjTaqnIkIan+zJ2K+tqN7+lxubegmN9CSMj3ZlgqmN6lRPcwLZ1Hh9V3tOYtXrRKRQdlwkGqBkggpz5TCUqywL1EX9ll1BffYK9WlkiuqRCm1yw5iV9/9BHeCPcMxC84Dv53qewgUey0Uek30Q1FTcltJNZJwfiTfBDiGMmqve56NipHr4hnQe8PMUKDsdiKR8IulerYdT/aH404AvU4Wvj4tQKlElzarXJlPgNS8//4Y6wFdvwtWJCtXPBDXgXIPYNBIMcJ2YsT6NqmerUIknF5XS8Prn1AG+ew+ulqRRPXfjfIRYBKer+pnr06j6QN8k+qVvOj7mRcCHcEwlldUvmtO2+hmZtsw7DeS+sE/haMBUn5Q+qF55+6/UAb5uui/MVJ+U/qheee0z6gA194WZ6pPSN9WDypvDTfVJ6anqlff+Th3gs5/AZapPS69Vr/yXP1MH+OvbpvrEsOrtwauB0nur96DARipM9YPFVD9YTPWDxVQ/WEz1g8VUP1hM9YPFVD9Y6lXP939ATIjeX4Z73jqBAicgewahkua9p8mTjez+S8gBL+5md59Dnoda1bPmaxU0b69oVr27/TAGBZ4bKnuDcpv3niZZxvrdyArKf5bdpd+7CUpZp3pSzsl+dMMf3+tOHPu7SQPB38YndxPLfeKhcvOosdXrraX88At5H/FDEhxGPMvKR4HnhBr0cX2zNe9dBs+zh5BAloWbeahR/bHc7KeqUB6ItkjHfAcw7Yh/d/XxLJHVm7qFe2ArjBqqXu86l+DkzV2Afo8WbfWTZuX2SfV3qT0KQ/uz7LFsExSzRvWqPrdhxHK38GCH8x/trbO386EOQPrjG8OzHd9n4qiB6ukHHLE339hO/YX2mupzHhbMe+Gqh0oEeBGH+ogCSf5313cD3niV6ZAfPJriowaq39KIArS9MNVL7mjEcqs17z1l7gWFIe4VypPdkc29BQ34ZL24t5uMGg8yUnF4UqaN+yVjpgE7mOYhxRuVfNRA9QgReJvVB6j6XxasnnTOU8BzWezNR6Xqc60FItZqohRZkYnW5WE/Me/8OQ0s8/IhP4gaqh4Bc2+oXh6DDIYMBQWeH6fcYqMqvVH95Im0jizwo6Lm3vNRM9fPAA0Q8z+Z1wAKnI6X84+Zp8YiippI9WS1+UixGFBgIxXprH7RoMBGKkz1g8VUP1hM9YPFVD9YTPWDxVQ/WOzBq8FiVj9YTPWDxVQ/WEz1g8VUP1hM9YPFVD9YTPWDxVQ/WEz1g6WT6uWGwOAG++pbZwnaASkdKPAc3M3uTl5k2RM4C2TZ08mz0iMPSyLL7r0s3YPvybKHk5f36va2pYvq+fa76BY8Uf1OtoXecLKdbcZfmiI2+Xss/GGizfK7tYsfmGoEBZ6d+9kL3jypvuX2sd7dPG97puEOSlFdGueb3dPtjHRQ/QP3hSi49WbM9RF7kf5Iu+5rTfRT2K6P+A5r/dYQx+SHsE6y4ANT00GBZ8e3WL12HyW5yzkZ9/GoTTV35rxtvL3q8azFZjDIk+pFbbyHOoD4xwqWjXDMN9fLHfzUTUTkjtPhLfso8OxMVf3zyYs7Df3itHne2A+fzl3S9qonRTngowM+wV57uospql4e1djGeEFdh5/uYX8Xp91XHFDg2fGqjx9ckSJ463qZbUBaClIYGcerJvp8790EXbS16kllOiv7J63UbnkrG5X3dvixytDfbfiJarg0qegDU9NBgWfnKa3jiLvVjYa2fJQ9ku2SuYtH66rZmHOWV9qqXidxgZdsKpHq5bFa/ZSUPHSr3/DSB7Oc6lXbjHPJV7miD0xNBwWeAxpBGRYflxuPn2gmejHXa1EYfra22Fexi4DHbHRY5qWCigypEyhwIh72wrhb8XT+JysrOW3VS2eF3A0UOA0vX4VwBmha5c/DEqx+RlBgIxWm+sFiqh8spvrBYqofLKb6wWKqHyz24NVgWTEMwzAMwzAMwzAMwzAMwzAMwzAMwzAM4ywhT1Mol+AF2Avi3FBSaxDruKbZIdcWEU6ZNS4ZFe2SbFfh25JC06KuS0YqAq7AT2EfiHNDSZ1x1b/CBctuuwaDbztWbxfC90/1cXFKHnNASZ1x1XO5VlcurFyl7ZWiFTfD4wRE0BvVaxvfJOm6SAshewVCHXFz+GL1BVegGbRWVn0/yNuYpFsqUf3WgsnsKvWKtXwyuECz3toFOAQaDK9CXLlyM7vlHQSSupJdZlchKYUSvHWlVvWUeJTbdc2MIt0MbO/Kbe1bN7LbLvdVHqPXyva5SjEvOrkmjMJZu8K6AlWpfkrmkeovZbc6DRkLxFVJJCoh61UHAHWvXOYtg+aCSyvDoa+oW/rKqsq6asiT4gYjj2JSCgch0KYs6kaKpYsrnmO1CS+oG5Fusjc7xZWtchoE+7pk4VLIdY1HbCQYhaFf7fkcgLe3ZI8WFmKmazxKhQMwJE/LHNI1Kb80AfoPy1xJzihqkVMC2a+sXFSJ2lrqrEXWAECCQSbY5UIz0V7u2XlS5B/t1aQUKFcgZ77hYuU7yeHaPYCHA4gBbIJQBCH9QyGXS5HVHIWh0USLRdsbugGkFkiVqi9QyhySqp65CNWLzi+4hj99kO8lHqC4JaVpLvI6hgWphbMtrtRt2rJ9604JzQbE3vmG08JOTUopJAXIxSnI2KFObLhYtIHR0TgiTYcgHIU2CMNFktzg1A0PvuxLG8D7OCYbJUWJw9CvTErqYu1wyVEl9hX9QGsOck3NnMtNGy2/LBFdIuzh4pw+nLGDW4WLq8piH3UHU61z8cCLKrMTtVNPFypPSikkpbjhFdkFG2rpG+qARXImrByXKW0QlHsU7+X2dnGUWFPkUBdtRZECwkDJKBD9av8kgVe/tKlR/dTM0Tiy1VxdIpi+tNFOHWTOyFTn2lX3aHmJ61q6vOIk0KjnQ8uWa+Jc4U4QJwV8ICTNIXRDraS/rvFcE7pC0AZBZfwt7CVoycnARXgXD7UiBGGQPP1ycuog0CPot0b1UzN35eatzuk+GHcV7VpLQPIm1qCRouql6gIv3aK91BSx6rlujnCnI0oKsFOEvOWxUdV78iYsq17GlsJemcEEdinehaLFYWhDBVOHy8sHpd8a1U/N3KWVp5knwkF4sF0GlLVUyREpVySs4KVzRns7qz5KCrBLBDQM3PQ7n+p19XndL94E9hJBi1YII0sURM/VhFrQb3vVxwm7tPI080TEGlQ8dSjnKaonLrEvu/Iyk1Aa8HmtKi4lTyrAJwV8ICSNnfSrqg8K10n19Mv9Ky8wQw518WBcDsNb+gsWe8TUAX9q5g2qZ6GggNOjmHOuLy4UqfPamphoXim/zKNNrHr+lcns5jVuj6LqC0kpPBCIQFskgQ0Vy6Vwc+0q5dpF9S4sDjYAOdRF2xvlMLQND/H8Mo8XcLRprfpiwtiUVe9OgyzjqD6vkqOoev31a1d28qKANu54gPeym35hIfAtqp6c4o6XweTglLjN2TffULG4aVgB6uqqempQaVv2VdjFTtbJajmMzkdyACpBOFlUCUVor/owYWzKqpcA8rMMKN9G1buOSXDnD5wcpqD6fC+bd1H1haQAN4ODnPmGi6WrZIYcXVQvOwH7KvBgWMEQmWA/DkBEFsQmadta9UFc8RUhH2V8MLaBSzJNujPopwrl26h6KZkgg3WuP3EVVO8D8+mwkuqLSQG2LwILBRZ1I8Vyumd9dFI9VpS8yQ8m2Uezk1V1KYzkJhLhjkd0NCahveoLCUtKN0uq50mTy8G5yvrilKFsm1W/snKZ/G7K0atwgTqru6BSVD3Vmrxwrq6k+lJSyuqN7Db5aWj6xUaLxddB1rRhOqlebIq6GDV7blISI7x8UwjD/To40UiTELLOC9RK9cWEr0pCRdXTj7q9YCyMaW3MF1QgGueLaaqftt84szSqlndi+DbOHaxbiGVE83pkZ5w7GlVPK9D45iPDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAxjSODjtsbA+LGq/m//46veM8G25/ztjJRz8v+R6r98+y+k/a/fwnfie8rrk9ch9ZsvJhB6zuQ/sepJeONL0v6376hvLzHVp8WrnnjtM9L+979WR/8w1aclVD3zCU/8/w2OfmGqT0tR9cRHrP2P4OgRpvq0VKie+IC1/wkcfcFUn5Zq1RPv/Z20/9lP4OoDpvq01Kqe+MU3pP0/vQHX0jHVp6VJ9cSbfybt//VtuJaLqT4tU1RP/PQL0v5378K1REz1aZmueuZT0v6/vg/HsjDVp6Wd6onfkfYnH8KRFnkRjXACn0pM9WlprXriQ9b+x3AkBHpnRvCqwlSfli6qJ97/B2n/j3CkglTOm+P1LFsXj2pM9WnpqHriV9+R9j9PqQWoPhAqMdWnpbvqibf/Str/85twzY2pfinMpHrijT+R9r/5BVzzAY0f0bZpnWeqT8usqide/++k/b+9B9cckMrBEXwqMdWnZQ7VM38g7U8+gGNWoHfGVvinx5yqJz5m7f8WjpkglfPmaBtCDVWql/4i1HWak8aRpAFK0//Wc4BtQEvVS6mFoITkglRk5nrUMr/qiX9m7f8eju74+m5m2Z5KVTSrvrrJRuvNk0gDmmRdwgotTyAFdFZ9dgyv+uzmqEctSVRP/Pp70v6ncHTE13cvy7ZVqqJa9RKBV4g74lGAUpyvyep0oVTuba963pxshYnUZTd3PSpIpXril9+S9r/4GVwd8PUlYV+lKhpUX2izfRo+HsgM4JvsQZat74oUMtrJsq0oyzyq4tKlgHn00Xa2LWEqNdVN9XEiLO9l624a8bkGqn8gI+PuOpVTPUKompsNA2dEQtUTb810UzfV1wOvKqao3o8XIyRF7afC0fhABVoQ7KPFqOWkoQSJxgRRRQvul1qe4YGZNofiIFXItlTkOVWvsCPPVYUj3sogcSxu3hXVJ69mG6aqXpKD3Ib/zNd4v/0lXK2Q4ir5rFdmyoAvbobkQ/hwkmiyEzahTfFCIP5ZPxnvBqePyddFRUD5pZZeH514DzI7XZGyLJ4R3VTPp68PxYPh9I5pYueSBrmyN+pBHPP2WHqGT8bJ0hnEZypTVU8Jte1Gjtf4Gm+Hm7olC2K7PCKHNC/z8pNB5KDfw21uUAyUh9u8W3bQgM4ebNmkY965vuvG0iiqyvKrIm3IwEjmETXYW6TzMi+YccjlN16mXFEP8pIlzdGOH5eC+pAHF23rga9PI+1UvwVHe+Sm7n+GIw3NqpdmEkjech0BTcackNVTIDIjakoZHzlk3NvCqJqk/KpYlp0jprPqg7GOHLyhQeUkyilXPXsJI56uSvWR0b8d01RPwyEP+XB14res/YTXeJsGfOr7vow6FastOdUHs7r8yojKDUZs5gNGGJW27lc8Becd7i3SccDnovlRFZ5SbJJBWfWkFsH5aX14HUCzRDujn6p6TphaqGkObkBu6v4DHPMyZZnnzXs84o7ABQ+bLNtmvZJMTc0qFn1jXZRfKg6iBr/iJTjvcG+Rrss8KpBfosJzmurZcwsmGdaHlykMy1OZrvp1TrjpOnoz7/2NtJ/kpu5G1dMQGR7UjNgsyBC0yWioZ0NGm9CoqOOjIOcQc7vPo2po+UVEAXKwt0hX1YdrVIhUpjjxWPW0kuMpH664Psc8r7mDw0amqJ7SoSVPWIgZSHRT9zSrdyPT0QNZCkmhtcm0/Hzkhh06J472JTKalQmjauhAHG3v08Cscri3SFfVk9786Sjy5MFf9mkAzTVWPfWMwEUbzPEH29wG1JVaHdpPUb2mToVr1Y/qSXFT95RlnjQDQ+LeeETzHjUA28fohMZEGbs0jD9cZeGoaHQ+qnrLLwc54cMs342woYY5Ks2F3Zd5Pn/xPORkqVOGuWo9XOZc8JEc2zuXCBz2UI75Wx2RNaueEuOhHrPkfLz+OWl/npu6p6jeV9ed75BJioU9BNPjIPUTgcd6xvfrMCpt/C8vxYholOWNb/WQ7qrP7UpP2aDsQa4SWurBDsSVaQEuEdzir90yv1n1WPQw8JmPfyHtz3xTd5Pqt+OzsdR+ciRPnXcr41GQWnGfe7A0MtXKBefxIDq+y6NSqv5XzvjuSOeCBzYH6/kSzdFR9duhoshJCnQncvNcUQ8KLi6eAHZ5BpO4QX1qzu9W0qx6LZzQfLqlPbPf1F2l+pmg2kBaCC1Vn44Z69OoepkeHfBLgNzU/Ts42pNG9XJCd/YDlhacrupnr0+j6knhOL1MUqulQ1ve/1fSfsdrvGlUn7gbV3C6qp+9PtNUD4lmQH8Akoh35abun8LVgjSqp9m97WQ4I6er+tnr06R6OqJwIwkfN0BMSLebupPN9Qvm1Of6GWle5i2eDjd1m+rTsmzVEz/hF3f9ffpN3ab6tPRA9Yxc451yU7epPi09UT0x9aZuU31a+qN6Qm7qrn1xl6k+Lb1SPSE3dX/2GlwRpvq09E31xDtyU3f5Gq+pPi09VD3x1tek/b8Ubuo21aeln6onfla6qdtUn5beqp6Jb+o21ael16onfk/an/xGRFN9WvquesLd1G2qT4uo/psPew6/v2Pyl8lHcPabbyYQes7k/ybVG4OEv3jV7wHf8TpKbCSi/3O9w1SfGFP9YDHVDxZT/WAx1Q8WU/1gMdUPFlP9YDHVDxZT/WAx1Q8WU/1gMdUPFlP9YDHVDxZT/WAx1Q8WU/1gqVc9vzmNX7qbGH0/xwxv6Uin+scZhEqa954mL+9ld55CDnmUZY8gzkO96kk79fo5mvn9Kq1Uv1exN5nqn2dNym3ee5o8FA2US6PeL+GanVrV65vT8g80RLgXNc4MJQ2pisq9qVT/mFKHWEHz3tPkRbZBv8/lN0S0/jJBKWtVT02A96RWcHZVT0ZNwFGiee/psqHlKBbnRXafN4+y5+KcgybVF1Sgr5TlL2KIwLvWRdCXCcuL9fQ9tN7bkUdFmvqrb2KVl3+xB0eLko9Io/osu1tqzZzmvUuhWJz7GOqze7KZgzrV7/OLV7fyt6+6byzIQKCC2/K7m2l6iN4nLnjdB1E1RP7LwFuhjqACeUakUf0d+qtXbvPeZfAk4zIFuOLNX8w61UvbR6/LU4sky6RfHfBJ39QzjvidvhqeXy29z7Hy7wYJYVT1ll9K5Vg6Gf2SB4VBhkHUnGTLvCmt1ifVU0MUjfuUVB/pIJz4o7leApFh04gv4z31hcILHMOoQcJIPfjoRLi3yABVT4u5LHsCB1i46uUt4qJQr0UuRrarr8r1qj/UWXzMb+imET8fvNfzmSKOSpL7FW/BeYd7iwzR6oksewZJWbjqWR8APt6PB3Oo3s3hTl003vOXOdwXBfI3KsMjnwfkV/wE5x3uLTKf6jmX7LGTdZvTvPeUkcL4cf5FoTyLVr37wieTKxCfWSDtqur3yLh1mlYHfy9KwulH5SL9+ajqLb8qKpCDvUUGqvpiee4uWPXenAk5JPMcyKJOVU872ctvSN9BYEqDh4Acjaqh5RcRhSitcIdnaAO+K0ehPE+yV3nz3PXU2alWfd72XiLF8TyuazivehoSuJtwADmY5yGCbJ8P6ygMPiIWRdXQ8kshDmS4oA6DRIK9RYam+nuq3DtZ4TS+lg8nfOahUvU8WUMkCd90IkkhmdRFW/kVeL/M8CxEIQU4xaPwK3iP0J+dIclV/7j6rEhfVE8FeTh5sSEncp8FhXqYbbx4uaHn9OaiUvVkwG6Bzh8GgkhGSqiLpSP1OSSzd374Qo4MAOEHgYKotPW/GjDwxkaWGuwMGZzqybKJhyyFqucLd0ku3VUP+DNRoa6UpFO943Gl6nvJswX0x3Sqd1+PXBTpVb9RdTG8n9wT409LKtXzIDTrV4/bkVz1/bknYyqLMPqkqk/1Lbxq0lv9wEk41y8YU31iTPWDxVQ/WEz1g8VUP1hM9YPFVD9YTPWDxVQ/WEz1g8VUP1hM9YPFVD9YTPWDRVT/2lngpyixkQhWvTFI+ItXf37jLPAWSmwkwub6wWKqHyym+sFiqh8spvrBYqofLKb6wWKqHyym+sFiqh8spvrBYqofLKb6wWKqHyym+sFiqh8spvrBYqofLKb6wdJN9fyypMLbziGVKLwSf34SqF7eL1/8jJBHvjBV+ObE0njGhal9D+4T2Ssvy52dTqovve86dgVsh+/KTEMC1XNrPa57G+a9bOPF5H5P3pX5KheV1F/9UsxH/JJ8CTIPnVQvmm+l+ug1qWmYX/Ub8sWgV2tsSZV+b/4vSaUAPbCmIzbvbUsX1Z9k2dZu9HUTVv3RuvehnfLxo1D1h+K1v0U+eFF2wP4mJRe8cL+J+VXf2GIv7suXRp7N/7LxFGBaulddVLwb+RRVT3oaxYZODn11PqsPH7/Qd6YT27zlLyVKOMa/E53D7voPLhywz1TmVn2rFruTvYDUB+40KvcUVU9akp/cTFVxvARQxzF3j+NQ9cQOe+7L5zLRffB9JPI45LfkS2eYytyqdyN9tSkJzzayuxB7QaNy5/3CZQfV67fsaFDPP3VBamOTFX0/UKWqJnXAZ9XTZny8y99FFgdNGjwBiKx7D7drvp5aYG7VP8YHhOpVTwW6O/+3YtOxUfzcVUQ257Kkg+qpYXLdKpDl+xaQdeNVn3/ict/toV8a76nLkLhVnv/rOAXVP588LX5gapk0D0F4Vf7sdFM9Nv4N2PCi7TbLAB6iev38zUG+RwYHGe9lCiDCEwUNLEr1Wgg4knwneA7uBYUpaz7cO7fmO6ierRa472K0UL2sC0jT2Tp/LoUdPOLjy/j8iSyG5anMrXq3eC98NkaLAAc7ISyFXLnUB0u6zfe+yIqfxOlOe9VLtgBe7McbGvD3nKx41cPFWwSgDY33bqAf8VfQpB9MY27VT2BF1cp9eg+fCV6q6j2k+QbdPp93nmc6qd4L7nCMRJ7MyXhHvM5nfW7u8XQQqZ56BruQAA3+Ot6Pjx7IWQCfcDMJVK9arT6V+xRfwumH6knzDbolzSdYjbZWPc3ROF3DE7dKrDXSfX5wd8ifPnNqPgyt/mjEnzhyLj0JRNu98YhiBJ87r2d+1T8Ws9+oOXLXxt5I8UGh+Wm26iSab6960pM7nnc6VC0K7MApHfcBK/J0qtfTPtRDZLTgCV68ESFfOjQyv+pJr4xMoWXjJkNjenFc/6qWhaCVaamo8skrAR6z0Vb14UeNSMS3TtjzYN1/+YTm7W180XIn29z3qh8fbmY7/kRg8Gn0mvO7lSRQ/eTZneye2nxVsz3Osvv9OKzX9RxTpXrsIuAxG+3n+mTQUr/l8VxECtUHzNdsp8qCinraqj/BCd3upFX93drL9r3j4TlRPZ+yn+3TWIlVj+0ZYP5PmFZz2qqnNUPbyb1A4gHfWMJcPyOm+sSY6geLqX6wmOoHi6l+sJjqB4upfrCY6geLqX6wmOoHi6l+sJjqB4upfrCY6gcLq94YJD9eWfmn//jvzwT/hG3P+Q9npJz/9H+tGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGIZhGItnjd+FHnJzbe3aReysA0Hh6g2XtFhrcM7KNU3mmrrUgbomyuGcc+mVm9JKr1y9oB5Xbtwi9+2161dW1WMpxHodMiWjB1ewvxKEgas3mNH3gNXb2kYCGz3aTLilYRbDhRvNijGjd9QZfZZdQogKEAKu3mBG3wNCm+d2ughZWJzBXeG1hBl9O2D0rrUuXLrutTZtkd87FmL0EWb000AL3YTTt+Z1OBeEKaYLBaNn3Nh8JluQyj3vUG5GPwelFjqd+dUU04UKo3d60iWtBlhbWZWTM3pYppJf3l+IjxFeKZytuRTuXguPGlzaKxfzINej2FeD1eIaTgsxVaUiLlLw2ypOK1XIqqsxJXS50E3VUbu8rykgAl5aWX1FJSoXnybJndkNXyDfDJdljcqs8c7cefuyhhRWr4VL6OxW3XGY7qZqBMkGTViXDpotnJovqJefvqOYt6/5isDHsYZW8JQsP03Nc+0JnItv/ysq8DmqQK8XXDpuNetKerOhl5wfoOLI6G+on+oYevENy90GouyPD9qU23nTOasMELUKSPuybDy+u5Xj+tOLVaVSrb4i+6eUKqKYDTpEC6OvLyAC5p1XCEcIAkV1lbkqG8daPjwI3lzLDVpz+kX3XYuTve0P2mrTQSGDRBEU7efsKEfGMwJOR2ujn7Pm9UZ/2TU4N3Vg9CsrLo+r4roeuc492uyh0fNsKWgLIIBDWhmy7IfFrl1m3VzCeOFHUKePW1dWV1avOK055fu0b/NVwitxxr5zXaOULyOqO/1bVSrS5CuugzSXKsL3YS6DD+oLCZc6YqNvKGDe3W9Qqr7vcU1X+TSzgizyZqBWuhB0eV4W+VbRsM4k5bKqL23lcIZ9nOeFlVVXQDem1qeD8dKtmGg1ox5q2f7s/CsU86KzFh1Q4XC0NXpirprXG71DFBYZvQ/Bu9A0t13vOe8UrCcA85ALEAwLkSHo/vzEze21G9cuwwhdO+dxoatC2i44upAGh0m5joLOhoyqShXSWKoItyTwO10/RsZwqSMy+qYChl2KcTM+pkQ3Jqmr0AxuLHEDHLok9l68fO3GmtvlGriyZror37mKQuiY2pAOCuAWIljcq9PZvM/RtR8MJmohJja1AslqXszWtX9eznJJnKlfQpVuwP/845q9iF8GIoBvbEa91BDQlNTbr18qTjho+tz2vNXrkRrS9ut5dC9NWFWR9x4kpmZTVaqQplLFoEBuXU7AZ6rRNxXQdTqXNyYxH1idSLXQDK4VXH+tN5vLr6C/VpqU7gpqtgofOHOK6aC0iKnGgaZGWYMjbVg9lBy1EFNfeiJZzYvZuvYP1FpOLT6qCIaH8w6aPSY4N+MCRA2vXnGX9dzIGxrmEzZnpB1EzferWxJ2aiui43FVqSIaShWD/XAxmIaRtjqwPyx9YwGxszgv+fKqM25BX0J1+iKVOuvqlRvo8o7KdsA+uJhCe9engzWB9AKYhs7ksPDcpoko1Ui/TBujn7/mxWydcuAUyiUJbiQKJ6ZzD5o90mIEAoQnUQu6uYB1UkC8fE9q9FHMqFQx9aWKwT64GOSMzqEO7A9L31jAqJpEG6P3zaBOX6Q47sX43KASdOQc7IOLCTNqTAdrArYEzL6wy2K9mKj4pQBtjH7+mhezhTsy5aqSYFqKK3TuQbPXV7qoF0a9wu504SrCOWRiwDIxjBtpp5S2uiVhBKzuLJWlKlNdqhgM9nAx3Wb66gJG1SSSGT0c2a3rEhzOynbQXeFJviCjKemgDejwXy2tcHwfdZeo+MWKx6UvkqzmxWxLxSAqSpJPDIM5iceg2aPWiSjqhVGv0FAc/nSuNC2aftoxfZ62ujVhFWuO2qtKVU9cqhgMTMHFGqSNsOpAXaO+pHJ1AYudrtjh1IlUi5VRZ2XXL7Zo3PVjdFdQZ8zffFp+ajrwQMvllURZ0x7Tz19zVM1nWyoGUSqJOwepVJfwXIJmj1onoqgXRr1ENzjiy3tFNE8Wz185m69b/qtblY6UXVx3kkdH5KpSBTSXKsKd3fLd2K34EBYudUR9qamAxU5X7HDqRKrdu7470Vw6lx6iu4LxDMtjXqlPT0ebAf7urG5eSx8yxdn7BDVXl8+2VAyiWBI3E7hrBsO4MYdBs0etE1FlXuqlunFNt3aZ2uzCFQR3F3nd3vg6veuGpbTVDaVDSZQyKRFBXdiqUoU0lyrCdWO5AHzZ5eM7B1zqiPtSQwGLna7Y4dSJVIuVUWdl13dDlFzXzu9P8+mGYB/Bl9R9zdqm4z2jZVB+M1t0nf6WM5iFGf2UEsN5dWVVrsxON3o3avDE4PplbXc6Z6DZZzf6/GaegPyUWcUdefnOUtrqdkovp+wXd1WlimguVQzWI45bWmR0DpFdkQp9qb6AizL63OaAOivVJ3uo1tgq7lLs9HT8YOhnV+Bmxpz8Nr/FGf2UErvRh2CvqUaPpR/6BHYVa3peQbNHrRNRZV7q5XWzEt8SHd1eT8T33uf9oyJtdecJxzd5B1fdqkpVpLlUEcH9sTdWkTi6qciuSKW+VFfAhRk9JZ2fxF674DIKmsajeyiZvHb5/f4t0nHGXV4fFe69h69QaqFizSMS1jy465FcpWIQYWrI2Md2BymDOp9nnD/Qj+GaAZhR48hqGEZ/UJOd3egxG/r7JQ3D6DlqszMY/UU6CLjoTgXUH/gZhtEzYLVwdcAd8DI2zxvG2QFmC1cHcMaLiN9oYhiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRiGYRjGOeKHP/x3/5uRjB/+8IeQjAT8W2vOpPzwh/+GbP5HE8MwBsOPyeh/MJl8+w3cf/rwzbExF69TM74O2ZifLyaT30A05uf9yeQ/qdF/yc43P/xKLX/y14/flgDGDJjRp8WMPikFo1def//zf6jpf/fHX8HP6IAZfVrM6JNSafTgV3/8Tk3/H5+/b124C2b0aTGjT0qT0Stvf/xXNf3JV3aw3xIz+rSY0SdlutErb374J7X8yTe/+wX8jDrM6NNiRp+UtkavvP7+f/9XNf2/ffoe/IwyZvRpMaNPSjejB+/+AQf7ky8++Cn8jAAz+rSY0SdlJqNX8oP9P//2v8DPEMzo02JGn5Q5jF554zf+YP/3drAPzOjTYkaflLmNXvnJrz/7Xk3/73awb0afGjP6pCQyevDLT75V06eD/Z/B70ywncVsbe8eY9csmNGnxYw+KWmNXnnro7+o5U++/ugt+PWcotEL6zPbvRl9Wszok7IIo1fe+IBUJXz7yTvw6y2VRp9le9jdFTP6tJjRJ2VxRq+85g/2v//s16/Bs3+o0cPBHItHNuNcb0afFjP6pCza6ME7/mD/y39+A359omT04z3xOYKrI2b0aTGjT8opGb3y1m+/Vsuf/KVnD+7WzPQP4OqKGX1azOiTcqpGr/wsONj/JfyWTfUx/QH2dsaMPi1m9ElZgtGD9z79u5o+Hez/BH5Lo8rod2a2eTP6xJjRJ2V5Rq/84vf+LV2/WeLBfvVMn22OsL8jLY0euXi2t/dPsKvPaFlFLJ8LWQhJjV7P1uRsbj84xK4Cp1S7U2fZRq+8+eGf1fKX9Zausnp3xWfG0/czGr2w1WmgOXkw89nGmZFiJjH6g02kM4WFGr1StayboXbL0Edn+mH0yk/zt3T94V34nRIV6lWrb9UnS8xj9F06zVyXGFIwl9FL3L4YfVVBOtdu6fpoR5+MHrz3KR7c/dfTe0tXhXq3xGsHrm50Mfqws+2Lzzpc0zGjn4FSo402xWcfzhwz+lPm579zB/un8ZaugnpHR7RKE2Y7xp7V6Gu72QhHG8K6HoIewSlIRzvU3qvsyGGCDl35MavWSw5a9tdFVirvPazKlRCnFjsub5D/A3+QIs698bHbh3Q0pjLV8Bdr9GjJchOgdoeuoTaDSOW6FvWh7qORxubUj8NKb4kSGvRzVNZmInpr9Er+Su5vfvdz+C2CUBsB6zOeV5tvpi8fXobGJ3DvK3ayk9CIGe5nI5H82uFQnDynqRRQ7vOVuRIil43+QGTPOrqpOHbCsm2yd4+MXmd6KVVMRa9AtKq6Vhs90uA7PtTAc7jatfopaXNqI7VnfqPfQaFmXAm34fX3P8dbur77l8W8krvS6LdnvAl3vmP6isd8tIvBiLSoOhqF/Ve7jyoBswuL2o3cXUbiz2FOxBszjCZTHGtqcxWxZPQiovA6eKksotuhkxfGF5Fb9eVTOKavug8LvUJ3HWubSivV1TUaT9wgwAsBbjixeVwP0pQ5YI1+tKV2xRMpVZVwNuY2eq2zUD4oSsu7Z+aV3LMb/foDdJmQaqMkok4WkncqzNdq3rJ4lGmlRT+qzVX8i0av/cCtjCRTnTvF310FweynjlBuZuFGv7WPwS1Ca+e6dT4p19a1yujzpXuABpTBr1o/2jjdruS0Zl6j1xkDqzfXDAsleEtXb1/JPc9MX7Vk8kd3mw8OwkYuG/3R3k5+KKg7ZIaRnqSzivq6kxbZ+s4+LLJIXa7iVzR6lWIkJxVZIvpq9Ey5FfLaCdpkVKnaulYYfaF+x/sP8lW+rniq9ZMfQGzvIcFkzGv02jFGWtyKw6JFEbylq4ev5J71mH6k3UnH+hB/LklYd8ffUScbeTt26A5d6/OkLoKLexwfYuZn3nJqchVX0ehFKCARRHKV7I/Rh4akvbe8Ui0YvY8o2wJS12ajDxbFijZojX5G/rhZmP1Ys8ycRq/9jNYmKqQ77GjH6//VPbjbr1dyz2r07mSPU3zE8V5gphoi7GRYTerdZdpdo953qDqKsjvZD3pWtflV5Cqihs7NQkOJZ4z4u7T7afTO6uHyaO38IkcX4hSxtq4VRu9VifMs2wc8umpA7KvXz+jgQT7uujOj8zOf0esaRExdC1d5ALNw3v1D/pauXrySe2aj1+PGxrMjOKEkctjJdM0lYsHoNdi69uyqnjPSXhzZQYEwV5G02LnRV5iSIv6ukj01ejXn0gJLa+dnMmkCXs3W1jXaUTB6nRaxTwO6feJq0A/i+qTmZS6jD683YLBMNhp1Jz/Y//q3S35L12xGf3Kovax4mKTnTVx/0RmjfOJIjV5l7SQuRnCFxY/KGtp1o8KUJtTnKv5Fo4eo5/20XFsii9hnoz/a0wGtfM4S6tDTaRj2ZJVdV9co6UqjVycO2P2+sn40tGscTbfinOpszGX0OkGgnHExl8Yb//ylWv4y39I134k87UABWBkG4MqP9ivmKJA9+YLBJYBrQAQ6dEDxoLE2V5FV0YHRu5HGgxlSZNctIqP3RZjaaU7lRF55lVpuI3fjRk1dQ30Ujb7cnMEZ27J+yqVMd3FsHqPXcsWrn4RFm4f8LV1//3QJb+max+irzqjF98YFQTD9aN/Kw+ypnB8F4u1f0XAS3ZFXeZ6oJldxlY0+StGf9Wsw+tx04K5l8Ua/WXVgKrXbzs+o6U10SmVdI30UjJ7mdx9lB2e+/XKjSj/RHXmV5ZuVOYweBS2S8Czj3ISv5P7P8DsNWhr9KaKLsngBf3ZIavS95FT1M4fRhxNFQPl607J56yP/lq5TeiV374xeZ+RkB4Wnzbk3+tPVz+xGr2szv7hndLiKvPrDab6lq0dGnx9m9uTIaxbOsdEvQz8zG72egIyndZzw7fWEEr6la2EH+32a6VUnfGwKjzPIeZ7poZ7T1M+sRg/7LpxewD1H/T90fOeT/6mmv5hXcvfvmP5sc/6P6U+VWY2+ZiWv3qVrTj0lfyV34rd0mdGnxYw+KXOcyDsv/NQf7Cd7S5cZfVrM6JNiRu9479O/qel//9ncD+6a0afFjD4pZvQxv/Bv6Zrnldxm9Gkxo0+KGX0V876S24w+LWb0STGjr+f1/JXcf+z2li4z+rSY0SfFjH4qv+r+li4z+rSY0SfFjL4lP/cP7rZ4JbcZfVrM6JNiRt+Jlq/kNqNPixl9UszoZyB/Jff/qn5Llxl9Wszok2JGPzvv/sEd7Bff0mVGnxYz+qSY0c9L1Su5zejTYkafFDP6NASv5P79L8zoE2NGnxQY/Y+0wxqGMQR+TEb/f0wmf/vCSMTX7iVdhtFP/l9b3qeGl/eG0V/smD45ZvRGvzGjT44ZvdFvzOiTY0Zv9Bsz+uSY0Rv9xow+OWb0Rr8xo0+OGb3Rb8zok2NGb/QbM/rkmNEb/caMPjlm9Ea/MaNPjhm90W/M6JNjRm/0GzP65JjRG/3GjD45ZvRGvzGjT44ZvdFvzOiTY0Zv9Bsz+uSY0Rv9xow+OWb0Rr8xo0+OGb3Rb7ob/XHmOIZPB462IZwWR1LSPZG3RRZxJkZ7+5Aa6aHRP6N6P4PclXninlceb0hXIjaewKuJRwicZY9ewmupdDf6dZQ/y9bh05KTBxwJjtMimdEfbPp0ptA7o39VuuhshjtP3PPKY26Sx88nk+ciTTN7NvmNpy8nL59yW96H7zLpbPRiuRl+4deOeSfauZmnAOHgMYV+Gf2zu1LymQx3nrjnl4fUIN7Q2eybrf4+haABQnhBZn8P8hLpavQH3Aey3fGWbA/gW+R4d5sXBOvbu4fwIYo2N9rfkVQ2t/dP4NXA6EBDb+3Uhq7MNaBYgIMdnr23dyvSO9mjzNZ38vqdUaOXUmdPuGt2Ntx54p5nHj+8F0zX1DqNZvyEAjyFTGsDcj2GvDw6Gv0JFZoMzwlZlf0d5wcAzLoc+u/BJbCHrhU8smjYEdFbmp492GWxKnRMZa4Ny/uoQHHoo13ZCOsj9odDmGr4/TL6O9zjZjT62eMOBp72c5uu4A6t7SEy9yg8xOXR0eh5alRT3xeJzL+IrgV2jmhyPtTgbCZFo5c96/tkUoe6aBA71vBiZ8616aX1A8r3WA1SbTGgOtdao9fxZP1ghDMN2Y54a2jKlAaeI01GTlyIBM6U0YN5DNeMvo7nT8iisw23dq/kJYUIVwK9aM1uRq8Wp+ew1VZlHo4Q03In6Xe3dvaOsByIJtrjg91tsWdC/GWHrh/UAJEZR8YErN4jWr4fQM6py7Xa6DUfZ75i3TLowOiRui481BGmMwUz+kEgHSLbePIC7mr42ke4nj97Rn8o9cTsjgV+yfwwp+/QLBoTGb3neF9HD92hE7Ys8HUy1rW+iNnmbv1Fwrpcq41ezVk8CY2bjy5u7FB/jWtGb0S8oDZ5+Sqv1hsP0s+80Y/0sBkTNxb45et2wRExWyF8S0Z/oG6P+upimy03n39pgAkP2DerzrzV5Vpt9CIU4CixaZ89o5dCKlFPbNPVNJrQOe75RixbKZ+z45PzDZfhzrzR6/xYBIvxkJMH0Vk1HAKERj/SA2YaM7b3cLeP7lBbpzTFiN0BAHGABYGyXmH3lbm2N3oOY0YvmNFHNBr9hC9rNhzWFyLxGLH0G3Q6GL3O7GXqblM7OXgA09b5OjR6NU+s1kV2Rq9HDQc6EpRM+2jPrQ+qZnumkGu10YdFCTnrRl/HPIZrRh/z7P69jVchMzwkNBh9wcrJ1XiF71Rob/QVF+n0GL9gf8eHezubfiCQAHqQHFiamhCOnZGKOtxhvRiuW6SPjvZ3t/1xhNpi4VxCXa7VRq9DCo4d+Mzg/pGcCzCjL2NGH/OC2mMjN+NXyXkXchUc/CFkvTuv8Wz/qdDe6HX+jKd1PQIPFuGEhpPraycHOqOrgerRwR75ukBbR+MRggTzrr8mD6N044BckBsfaTLuZJujLtdqo4d3tncyPlHTLoeOjV6Hic2T8VFhtCljRn++4cN0d23+JS/um2xeg+OynoQOVwlLorXRqykWr8ureXnrFLwZgy2cUMdSgSC7CY/Q1YzzM35qwOEpwpHaa04e2FGTa43RF2/3wYmJeqPPwxeHmxL9N3p2tl5kmtGX4DtyPP46vQwGkEPE1B13+/DETVujr1zJe+/iba8ne9tiuVvxJbQjPtymxbT4HfJNsOsSIL8iL2B0KFyfO3ggRkvR6y7cVeVaa/Q0kuhtuJs7fIuQ0mD049E+x9/aqb7FN8CM/vzz8sl9fnrm3uPgKn2d0RMvHsmK4NHyV/ZChxN5p4YaW935wd7TQ6Mv8TB7BMlIx9MpK/2+0C+jP6E5F7flTl1F95b+G/2Lu+GpKCMNL2nVfzaWRP0yel1eM+Xbe88M/Tf6l3d7cDbp/HE/ur+hx/TL6Edy2F35sOvZ4Sws740h08dj+jOOGb3Rb8zok2NGb/QbM/rkmNEb/caMPjlm9Ea/MaNPjhm90W/M6JNjRm/0GzP65JjRG/3GjD45ZvRGvzGjT44ZvdFvzOiTY0Zv9Bsz+uSY0Rv9xow+OWb0Rr8xo0+OGb3Rb8zok2NGb/QbNvofQTYMYwD82IzeMIYFG70t75Niy3uj39gxfXLM6I1+Y0afHDN6o9+Y0SfHjN7oN2b0yTGjN/qNGX1yzOiNfmNGnxwzeqPfmNEnx4ze6Ddm9Mkxozf6jRl9cszojX5jRp8cM3qj35jRJ8eM3ug3ZvTJMaM3+o0ZfXLM6I1+Y0afHDN6o9+Y0SfHjN7oN2b0yTGjN/qNGX1yzOiNfmNGnxwzeqPfLM7oH2TgBB4FjmTnHlzniL4Y/bOHd6iB7z15AXcHXjy6R1HvPnwVbsPz6sO71DR37j15CY/2vHx6nzVy9/5TeCyLhRn9AVVP2YJPgVmM/mAz24bYX3ph9C+5azoewrMdUdRs2R20VzxFoyjdmvUhYilLbdZFGf0IlWN24RfT3eglghl9Gx5TS6FPPt/Iso0O0xJ37LsIz/I9FY3JhOfpJ5DF/p/BMZ0XFHrDBWf776KS1CzK6Le4TbKTTdkcwTPCjH5xcI90vXMyoZl7A+J0nlPU+5CLCQ2c+9QYzyETPJhCnE4cOG7kU2dBRr9Htcqyg/GxbNfhGwGjH+3IltgdYQ+tE/wJgWzzUL224WbY8MW9jYzWOereusiKDCZYbuTpyhgkpRntyi5lHXmkoQdGT13sLkTiGVXxMeSOPKGotsAH9+7dCZc9fNoD4lSe37u3EaqAoi5xBbUYo1db3yFJbYulImr0EZjFR7pM8IgBVxr9Fuz8ZDw+VCmHlxfq6XPXwhx7KaByMTIbyzf6opXTGHAHYide8jq025HrcODZOhhZO8Fj6SPIS2AxRq+2KDOsLvD3xTsCRr/ONujO9W/mOx6I90iiw2rF3y3vMQiss7V6m9dsNAEJqMZ9IN4YijiMnmXECkBTqrnGMAPLN3o+og8PN7vMSeClNAqZ/BIPPXvNq9Q4sx6XP6K4yzxVshCjVwtWU1NLq7ApNU2/8lfzZIuUEUNt3q3QNSkRY6OvvjIguzIRddGg5p0PIO7oYyGcC6PnPi3caX+yakDw2dFZ7VZOAc54uJWGRRi9zqNuUa3WLHN4hBq9P5F3Ik4yaawAItTSA9EZfbwqHx3ubecH9uolopRFCiJH/279QWw+OEg3xyvnwugVuXq3zPPM/URM3l3h6IiY/JIPmRZg9Gq+RdzU7SkYvTdpnYULRCGEotGfFE4EIA6yoUldlxwuwmF41i9b73IRYRrLN3qepsOppNnopQWU8vzDfXSwF+243UDQBjykTjf5yrgv+QLA8s+SLMDoS9anFM+QqzX6sUCnZDJpPTqvskLZERs9HG6oWN+VMwQiu326Z6STe5Ts8V5Q1HRmv3yj5wPysGeRs8FwpfpKxaKTvSEOjgrD1TuXWizOK+LKAmGjB3c5pjf60olxR37lTMAy3i2u98XFh9kiONsOiXbERu8PDgRx+H0SckeKVXkK4FgnfbjmZ/lGL1eU86mIzxW3PjLnk0xBv+Rz1A0DxsDQw53gWn0H5jkmSExyo8els8jC9VJ8weLcsbueTtNzf3LsrTu2JIWRGqSuEkRsMno9YHdX/GQHk6/kUSocgGCpr3mUTzrMSg+M/iVfpHP9i1fo7a8PcdR8iGCbz2a4ef98wmPpjGb7ku/m68vVz+RGrxYWnxjHTTLxdTtn9AG4XxdTrwdX9WDnBBt+5fI+ArH8BYTgCANjScBmYR0yBz0wep2S7jx9OXkhR6Dupjp2TJ23ZTZ7TJb+nGf9ma9Fnz/kaZnHETIe8m0RUw6B+C7c7D4iAexaAqmNXid1d+begadvvBkyavRH+Rm14Kj6xNs3WXgey9+nR3LB6McjH2X9UE8r5EcIeugQPQMQ3ZGXPUhn8v0wejJ7f1C5kd9H28roJy/F2IXoNrKBEz8xo8iSqIXR83hRBLuWwAJO5PUPXWmkW8A30w+jr+GxHaEvADJ7SGeCIRg9FvOpr8fX0WejpyN2u5U+PffO1s3K59zog0P96NhikfTY6Gl5bzafHJrnz5TNn3ej92cLq5/pXwi9Xt4bxjCO6U8XM3qj35jRJ8eM3ug3ZvTJMaM3+o0ZfXLM6I1+Y0afHDN6o9+Y0SfHjN7oN2b0yTGjN/qNGX1yzOiNfmNGnxwzeqPfmNEnx4ze6Ddm9Mkxozf6jRl9cszojX5jRp8cM3qj35jRJ8eM3ug3bPT/+2Ty3b8YqfgUTWsY/eT/IaP/EWTDMAbAj8noDcMYEisr/z8ELe8Tl8wUzAAAAABJRU5ErkJggg==" style="display:block; margin:auto; width:50%;"></li>
 </ol>
-<pre class="r"><code>game=list(
-  players=list(player1=&quot;A&quot;,player2=&quot;B&quot;),
-  strategies=list(
-    player1=list(strategy1=&quot;stay_silent&quot;,strategy2=&quot;betray&quot;),
-    player2=list(strategy1=&quot;stay_silent&quot;,strategy2=&quot;betray&quot;)
-  ),
-  `payoffs: (player1, player2)`=list(
-    # mapping from all possible player1 strategy vs player2 strategy
-    player1=list(
-      strategy1=list(
-        player2=list(strategy1=c(-1,-1),strategy2=c(-3,0))
-      ),
-      strategy2=list(
-        player2=list(strategy1=c(0,-3),strategy2=c(-2,-1))
-      )
-    )
-  )
-)
-
-# 查詢strategies
+<pre class="r"><code>game&lt;-list(players=list(player1=&quot;A&quot;,player2=&quot;B&quot;),
+           strategies=list(player1=list(strategy1=&quot;stay_silent&quot;,strategy2=&quot;betray&quot;),
+                           player2=list(strategy1=&quot;stay_silent&quot;,strategy2=&quot;betray&quot;)
+                           ),
+           `payoffs: (player1, player2)`=list(
+               #mapping from all possible player1 strategy vs player2 strategy
+               player1=list(strategy1=list(player2=list(strategy1=c(-1,-1),
+                                                        strategy2=c(-3,0))
+                                           ),
+                            strategy2=list(player2=list(strategy1=c(0,-3),
+                                                        strategy2=c(-2,-1)
+                                                        )
+                                           )
+                            )
+                                            )
+           )
+str(game)</code></pre>
+<pre><code>## List of 3
+##  $ players                    :List of 2
+##   ..$ player1: chr &quot;A&quot;
+##   ..$ player2: chr &quot;B&quot;
+##  $ strategies                 :List of 2
+##   ..$ player1:List of 2
+##   .. ..$ strategy1: chr &quot;stay_silent&quot;
+##   .. ..$ strategy2: chr &quot;betray&quot;
+##   ..$ player2:List of 2
+##   .. ..$ strategy1: chr &quot;stay_silent&quot;
+##   .. ..$ strategy2: chr &quot;betray&quot;
+##  $ payoffs: (player1, player2):List of 1
+##   ..$ player1:List of 2
+##   .. ..$ strategy1:List of 1
+##   .. .. ..$ player2:List of 2
+##   .. .. .. ..$ strategy1: num [1:2] -1 -1
+##   .. .. .. ..$ strategy2: num [1:2] -3 0
+##   .. ..$ strategy2:List of 1
+##   .. .. ..$ player2:List of 2
+##   .. .. .. ..$ strategy1: num [1:2] 0 -3
+##   .. .. .. ..$ strategy2: num [1:2] -2 -1</code></pre>
+<pre class="r"><code># 查詢strategies
 game$strategies$player1$strategy1</code></pre>
 <pre><code>## [1] &quot;stay_silent&quot;</code></pre>
 <pre class="r"><code>game$strategies$player2$strategy2</code></pre>
@@ -912,13 +844,14 @@ game$`payoffs: (player1, player2)`$player1$strategy2$player2$strategy2</code></p
 <div id="物件儲存" class="section level2">
 <h2>3.7 物件儲存</h2>
 <ul>
-<li>存下Global Environment中有的物件： <code>save(object1, object2, ..., file=&quot;myData.Rda&quot;)</code></li>
-<li>下次取回來Global Environment用： <code>load(&quot;myData.Rda&quot;)</code></li>
+<li>存下Global Environment中有的物件: <code>save(object1, object2, ..., file=&quot;myData.Rda&quot;)</code><br />
+</li>
+<li>下次取回來Global Environment用: <code>load(&quot;myData.Rda&quot;)</code></li>
 </ul>
 <pre class="r"><code>object1 &lt;- c(2,5)
 object2 &lt;- ymd_hms(c(&quot;2015-03-22 12:28:42&quot;,&quot;2017-12-22 15:33:48&quot;),
                    tz=&quot;Asia/Taipei&quot;
-                   )
+                  )
 object3 &lt;- list(2, FALSE, c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;))
 save(object1, object2, object3, file=&quot;threeObjects.Rda&quot;)</code></pre>
 <pre class="r"><code>load(&quot;threeObjects.Rda&quot;)</code></pre>
@@ -930,13 +863,11 @@ save(object1, object2, object3, file=&quot;threeObjects.Rda&quot;)</code></pre>
 <h2>4.1 選取元素</h2>
 <div id="選一個元素" class="section level3">
 <h3>4.1.1 選「一個元素」</h3>
-<div id="用位置選數字" class="section level4">
-<h4>4.1.1.1 用位置選<code>[[數字]]</code></h4>
 <ul>
-<li>用位置選：<code>物件[[數字]]</code></li>
+<li>用位置選: <code>物件[[數字]]</code></li>
 </ul>
 <pre class="r"><code>vectorExample &lt;- c(&quot;小明&quot;,&quot;小英&quot;,&quot;大雄&quot;)
-#確認有多少位置可選：
+#確認有多少位置可選
 length(vectorExample)</code></pre>
 <pre><code>## [1] 3</code></pre>
 <pre class="r"><code>vectorExample[[1]]</code></pre>
@@ -954,7 +885,7 @@ length(vectorExample)</code></pre>
                                              )
                                 )
                     )
-#確認有多少位置可選：
+#確認有多少位置可選
 length(listExample)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>listExample[[1]]</code></pre>
@@ -1015,10 +946,10 @@ fromJSON(&quot;https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff7
 ##  $ rating   : num 6.5
 ##  $ votes    : int 4
 ##  $ comments : int 0</code></pre>
-</div>
-<div id="用名字選" class="section level4">
-<h4>4.1.1.2 用名字選<code>$</code></h4>
-<pre class="r"><code>#確認有多少名字可選：
+<ul>
+<li>用名字選: <code>物件$名字</code></li>
+</ul>
+<pre class="r"><code>#確認有多少名字可選
 names(listExample)</code></pre>
 <pre><code>## [1] &quot;student&quot; &quot;學期&quot;</code></pre>
 <pre class="r"><code>listExample$student</code></pre>
@@ -1047,7 +978,9 @@ names(listExample)</code></pre>
 ## 
 ## $`108-2`[[1]]$grade
 ## [1] 78</code></pre>
-<p>其實也可以用<code>[[&quot;名字&quot;]]</code>來選，只是名字要以字串「值」的方式來寫，也就是要用引號“…”。</p>
+<ul>
+<li>用名字選: <code>物件[[&quot;名字&quot;]]</code></li>
+</ul>
 <pre class="r"><code>listExample[[&quot;student&quot;]]</code></pre>
 <pre><code>## [1] &quot;小明&quot;</code></pre>
 <pre class="r"><code>listExample$student</code></pre>
@@ -1110,7 +1043,6 @@ str(newTaipeiCityVaccine$result, max.level = 1) #顯示到第一層</code></pre>
 ##  $ total      : int 29
 ##  $ fields     :List of 4
 ##  $ records    :List of 29</code></pre>
-</div>
 </div>
 <div id="選多個元素" class="section level3">
 <h3>4.1.2 選「多個元素」</h3>
@@ -1507,9 +1439,6 @@ dance[[1]]$title</code></pre>
 <pre><code>## The following object is masked from 'package:jsonlite':
 ## 
 ##     flatten</code></pre>
-<pre><code>## The following object is masked from 'package:magrittr':
-## 
-##     set_names</code></pre>
 <pre class="r"><code>map(dance,~.x$title) -&gt; dance_title
 dance[[1]]$showInfo</code></pre>
 <pre><code>## [[1]]
@@ -1896,7 +1825,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
@@ -1906,7 +1835,7 @@ $(document).ready(function ()  {
       scrollTo: 0
     };
     options.showAndHide = false;
-    options.smoothScroll = false;
+    options.smoothScroll = true;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
