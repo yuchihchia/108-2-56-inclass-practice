@@ -1,0 +1,23 @@
+"0","library(lubridate)
+"
+"2","
+Attaching package: ．lubridate・
+
+"
+"2","The following object is masked from ．package:base・:
+
+    date
+
+"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","list1 <- list(list(name=""Jack"","
+"0","                   birthday=ymd(""1998-03-21""),"
+"0","                   status=c(height=177, weight=80)"
+"0","                   )"
+"0","              )"

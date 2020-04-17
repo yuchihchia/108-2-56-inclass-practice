@@ -431,14 +431,26 @@ str(`小明的修課記錄`)
 ```
 ```{r}
 #今("2020-03-31")明("2020-04-01")兩天「台北市」氣溫最高25度，最低18度；「新北市」氣溫最高24度，最低15度。
-temperature <- list(date=list(today=ymd("2020-03-31"),
-                              tomorrow=ymd("2020-04-01")
-                              ),
-                    location=list(taipei=list(high=25,low=18),
-                                  newtaipei=list(high=24,low=15)
-                                  )
-                    )
-str(temperature)
+weather <- list(today=list(taipei=list(city="台北市",
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       ),
+                           newTaipei=list(city="新北市",
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       )
+                           ),
+                tommorrow=list(taipei=list(city="台北市",
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       ),
+                           newTaipei=list(city="新北市",
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       )
+                           )
+                )
+str(weather)
 ```
 game的定義： A game involves three components:
 
@@ -578,14 +590,14 @@ str(listExample)
 get1 <- listExample[["學期"]]
 get2 <- listExample["學期"]
 ```
-* `[[]]`: 拿出某個物件值。`listExample[["學期"]]`將listExample裡的"學期"物件值拿出來
-* `[]`: 留下某個物件值。`listExample["學期"]`「只留下」listExample裡的"學期"物件值
+* `[[.]]`: 拿出某個物件值。`listExample[["學期"]]`將listExample裡的"學期"物件值拿出來
+* `[.]`: 留下某個物件值。`listExample["學期"]`「只留下」listExample裡的"學期"物件值
 ```{r}
 get1
-str(get1)
-get1$`108-1`[[1]]$teacher
 get2
+str(get1)
 str(get2)
+get1$`108-1`[[1]]$teacher
 get2[[1]]$`108-1`[[1]]$teacher
 ```
 
@@ -604,39 +616,24 @@ econFemaleOnly <- gender[econOnly]=="F"
 names[econOnly][econFemaleOnly]
 ```
 #### 4.1.3.1 list應用
-atomic vector其實也可以像list對元素命名，然而用名稱取元素值在atomic vector: 
+atomic vector其實也可以像list對元素命名，然而用名稱取元素值在atomic vector:  
 
-* 只能用`[ ]`或`[[ ]]`;
-* 不能用`$`。（`$`只適用在list）。
+* 只能用`[.]`或`[[.]]`  
+* 不能用`$.` (`$.`只適用在list)  
 ```{r}
 vector1 <- c(a=1,b=3,c=4)
-vector1[["a"]]
+```
+```{r}
+vector1[["a"]] #vector1$a 不能用
 vector1[c("a","c")]
-#vector1$a 不能用
 list1 <- list(a=1,b=3,c=4)
+```
+```{r}
 list1[["a"]]
 list1[c("a","c")]
 list1$a
 #今明兩日台北市、新北市氣溫
-weather <- list(today=list(taipei=list("`台北市`",
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       ),
-                           newTaipei=list("`新北市`",
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       )
-                           ),
-                tommorrow=list(taipei=list("`台北市`",
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       ),
-                           newTaipei=list("`新北市`",
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       )
-                           )
-                )
+str(weather)
 weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp
 weather[[2]][[2]]$highest_temp # 明天/新北市/highest_temp
 ```
@@ -664,19 +661,18 @@ length(dance[[2]]$showInfo)
 
 map(dance,~length(.x$showInfo)) -> dance_showInfoLength
 ```
-
 ```{r}
 #選出每個活動的「活動起始日期」
 map(dance,~.x$startDate) -> dance_startDate
 #選出每個活動的「活動名稱」及「活動起始日期」
-map(dance,~list(title=.x$title,startDate=.x$startDate)) -> dance_startDate
+map(dance,~.x[c("title", "startDate")]) -> dance_titleStartDate
 #選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）
 ```
-```{r eval=FALSE}
+```{r echo=FALSE, eval=FALSE}
 dance[[1]]$showInfo[[1]][c("time","locationName")] #第1個活動舉辦1次
 dance[[2]]$showInfo[[1]][c("time","locationName")] #第2個活動舉辦3次
 dance[[2]]$showInfo[[2]][c("time","locationName")]
-dance[[2]]$showInfo[[2]][c("time","locationName")]
+dance[[2]]$showInfo[[3]][c("time","locationName")]
 
 map(dance[[1]]$showInfo,~.x[c("time","locationName")]),
 map(dance[[2]]$showInfo,~.x[c("time","locationName")])
@@ -728,7 +724,7 @@ str(list1)
 #替Mary依Jack的記錄方式增加身高163，體重45
 list1[[2]]$status <- c(height=163, weight=45)
 #將Jack的身高改成176
-list1[[1]]$status[[1]] <- 176 #不要用list1[[1]]$status$hight，這種做法下list1[[1]]$status會變成list格式
+list1[[1]]$status[[1]] <- 176
 str(list1)
 ```
 使用`[.] <- `  
@@ -754,9 +750,9 @@ listExample$`學期`$`108-1`[[2]][c("teacher","grade")] <- list("Wen",88)
 str(listExample)
 ```
 ### 4.2.2 刪除元素  
-刪除可以使用[- c(數字位置)]  
+刪除可以使用`[- c(數字位置)]`  
 
-* 只能「一個」中括號（[[.]]不能接受負數值）  
+* 只能「一個」中括號（`[[.]]`不能接受負數值）  
 * 只能用負數值，不能用元素名稱  
 ```{r}
 a[-c(1,3)]

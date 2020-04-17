@@ -762,25 +762,53 @@ str(`小明的修課記錄`)</code></pre>
 ##   .. .. ..$ teacher: chr &quot;Jason&quot;
 ##   .. .. ..$ grade  : num 90</code></pre>
 <pre class="r"><code>#今(&quot;2020-03-31&quot;)明(&quot;2020-04-01&quot;)兩天「台北市」氣溫最高25度，最低18度；「新北市」氣溫最高24度，最低15度。
-temperature &lt;- list(date=list(today=ymd(&quot;2020-03-31&quot;),
-                              tomorrow=ymd(&quot;2020-04-01&quot;)
-                              ),
-                    location=list(taipei=list(high=25,low=18),
-                                  newtaipei=list(high=24,low=15)
-                                  )
-                    )
-str(temperature)</code></pre>
+weather &lt;- list(today=list(taipei=list(city=&quot;台北市&quot;,
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       ),
+                           newTaipei=list(city=&quot;新北市&quot;,
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       )
+                           ),
+                tommorrow=list(taipei=list(city=&quot;台北市&quot;,
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       ),
+                           newTaipei=list(city=&quot;新北市&quot;,
+                                       highest_temp=c(highest_temp=18),
+                                       lowest_temp=c(lowest_temp=15)
+                                       )
+                           )
+                )
+str(weather)</code></pre>
 <pre><code>## List of 2
-##  $ date    :List of 2
-##   ..$ today   : Date[1:1], format: &quot;2020-03-31&quot;
-##   ..$ tomorrow: Date[1:1], format: &quot;2020-04-01&quot;
-##  $ location:List of 2
-##   ..$ taipei   :List of 2
-##   .. ..$ high: num 25
-##   .. ..$ low : num 18
-##   ..$ newtaipei:List of 2
-##   .. ..$ high: num 24
-##   .. ..$ low : num 15</code></pre>
+##  $ today    :List of 2
+##   ..$ taipei   :List of 3
+##   .. ..$ city        : chr &quot;台北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##   ..$ newTaipei:List of 3
+##   .. ..$ city        : chr &quot;新北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##  $ tommorrow:List of 2
+##   ..$ taipei   :List of 3
+##   .. ..$ city        : chr &quot;台北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##   ..$ newTaipei:List of 3
+##   .. ..$ city        : chr &quot;新北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;</code></pre>
 <p>game的定義： A game involves three components:</p>
 <ol style="list-style-type: decimal">
 <li>A list of players<br />
@@ -1046,8 +1074,9 @@ str(newTaipeiCityVaccine$result, max.level = 1) #顯示到第一層</code></pre>
 </div>
 <div id="選多個元素" class="section level3">
 <h3>4.1.2 選「多個元素」</h3>
-<div id="用位置選c..." class="section level4">
-<h4>4.1.2.1 用位置選<code>[c(...)]</code></h4>
+<ul>
+<li>用位置選: <code>物件[數字向量]</code></li>
+</ul>
 <pre class="r"><code>vectorExample</code></pre>
 <pre><code>## [1] &quot;小明&quot; &quot;小英&quot; &quot;大雄&quot;</code></pre>
 <pre class="r"><code>vectorExample[c(1,3)]</code></pre>
@@ -1138,13 +1167,9 @@ str(newTaipeiCityVaccine$result, max.level = 1) #顯示到第一層</code></pre>
 ##   ..$ rating   : num 0
 ##   ..$ votes    : int 0
 ##   ..$ comments : int 0</code></pre>
-</div>
-<div id="用名字選cname1name2..." class="section level4">
-<h4>4.1.2.2 用名字選<code>[c(&quot;name1&quot;,&quot;name2&quot;,...)]</code></h4>
-<pre class="r"><code>str(listExample, max.level=1)</code></pre>
-<pre><code>## List of 2
-##  $ student: chr &quot;小明&quot;
-##  $ 學期   :List of 2</code></pre>
+<ul>
+<li>用名字選: <code>物件[名字向量]</code></li>
+</ul>
 <pre class="r"><code>listExample[c(&quot;student&quot;,&quot;學期&quot;)]</code></pre>
 <pre><code>## $student
 ## [1] &quot;小明&quot;
@@ -1200,9 +1225,9 @@ names(taipeiNightMarkets)</code></pre>
 ##   ..$ 營業時間: chr &quot;18:00~24:00&quot;
 ##   ..$ 交通資訊: chr &quot;捷運板南線-後山埤站，循中坡北路步行約10分鐘。&lt;br/&gt;\r\n火車-松山火車站，沿著八德路4段步行約5分鐘可抵達。&quot;
 ##   ..$ 夜市簡介: chr &quot;饒河街夜市緊臨慈祐宮、彩虹橋，全長約600公尺，除了琳瑯滿目生活百貨與包款服飾外，更有多道誘人的傳統美味深受民眾青&quot;| __truncated__</code></pre>
-</div>
-<div id="用要不要邏輯向量選cttf..." class="section level4">
-<h4>4.1.2.3 用「要/不要」邏輯向量選<code>[c(T,T,F,...)]</code></h4>
+<ul>
+<li>用邏輯向量選: <code>物件[邏輯向量]</code></li>
+</ul>
 <pre class="r"><code>vectorExample</code></pre>
 <pre><code>## [1] &quot;小明&quot; &quot;小英&quot; &quot;大雄&quot;</code></pre>
 <pre class="r"><code>vectorExample[c(T,T,F)]</code></pre>
@@ -1247,9 +1272,7 @@ names(taipeiNightMarkets)</code></pre>
 ##   ..$ 營業時間: chr &quot;日市08:00~16:00\r\n夜市16:00~24:00&quot;
 ##   ..$ 交通資訊: chr &quot;捷運中和線-中山國小站，1號出口步行5分鐘可抵。&quot;
 ##   ..$ 夜市簡介: chr &quot;雙城街是個逾40年以上的市集，位處晴光市場旁，在2006年時經市府重新規劃成雙城美食街，採日夜兩班的經營方式，早晚都&quot;| __truncated__</code></pre>
-</div>
-<div id="與.比較" class="section level4">
-<h4>4.1.2.4 <code>[[.]]</code>與<code>[.]</code>比較</h4>
+<p><strong><code>[[.]]</code>與<code>[.]</code>比較</strong></p>
 <pre class="r"><code>str(listExample)</code></pre>
 <pre><code>## List of 2
 ##  $ student: chr &quot;小明&quot;
@@ -1264,12 +1287,12 @@ names(taipeiNightMarkets)</code></pre>
 ##   .. .. ..$ name   : chr &quot;總體經濟學&quot;
 ##   .. .. ..$ teacher: chr &quot;Mark&quot;
 ##   .. .. ..$ grade  : num 78</code></pre>
-<p>以下兩個表面都是選取“學期”:</p>
-<pre class="r"><code>get1 &lt;- listExample[[&quot;學期&quot;]]
+<pre class="r"><code>#以下兩個表面都是選取&quot;學期&quot;
+get1 &lt;- listExample[[&quot;學期&quot;]]
 get2 &lt;- listExample[&quot;學期&quot;]</code></pre>
 <ul>
-<li><code>[[]]</code>: 拿出某個物件值。<code>listExample[[&quot;學期&quot;]]</code>將listExample裡的“學期”物件值拿出來</li>
-<li><code>[]</code>: 留下某個物件值。<code>listExample[&quot;學期&quot;]</code>「只留下」listExample裡的“學期”物件值。</li>
+<li><code>[[.]]</code>: 拿出某個物件值。<code>listExample[[&quot;學期&quot;]]</code>將listExample裡的“學期”物件值拿出來</li>
+<li><code>[.]</code>: 留下某個物件值。<code>listExample[&quot;學期&quot;]</code>「只留下」listExample裡的“學期”物件值</li>
 </ul>
 <pre class="r"><code>get1</code></pre>
 <pre><code>## $`108-1`
@@ -1295,20 +1318,6 @@ get2 &lt;- listExample[&quot;學期&quot;]</code></pre>
 ## 
 ## $`108-2`[[1]]$grade
 ## [1] 78</code></pre>
-<pre class="r"><code>str(get1)</code></pre>
-<pre><code>## List of 2
-##  $ 108-1:List of 1
-##   ..$ :List of 3
-##   .. ..$ name   : chr &quot;個體經濟學&quot;
-##   .. ..$ teacher: chr &quot;Alice&quot;
-##   .. ..$ grade  : num 85
-##  $ 108-2:List of 1
-##   ..$ :List of 3
-##   .. ..$ name   : chr &quot;總體經濟學&quot;
-##   .. ..$ teacher: chr &quot;Mark&quot;
-##   .. ..$ grade  : num 78</code></pre>
-<pre class="r"><code>get1$`108-1`[[1]]$teacher</code></pre>
-<pre><code>## [1] &quot;Alice&quot;</code></pre>
 <pre class="r"><code>get2</code></pre>
 <pre><code>## $學期
 ## $學期$`108-1`
@@ -1334,6 +1343,18 @@ get2 &lt;- listExample[&quot;學期&quot;]</code></pre>
 ## 
 ## $學期$`108-2`[[1]]$grade
 ## [1] 78</code></pre>
+<pre class="r"><code>str(get1)</code></pre>
+<pre><code>## List of 2
+##  $ 108-1:List of 1
+##   ..$ :List of 3
+##   .. ..$ name   : chr &quot;個體經濟學&quot;
+##   .. ..$ teacher: chr &quot;Alice&quot;
+##   .. ..$ grade  : num 85
+##  $ 108-2:List of 1
+##   ..$ :List of 3
+##   .. ..$ name   : chr &quot;總體經濟學&quot;
+##   .. ..$ teacher: chr &quot;Mark&quot;
+##   .. ..$ grade  : num 78</code></pre>
 <pre class="r"><code>str(get2)</code></pre>
 <pre><code>## List of 1
 ##  $ 學期:List of 2
@@ -1347,9 +1368,10 @@ get2 &lt;- listExample[&quot;學期&quot;]</code></pre>
 ##   .. .. ..$ name   : chr &quot;總體經濟學&quot;
 ##   .. .. ..$ teacher: chr &quot;Mark&quot;
 ##   .. .. ..$ grade  : num 78</code></pre>
+<pre class="r"><code>get1$`108-1`[[1]]$teacher</code></pre>
+<pre><code>## [1] &quot;Alice&quot;</code></pre>
 <pre class="r"><code>get2[[1]]$`108-1`[[1]]$teacher</code></pre>
 <pre><code>## [1] &quot;Alice&quot;</code></pre>
-</div>
 </div>
 <div id="連鎖選取" class="section level3">
 <h3>4.1.3 連鎖選取</h3>
@@ -1373,18 +1395,18 @@ names[econOnly][econFemaleOnly]</code></pre>
 <h4>4.1.3.1 list應用</h4>
 <p>atomic vector其實也可以像list對元素命名，然而用名稱取元素值在atomic vector:</p>
 <ul>
-<li>只能用<code>[ ]</code>或<code>[[ ]]</code>;</li>
-<li>不能用<code>$</code>。（<code>$</code>只適用在list）。</li>
+<li>只能用<code>[.]</code>或<code>[[.]]</code><br />
+</li>
+<li>不能用<code>$.</code> (<code>$.</code>只適用在list)</li>
 </ul>
-<pre class="r"><code>vector1 &lt;- c(a=1,b=3,c=4)
-vector1[[&quot;a&quot;]]</code></pre>
+<pre class="r"><code>vector1 &lt;- c(a=1,b=3,c=4)</code></pre>
+<pre class="r"><code>vector1[[&quot;a&quot;]] #vector1$a 不能用</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>vector1[c(&quot;a&quot;,&quot;c&quot;)]</code></pre>
 <pre><code>## a c 
 ## 1 4</code></pre>
-<pre class="r"><code>#vector1$a 不能用
-list1 &lt;- list(a=1,b=3,c=4)
-list1[[&quot;a&quot;]]</code></pre>
+<pre class="r"><code>list1 &lt;- list(a=1,b=3,c=4)</code></pre>
+<pre class="r"><code>list1[[&quot;a&quot;]]</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>list1[c(&quot;a&quot;,&quot;c&quot;)]</code></pre>
 <pre><code>## $a
@@ -1395,26 +1417,35 @@ list1[[&quot;a&quot;]]</code></pre>
 <pre class="r"><code>list1$a</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>#今明兩日台北市、新北市氣溫
-weather &lt;- list(today=list(taipei=list(&quot;`台北市`&quot;,
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       ),
-                           newTaipei=list(&quot;`新北市`&quot;,
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       )
-                           ),
-                tommorrow=list(taipei=list(&quot;`台北市`&quot;,
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       ),
-                           newTaipei=list(&quot;`新北市`&quot;,
-                                       highest_temp=c(highest_temp=18),
-                                       lowest_temp=c(lowest_temp=15)
-                                       )
-                           )
-                )
-weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp</code></pre>
+str(weather)</code></pre>
+<pre><code>## List of 2
+##  $ today    :List of 2
+##   ..$ taipei   :List of 3
+##   .. ..$ city        : chr &quot;台北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##   ..$ newTaipei:List of 3
+##   .. ..$ city        : chr &quot;新北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##  $ tommorrow:List of 2
+##   ..$ taipei   :List of 3
+##   .. ..$ city        : chr &quot;台北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;
+##   ..$ newTaipei:List of 3
+##   .. ..$ city        : chr &quot;新北市&quot;
+##   .. ..$ highest_temp: Named num 18
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;highest_temp&quot;
+##   .. ..$ lowest_temp : Named num 15
+##   .. .. ..- attr(*, &quot;names&quot;)= chr &quot;lowest_temp&quot;</code></pre>
+<pre class="r"><code>weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp</code></pre>
 <pre><code>## highest_temp 
 ##           18</code></pre>
 <pre class="r"><code>weather[[2]][[2]]$highest_temp # 明天/新北市/highest_temp</code></pre>
@@ -1555,15 +1586,8 @@ map(dance,~length(.x$showInfo)) -&gt; dance_showInfoLength</code></pre>
 <pre class="r"><code>#選出每個活動的「活動起始日期」
 map(dance,~.x$startDate) -&gt; dance_startDate
 #選出每個活動的「活動名稱」及「活動起始日期」
-map(dance,~list(title=.x$title,startDate=.x$startDate)) -&gt; dance_startDate
+map(dance,~.x[c(&quot;title&quot;, &quot;startDate&quot;)]) -&gt; dance_titleStartDate
 #選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）</code></pre>
-<pre class="r"><code>dance[[1]]$showInfo[[1]][c(&quot;time&quot;,&quot;locationName&quot;)] #第1個活動舉辦1次
-dance[[2]]$showInfo[[1]][c(&quot;time&quot;,&quot;locationName&quot;)] #第2個活動舉辦3次
-dance[[2]]$showInfo[[2]][c(&quot;time&quot;,&quot;locationName&quot;)]
-dance[[2]]$showInfo[[2]][c(&quot;time&quot;,&quot;locationName&quot;)]
-
-map(dance[[1]]$showInfo,~.x[c(&quot;time&quot;,&quot;locationName&quot;)]),
-map(dance[[2]]$showInfo,~.x[c(&quot;time&quot;,&quot;locationName&quot;)])</code></pre>
 <pre class="r"><code>#新北市公車路線清單: 找出Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)
 jsonlite::fromJSON(&quot;https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json&quot;, simplifyDataFrame = F) -&gt; busRoutes
 map(busRoutes,~.x[c(&quot;Id&quot;,&quot;providerId&quot;,&quot;providerName&quot;,&quot;nameZh&quot;)]) -&gt; busRoutesInfo
@@ -1643,7 +1667,7 @@ str(list1)</code></pre>
 <pre class="r"><code>#替Mary依Jack的記錄方式增加身高163，體重45
 list1[[2]]$status &lt;- c(height=163, weight=45)
 #將Jack的身高改成176
-list1[[1]]$status[[1]] &lt;- 176 #不要用list1[[1]]$status$hight，這種做法下list1[[1]]$status會變成list格式
+list1[[1]]$status[[1]] &lt;- 176
 str(list1)</code></pre>
 <pre><code>## List of 2
 ##  $ :List of 3
@@ -1736,9 +1760,9 @@ str(listExample)</code></pre>
 </div>
 <div id="刪除元素" class="section level3">
 <h3>4.2.2 刪除元素</h3>
-<p>刪除可以使用[- c(數字位置)]</p>
+<p>刪除可以使用<code>[- c(數字位置)]</code></p>
 <ul>
-<li>只能「一個」中括號（[[.]]不能接受負數值）<br />
+<li>只能「一個」中括號（<code>[[.]]</code>不能接受負數值）<br />
 </li>
 <li>只能用負數值，不能用元素名稱</li>
 </ul>
