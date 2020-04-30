@@ -637,53 +637,6 @@ str(weather)
 weather[[1]][[2]]$highest_temp # 今天/新北市/highest_temp
 weather[[2]][[2]]$highest_temp # 明天/新北市/highest_temp
 ```
-#### 4.1.3.2 list補充
-```{r}
-library(jsonlite)
-fromJSON("https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1", simplifyDataFrame = F) -> dance
-# 前三筆演出的名稱
-dance[[1]]$title
-dance[[2]]$title
-dance[[3]]$title 
-```
-若要針對向量或list裡的每個元素反覆進行相同操作，purrr是相當方便的套件，最常用的是: `map(向量或串列, 每個元素要做的事)`
-```{r}
-library(purrr)
-map(dance,~.x$title) -> dance_title
-dance[[1]]$showInfo
-length(dance[[1]]$showInfo)
-dance[[2]]$showInfo
-length(dance[[2]]$showInfo)
-#length(dance[[1]]$showInfo)
-#length(dance[[2]]$showInfo)
-# ...
-#length(dance[[34]]$showInfo)
-
-map(dance,~length(.x$showInfo)) -> dance_showInfoLength
-```
-```{r}
-#選出每個活動的「活動起始日期」
-map(dance,~.x$startDate) -> dance_startDate
-#選出每個活動的「活動名稱」及「活動起始日期」
-map(dance,~.x[c("title", "startDate")]) -> dance_titleStartDate
-#選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）
-```
-```{r echo=FALSE, eval=FALSE}
-dance[[1]]$showInfo[[1]][c("time","locationName")] #第1個活動舉辦1次
-dance[[2]]$showInfo[[1]][c("time","locationName")] #第2個活動舉辦3次
-dance[[2]]$showInfo[[2]][c("time","locationName")]
-dance[[2]]$showInfo[[3]][c("time","locationName")]
-
-map(dance[[1]]$showInfo,~.x[c("time","locationName")]),
-map(dance[[2]]$showInfo,~.x[c("time","locationName")])
-
-```
-```{r}
-#新北市公車路線清單: 找出Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)
-jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json", simplifyDataFrame = F) -> busRoutes
-map(busRoutes,~.x[c("Id","providerId","providerName","nameZh")]) -> busRoutesInfo
-busRoutesInfo[[1]]
-```
 ## 4.2 新增/替換/刪除元素  
 ### 4.2.1 新增/替換元素  
 元素提取`[.]`,`[[.]]`,`$.`也可用來進行元素「值」的修改與新增, 使用方法為：  
@@ -769,9 +722,320 @@ list元素要刪除時也可以用`[.]<-NULL`, `[[.]]<-NULL`
 list1[[2]][c(1,2)] <- NULL
 str(list1)
 ```
+## 4.3 On numeric class  
+加、減、乘、除: `+`, `-`, `*`, `/`  
+餘數: `%%`  
+次方: `**` 或 `^`  
+```{r}
+a <- c(2, 3, 5)
+b <- c(4,-1, 3)
+a+b
+a-b
+a*b
+a/b
+a %% b
+a ** b
+#奇、偶數判斷  
+sequenceNums <- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
+print(sequenceNums)
+sequenceNums %% 2 # 餘數為1則是奇數，0則是偶數
+```
+在多數時候R向量間的運算都是**elementwise**(個別元素)的運算：
+
+所有向量一一取出各自對應相同位置的元素值進行運算  
+```
+# a+b 即等於
+c(2+4, 3+(-1), 5+3)
+# a**b 即等於
+c(2**4, 3**(-1), 5**3)
+```
+當向量間不等長度時，R會對短的向量進行Recycle的動作（即Python的Broadcast）:  
+
+將其中較短的向量反複堆疊到可以長得跟最長的向量一樣長度  
+```
+5*c(1,3,4)+7
+# 對向量5，向量7進行recycle:
+c(5,5,5)*c(1,3,4)+c(7,7,7)
+# Recycle等長後才進行elementwise operation:
+c(5*1+7, 5*3+7, 5*4+7)
+```
+當運算的兩物件內容長度不同時，則將其中較短的一個反複堆疊到可以長得跟另一個一樣高時才來運算，稱為recycling  
+```{r}
+# 狀況一: 堆疊一定倍數剛好一樣長
+c(2,3)/c(-2,-13,10,22)
+c(2,3,2,3)/c(-2,-13,10,22)
+# 狀況二: 倍數堆疊一定會超過，只好截斷
+c(2,3)/c(-2,-13,10)
+c(2,3,2)/c(-2,-13,10)
+```
+Recycling不只用在數值class，只要向量間的處理要等長度才合理時，recycling通常也會用在其他的class  
+```{r}
+paste0(c("我叫"), c("小明","小美"))
+#也等於是
+paste0(c("我叫","我叫"), c("小明","小美"))
+```
+## 4.4 Relational Operators  
+```{r}
+example <- list(
+  name=c("小明","小花","小新","美美"),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c("1998-03-11","1999-12-22","1995-08-22","2001-10-10")),
+  hobby=c("美食 旅遊","旅遊 時尚","3C 美食","音樂 旅遊"),
+  residence=c("Taipei","New Taipei","Taichung","Kaohsiung"),
+  allowance=factor(c("0-1000","1001-2000","2000+","1001-2000")),
+  bloodType=c("A","B","B","O")
+)
+```
+### 4.4.1 比較  
+
+`>`，`<`，`<=`，`>=`: 分別為大於、小於、小於等於、大於等於
+
+* 數字比較
+
+* 時間比較
+
+* 可排序類別資料比較 (需先將類別資料的類別排序)
+
+1. 數字比較 
+example裡誰的身高大於等於170
+```{r}
+str(example[c("name","height")])
+pick_above170 <- example$height >= 170
+example$name[pick_above170]
+```
+不同屆入學學生在2年級的學業表現
+```{r}
+#匯入transcript100to103的資料
+source("https://www.dropbox.com/s/qsrw069n94k61lj/transcript100to103_list.R?dl=1") 
+# 只要成績大於85的
+pick_above85 <- transcript100to103$`成績` > 85
+# 各學屆2年級人數
+table(transcript100to103$`學屆`) #table適用於類別資料或間斷資料，顯示各個類別的重複次數
+# 各學屆2年級成績大於85人數
+table(transcript100to103$`學屆`[pick_above85])
+```
+
+2. 時間比較:  
+
+example裡誰1998年(含)以後出生
+```{r}
+print(example[c("name","birthday")])
+pick_after98 <- example$birthday >= lubridate::ymd("1998-01-01")
+example$name[pick_after98]
+```
+美元匯率: 選1998年1月(含)以後的匯率
+```{r}
+#匯入exchangeRate的資料
+source("https://www.dropbox.com/s/16h6ggua6qtydci/exchangeRate.R?dl=1")
+# 只要1998年1月（含）以後的
+library(lubridate)
+pick_after98_01 <- exchangeRate$`期間` >= ymd("1998-01-01")
+exchangeRate_after98 <- list(`期間`=exchangeRate$`期間`[pick_after98_01],
+                             `幣別`=exchangeRate$`幣別`[pick_after98_01],
+                             `匯率`=exchangeRate$`匯率`[pick_after98_01]
+                             )
+```
+
+3. 可排序類別資料比較:  
+
+factor資料可進一步分成可排序與不可排序的，如:  
+
+* 可排序: 以年齡層區分的類別，以所得級距區分的類別等  
+* 不排序: 性別，學系等  
+
+factor的設定在不調整時內定為不可排序資料，如要改成可排序類別資料，以先前已處理好的example$allowance為例:  
+```{r}
+example$allowance <- ordered(example$allowance)
+```
+或在設定為factor時即把levels排好，並ordered=T:
+```{r}
+example$allowance <- factor(example$allowance,
+                            levels=c("0-1000", "1001-2000", "2000+"),
+                            ordered = T # 設定為可排序factor
+                            )
+```
+example裡誰零用錢大於1000  
+```{r}
+print(example[c("name","allowance")])
+pick_allowanceOver1000 <- example$allowance >= "1001-2000"
+example$name[pick_allowanceOver1000]
+```
+刑事案件被害者人數
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/3uijub7xheib405/list_victimAges_female.json?dl=1", simplifyDataFrame = F) -> list_victimAges_female
+list_victimAges_female$`數目` <- as.integer(list_victimAges_female$`數目`)
+list_victimAges_female$`年齡層` <- as.factor(list_victimAges_female$`年齡層`)
+```
+```{r}
+levels(list_victimAges_female$`年齡層`) -> levels_ages
+print(levels_ages)
+#將levels順序改成: 不詳、總計、0_5歲、12_17歲、...、70歲以上
+levels_new <- c(levels_ages[c(12,13,1,8,2:7,9:11)])
+levels(list_victimAges_female$`年齡層`) <- levels_new
+list_victimAges_female$`年齡層` <- ordered(list_victimAges_female$`年齡層`)
+```
+「30_39歲以上受害者」的數目
+```{r}
+sum(list_victimAges_female$`數目`, na.rm=T) #將數目中資料為NA的排除再加總，若數值資料中有NA將無法加總運算
+pick_above30 <- list_victimAges_female$`年齡層` >= "30_39歲"
+sum(list_victimAges_female$`數目`[pick_above30], na.rm = T)
+```
+### 4.4.2 相等、屬於  
+`==`: 等於  
+
+`!=`: 不等於  
+
+[`==`與`!=`可使用於字串]  
+
+`%in%`: 屬於(左邊元素「一一」檢視是不是屬於右邊元素集合)  
+
+example裡誰血型B型  
+```{r}
+print(example[c("name","bloodType")])
+pick_bloodB <- example$bloodType == "B"
+example$name[pick_bloodB]
+```
+創造可留下偶數的「要/不要」向量pick_evens
+```{r}
+sequenceNums <- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
+pick_evens <- (sequenceNums%%2) == 0
+sequenceNums[pick_evens]
+x <- c(1,5,8)
+y <- c(5,8)
+# x裡的元素值是不是屬於y集合
+x %in% y
+```
+example裡誰來自大台北
+```{r}
+print(example[c("name","residence")])
+set_TaipeiMetro <- c("Taipei","New Taipei")
+pick_fromTaipeiMetro <- example$residence %in% set_TaipeiMetro
+example$name[pick_fromTaipeiMetro]
+```
+創造可選出來自法商學院的「要/不要」向量，pick_lawBusiness
+```{r}
+str(transcript100to103)
+unique(transcript100to103$`學院`) #table適用於類別資料或間斷資料，顯示有哪些類別
+pick_lawBusiness <- transcript100to103$`學院` %in% c("法學院","商學院")
+```
+### 4.4.3 Negation(否定用法)  
+在「要/不要」向量前加上`!`會成為否定句的「要/不要」向量，元素裡的TRUE會轉成FALSE, FALSE則轉成TRUE  
+```{r}
+pick_not_fromTaipeiMetro <- !pick_fromTaipeiMetro
+# 或
+pick_not_fromTaipeiMetro <- !(example$residence %in% set_TaipeiMetro) 
+print(example[c("name","residence")])
+example$name[pick_not_fromTaipeiMetro]
+# 或
+example$name[!pick_fromTaipeiMetro]
+```
+### 4.4.4 資料狀態  
+
+* `is.na`: 有缺失  
+
+* `is.{class/type name}`: 例如`is.integer`, `is.character`, `is.factor`, ...等  
+
+有時資料有缺失，在R裡會記成NA(即not available)如下例: 
+```{r}
+x2 <- c(1,NA,10)
+y2 <- c(-1,NA,20)
+x3 <- c(NA,"小花")
+y3 <- c(NA,"小華")
+is.na(x2)
+```
+example裡誰沒有體重資料
+```{r}
+print(example[c("name","weight")])
+pick_na <- is.na(example$weight)
+example$name[pick_na]
+```
+R還有一種特別的缺失資料NaN (即not a number)，出現在沒有定義的數學運算上，如:
+```{r}
+0/0
+```
+創立可選出缺失資料的「要/不要」向量pick_na, 並計算有多少筆缺失
+```{r}
+list_victimAges_female$`數目` <- as.integer(list_victimAges_female$`數目`)
+pick_na <- is.na(list_victimAges_female$`數目`)
+total_na <- sum(pick_na)
+print(total_na)
+```
+### 4.4.5 字元偵測  
+`stringr::str_detect()`  
+
+example裡誰喜歡美食  
+```{r}
+print(example[c("name","hobby")])
+pick_loveFood <- stringr::str_detect(example$hobby,"美食")
+example$name[pick_loveFood]
+```
+新北市垃圾車路線
+```{r}
+jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8?$format=json") -> garbageRoutes
+# typeof(): 查詢電腦實質上如何看待garbageRoutes
+typeof(garbageRoutes)  
+# class(): 查詢電腦把它能進行的操作運算歸屬於哪一類型
+class(garbageRoutes) #代表garbageRoutes這筆資料除了能使用list所有操作手法外，還可以用data.frame的操作
+# 由linename元素判斷垃圾車有幾條路線。
+factor(garbageRoutes$linename) -> garbageRoutes$linename
+levels(garbageRoutes$linename)
+# 由linename創造： 可篩選出下午路線的「要/不要」向量pick_afternoonRoutes。
+pick_afternoonRoutes <- stringr::str_detect(garbageRoutes$linename,"下午")
+garbageRoutes_afternoon <- unique(garbageRoutes$linename[pick_afternoonRoutes])
+```
+#### 4.4.5.1 閱讀函數說明  
+```
+?str_detect
+```
+##### str_detect {.tabset .tabset-pills}  
+###### Title  
+Detect the presence or absence of a pattern in a string.
+
+###### Description
+Vectorised over string and pattern. Equivalent to grepl(pattern, x). See str_which() for an equivalent to grep(pattern, x).
+
+###### Usage
+str_detect(string, pattern, negate = FALSE)
+
+###### Arguments
+string:
+input character vector. Either a character vector, or something coercible to one.
+
+pattern:
+Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, "“, is equivalent to boundary(”character").
+
+negate:
+If TRUE, return non-matching elements.
+
+###### Value
+A logical vector.
+
+###### Examples
+```{r}
+library(stringr)
+fruit <- c("apple", "banana", "pear", "pinapple")
+str_detect(fruit, "a")
+str_detect(fruit, "^a") #字首為a開頭
+str_detect(fruit, "a$") #字尾為a結尾
+str_detect(fruit, "b")
+str_detect(fruit, "[aeiou]") #有出現a,e,i,o,或u
+# Also vectorised over pattern
+str_detect("aecfg", letters)
+# Returns TRUE if the pattern do NOT match
+str_detect(fruit, "^p", negate = TRUE)
+```
+###### {-}
 
 
 
+疾病管制署傳染病答問集: 找出問題中包含“肺炎”字眼的問題
+```{r}
+CDC_chatbox <- readr::read_csv("http://od.cdc.gov.tw/pr/CDC_chatbox.csv")
+
+```
+
+。
 
 
 

@@ -1452,158 +1452,6 @@ str(weather)</code></pre>
 <pre><code>## highest_temp 
 ##           18</code></pre>
 </div>
-<div id="list補充" class="section level4">
-<h4>4.1.3.2 list補充</h4>
-<pre class="r"><code>library(jsonlite)
-fromJSON(&quot;https://www.dropbox.com/s/6252gbdnv9owljm/dance.json?dl=1&quot;, simplifyDataFrame = F) -&gt; dance
-# 前三筆演出的名稱
-dance[[1]]$title</code></pre>
-<pre><code>## [1] &quot;傳統藝術接班人－傳統工藝推廣計畫&quot;</code></pre>
-<pre class="r"><code>dance[[2]]$title</code></pre>
-<pre><code>## [1] &quot;2020TIFA 布拉瑞揚舞團《沒有害怕太陽和下雨》─ 延期&quot;</code></pre>
-<pre class="r"><code>dance[[3]]$title </code></pre>
-<pre><code>## [1] &quot;2020TIFA 舞蹈空間與東京 鷹《月球水2.0》─ 延期&quot;</code></pre>
-<p>若要針對向量或list裡的每個元素反覆進行相同操作，purrr是相當方便的套件，最常用的是: <code>map(向量或串列, 每個元素要做的事)</code></p>
-<pre class="r"><code>library(purrr)</code></pre>
-<pre><code>## 
-## Attaching package: 'purrr'</code></pre>
-<pre><code>## The following object is masked from 'package:jsonlite':
-## 
-##     flatten</code></pre>
-<pre class="r"><code>map(dance,~.x$title) -&gt; dance_title
-dance[[1]]$showInfo</code></pre>
-<pre><code>## [[1]]
-## [[1]]$time
-## [1] &quot;2020/01/15 09:00:00&quot;
-## 
-## [[1]]$location
-## [1] &quot;268  宜蘭縣五結鄉五濱路二段201號&quot;
-## 
-## [[1]]$locationName
-## [1] &quot;宜蘭傳藝園區-展示館&quot;
-## 
-## [[1]]$onSales
-## [1] &quot;N&quot;
-## 
-## [[1]]$price
-## [1] &quot;&quot;
-## 
-## [[1]]$latitude
-## NULL
-## 
-## [[1]]$longitude
-## NULL
-## 
-## [[1]]$endTime
-## [1] &quot;2020/12/15 09:00:00&quot;</code></pre>
-<pre class="r"><code>length(dance[[1]]$showInfo)</code></pre>
-<pre><code>## [1] 1</code></pre>
-<pre class="r"><code>dance[[2]]$showInfo</code></pre>
-<pre><code>## [[1]]
-## [[1]]$time
-## [1] &quot;2020/04/17 19:30:00&quot;
-## 
-## [[1]]$location
-## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
-## 
-## [[1]]$locationName
-## [1] &quot;國家戲劇院&quot;
-## 
-## [[1]]$onSales
-## [1] &quot;Y&quot;
-## 
-## [[1]]$price
-## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
-## 
-## [[1]]$latitude
-## NULL
-## 
-## [[1]]$longitude
-## NULL
-## 
-## [[1]]$endTime
-## [1] &quot;&quot;
-## 
-## 
-## [[2]]
-## [[2]]$time
-## [1] &quot;2020/04/18 19:30:00&quot;
-## 
-## [[2]]$location
-## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
-## 
-## [[2]]$locationName
-## [1] &quot;國家戲劇院&quot;
-## 
-## [[2]]$onSales
-## [1] &quot;Y&quot;
-## 
-## [[2]]$price
-## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
-## 
-## [[2]]$latitude
-## NULL
-## 
-## [[2]]$longitude
-## NULL
-## 
-## [[2]]$endTime
-## [1] &quot;&quot;
-## 
-## 
-## [[3]]
-## [[3]]$time
-## [1] &quot;2020/04/19 14:30:00&quot;
-## 
-## [[3]]$location
-## [1] &quot;臺北市中山南路21-1號，愛國東路側&quot;
-## 
-## [[3]]$locationName
-## [1] &quot;國家戲劇院&quot;
-## 
-## [[3]]$onSales
-## [1] &quot;Y&quot;
-## 
-## [[3]]$price
-## [1] &quot;600,800,1000,1200,1400,1600,2000,2500&quot;
-## 
-## [[3]]$latitude
-## NULL
-## 
-## [[3]]$longitude
-## NULL
-## 
-## [[3]]$endTime
-## [1] &quot;&quot;</code></pre>
-<pre class="r"><code>length(dance[[2]]$showInfo)</code></pre>
-<pre><code>## [1] 3</code></pre>
-<pre class="r"><code>#length(dance[[1]]$showInfo)
-#length(dance[[2]]$showInfo)
-# ...
-#length(dance[[34]]$showInfo)
-
-map(dance,~length(.x$showInfo)) -&gt; dance_showInfoLength</code></pre>
-<pre class="r"><code>#選出每個活動的「活動起始日期」
-map(dance,~.x$startDate) -&gt; dance_startDate
-#選出每個活動的「活動名稱」及「活動起始日期」
-map(dance,~.x[c(&quot;title&quot;, &quot;startDate&quot;)]) -&gt; dance_titleStartDate
-#選出每個活動showInfo下的每場次之「單場次演出時間」及「場地名稱」（只用到map, 及~。）</code></pre>
-<pre class="r"><code>#新北市公車路線清單: 找出Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)
-jsonlite::fromJSON(&quot;https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json&quot;, simplifyDataFrame = F) -&gt; busRoutes
-map(busRoutes,~.x[c(&quot;Id&quot;,&quot;providerId&quot;,&quot;providerName&quot;,&quot;nameZh&quot;)]) -&gt; busRoutesInfo
-busRoutesInfo[[1]]</code></pre>
-<pre><code>## $Id
-## [1] &quot;16586&quot;
-## 
-## $providerId
-## [1] &quot;16176&quot;
-## 
-## $providerName
-## [1] &quot;臺北客運&quot;
-## 
-## $nameZh
-## [1] &quot;藍46&quot;</code></pre>
-</div>
 </div>
 </div>
 <div id="新增替換刪除元素" class="section level2">
@@ -1799,6 +1647,408 @@ str(list1)</code></pre>
 ##   ..$ registered: logi TRUE
 ##  $ :List of 1
 ##   ..$ age: num 21</code></pre>
+</div>
+</div>
+<div id="on-numeric-class" class="section level2">
+<h2>4.3 On numeric class</h2>
+<p>加、減、乘、除: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code><br />
+餘數: <code>%%</code><br />
+次方: <code>**</code> 或 <code>^</code></p>
+<pre class="r"><code>a &lt;- c(2, 3, 5)
+b &lt;- c(4,-1, 3)
+a+b</code></pre>
+<pre><code>## [1] 6 2 8</code></pre>
+<pre class="r"><code>a-b</code></pre>
+<pre><code>## [1] -2  4  2</code></pre>
+<pre class="r"><code>a*b</code></pre>
+<pre><code>## [1]  8 -3 15</code></pre>
+<pre class="r"><code>a/b</code></pre>
+<pre><code>## [1]  0.500000 -3.000000  1.666667</code></pre>
+<pre class="r"><code>a %% b</code></pre>
+<pre><code>## [1] 2 0 2</code></pre>
+<pre class="r"><code>a ** b</code></pre>
+<pre><code>## [1]  16.0000000   0.3333333 125.0000000</code></pre>
+<pre class="r"><code>#奇、偶數判斷  
+sequenceNums &lt;- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
+print(sequenceNums)</code></pre>
+<pre><code>##  [1] 11  6  8 11 12 11  3  7 10  8</code></pre>
+<pre class="r"><code>sequenceNums %% 2 # 餘數為1則是奇數，0則是偶數</code></pre>
+<pre><code>##  [1] 1 0 0 1 0 1 1 1 0 0</code></pre>
+<p>在多數時候R向量間的運算都是<strong>elementwise</strong>(個別元素)的運算：</p>
+<p>所有向量一一取出各自對應相同位置的元素值進行運算</p>
+<pre><code># a+b 即等於
+c(2+4, 3+(-1), 5+3)
+# a**b 即等於
+c(2**4, 3**(-1), 5**3)</code></pre>
+<p>當向量間不等長度時，R會對短的向量進行Recycle的動作（即Python的Broadcast）:</p>
+<p>將其中較短的向量反複堆疊到可以長得跟最長的向量一樣長度</p>
+<pre><code>5*c(1,3,4)+7
+# 對向量5，向量7進行recycle:
+c(5,5,5)*c(1,3,4)+c(7,7,7)
+# Recycle等長後才進行elementwise operation:
+c(5*1+7, 5*3+7, 5*4+7)</code></pre>
+<p>當運算的兩物件內容長度不同時，則將其中較短的一個反複堆疊到可以長得跟另一個一樣高時才來運算，稱為recycling</p>
+<pre class="r"><code># 狀況一: 堆疊一定倍數剛好一樣長
+c(2,3)/c(-2,-13,10,22)</code></pre>
+<pre><code>## [1] -1.0000000 -0.2307692  0.2000000  0.1363636</code></pre>
+<pre class="r"><code>c(2,3,2,3)/c(-2,-13,10,22)</code></pre>
+<pre><code>## [1] -1.0000000 -0.2307692  0.2000000  0.1363636</code></pre>
+<pre class="r"><code># 狀況二: 倍數堆疊一定會超過，只好截斷
+c(2,3)/c(-2,-13,10)</code></pre>
+<pre><code>## Warning in c(2, 3)/c(-2, -13, 10): 較長的物件長度並非較短物件長度的倍數</code></pre>
+<pre><code>## [1] -1.0000000 -0.2307692  0.2000000</code></pre>
+<pre class="r"><code>c(2,3,2)/c(-2,-13,10)</code></pre>
+<pre><code>## [1] -1.0000000 -0.2307692  0.2000000</code></pre>
+<p>Recycling不只用在數值class，只要向量間的處理要等長度才合理時，recycling通常也會用在其他的class</p>
+<pre class="r"><code>paste0(c(&quot;我叫&quot;), c(&quot;小明&quot;,&quot;小美&quot;))</code></pre>
+<pre><code>## [1] &quot;我叫小明&quot; &quot;我叫小美&quot;</code></pre>
+<pre class="r"><code>#也等於是
+paste0(c(&quot;我叫&quot;,&quot;我叫&quot;), c(&quot;小明&quot;,&quot;小美&quot;))</code></pre>
+<pre><code>## [1] &quot;我叫小明&quot; &quot;我叫小美&quot;</code></pre>
+</div>
+<div id="relational-operators" class="section level2">
+<h2>4.4 Relational Operators</h2>
+<pre class="r"><code>example &lt;- list(
+  name=c(&quot;小明&quot;,&quot;小花&quot;,&quot;小新&quot;,&quot;美美&quot;),
+  height=c(175,166,170,160),
+  weight=c(77,NA,60,43),
+  birthday=lubridate::ymd(c(&quot;1998-03-11&quot;,&quot;1999-12-22&quot;,&quot;1995-08-22&quot;,&quot;2001-10-10&quot;)),
+  hobby=c(&quot;美食 旅遊&quot;,&quot;旅遊 時尚&quot;,&quot;3C 美食&quot;,&quot;音樂 旅遊&quot;),
+  residence=c(&quot;Taipei&quot;,&quot;New Taipei&quot;,&quot;Taichung&quot;,&quot;Kaohsiung&quot;),
+  allowance=factor(c(&quot;0-1000&quot;,&quot;1001-2000&quot;,&quot;2000+&quot;,&quot;1001-2000&quot;)),
+  bloodType=c(&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;O&quot;)
+)</code></pre>
+<div id="比較" class="section level3">
+<h3>4.4.1 比較</h3>
+<p><code>&gt;</code>，<code>&lt;</code>，<code>&lt;=</code>，<code>&gt;=</code>: 分別為大於、小於、小於等於、大於等於</p>
+<ul>
+<li><p>數字比較</p></li>
+<li><p>時間比較</p></li>
+<li><p>可排序類別資料比較 (需先將類別資料的類別排序)</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>數字比較 example裡誰的身高大於等於170</li>
+</ol>
+<pre class="r"><code>str(example[c(&quot;name&quot;,&quot;height&quot;)])</code></pre>
+<pre><code>## List of 2
+##  $ name  : chr [1:4] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+##  $ height: num [1:4] 175 166 170 160</code></pre>
+<pre class="r"><code>pick_above170 &lt;- example$height &gt;= 170
+example$name[pick_above170]</code></pre>
+<pre><code>## [1] &quot;小明&quot; &quot;小新&quot;</code></pre>
+<p>不同屆入學學生在2年級的學業表現</p>
+<pre class="r"><code>#匯入transcript100to103的資料
+source(&quot;https://www.dropbox.com/s/qsrw069n94k61lj/transcript100to103_list.R?dl=1&quot;) </code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   年級 = col_double(),
+##   學屆 = col_double(),
+##   學系 = col_character(),
+##   學院 = col_character(),
+##   成績 = col_double()
+## )</code></pre>
+<pre class="r"><code># 只要成績大於85的
+pick_above85 &lt;- transcript100to103$`成績` &gt; 85
+# 各學屆2年級人數
+table(transcript100to103$`學屆`) #table適用於類別資料或間斷資料，顯示各個類別的重複次數</code></pre>
+<pre><code>## 
+##  100  101  102  103 
+## 1337 1424 1441 1447</code></pre>
+<pre class="r"><code># 各學屆2年級成績大於85人數
+table(transcript100to103$`學屆`[pick_above85])</code></pre>
+<pre><code>## 
+## 100 101 102 103 
+## 251 293 296 359</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>時間比較:</li>
+</ol>
+<p>example裡誰1998年(含)以後出生</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;birthday&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $birthday
+## [1] &quot;1998-03-11&quot; &quot;1999-12-22&quot; &quot;1995-08-22&quot; &quot;2001-10-10&quot;</code></pre>
+<pre class="r"><code>pick_after98 &lt;- example$birthday &gt;= lubridate::ymd(&quot;1998-01-01&quot;)
+example$name[pick_after98]</code></pre>
+<pre><code>## [1] &quot;小明&quot; &quot;小花&quot; &quot;美美&quot;</code></pre>
+<p>美元匯率: 選1998年1月(含)以後的匯率</p>
+<pre class="r"><code>#匯入exchangeRate的資料
+source(&quot;https://www.dropbox.com/s/16h6ggua6qtydci/exchangeRate.R?dl=1&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   期間 = col_date(format = &quot;&quot;),
+##   幣別 = col_character(),
+##   匯率 = col_double()
+## )</code></pre>
+<pre class="r"><code># 只要1998年1月（含）以後的
+library(lubridate)
+pick_after98_01 &lt;- exchangeRate$`期間` &gt;= ymd(&quot;1998-01-01&quot;)
+exchangeRate_after98 &lt;- list(`期間`=exchangeRate$`期間`[pick_after98_01],
+                             `幣別`=exchangeRate$`幣別`[pick_after98_01],
+                             `匯率`=exchangeRate$`匯率`[pick_after98_01]
+                             )</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>可排序類別資料比較:</li>
+</ol>
+<p>factor資料可進一步分成可排序與不可排序的，如:</p>
+<ul>
+<li>可排序: 以年齡層區分的類別，以所得級距區分的類別等<br />
+</li>
+<li>不排序: 性別，學系等</li>
+</ul>
+<p>factor的設定在不調整時內定為不可排序資料，如要改成可排序類別資料，以先前已處理好的example$allowance為例:</p>
+<pre class="r"><code>example$allowance &lt;- ordered(example$allowance)</code></pre>
+<p>或在設定為factor時即把levels排好，並ordered=T:</p>
+<pre class="r"><code>example$allowance &lt;- factor(example$allowance,
+                            levels=c(&quot;0-1000&quot;, &quot;1001-2000&quot;, &quot;2000+&quot;),
+                            ordered = T # 設定為可排序factor
+                            )</code></pre>
+<p>example裡誰零用錢大於1000</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;allowance&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $allowance
+## [1] 0-1000    1001-2000 2000+     1001-2000
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+</code></pre>
+<pre class="r"><code>pick_allowanceOver1000 &lt;- example$allowance &gt;= &quot;1001-2000&quot;
+example$name[pick_allowanceOver1000]</code></pre>
+<pre><code>## [1] &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;</code></pre>
+<p>刑事案件被害者人數</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/3uijub7xheib405/list_victimAges_female.json?dl=1&quot;, simplifyDataFrame = F) -&gt; list_victimAges_female
+list_victimAges_female$`數目` &lt;- as.integer(list_victimAges_female$`數目`)
+list_victimAges_female$`年齡層` &lt;- as.factor(list_victimAges_female$`年齡層`)</code></pre>
+<pre class="r"><code>levels(list_victimAges_female$`年齡層`) -&gt; levels_ages
+print(levels_ages)</code></pre>
+<pre><code>##  [1] &quot;0_5歲&quot;    &quot;12_17歲&quot;  &quot;18_23歲&quot;  &quot;24_29歲&quot;  &quot;30_39歲&quot;  &quot;40_49歲&quot; 
+##  [7] &quot;50_59歲&quot;  &quot;6_11歲&quot;   &quot;60_64歲&quot;  &quot;65_69歲&quot;  &quot;70歲以上&quot; &quot;不詳&quot;    
+## [13] &quot;總計&quot;</code></pre>
+<pre class="r"><code>#將levels順序改成: 不詳、總計、0_5歲、12_17歲、...、70歲以上
+levels_new &lt;- c(levels_ages[c(12,13,1,8,2:7,9:11)])
+levels(list_victimAges_female$`年齡層`) &lt;- levels_new
+list_victimAges_female$`年齡層` &lt;- ordered(list_victimAges_female$`年齡層`)</code></pre>
+<p>「30_39歲以上受害者」的數目</p>
+<pre class="r"><code>sum(list_victimAges_female$`數目`, na.rm=T) #將數目中資料為NA的排除再加總，若數值資料中有NA將無法加總運算</code></pre>
+<pre><code>## [1] 276050</code></pre>
+<pre class="r"><code>pick_above30 &lt;- list_victimAges_female$`年齡層` &gt;= &quot;30_39歲&quot;
+sum(list_victimAges_female$`數目`[pick_above30], na.rm = T)</code></pre>
+<pre><code>## [1] 148492</code></pre>
+</div>
+<div id="相等屬於" class="section level3">
+<h3>4.4.2 相等、屬於</h3>
+<p><code>==</code>: 等於</p>
+<p><code>!=</code>: 不等於</p>
+<p>[<code>==</code>與<code>!=</code>可使用於字串]</p>
+<p><code>%in%</code>: 屬於(左邊元素「一一」檢視是不是屬於右邊元素集合)</p>
+<p>example裡誰血型B型</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;bloodType&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $bloodType
+## [1] &quot;A&quot; &quot;B&quot; &quot;B&quot; &quot;O&quot;</code></pre>
+<pre class="r"><code>pick_bloodB &lt;- example$bloodType == &quot;B&quot;
+example$name[pick_bloodB]</code></pre>
+<pre><code>## [1] &quot;小花&quot; &quot;小新&quot;</code></pre>
+<p>創造可留下偶數的「要/不要」向量pick_evens</p>
+<pre class="r"><code>sequenceNums &lt;- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
+pick_evens &lt;- (sequenceNums%%2) == 0
+sequenceNums[pick_evens]</code></pre>
+<pre><code>## [1]  6  8 12 10  8</code></pre>
+<pre class="r"><code>x &lt;- c(1,5,8)
+y &lt;- c(5,8)
+# x裡的元素值是不是屬於y集合
+x %in% y</code></pre>
+<pre><code>## [1] FALSE  TRUE  TRUE</code></pre>
+<p>example裡誰來自大台北</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;residence&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $residence
+## [1] &quot;Taipei&quot;     &quot;New Taipei&quot; &quot;Taichung&quot;   &quot;Kaohsiung&quot;</code></pre>
+<pre class="r"><code>set_TaipeiMetro &lt;- c(&quot;Taipei&quot;,&quot;New Taipei&quot;)
+pick_fromTaipeiMetro &lt;- example$residence %in% set_TaipeiMetro
+example$name[pick_fromTaipeiMetro]</code></pre>
+<pre><code>## [1] &quot;小明&quot; &quot;小花&quot;</code></pre>
+<p>創造可選出來自法商學院的「要/不要」向量，pick_lawBusiness</p>
+<pre class="r"><code>str(transcript100to103)</code></pre>
+<pre><code>## List of 5
+##  $ 年級: num [1:5649] 2 2 2 2 2 2 2 2 2 2 ...
+##  $ 學屆: num [1:5649] 100 100 100 100 100 100 100 100 100 100 ...
+##  $ 學系: chr [1:5649] &quot;法律學系法學組&quot; &quot;法律學系法學組&quot; &quot;法律學系法學組&quot; &quot;法律學系法學組&quot; ...
+##  $ 學院: chr [1:5649] &quot;法學院&quot; &quot;法學院&quot; &quot;法學院&quot; &quot;法學院&quot; ...
+##  $ 成績: num [1:5649] 81.1 64.2 70.3 79.9 85.7 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   年級 = col_double(),
+##   ..   學屆 = col_double(),
+##   ..   學系 = col_character(),
+##   ..   學院 = col_character(),
+##   ..   成績 = col_double()
+##   .. )</code></pre>
+<pre class="r"><code>unique(transcript100to103$`學院`) #table適用於類別資料或間斷資料，顯示有哪些類別</code></pre>
+<pre><code>## [1] &quot;法學院&quot;       &quot;公共行政學院&quot; &quot;社會科學院&quot;   &quot;文學院&quot;       &quot;商學院&quot;      
+## [6] &quot;電資學院&quot;</code></pre>
+<pre class="r"><code>pick_lawBusiness &lt;- transcript100to103$`學院` %in% c(&quot;法學院&quot;,&quot;商學院&quot;)</code></pre>
+</div>
+<div id="negation否定用法" class="section level3">
+<h3>4.4.3 Negation(否定用法)</h3>
+<p>在「要/不要」向量前加上<code>!</code>會成為否定句的「要/不要」向量，元素裡的TRUE會轉成FALSE, FALSE則轉成TRUE</p>
+<pre class="r"><code>pick_not_fromTaipeiMetro &lt;- !pick_fromTaipeiMetro
+# 或
+pick_not_fromTaipeiMetro &lt;- !(example$residence %in% set_TaipeiMetro) 
+print(example[c(&quot;name&quot;,&quot;residence&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $residence
+## [1] &quot;Taipei&quot;     &quot;New Taipei&quot; &quot;Taichung&quot;   &quot;Kaohsiung&quot;</code></pre>
+<pre class="r"><code>example$name[pick_not_fromTaipeiMetro]</code></pre>
+<pre><code>## [1] &quot;小新&quot; &quot;美美&quot;</code></pre>
+<pre class="r"><code># 或
+example$name[!pick_fromTaipeiMetro]</code></pre>
+<pre><code>## [1] &quot;小新&quot; &quot;美美&quot;</code></pre>
+</div>
+<div id="資料狀態" class="section level3">
+<h3>4.4.4 資料狀態</h3>
+<ul>
+<li><p><code>is.na</code>: 有缺失</p></li>
+<li><p><code>is.{class/type name}</code>: 例如<code>is.integer</code>, <code>is.character</code>, <code>is.factor</code>, …等</p></li>
+</ul>
+<p>有時資料有缺失，在R裡會記成NA(即not available)如下例:</p>
+<pre class="r"><code>x2 &lt;- c(1,NA,10)
+y2 &lt;- c(-1,NA,20)
+x3 &lt;- c(NA,&quot;小花&quot;)
+y3 &lt;- c(NA,&quot;小華&quot;)
+is.na(x2)</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE</code></pre>
+<p>example裡誰沒有體重資料</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;weight&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $weight
+## [1] 77 NA 60 43</code></pre>
+<pre class="r"><code>pick_na &lt;- is.na(example$weight)
+example$name[pick_na]</code></pre>
+<pre><code>## [1] &quot;小花&quot;</code></pre>
+<p>R還有一種特別的缺失資料NaN (即not a number)，出現在沒有定義的數學運算上，如:</p>
+<pre class="r"><code>0/0</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<p>創立可選出缺失資料的「要/不要」向量pick_na, 並計算有多少筆缺失</p>
+<pre class="r"><code>list_victimAges_female$`數目` &lt;- as.integer(list_victimAges_female$`數目`)
+pick_na &lt;- is.na(list_victimAges_female$`數目`)
+total_na &lt;- sum(pick_na)
+print(total_na)</code></pre>
+<pre><code>## [1] 52</code></pre>
+</div>
+<div id="字元偵測" class="section level3">
+<h3>4.4.5 字元偵測</h3>
+<p><code>stringr::str_detect()</code></p>
+<p>example裡誰喜歡美食</p>
+<pre class="r"><code>print(example[c(&quot;name&quot;,&quot;hobby&quot;)])</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $hobby
+## [1] &quot;美食 旅遊&quot; &quot;旅遊 時尚&quot; &quot;3C 美食&quot;   &quot;音樂 旅遊&quot;</code></pre>
+<pre class="r"><code>pick_loveFood &lt;- stringr::str_detect(example$hobby,&quot;美食&quot;)
+example$name[pick_loveFood]</code></pre>
+<pre><code>## [1] &quot;小明&quot; &quot;小新&quot;</code></pre>
+<p>新北市垃圾車路線</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://data.ntpc.gov.tw/od/data/api/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8?$format=json&quot;) -&gt; garbageRoutes
+# typeof(): 查詢電腦實質上如何看待garbageRoutes
+typeof(garbageRoutes)  </code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="r"><code># class(): 查詢電腦把它能進行的操作運算歸屬於哪一類型
+class(garbageRoutes) #代表garbageRoutes這筆資料除了能使用list所有操作手法外，還可以用data.frame的操作</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<pre class="r"><code># 由linename元素判斷垃圾車有幾條路線。
+factor(garbageRoutes$linename) -&gt; garbageRoutes$linename
+levels(garbageRoutes$linename)</code></pre>
+<pre><code>##  [1] &quot;A01路線下午&quot;         &quot;A02路線下午&quot;         &quot;A03路線下午&quot;        
+##  [4] &quot;A04路線下午&quot;         &quot;A05路線下午&quot;         &quot;A09路線&quot;            
+##  [7] &quot;A10路線下午&quot;         &quot;A11路線(一、四)下午&quot; &quot;A12路線下午(1.4版)&quot; 
+## [10] &quot;A13路線下午&quot;         &quot;A14路線下午&quot;         &quot;A16路線&quot;            
+## [13] &quot;A17路線下午&quot;         &quot;A19路線下午&quot;         &quot;A路線下午&quot;          
+## [16] &quot;B01路線下午&quot;         &quot;B02路線(一、四)下午&quot; &quot;B03路線下午&quot;        
+## [19] &quot;B04路線下午&quot;         &quot;B06路線下午&quot;         &quot;B08路線下午&quot;        
+## [22] &quot;B09路線下午&quot;         &quot;B路線下午&quot;           &quot;C路線晚上&quot;          
+## [25] &quot;D路線晚上&quot;           &quot;金山1路線 晚上1&quot;     &quot;金山2路線 晚上1&quot;    
+## [28] &quot;金山3路線 晚上1&quot;</code></pre>
+<pre class="r"><code># 由linename創造： 可篩選出下午路線的「要/不要」向量pick_afternoonRoutes。
+pick_afternoonRoutes &lt;- stringr::str_detect(garbageRoutes$linename,&quot;下午&quot;)
+garbageRoutes_afternoon &lt;- unique(garbageRoutes$linename[pick_afternoonRoutes])</code></pre>
+<div id="閱讀函數說明" class="section level4">
+<h4>4.4.5.1 閱讀函數說明</h4>
+<pre><code>?str_detect</code></pre>
+<div id="str_detect" class="section level5 tabset tabset-pills">
+<h5>str_detect</h5>
+<div id="title" class="section level6">
+<h6>Title</h6>
+<p>Detect the presence or absence of a pattern in a string.</p>
+</div>
+<div id="description" class="section level6">
+<h6>Description</h6>
+<p>Vectorised over string and pattern. Equivalent to grepl(pattern, x). See str_which() for an equivalent to grep(pattern, x).</p>
+</div>
+<div id="usage" class="section level6">
+<h6>Usage</h6>
+<p>str_detect(string, pattern, negate = FALSE)</p>
+</div>
+<div id="arguments" class="section level6">
+<h6>Arguments</h6>
+<p>string: input character vector. Either a character vector, or something coercible to one.</p>
+<p>pattern: Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, ““, is equivalent to boundary(”character”).</p>
+<p>negate: If TRUE, return non-matching elements.</p>
+</div>
+<div id="value" class="section level6">
+<h6>Value</h6>
+<p>A logical vector.</p>
+</div>
+<div id="examples" class="section level6">
+<h6>Examples</h6>
+<pre class="r"><code>library(stringr)
+fruit &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;pinapple&quot;)
+str_detect(fruit, &quot;a&quot;)</code></pre>
+<pre><code>## [1] TRUE TRUE TRUE TRUE</code></pre>
+<pre class="r"><code>str_detect(fruit, &quot;^a&quot;) #字首為a開頭</code></pre>
+<pre><code>## [1]  TRUE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>str_detect(fruit, &quot;a$&quot;) #字尾為a結尾</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE FALSE</code></pre>
+<pre class="r"><code>str_detect(fruit, &quot;b&quot;)</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE FALSE</code></pre>
+<pre class="r"><code>str_detect(fruit, &quot;[aeiou]&quot;) #有出現a,e,i,o,或u</code></pre>
+<pre><code>## [1] TRUE TRUE TRUE TRUE</code></pre>
+<pre class="r"><code># Also vectorised over pattern
+str_detect(&quot;aecfg&quot;, letters)</code></pre>
+<pre><code>##  [1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [25] FALSE FALSE</code></pre>
+<pre class="r"><code># Returns TRUE if the pattern do NOT match
+str_detect(fruit, &quot;^p&quot;, negate = TRUE)</code></pre>
+<pre><code>## [1]  TRUE  TRUE FALSE FALSE</code></pre>
+</div>
+<div id="section" class="section level6 unnumbered">
+<h6></h6>
+<p>疾病管制署傳染病答問集: 找出問題中包含“肺炎”字眼的問題</p>
+<pre class="r"><code>CDC_chatbox &lt;- readr::read_csv(&quot;http://od.cdc.gov.tw/pr/CDC_chatbox.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   No = col_double(),
+##   Disease = col_character(),
+##   Question = col_character(),
+##   Answer1 = col_character(),
+##   Answer2 = col_character(),
+##   Answer3 = col_character(),
+##   Answer4 = col_character()
+## )</code></pre>
+<p>。</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
