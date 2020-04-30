@@ -1983,33 +1983,26 @@ pick_afternoonRoutes &lt;- stringr::str_detect(garbageRoutes$linename,&quot;下�
 garbageRoutes_afternoon &lt;- unique(garbageRoutes$linename[pick_afternoonRoutes])</code></pre>
 <div id="閱讀函數說明" class="section level4">
 <h4>4.4.5.1 閱讀函數說明</h4>
-<pre><code>?str_detect</code></pre>
-<div id="str_detect" class="section level5 tabset tabset-pills">
-<h5>str_detect</h5>
-<div id="title" class="section level6">
-<h6>Title</h6>
-<p>Detect the presence or absence of a pattern in a string.</p>
-</div>
-<div id="description" class="section level6">
-<h6>Description</h6>
-<p>Vectorised over string and pattern. Equivalent to grepl(pattern, x). See str_which() for an equivalent to grep(pattern, x).</p>
-</div>
-<div id="usage" class="section level6">
-<h6>Usage</h6>
-<p>str_detect(string, pattern, negate = FALSE)</p>
-</div>
-<div id="arguments" class="section level6">
-<h6>Arguments</h6>
-<p>string: input character vector. Either a character vector, or something coercible to one.</p>
-<p>pattern: Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, ““, is equivalent to boundary(”character”).</p>
-<p>negate: If TRUE, return non-matching elements.</p>
-</div>
-<div id="value" class="section level6">
-<h6>Value</h6>
-<p>A logical vector.</p>
-</div>
-<div id="examples" class="section level6">
-<h6>Examples</h6>
+<pre class="r"><code>?str_detect</code></pre>
+<ul>
+<li><p>Title<br />
+Detect the presence or absence of a pattern in a string.</p></li>
+<li><p>Description<br />
+Vectorised over string and pattern. Equivalent to <code>grep(pattern, x)</code>. See <code>str_which()</code> for an equivalent to <code>grep(pattern, x)</code>.</p></li>
+<li>Usage <code>str_detect(string, pattern, negate = FALSE)</code></li>
+<li>Arguments
+<ul>
+<li><p>string:<br />
+input character vector. Either a character vector, or something coercible to one.</p></li>
+<li><p>pattern:<br />
+Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, ““, is equivalent to boundary(”character”).</p></li>
+<li><p>negate:<br />
+If TRUE, return non-matching elements.</p></li>
+</ul></li>
+<li><p>Value<br />
+A logical vector.</p></li>
+<li><p>Examples</p></li>
+</ul>
 <pre class="r"><code>library(stringr)
 fruit &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;pinapple&quot;)
 str_detect(fruit, &quot;a&quot;)</code></pre>
@@ -2022,17 +2015,6 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 <pre><code>## [1] FALSE  TRUE FALSE FALSE</code></pre>
 <pre class="r"><code>str_detect(fruit, &quot;[aeiou]&quot;) #有出現a,e,i,o,或u</code></pre>
 <pre><code>## [1] TRUE TRUE TRUE TRUE</code></pre>
-<pre class="r"><code># Also vectorised over pattern
-str_detect(&quot;aecfg&quot;, letters)</code></pre>
-<pre><code>##  [1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [25] FALSE FALSE</code></pre>
-<pre class="r"><code># Returns TRUE if the pattern do NOT match
-str_detect(fruit, &quot;^p&quot;, negate = TRUE)</code></pre>
-<pre><code>## [1]  TRUE  TRUE FALSE FALSE</code></pre>
-</div>
-<div id="section" class="section level6 unnumbered">
-<h6></h6>
 <p>疾病管制署傳染病答問集: 找出問題中包含“肺炎”字眼的問題</p>
 <pre class="r"><code>CDC_chatbox &lt;- readr::read_csv(&quot;http://od.cdc.gov.tw/pr/CDC_chatbox.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
@@ -2045,9 +2027,41 @@ str_detect(fruit, &quot;^p&quot;, negate = TRUE)</code></pre>
 ##   Answer3 = col_character(),
 ##   Answer4 = col_character()
 ## )</code></pre>
-<p>。</p>
-</div>
-</div>
+<pre class="r"><code>pick_pneumonia &lt;- stringr::str_detect(CDC_chatbox$Question,&quot;肺炎&quot;)
+CDC_chatbox$Question[pick_pneumonia]</code></pre>
+<pre><code>##  [1] &quot;什麼是侵襲性肺炎鏈球菌感染症？&quot;                    
+##  [2] &quot;侵襲性肺炎鏈球菌感染症會有什麼症狀？&quot;              
+##  [3] &quot;罹患侵襲性肺炎鏈球菌感染症的嚴重性？&quot;              
+##  [4] &quot;侵襲性肺炎鏈球菌感染症有什麼併發症&quot;                
+##  [5] &quot;侵襲性肺炎鏈球菌感染症有哪些高風險族群&quot;            
+##  [6] &quot;侵襲性肺炎鏈球菌感染症傳染途徑為何？&quot;              
+##  [7] &quot;侵襲性肺炎鏈球菌感染症潛伏期和可傳染期&quot;            
+##  [8] &quot;侵襲性肺炎鏈球菌感染症的國內流行期&quot;                
+##  [9] &quot;侵襲性肺炎鏈球菌感染症流行地區有哪些&quot;              
+## [10] &quot;如何預防侵襲性肺炎鏈球菌感染症&quot;                    
+## [11] &quot;除了接種或投藥外的侵襲性肺炎鏈球菌感染症預防方法&quot;  
+## [12] &quot;何時需要進行侵襲性肺炎鏈球菌感染症的預防接種或投藥&quot;
+## [13] &quot;接種侵襲性肺炎鏈球菌感染症疫苗該帶什麼證件？&quot;      
+## [14] &quot;我現在適合接種侵襲性肺炎鏈球菌感染症疫苗嗎？&quot;      
+## [15] &quot;我想了解侵襲性肺炎鏈球菌感染症疫苗或預防藥品&quot;      
+## [16] &quot;侵襲性肺炎鏈球菌感染症疫苗有哪些種類&quot;              
+## [17] &quot;侵襲性肺炎鏈球菌感染症疫苗有哪些廠牌&quot;              
+## [18] &quot;疑似感染侵襲性肺炎鏈球菌感染症了怎麼辦？&quot;          
+## [19] &quot;罹患侵襲性肺炎鏈球菌感染症要注意什麼？&quot;            
+## [20] &quot;罹患侵襲性肺炎鏈球菌感染症有需要隔離？&quot;            
+## [21] &quot;疑似罹患侵襲性肺炎鏈球菌感染症要去哪裡就醫？&quot;      
+## [22] &quot;侵襲性肺炎鏈球菌感染症要怎麼治療？&quot;                
+## [23] &quot;什麼是肺囊蟲肺炎？&quot;                                
+## [24] &quot;肺囊蟲肺炎會有什麼症狀？&quot;                          
+## [25] &quot;肺囊蟲肺炎有哪些高風險族群&quot;                        
+## [26] &quot;肺囊蟲肺炎傳染途徑為何？&quot;                          
+## [27] &quot;肺囊蟲肺炎潛伏期和可傳染期&quot;                        
+## [28] &quot;肺囊蟲肺炎流行地區有哪些&quot;                          
+## [29] &quot;如何預防肺囊蟲肺炎&quot;                                
+## [30] &quot;接種肺囊蟲肺炎疫苗需要額外付費嗎？&quot;                
+## [31] &quot;疑似感染肺囊蟲肺炎了怎麼辦？&quot;                      
+## [32] &quot;疑似罹患肺囊蟲肺炎要去哪裡就醫？&quot;                  
+## [33] &quot;肺囊蟲肺炎要怎麼治療？&quot;</code></pre>
 </div>
 </div>
 </div>
