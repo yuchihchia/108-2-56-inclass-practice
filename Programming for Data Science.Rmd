@@ -1088,7 +1088,7 @@ lubridate::ymd(
 ```
 然而即使忽略非數字文字，三個數字的組合誰是年？月？日？依然受每個國家日期書寫習慣影響，所以有時還是可能會有誤判。  
 
-### 4.6.1 正規表示式 Regular Expression (regex)  
+### 4.6.1 正規表示式 Regular Expression  
 一種廣義描述所要字串規律的表示法，分成兩部份:  
 
 * target pattern: 指對取出字串的描述。如“108”,“98”是我們想取出的字串。我們可以說目標是，  
@@ -1180,15 +1180,156 @@ str_count(headline, "謝無雙|官求敗")
 str_view_all(headline, "陳[^官]") # 固定字元＋有1個strip： 出象為排官的字元
 str_count(headline, "陳[^官]")
 ```
-請使用`str_extract`函數粹取出每個地址的"xx號"包含"號"字
+請使用`str_extract`函數粹取出每個地址的"xx號"包含"號"字  
 ```{r}
-addresses <- c('臺中市后里區公館里尾社路385號','新竹市東區科學園路125號1樓')
-strip1 <- "[:digit:]{1,3}(?=號)"
-strip2 <- "號"
-myRegexSlotMachine <- paste0(strip1,strip2)
+addresses <- c('臺中市后里區公館里尾社路385號',
+               '新竹市東區科學園路125號1樓')
+strip1 <- strip2 <- strip3 <- "[0-9]"
+strip4 <- "號"
+myRegexSlotMachine <- paste0(strip1,strip2,strip3,strip4)
 print(myRegexSlotMachine)
 str_extract(addresses,myRegexSlotMachine)
 ```
+### 4.6.3 複製次數 Quantifiers:
+`(..|..|...)`或`[...]`只是一條reel strip, 前者是寬的(每個出象可以是多字元)，後者是窄的(每個出象只是一個字元)。有時我們同樣的belt想連放很多條，可以在`(..|..|...)`或`[...]`後面加:  
+
+* `{n}`: 放n條belt，n是數字  
+* `+`: 放1條或以上(多少不限)  
+* `{n,m}`: 放n到m條belt，n及m都是數字  
+
+將以下地址的號數取出(含"號"字)   
+```{r}
+addresses <- c('臺中市后里區公館里尾社路385號',
+               '新竹市東區科學園路125號1樓',
+               '新竹市北區竹光路99號',
+               '金門縣金城鎮賢庵里山前33號',
+               '臺中市南屯區工業區二十四路23號1樓')
+myRegexSlotMachine <- "[0-9]+號"
+print(myRegexSlotMachine)
+str_view_all(addresses,myRegexSlotMachine)
+str_extract(addresses,myRegexSlotMachine)
+```
+了解如何regex形式的描述你的target後，接下來我們進一步學習如何更準確描述target在整個字串的位置
+### 4.6.4 頭尾定位 Anchors  
+
+* 在開頭: `^target_regex`  
+* 在結尾: `target_regex$`  
+```{r}
+phrase <- c("唧唧復唧唧")
+# 目標是前面的唧唧
+target_regex <- "唧唧"
+pattern <- glue::glue("^{target_regex}") 
+print(pattern)
+str_view(phrase, pattern) 
+```
+glue套件裡的glue函數會把字串中的{物值名稱}換成目前Environment裡該物件的值。在上面{target_regex}會被換成“唧唧”  
+```{r}
+# 目標是後面的唧唧
+target_regex2 <- "唧唧"
+pattern <- glue::glue("{target_regex2}$")
+print(pattern)
+str_view(phrase, pattern) 
+```
+### 4.6.5 前後鄰居描述Look around
+
+* target後面是B:　`target_regex(?=B_regex)`，例如target_pattern後面是年  
+* target前面是A: `(?<=A_regex)target_regex`，例如target_pattern前面是民國  
+* target前有A後有B：`(?<=A_regex)target_regex(?=B_regex)`  
+
+民國年月日存成date class:  
+```{r}
+twDate <- c("民國108年12月5日","民國98年10月5日")
+# 準備regex: 
+## 取出：「前有」民國，「後有」年的「數字」「們」
+target_regex <- "[0-9]+"
+A_regex <- "民國"
+B_regex <- "年"
+regex_pattern <- glue::glue("(?<={A_regex}){target_regex}(?={B_regex})")
+print(regex_pattern)
+## 如果同學已經很熟就可以直接寫
+regex_pattern <- "(?<=民國)[0-9]+(?=年)"
+# 取出民國年，計算西元年
+year <- str_extract(twDate, regex_pattern)
+westernYear <- as.integer(year)+1911
+# 替換民國xx年的xx成西元年數字
+str_replace(twDate,
+            regex_pattern,  # 要換掉的文字
+            as.character(westernYear) # 要替換的內容
+            ) -> twDate_reformat
+print(twDate_reformat)
+lubridate::ymd(twDate_reformat)
+```
+康熙元年是西元1662年，請將"康熙23年5月6日"轉成date class (假設月日已是西曆月日)  
+```{r}
+kangshiDate <- "康熙23年5月6日"
+regexPattern <- "(?<=康熙)[:digit:]+(?=年)"
+westernYear <- as.numeric(str_extract(kangshiDate,
+                                      regexPattern)
+                          )+1661
+kangshiDate_reformat <- str_replace(kangshiDate,
+                                    regexPattern,
+                                    as.character(westernYear)
+                                    )
+lubridate::ymd(kangshiDate_reformat)
+```
+之前我們使用str_extract函數粹取出以下地址的"xx號"包含"號"字，如果不要取到「號」字只取出數字  
+```{r}
+print(addresses)
+str_extract(addresses,
+            "[:digit:]+(?=號)")
+```
+### 4.6.6 字元模版  
+
+* `[:graph:]`: 包山包海，還包中文字元  
+* `[\u4E00-\u9FFF]`: 代表所有中日韓文字字元  
+```{r}
+str_extract_all("我的名字8293叫17380小abce明",
+                "[\u4E00-\u9FFF]+")
+```
+### 4.6.7 綜合練習  
+學期初在輸入Github inclass-practice-repo網址時，它要長得像  
+```
+https://github.com/...../108-2-XX-inclass-practice
+```
+其中XX只可以是56或78，以下是課程資訊表單學生填答的可能形式，請寫下正確格式的regex，並用`str_detect`判斷哪幾個人沒有正確填寫:  
+```{r}
+c("https://github.com/student1/108-2-78-inclass-practice", 
+  "github.com/student2 / 108-2-56-inclass-practice", 
+  "https://github.com/student3/108-2-56-inclass-practice",
+  "student4 / 108-2-56-inclass-practice",
+  "student5"
+  ) -> studentGithubURLs
+str_detect(studentGithubURLs,
+           "https://github.com/[:graph:]+/108-2-(56|78)-inclass-practice")
+```
+期中考檔案命名出現以下幾種寫法:  
+```{r}
+midtermFilename <- c("exam1-410773888.rmd",
+                     "exam1410882888.Rmd",
+                     "410682999第一次期中考.Rmd",
+                     "期中考310573888.R")
+# 請「只」以str_extract完成以下任務:  
+## 1. 取出9位數的學號(4或3開頭的數字)  
+student_id <- str_extract(midtermFilename, 
+                          "[43][:digit:]{8}")
+print(student_id)
+## 2. 系號是學號的第5-6兩位數字, 如410773082的系號是73  
+department <- str_extract(student_id, 
+                          "[:digit:]{2}(?=[:digit:]{3}$)")
+print(department)
+## 3. 如果多了兩位99年入學但休學多年的學生(學號只有8位數49975013及49977012，系號是第4-5位數），他們的檔案名稱分別是“exam149975013.Rmd”,“499770121stExam.Rmd”,執行以下程序更新midterFilename:  
+midtermFilename <- c(midtermFilename,"exam149975013.Rmd","499770121stExam.Rmd")
+student_id <- str_extract(midtermFilename, 
+                          "[43][:digit:]{7,8}")
+print(student_id)
+department <- str_extract(student_id, 
+                          "[:digit:]{2}(?=[:digit:]{3}$)")
+print(department)
+```
+
+
+
+
 
 
 

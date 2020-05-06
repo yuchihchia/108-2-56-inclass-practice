@@ -2147,8 +2147,8 @@ lubridate對年只有西元年的概念<br />
 <pre><code>## Warning: 5 failed to parse.</code></pre>
 <pre><code>## [1] NA NA NA NA NA</code></pre>
 <p>然而即使忽略非數字文字，三個數字的組合誰是年？月？日？依然受每個國家日期書寫習慣影響，所以有時還是可能會有誤判。</p>
-<div id="正規表示式-regular-expression-regex" class="section level3">
-<h3>4.6.1 正規表示式 Regular Expression (regex)</h3>
+<div id="正規表示式-regular-expression" class="section level3">
+<h3>4.6.1 正規表示式 Regular Expression</h3>
 <p>一種廣義描述所要字串規律的表示法，分成兩部份:</p>
 <ul>
 <li>target pattern: 指對取出字串的描述。如“108”,“98”是我們想取出的字串。我們可以說目標是，
@@ -2186,8 +2186,8 @@ lubridate對年只有西元年的概念<br />
 </ul>
 <pre class="r"><code>heartSutra &lt;- c(&quot;舍利子，色不異空，空不異色；色即是空，空即是色。&quot;)
 str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
-<div id="htmlwidget-ac1d7e175d516061d980" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac1d7e175d516061d980">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d866f7fcb49cac4f8e8f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d866f7fcb49cac4f8e8f">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(heartSutra,&quot;色&quot;) # 計數</code></pre>
 <pre><code>## [1] 4</code></pre>
 <ul>
@@ -2199,8 +2199,8 @@ str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
 <pre class="r"><code>studentIds &lt;- c(&quot;410873029&quot;,&quot;410773005&quot;,&quot;410772035&quot;,&quot;410562123&quot;)
 # 取出學號中的入學屆為107或108
 str_view_all(studentIds,&quot;(107|108)&quot;) # 可不寫()</code></pre>
-<div id="htmlwidget-f38e7af7bfab140c89cc" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f38e7af7bfab140c89cc">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4415e75aca465089acca" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4415e75aca465089acca">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否來自107或108學屆
 str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE</code></pre>
@@ -2221,8 +2221,8 @@ str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 </ul>
 <pre class="r"><code>Ids &lt;- c(&quot;A283743192&quot;,&quot;B829103720&quot;,&quot;A10920402&quot;,&quot;C291022384&quot;)
 str_view_all(Ids, &quot;[AC]&quot;)</code></pre>
-<div id="htmlwidget-b979fbf03684fee1e292" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b979fbf03684fee1e292">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5ec2f60303de2b9a0b26" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ec2f60303de2b9a0b26">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_detect(Ids, &quot;[AC]&quot;) # 偵測 出現A、C</code></pre>
 <pre><code>## [1]  TRUE FALSE  TRUE  TRUE</code></pre>
 <pre class="r"><code>str_extract(Ids,&quot;[A-Z]&quot;) # 取出 A-Z的字元</code></pre>
@@ -2243,8 +2243,8 @@ claimC &lt;- &quot;我玩了兩次，一次是7蘋果H，另一次是5紅心J&qu
 str_view(c(claimA,claimB,claimC),
          pattern=myRegexSlotMachine
          )</code></pre>
-<div id="htmlwidget-792556edcf0d4468fae2" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-792556edcf0d4468fae2">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4bfad4360e9f673801fe" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4bfad4360e9f673801fe">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否有吻合的出象
 str_detect(c(claimA,claimB,claimC),
            pattern=myRegexSlotMachine
@@ -2258,34 +2258,187 @@ str_detect(c(claimA,claimB,claimC),
 <pre class="r"><code>headline &lt;- &quot;資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。&quot;
 # 顯示所有符合規則的
 str_view_all(headline, &quot;謝陳官&quot;) # 固定字組</code></pre>
-<div id="htmlwidget-7f3d4a0e701f577aa4b4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7f3d4a0e701f577aa4b4">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8af317ac4d9f01e1712e" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8af317ac4d9f01e1712e">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline,&quot;謝陳官&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;[謝陳官]&quot;) # 有1個strip: 出象有3個可能字元 </code></pre>
-<div id="htmlwidget-57bb99ca724d9cbb6d1f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-57bb99ca724d9cbb6d1f">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ccc908c699e1bd6d207a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ccc908c699e1bd6d207a">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;[謝陳官]&quot;)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;謝無雙|官求敗&quot;) # 有1個strip，出象有2個字組 </code></pre>
-<div id="htmlwidget-b97ba837316c6b99c833" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b97ba837316c6b99c833">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5ff3054b0c9951df1be7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ff3054b0c9951df1be7">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;陳[^官]&quot;) # 固定字元＋有1個strip： 出象為排官的字元</code></pre>
-<div id="htmlwidget-ed59c8b08017e5cd1c7d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ed59c8b08017e5cd1c7d">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-886da36ada5e55485a96" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-886da36ada5e55485a96">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;陳[^官]&quot;)</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p>請使用<code>str_extract</code>函數粹取出每個地址的“xx號”包含“號”字</p>
-<pre class="r"><code>addresses &lt;- c('臺中市后里區公館里尾社路385號','新竹市東區科學園路125號1樓')
-strip1 &lt;- &quot;[:digit:]{1,3}(?=號)&quot;
-strip2 &lt;- &quot;號&quot;
-myRegexSlotMachine &lt;- paste0(strip1,strip2)
+<pre class="r"><code>addresses &lt;- c('臺中市后里區公館里尾社路385號',
+               '新竹市東區科學園路125號1樓')
+strip1 &lt;- strip2 &lt;- strip3 &lt;- &quot;[0-9]&quot;
+strip4 &lt;- &quot;號&quot;
+myRegexSlotMachine &lt;- paste0(strip1,strip2,strip3,strip4)
 print(myRegexSlotMachine)</code></pre>
-<pre><code>## [1] &quot;[:digit:]{1,3}(?=號)號&quot;</code></pre>
+<pre><code>## [1] &quot;[0-9][0-9][0-9]號&quot;</code></pre>
 <pre class="r"><code>str_extract(addresses,myRegexSlotMachine)</code></pre>
 <pre><code>## [1] &quot;385號&quot; &quot;125號&quot;</code></pre>
+</div>
+<div id="複製次數-quantifiers" class="section level3">
+<h3>4.6.3 複製次數 Quantifiers:</h3>
+<p><code>(..|..|...)</code>或<code>[...]</code>只是一條reel strip, 前者是寬的(每個出象可以是多字元)，後者是窄的(每個出象只是一個字元)。有時我們同樣的belt想連放很多條，可以在<code>(..|..|...)</code>或<code>[...]</code>後面加:</p>
+<ul>
+<li><code>{n}</code>: 放n條belt，n是數字<br />
+</li>
+<li><code>+</code>: 放1條或以上(多少不限)<br />
+</li>
+<li><code>{n,m}</code>: 放n到m條belt，n及m都是數字</li>
+</ul>
+<p>將以下地址的號數取出(含“號”字)</p>
+<pre class="r"><code>addresses &lt;- c('臺中市后里區公館里尾社路385號',
+               '新竹市東區科學園路125號1樓',
+               '新竹市北區竹光路99號',
+               '金門縣金城鎮賢庵里山前33號',
+               '臺中市南屯區工業區二十四路23號1樓')
+myRegexSlotMachine &lt;- &quot;[0-9]+號&quot;
+print(myRegexSlotMachine)</code></pre>
+<pre><code>## [1] &quot;[0-9]+號&quot;</code></pre>
+<pre class="r"><code>str_view_all(addresses,myRegexSlotMachine)</code></pre>
+<div id="htmlwidget-9c83996cd78a68eb765d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9c83996cd78a68eb765d">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>str_extract(addresses,myRegexSlotMachine)</code></pre>
+<pre><code>## [1] &quot;385號&quot; &quot;125號&quot; &quot;99號&quot;  &quot;33號&quot;  &quot;23號&quot;</code></pre>
+<p>了解如何regex形式的描述你的target後，接下來我們進一步學習如何更準確描述target在整個字串的位置 ### 4.6.4 頭尾定位 Anchors</p>
+<ul>
+<li>在開頭: <code>^target_regex</code><br />
+</li>
+<li>在結尾: <code>target_regex$</code></li>
+</ul>
+<pre class="r"><code>phrase &lt;- c(&quot;唧唧復唧唧&quot;)
+# 目標是前面的唧唧
+target_regex &lt;- &quot;唧唧&quot;
+pattern &lt;- glue::glue(&quot;^{target_regex}&quot;) 
+print(pattern)</code></pre>
+<pre><code>## ^唧唧</code></pre>
+<pre class="r"><code>str_view(phrase, pattern) </code></pre>
+<p><div id="htmlwidget-12150650e6b59bd950cd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-12150650e6b59bd950cd">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue套件裡的glue函數會把字串中的{物值名稱}換成目前Environment裡該物件的值。在上面{target_regex}會被換成“唧唧”</p>
+<pre class="r"><code># 目標是後面的唧唧
+target_regex2 &lt;- &quot;唧唧&quot;
+pattern &lt;- glue::glue(&quot;{target_regex2}$&quot;)
+print(pattern)</code></pre>
+<pre><code>## 唧唧$</code></pre>
+<pre class="r"><code>str_view(phrase, pattern) </code></pre>
+<p><div id="htmlwidget-03571e8b0ff3bb78967d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-03571e8b0ff3bb78967d">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> ### 4.6.5 前後鄰居描述Look around</p>
+<ul>
+<li>target後面是B:　<code>target_regex(?=B_regex)</code>，例如target_pattern後面是年<br />
+</li>
+<li>target前面是A: <code>(?&lt;=A_regex)target_regex</code>，例如target_pattern前面是民國<br />
+</li>
+<li>target前有A後有B：<code>(?&lt;=A_regex)target_regex(?=B_regex)</code></li>
+</ul>
+<p>民國年月日存成date class:</p>
+<pre class="r"><code>twDate &lt;- c(&quot;民國108年12月5日&quot;,&quot;民國98年10月5日&quot;)
+# 準備regex: 
+## 取出：「前有」民國，「後有」年的「數字」「們」
+target_regex &lt;- &quot;[0-9]+&quot;
+A_regex &lt;- &quot;民國&quot;
+B_regex &lt;- &quot;年&quot;
+regex_pattern &lt;- glue::glue(&quot;(?&lt;={A_regex}){target_regex}(?={B_regex})&quot;)
+print(regex_pattern)</code></pre>
+<pre><code>## (?&lt;=民國)[0-9]+(?=年)</code></pre>
+<pre class="r"><code>## 如果同學已經很熟就可以直接寫
+regex_pattern &lt;- &quot;(?&lt;=民國)[0-9]+(?=年)&quot;
+# 取出民國年，計算西元年
+year &lt;- str_extract(twDate, regex_pattern)
+westernYear &lt;- as.integer(year)+1911
+# 替換民國xx年的xx成西元年數字
+str_replace(twDate,
+            regex_pattern,  # 要換掉的文字
+            as.character(westernYear) # 要替換的內容
+            ) -&gt; twDate_reformat
+print(twDate_reformat)</code></pre>
+<pre><code>## [1] &quot;民國2019年12月5日&quot; &quot;民國2009年10月5日&quot;</code></pre>
+<pre class="r"><code>lubridate::ymd(twDate_reformat)</code></pre>
+<pre><code>## [1] &quot;2019-12-05&quot; &quot;2009-10-05&quot;</code></pre>
+<p>康熙元年是西元1662年，請將“康熙23年5月6日”轉成date class (假設月日已是西曆月日)</p>
+<pre class="r"><code>kangshiDate &lt;- &quot;康熙23年5月6日&quot;
+regexPattern &lt;- &quot;(?&lt;=康熙)[:digit:]+(?=年)&quot;
+westernYear &lt;- as.numeric(str_extract(kangshiDate,
+                                      regexPattern)
+                          )+1661
+kangshiDate_reformat &lt;- str_replace(kangshiDate,
+                                    regexPattern,
+                                    as.character(westernYear)
+                                    )
+lubridate::ymd(kangshiDate_reformat)</code></pre>
+<pre><code>## [1] &quot;1684-05-06&quot;</code></pre>
+<p>之前我們使用str_extract函數粹取出以下地址的“xx號”包含“號”字，如果不要取到「號」字只取出數字</p>
+<pre class="r"><code>print(addresses)</code></pre>
+<pre><code>## [1] &quot;臺中市后里區公館里尾社路385號&quot;     &quot;新竹市東區科學園路125號1樓&quot;       
+## [3] &quot;新竹市北區竹光路99號&quot;              &quot;金門縣金城鎮賢庵里山前33號&quot;       
+## [5] &quot;臺中市南屯區工業區二十四路23號1樓&quot;</code></pre>
+<pre class="r"><code>str_extract(addresses,
+            &quot;[:digit:]+(?=號)&quot;)</code></pre>
+<pre><code>## [1] &quot;385&quot; &quot;125&quot; &quot;99&quot;  &quot;33&quot;  &quot;23&quot;</code></pre>
+</div>
+<div id="字元模版" class="section level3">
+<h3>4.6.6 字元模版</h3>
+<ul>
+<li><code>[:graph:]</code>: 包山包海，還包中文字元<br />
+</li>
+<li><code>[\u4E00-\u9FFF]</code>: 代表所有中日韓文字字元</li>
+</ul>
+<pre class="r"><code>str_extract_all(&quot;我的名字8293叫17380小abce明&quot;,
+                &quot;[\u4E00-\u9FFF]+&quot;)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;我的名字&quot; &quot;叫&quot;       &quot;小&quot;       &quot;明&quot;</code></pre>
+</div>
+<div id="綜合練習" class="section level3">
+<h3>4.6.7 綜合練習</h3>
+<p>學期初在輸入Github inclass-practice-repo網址時，它要長得像</p>
+<pre><code>https://github.com/...../108-2-XX-inclass-practice</code></pre>
+<p>其中XX只可以是56或78，以下是課程資訊表單學生填答的可能形式，請寫下正確格式的regex，並用str_detect判斷哪幾個人沒有正確填寫:</p>
+<pre class="r"><code>c(&quot;https://github.com/student1/108-2-78-inclass-practice&quot;, 
+  &quot;github.com/student2 / 108-2-56-inclass-practice&quot;, 
+  &quot;https://github.com/student3/108-2-56-inclass-practice&quot;,
+  &quot;student4 / 108-2-56-inclass-practice&quot;,
+  &quot;student5&quot;
+  ) -&gt; studentGithubURLs
+str_detect(studentGithubURLs,
+           &quot;https://github.com/[:graph:]+/108-2-(56|78)-inclass-practice&quot;)</code></pre>
+<pre><code>## [1]  TRUE FALSE  TRUE FALSE FALSE</code></pre>
+<p>期中考檔案命名出現以下幾種寫法:</p>
+<pre class="r"><code>midtermFilename &lt;- c(&quot;exam1-410773888.rmd&quot;,
+                     &quot;exam1410882888.Rmd&quot;,
+                     &quot;410682999第一次期中考.Rmd&quot;,
+                     &quot;期中考310573888.R&quot;)
+# 請「只」以str_extract完成以下任務:  
+## 1. 取出9位數的學號(4或3開頭的數字)  
+student_id &lt;- str_extract(midtermFilename, 
+                          &quot;[43][:digit:]{8}&quot;)
+print(student_id)</code></pre>
+<pre><code>## [1] &quot;410773888&quot; &quot;410882888&quot; &quot;410682999&quot; &quot;310573888&quot;</code></pre>
+<pre class="r"><code>## 2. 系號是學號的第5-6兩位數字, 如410773082的系號是73  
+department &lt;- str_extract(student_id, 
+                          &quot;[:digit:]{2}(?=[:digit:]{3}$)&quot;)
+print(department)</code></pre>
+<pre><code>## [1] &quot;73&quot; &quot;82&quot; &quot;82&quot; &quot;73&quot;</code></pre>
+<pre class="r"><code>## 3. 如果多了兩位99年入學但休學多年的學生(學號只有8位數49975013及49977012，系號是第4-5位數），他們的檔案名稱分別是“exam149975013.Rmd”,“499770121stExam.Rmd”,執行以下程序更新midterFilename:  
+midtermFilename &lt;- c(midtermFilename,&quot;exam149975013.Rmd&quot;,&quot;499770121stExam.Rmd&quot;)
+student_id &lt;- str_extract(midtermFilename, 
+                          &quot;[43][:digit:]{7,8}&quot;)
+print(student_id)</code></pre>
+<pre><code>## [1] &quot;410773888&quot; &quot;410882888&quot; &quot;410682999&quot; &quot;310573888&quot; &quot;49975013&quot;  &quot;499770121&quot;</code></pre>
+<pre class="r"><code>department &lt;- str_extract(student_id, 
+                          &quot;[:digit:]{2}(?=[:digit:]{3}$)&quot;)
+print(department)</code></pre>
+<pre><code>## [1] &quot;73&quot; &quot;82&quot; &quot;82&quot; &quot;73&quot; &quot;75&quot; &quot;70&quot;</code></pre>
 </div>
 </div>
 </div>
