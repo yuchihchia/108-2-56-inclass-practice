@@ -737,42 +737,32 @@ a %% b
 a ** b
 #奇、偶數判斷  
 sequenceNums <- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
-print(sequenceNums)
 sequenceNums %% 2 # 餘數為1則是奇數，0則是偶數
 ```
-在多數時候R向量間的運算都是**elementwise**(個別元素)的運算：
-
-所有向量一一取出各自對應相同位置的元素值進行運算  
-```
+在多數時候R向量間的運算都是**elementwise**(個別元素)的運算：所有向量一一取出各自對應相同位置的元素值進行運算  
+```{r echo=FALSE}
 # a+b 即等於
 c(2+4, 3+(-1), 5+3)
 # a**b 即等於
 c(2**4, 3**(-1), 5**3)
 ```
-當向量間不等長度時，R會對短的向量進行Recycle的動作（即Python的Broadcast）:  
-
-將其中較短的向量反複堆疊到可以長得跟最長的向量一樣長度  
-```
+當向量間不等長度時，R會對短的向量進行Recycle的動作(即Python的Broadcast): 將其中較短的向量反複堆疊到可以長得跟最長的向量一樣長度  
+```{r echo=FALSE}
 5*c(1,3,4)+7
 # 對向量5，向量7進行recycle:
 c(5,5,5)*c(1,3,4)+c(7,7,7)
 # Recycle等長後才進行elementwise operation:
 c(5*1+7, 5*3+7, 5*4+7)
 ```
-當運算的兩物件內容長度不同時，則將其中較短的一個反複堆疊到可以長得跟另一個一樣高時才來運算，稱為recycling  
 ```{r}
 # 狀況一: 堆疊一定倍數剛好一樣長
-c(2,3)/c(-2,-13,10,22)
-c(2,3,2,3)/c(-2,-13,10,22)
+c(2,3)/c(-2,-13,10,22) #等同於 c(2,3,2,3)/c(-2,-13,10,22)
 # 狀況二: 倍數堆疊一定會超過，只好截斷
-c(2,3)/c(-2,-13,10)
-c(2,3,2)/c(-2,-13,10)
+c(2,3)/c(-2,-13,10) #等同於 c(2,3,2)/c(-2,-13,10)
 ```
 Recycling不只用在數值class，只要向量間的處理要等長度才合理時，recycling通常也會用在其他的class  
 ```{r}
-paste0(c("我叫"), c("小明","小美"))
-#也等於是
-paste0(c("我叫","我叫"), c("小明","小美"))
+paste0(c("我叫"), c("小明","小美")) #等同於 paste0(c("我叫","我叫"), c("小明","小美"))
 ```
 ## 4.4 Relational Operators  
 ```{r}
@@ -788,23 +778,23 @@ example <- list(
 )
 ```
 ### 4.4.1 比較  
+`>`，`<`，`<=`，`>=`: 分別為大於、小於、小於等於、大於等於  
 
-`>`，`<`，`<=`，`>=`: 分別為大於、小於、小於等於、大於等於
+比較關係可套用在下列狀況:  
 
-* 數字比較
+* 數字比較  
+* 時間比較  
+* 可排序類別資料比較 (需先將類別資料的類別排序)  
 
-* 時間比較
+1. 數字比較  
 
-* 可排序類別資料比較 (需先將類別資料的類別排序)
-
-1. 數字比較 
-example裡誰的身高大於等於170
+example裡誰的身高大於等於170  
 ```{r}
-str(example[c("name","height")])
+print(example[c("name","height")])
 pick_above170 <- example$height >= 170
 example$name[pick_above170]
 ```
-不同屆入學學生在2年級的學業表現
+不同屆入學學生在2年級的學業表現  
 ```{r}
 #匯入transcript100to103的資料
 source("https://www.dropbox.com/s/qsrw069n94k61lj/transcript100to103_list.R?dl=1") 
@@ -815,10 +805,9 @@ table(transcript100to103$`學屆`) #table適用於類別資料或間斷資料，
 # 各學屆2年級成績大於85人數
 table(transcript100to103$`學屆`[pick_above85])
 ```
-
 2. 時間比較:  
 
-example裡誰1998年(含)以後出生
+example裡誰1998年(含)以後出生  
 ```{r}
 print(example[c("name","birthday")])
 pick_after98 <- example$birthday >= lubridate::ymd("1998-01-01")
@@ -833,10 +822,8 @@ library(lubridate)
 pick_after98_01 <- exchangeRate$`期間` >= ymd("1998-01-01")
 exchangeRate_after98 <- list(`期間`=exchangeRate$`期間`[pick_after98_01],
                              `幣別`=exchangeRate$`幣別`[pick_after98_01],
-                             `匯率`=exchangeRate$`匯率`[pick_after98_01]
-                             )
+                             `匯率`=exchangeRate$`匯率`[pick_after98_01])
 ```
-
 3. 可排序類別資料比較:  
 
 factor資料可進一步分成可排序與不可排序的，如:  
@@ -848,7 +835,7 @@ factor的設定在不調整時內定為不可排序資料，如要改成可排�
 ```{r}
 example$allowance <- ordered(example$allowance)
 ```
-或在設定為factor時即把levels排好，並ordered=T:
+或在設定為factor時即把levels排好，並`ordered=T`:
 ```{r}
 example$allowance <- factor(example$allowance,
                             levels=c("0-1000", "1001-2000", "2000+"),
@@ -864,6 +851,7 @@ example$name[pick_allowanceOver1000]
 刑事案件被害者人數
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/3uijub7xheib405/list_victimAges_female.json?dl=1", simplifyDataFrame = F) -> list_victimAges_female
+str(list_victimAges_female)
 list_victimAges_female$`數目` <- as.integer(list_victimAges_female$`數目`)
 list_victimAges_female$`年齡層` <- as.factor(list_victimAges_female$`年齡層`)
 ```
@@ -872,22 +860,21 @@ levels(list_victimAges_female$`年齡層`) -> levels_ages
 print(levels_ages)
 #將levels順序改成: 不詳、總計、0_5歲、12_17歲、...、70歲以上
 levels_new <- c(levels_ages[c(12,13,1,8,2:7,9:11)])
+str(list_victimAges_female$`年齡層`)
 levels(list_victimAges_female$`年齡層`) <- levels_new
 list_victimAges_female$`年齡層` <- ordered(list_victimAges_female$`年齡層`)
 ```
 「30_39歲以上受害者」的數目
 ```{r}
-sum(list_victimAges_female$`數目`, na.rm=T) #將數目中資料為NA的排除再加總，若數值資料中有NA將無法加總運算
 pick_above30 <- list_victimAges_female$`年齡層` >= "30_39歲"
-sum(list_victimAges_female$`數目`[pick_above30], na.rm = T)
+sum(list_victimAges_female$`數目`[pick_above30], 
+    na.rm = T #將數目中資料為NA的排除再加總，若數值資料中有NA將無法加總運算
+    )
 ```
 ### 4.4.2 相等、屬於  
 `==`: 等於  
-
 `!=`: 不等於  
-
 [`==`與`!=`可使用於字串]  
-
 `%in%`: 屬於(左邊元素「一一」檢視是不是屬於右邊元素集合)  
 
 example裡誰血型B型  
@@ -895,9 +882,7 @@ example裡誰血型B型
 print(example[c("name","bloodType")])
 pick_bloodB <- example$bloodType == "B"
 example$name[pick_bloodB]
-```
-創造可留下偶數的「要/不要」向量pick_evens
-```{r}
+#創造可留下偶數的「要/不要」向量pick_evens
 sequenceNums <- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
 pick_evens <- (sequenceNums%%2) == 0
 sequenceNums[pick_evens]
@@ -906,34 +891,33 @@ y <- c(5,8)
 # x裡的元素值是不是屬於y集合
 x %in% y
 ```
-example裡誰來自大台北
+example裡誰來自大台北地區  
 ```{r}
 print(example[c("name","residence")])
 set_TaipeiMetro <- c("Taipei","New Taipei")
 pick_fromTaipeiMetro <- example$residence %in% set_TaipeiMetro
 example$name[pick_fromTaipeiMetro]
 ```
-創造可選出來自法商學院的「要/不要」向量，pick_lawBusiness
+創造可選出來自法商學院的「要/不要」向量，pick_lawBusiness  
 ```{r}
 str(transcript100to103)
-unique(transcript100to103$`學院`) #table適用於類別資料或間斷資料，顯示有哪些類別
+unique(transcript100to103$`學院`) #unique適用於類別資料或間斷資料，顯示共有哪些類別
 pick_lawBusiness <- transcript100to103$`學院` %in% c("法學院","商學院")
 ```
-### 4.4.3 Negation(否定用法)  
-在「要/不要」向量前加上`!`會成為否定句的「要/不要」向量，元素裡的TRUE會轉成FALSE, FALSE則轉成TRUE  
+### 4.4.3 Negation (否定用法)  
+在「要/不要」向量前加上`!`會成為否定句的「要/不要」向量，元素裡的TRUE會轉成FALSE，FALSE則轉成TRUE  
 ```{r}
 pick_not_fromTaipeiMetro <- !pick_fromTaipeiMetro
 # 或
 pick_not_fromTaipeiMetro <- !(example$residence %in% set_TaipeiMetro) 
-print(example[c("name","residence")])
+```
+```{r}
 example$name[pick_not_fromTaipeiMetro]
 # 或
 example$name[!pick_fromTaipeiMetro]
 ```
 ### 4.4.4 資料狀態  
-
 * `is.na`: 有缺失  
-
 * `is.{class/type name}`: 例如`is.integer`, `is.character`, `is.factor`, ...等  
 
 有時資料有缺失，在R裡會記成NA(即not available)如下例: 
