@@ -740,14 +740,14 @@ sequenceNums <- c(11, 6, 8, 11, 12, 11, 3, 7, 10, 8)
 sequenceNums %% 2 # 餘數為1則是奇數，0則是偶數
 ```
 在多數時候R向量間的運算都是**elementwise**(個別元素)的運算：所有向量一一取出各自對應相同位置的元素值進行運算  
-```{r echo=FALSE}
+```{r eval=FALSE}
 # a+b 即等於
 c(2+4, 3+(-1), 5+3)
 # a**b 即等於
 c(2**4, 3**(-1), 5**3)
 ```
 當向量間不等長度時，R會對短的向量進行Recycle的動作(即Python的Broadcast): 將其中較短的向量反複堆疊到可以長得跟最長的向量一樣長度  
-```{r echo=FALSE}
+```{r eval=FALSE}
 5*c(1,3,4)+7
 # 對向量5，向量7進行recycle:
 c(5,5,5)*c(1,3,4)+c(7,7,7)
@@ -1062,27 +1062,27 @@ str_sub("410873002", 5, 6)
     + lubridate偵測年時，只有西元年的概念  
     + 要能想辦法把上面的"108","98"取出加上1911  
     + 因為lubridate裡的字串日期時間判斷採取的策略是「忽略非數字文字」只以「數字組合」(還允許各地習慣使用的文字，如March, Mar都是3月的意思)判斷時間，所以以下幾個都可以產生「西元」"2019-12-05":  
-```{r echo=FALSE}
+```{r eval=FALSE}
 lubridate::ymd(
-  c(
-    "民國2019年12月05日", 
+  c("民國2019年12月05日", 
     "馬丁2019的12課05muydifícil", 
     "助教2019Emily12解說05真棒", 
     "2019R12課程05すごい", 
-    "R程式2019的12期中考05とても変態" 
-  )
+    "R程式2019的12期中考05とても変態")
 )
 ```
-然而即使忽略非數字文字，三個數字的組合誰是年？月？日？依然受每個國家日期書寫習慣影響，所以有時還是可能會有誤判。  
+然而即使忽略非數字文字，三個數字的組合誰是年月日依然受每個國家日期書寫習慣影響，所以有時還是可能會有誤判的狀況  
 
 ### 4.6.1 正規表示式 Regular Expression  
 一種廣義描述所要字串規律的表示法，分成兩部份:  
 
-* target pattern: 指對取出字串的描述。如“108”,“98”是我們想取出的字串。我們可以說目標是，  
+* target pattern: 指對取出字串的描述。如"108","98"是我們想取出的字串。我們可以說目標是，  
     + 「0-9的字元2-3個」: `[:digit:]{2,3}或[0-9]{2,3}`  
-* target location description: 指target位置的情境描述。如“民國108年”,“民國98年”，我們可以說，  
-    + target前面是「民國」後面是「年」: `(?<=民國)target_pattern(?=年)  
-* 合成regex: `(?<=民國)[0-9]{2,3}(?=年)`  
+    
+* target location description: 指target位置的情境描述。如"民國108年","民國98年"，我們可以說，  
+    + target前面是「民國」後面是「年」: `(?<=民國)target_pattern(?=年)`  
+    
+* 合成regular expression (regex): `(?<=民國)[0-9]{2,3}(?=年)`  
 ```{r}
 str_extract_all(
   c("民國108年12月5日","民國98年10月5日"),
@@ -1094,8 +1094,10 @@ str_extract(
   "(?<=民國)[0-9]{2,3}(?=年)"
 ) # 回傳vector 
 ```
+<img src="C:/Users/USER/Desktop/R/RStudio Cheatsheets/regular_expressions.jpg" style="display:block; margin:auto; width:100%;">  
+
 ### 4.6.2 組合 alternate
-用來製做一台吃角子老虎，它能夠包含你要的所有可能target出象。吃角子老虎由數條reel strip組成，每一條strip可以有以下幾種設計
+用來製做一台吃角子老虎，它能夠包含你要的所有可能target出象。吃角子老虎由數條reel strip組成，每一條strip可以有以下幾種設計  
 
 * __固定字元/組__: 單寫一個字組或字元，表示那個strip固定不動只有一個出象，例如: `2`表示只有"2"一個出象，`櫻桃`只有"櫻桃"一個出象
 ```{r}
@@ -1126,8 +1128,8 @@ str_extract(Ids,"[A-Z]") # 取出 A-Z的字元
 ```
 
 * 將設定好的reel strips依你要的順序排好就是你的regex slot machine
-，它可以用來驗證字串裡頭是否出現來自你regex slot machine的某些組合。
-<img src="C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/regexSlotMachine.jpg" style="display:block; margin:auto; width:50%;">  
+，它可以用來驗證字串裡頭是否出現來自你regex slot machine的某些組合  
+<img src="C:/Users/USER/Documents/GitHub/yikahui/regex slot machine.png" style="display:block; margin:auto; width:20%;">  
 
 ```{r}
 strip1 <- "[0-9]"
