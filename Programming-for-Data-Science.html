@@ -2196,8 +2196,8 @@ library(glue)</code></pre>
 </ul>
 <pre class="r"><code>heartSutra &lt;- c(&quot;舍利子，色不異空，空不異色；色即是空，空即是色。&quot;)
 str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
-<div id="htmlwidget-680a689fed9b3abf7d4c" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-680a689fed9b3abf7d4c">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9ce3f0d6af577430a77c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9ce3f0d6af577430a77c">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(heartSutra,&quot;色&quot;) # 計數</code></pre>
 <pre><code>## [1] 4</code></pre>
 <ul>
@@ -2209,8 +2209,8 @@ str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
 <pre class="r"><code>studentIds &lt;- c(&quot;410873029&quot;,&quot;410773005&quot;,&quot;410772035&quot;,&quot;410562123&quot;)
 # 取出學號中的入學屆為107或108
 str_view_all(studentIds,&quot;(107|108)&quot;) # 可不寫()</code></pre>
-<div id="htmlwidget-b6bce5e3041ba470e819" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b6bce5e3041ba470e819">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3a7af8c0212f0b720637" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a7af8c0212f0b720637">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否來自107或108學屆
 str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE</code></pre>
@@ -2229,8 +2229,8 @@ str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 </ul>
 <pre class="r"><code>Ids &lt;- c(&quot;A283743192&quot;,&quot;B829103720&quot;,&quot;A10920402&quot;,&quot;C291022384&quot;)
 str_view_all(Ids, &quot;[AC]&quot;)</code></pre>
-<div id="htmlwidget-218bb8613c70a8d87e44" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-218bb8613c70a8d87e44">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-74ea279ba73dec0d0989" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-74ea279ba73dec0d0989">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_detect(Ids, &quot;[AC]&quot;) # 偵測 出現A、C</code></pre>
 <pre><code>## [1]  TRUE FALSE  TRUE  TRUE</code></pre>
 <pre class="r"><code>str_extract(Ids,&quot;[A-Z]&quot;) # 取出 A-Z的字元</code></pre>
@@ -2252,8 +2252,8 @@ claimC &lt;- &quot;我玩了兩次，一次是7蘋果H，另一次是5紅心J&qu
 str_view(c(claimA,claimB,claimC),
          pattern=myRegexSlotMachine
          )</code></pre>
-<div id="htmlwidget-f9209b1ee0cf8edd7450" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f9209b1ee0cf8edd7450">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3f75336ef04274ac774f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3f75336ef04274ac774f">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否有吻合的出象
 str_detect(c(claimA,claimB,claimC),
            pattern=myRegexSlotMachine
@@ -2266,23 +2266,23 @@ str_detect(c(claimA,claimB,claimC),
 <pre class="r"><code>headline &lt;- &quot;資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。&quot;
 # 顯示所有符合規則的
 str_view_all(headline, &quot;謝陳官&quot;) # 固定字組</code></pre>
-<div id="htmlwidget-8bfc8cfe053ab7252da1" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8bfc8cfe053ab7252da1">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-efe00df6b1453c840ebf" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-efe00df6b1453c840ebf">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline,&quot;謝陳官&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;[謝陳官]&quot;) # 有1個strip: 出象有3個可能字元 </code></pre>
-<div id="htmlwidget-a2c1a791dc9b249a2e4b" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a2c1a791dc9b249a2e4b">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fa38df82d670ade2bb54" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa38df82d670ade2bb54">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;[謝陳官]&quot;)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;謝無雙|官求敗&quot;) # 有1個strip，出象有2個字組 </code></pre>
-<div id="htmlwidget-572a7ead9f75cad417d3" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-572a7ead9f75cad417d3">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-99d079a72870b28389ed" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-99d079a72870b28389ed">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;陳[^官]&quot;) # 固定字元＋有1個strip： 出象為排除官以外的字元</code></pre>
-<div id="htmlwidget-308747c5c7152cf81cab" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-308747c5c7152cf81cab">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-93ac5be6a0f27c01a636" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-93ac5be6a0f27c01a636">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;陳[^官]&quot;)</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p>請使用<code>str_extract</code>函數粹取出每個地址的“xx號”包含“號”字</p>
@@ -2316,8 +2316,8 @@ myRegexSlotMachine &lt;- &quot;[0-9]+號&quot;
 print(myRegexSlotMachine)</code></pre>
 <pre><code>## [1] &quot;[0-9]+號&quot;</code></pre>
 <pre class="r"><code>str_view_all(addresses, myRegexSlotMachine)</code></pre>
-<div id="htmlwidget-5acf401452b07997fb6d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5acf401452b07997fb6d">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e9fc2189af5295ff8412" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9fc2189af5295ff8412">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_extract(addresses, myRegexSlotMachine)</code></pre>
 <pre><code>## [1] &quot;385號&quot; &quot;125號&quot; &quot;99號&quot;  &quot;33號&quot;  &quot;23號&quot;</code></pre>
 <p>了解如何regex形式的描述你的target後，接下來我們進一步學習如何更準確描述target在整個字串的位置</p>
@@ -2336,16 +2336,16 @@ pattern &lt;- glue::glue(&quot;^{target_regex}&quot;)
 print(pattern)</code></pre>
 <pre><code>## ^唧唧</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<p><div id="htmlwidget-3cb03b2881299a616b83" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3cb03b2881299a616b83">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue套件裡的glue函數會把字串中的<code>{物值名稱}</code>換成目前Environment裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”</p>
+<p><div id="htmlwidget-f552555195a6897ccaeb" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f552555195a6897ccaeb">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue套件裡的glue函數會把字串中的<code>{物值名稱}</code>換成目前Environment裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”</p>
 <pre class="r"><code># 目標是後面的唧唧
 target_regex2 &lt;- &quot;唧唧&quot;
 pattern &lt;- glue::glue(&quot;{target_regex2}$&quot;)
 print(pattern)</code></pre>
 <pre><code>## 唧唧$</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<div id="htmlwidget-d58d201d9006a2477027" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d58d201d9006a2477027">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0ce89cd415482a57ea53" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0ce89cd415482a57ea53">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="前後鄰居描述-look-around" class="section level3">
 <h3>4.6.5 前後鄰居描述 Look around</h3>
@@ -2453,6 +2453,141 @@ print(student_id)</code></pre>
                           &quot;[:digit:]{2}(?=[:digit:]{3}$)&quot;)
 print(department)</code></pre>
 <pre><code>## [1] &quot;73&quot; &quot;82&quot; &quot;82&quot; &quot;73&quot; &quot;75&quot; &quot;77&quot;</code></pre>
+</div>
+</div>
+<div id="on-factor-class" class="section level2">
+<h2>4.7 On factor class</h2>
+<ul>
+<li>內定levels順序是根據電腦內字元排序（collating sequence）依辭典序列方式決定排序，很多時候沒有意義</li>
+</ul>
+<pre class="r"><code>char1 &lt;- c(&quot;Wild&quot;,&quot;Apple&quot;,&quot;Donald&quot;,&quot;May&quot;,&quot;Avocada&quot;) 
+factor1 &lt;- factor(char1)
+levels(factor1) #依據字首字母從A排到Z</code></pre>
+<pre><code>## [1] &quot;Apple&quot;   &quot;Avocada&quot; &quot;Donald&quot;  &quot;May&quot;     &quot;Wild&quot;</code></pre>
+<pre class="r"><code>char2 &lt;- c(&quot;蔡英文&quot;,&quot;習近平&quot;,&quot;Donald Trump&quot;,&quot;蔡頭&quot;) 
+factor2 &lt;- factor(char2)
+levels(factor2)</code></pre>
+<pre><code>## [1] &quot;Donald Trump&quot; &quot;習近平&quot;       &quot;蔡英文&quot;       &quot;蔡頭&quot;</code></pre>
+<pre class="r"><code>sort(str_sub(char2,1,1))</code></pre>
+<pre><code>## [1] &quot;D&quot;  &quot;習&quot; &quot;蔡&quot; &quot;蔡&quot;</code></pre>
+<pre class="r"><code>sort(str_sub(char2[c(1,4)],2,2))</code></pre>
+<pre><code>## [1] &quot;英&quot; &quot;頭&quot;</code></pre>
+<ul>
+<li>查詢你的collating sequence設定：</li>
+</ul>
+<pre class="r"><code>Sys.getlocale(&quot;LC_COLLATE&quot;)</code></pre>
+<pre><code>## [1] &quot;Chinese (Traditional)_Taiwan.950&quot;</code></pre>
+<p>[由於不同電腦、不同作業系統的collating sequence不同，如果levels順序在你的分析是重要的，一定要在設定factor時自行設定好]</p>
+<p>嚴重特殊傳染性肺炎</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json&quot;) -&gt; covid19
+# 不可排序類別：性別、縣市、是否境外移入
+covid19$`縣市` &lt;- factor(covid19$`縣市`)
+covid19$`性別` &lt;- factor(covid19$`性別`)
+covid19$`是否為境外移入` &lt;- factor(covid19$`是否為境外移入`)
+# 可排序類別資料：年齡層
+covid19$`年齡層` &lt;- factor(covid19$`年齡層`,ordered=TRUE)
+levels(covid19$`縣市`)</code></pre>
+<pre><code>##  [1] &quot;台中市&quot; &quot;台北市&quot; &quot;台南市&quot; &quot;宜蘭縣&quot; &quot;南投縣&quot; &quot;屏東縣&quot; &quot;苗栗縣&quot; &quot;桃園市&quot;
+##  [9] &quot;高雄市&quot; &quot;基隆市&quot; &quot;雲林縣&quot; &quot;新北市&quot; &quot;新竹市&quot; &quot;新竹縣&quot; &quot;嘉義市&quot; &quot;嘉義縣&quot;
+## [17] &quot;彰化縣&quot;</code></pre>
+<pre class="r"><code>levels(covid19$`性別`)</code></pre>
+<pre><code>## [1] &quot;女&quot; &quot;男&quot;</code></pre>
+<pre class="r"><code>levels(covid19$`是否為境外移入`)</code></pre>
+<pre><code>## [1] &quot;否&quot; &quot;是&quot;</code></pre>
+<pre class="r"><code>levels(covid19$`年齡層`)</code></pre>
+<pre><code>##  [1] &quot;10-14&quot; &quot;15-19&quot; &quot;20-24&quot; &quot;25-29&quot; &quot;30-34&quot; &quot;35-39&quot; &quot;4&quot;     &quot;40-44&quot; &quot;45-49&quot;
+## [10] &quot;5-9&quot;   &quot;50-54&quot; &quot;55-59&quot; &quot;60-64&quot; &quot;65-69&quot; &quot;70+&quot;</code></pre>
+<div id="levels重新排列" class="section level3">
+<h3>4.7.1 levels重新排列</h3>
+<p>重新再定義factor一次<br />
+<code>factor(目前的factor向量, levels=自訂排序)</code></p>
+<ul>
+<li>levels放第二格時，<code>levels=</code>可省略<br />
+</li>
+<li>目前的類別向量的可不可排序性質依然會保留，不用特意去設<code>ordered=T/F</code></li>
+</ul>
+<p>使用函數時，若argument input的位置就是原help說明裡定義該argument位置時，「argument_name =」部份可以不寫。<br />
+***<br />
+手動輸入排法：由女男改男女</p>
+<pre class="r"><code>levels(covid19$`性別`)</code></pre>
+<pre><code>## [1] &quot;女&quot; &quot;男&quot;</code></pre>
+<pre class="r"><code>covid19$`性別` &lt;- factor(covid19$`性別`, c(&quot;男&quot;,&quot;女&quot;))</code></pre>
+<hr />
+<p>依與levels相關的其他數據排列：</p>
+<ul>
+<li>covid19$縣市的levels依其人口由大排到小。如“新北市”人口最多，它就要排levels的第一個，依此類推。<br />
+演算思維：<br />
+</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>下載台灣各縣市人口資料：</li>
+</ol>
+<pre class="r"><code>jsonlite::fromJSON(
+  &quot;https://www.dropbox.com/s/jckqryeh5zeat5w/regionPopulation.json?dl=1&quot;
+) -&gt; population
+unlist(population) -&gt; population</code></pre>
+<p>資料科學心法一：拿到新的資料先檢視「內容」、「class/type」</p>
+<pre class="r"><code>print(population)</code></pre>
+<pre><code>##     總計   新北市   台北市   桃園市   台中市   台南市   高雄市   台灣省 
+## 23603121  4018696  2645041  2249037  2815261  1880906  2773198  7067708 
+##   宜蘭縣   新竹縣   苗栗縣   彰化縣   南投縣   雲林縣   嘉義縣   屏東縣 
+##   454178   563933   545459  1272802   494112   681306   503113   819184 
+##   台東縣   花蓮縣   澎湖縣   基隆市   新竹市   嘉義市   福建省   金門縣 
+##   216781   326247   105207   368893   448803   267690   153274   140185 
+##   連江縣 
+##    13089</code></pre>
+<pre class="r"><code>class(population) #named integer vector</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>names(population) </code></pre>
+<pre><code>##  [1] &quot;總計&quot;   &quot;新北市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台中市&quot; &quot;台南市&quot; &quot;高雄市&quot; &quot;台灣省&quot;
+##  [9] &quot;宜蘭縣&quot; &quot;新竹縣&quot; &quot;苗栗縣&quot; &quot;彰化縣&quot; &quot;南投縣&quot; &quot;雲林縣&quot; &quot;嘉義縣&quot; &quot;屏東縣&quot;
+## [17] &quot;台東縣&quot; &quot;花蓮縣&quot; &quot;澎湖縣&quot; &quot;基隆市&quot; &quot;新竹市&quot; &quot;嘉義市&quot; &quot;福建省&quot; &quot;金門縣&quot;
+## [25] &quot;連江縣&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>留下levels中有的popluation元素</li>
+</ol>
+<pre class="r"><code>levels(covid19$`縣市`) # 是名稱字串向量</code></pre>
+<pre><code>##  [1] &quot;台中市&quot; &quot;台北市&quot; &quot;台南市&quot; &quot;宜蘭縣&quot; &quot;南投縣&quot; &quot;屏東縣&quot; &quot;苗栗縣&quot; &quot;桃園市&quot;
+##  [9] &quot;高雄市&quot; &quot;基隆市&quot; &quot;雲林縣&quot; &quot;新北市&quot; &quot;新竹市&quot; &quot;新竹縣&quot; &quot;嘉義市&quot; &quot;嘉義縣&quot;
+## [17] &quot;彰化縣&quot;</code></pre>
+<pre class="r"><code># 由於population元素值有names，可以用`[名稱字串向量]`取出所要的
+levels(covid19$`縣市`) -&gt; levelsInData
+population[levelsInData] -&gt; population</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>將population由大排到小(<code>sort(x, decreasing=T)</code>可將x numeric vector由大排到小)</li>
+</ol>
+<pre class="r"><code>population &lt;- sort(population, decreasing=T)
+population</code></pre>
+<pre><code>##  新北市  台中市  高雄市  台北市  桃園市  台南市  彰化縣  屏東縣  雲林縣  新竹縣 
+## 4018696 2815261 2773198 2645041 2249037 1880906 1272802  819184  681306  563933 
+##  苗栗縣  嘉義縣  南投縣  宜蘭縣  新竹市  基隆市  嘉義市 
+##  545459  503113  494112  454178  448803  368893  267690</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>排完後population第一個元素值最大，它的名稱即是人口最多的縣市，第二元素值次大，它名稱是人口第二多縣市，依此類推。我們要的是population排完後的元素名稱</li>
+</ol>
+<pre class="r"><code>newLevels &lt;- names(population)
+newLevels</code></pre>
+<pre><code>##  [1] &quot;新北市&quot; &quot;台中市&quot; &quot;高雄市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台南市&quot; &quot;彰化縣&quot; &quot;屏東縣&quot;
+##  [9] &quot;雲林縣&quot; &quot;新竹縣&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot; &quot;宜蘭縣&quot; &quot;新竹市&quot; &quot;基隆市&quot;
+## [17] &quot;嘉義市&quot;</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>重設levels排序</li>
+</ol>
+<pre class="r"><code>covid19$`縣市` &lt;- factor(covid19$`縣市`, levels=newLevels)
+levels(covid19$`縣市`)</code></pre>
+<pre><code>##  [1] &quot;新北市&quot; &quot;台中市&quot; &quot;高雄市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台南市&quot; &quot;彰化縣&quot; &quot;屏東縣&quot;
+##  [9] &quot;雲林縣&quot; &quot;新竹縣&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot; &quot;宜蘭縣&quot; &quot;新竹市&quot; &quot;基隆市&quot;
+## [17] &quot;嘉義市&quot;</code></pre>
+<p>將<code>covid19$縣市</code>依縣市目前個案數目由大排到小。（hint: 可使用<code>table()</code>來得到個案數統計, 它會自然產生named integer vector）</p>
+<pre class="r"><code>number &lt;- table(covid19$`縣市`)
+number &lt;- sort(number, decreasing=T)
+covid19$`縣市` &lt;- factor(covid19$`縣市`, levels=names(number))
+levels(covid19$`縣市`)</code></pre>
+<pre><code>##  [1] &quot;台北市&quot; &quot;新北市&quot; &quot;桃園市&quot; &quot;高雄市&quot; &quot;台中市&quot; &quot;彰化縣&quot; &quot;台南市&quot; &quot;屏東縣&quot;
+##  [9] &quot;新竹市&quot; &quot;新竹縣&quot; &quot;基隆市&quot; &quot;雲林縣&quot; &quot;嘉義市&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot;
+## [17] &quot;宜蘭縣&quot;</code></pre>
+<hr />
+<p>年齡應該用年齡區間起始數字排序</p>
 </div>
 </div>
 </div>

@@ -1334,6 +1334,7 @@ Sys.getlocale("LC_COLLATE")
 ```
 [由於不同電腦、不同作業系統的collating sequence不同，如果levels順序在你的分析是重要的，一定要在設定factor時自行設定好]  
 
+***  
 嚴重特殊傳染性肺炎  
 ```{r}
 jsonlite::fromJSON("https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json") -> covid19
@@ -1351,11 +1352,13 @@ levels(covid19$`年齡層`)
 ### 4.7.1 levels重新排列  
 重新再定義factor一次  
 `factor(目前的factor向量, levels=自訂排序)`  
+
 * levels放第二格時，`levels=`可省略  
 * 目前的類別向量的可不可排序性質依然會保留，不用特意去設`ordered=T/F`  
 
 使用函數時，若argument input的位置就是原help說明裡定義該argument位置時，「argument_name =」部份可以不寫。  
-***
+
+***  
 手動輸入排法：由女男改男女  
 ```{r}
 levels(covid19$`性別`)
@@ -1363,9 +1366,10 @@ covid19$`性別` <- factor(covid19$`性別`, c("男","女"))
 ```
 ***
 依與levels相關的其他數據排列：  
+
 * covid19$縣市的levels依其人口由大排到小。如“新北市”人口最多，它就要排levels的第一個，依此類推。  
 演算思維：  
-(@) 下載台灣各縣市人口資料：  
+1. 下載台灣各縣市人口資料：  
 ```{r}
 jsonlite::fromJSON(
   "https://www.dropbox.com/s/jckqryeh5zeat5w/regionPopulation.json?dl=1"
@@ -1378,37 +1382,37 @@ print(population)
 class(population) #named integer vector
 names(population) 
 ```
-(@) 留下levels中有的popluation元素  
+2. 留下levels中有的popluation元素  
 ```{r}
 levels(covid19$`縣市`) # 是名稱字串向量
 # 由於population元素值有names，可以用`[名稱字串向量]`取出所要的
 levels(covid19$`縣市`) -> levelsInData
 population[levelsInData] -> population
 ```
-(@) 將population由大排到小(`sort(x, decreasing=T)`可將x numeric vector由大排到小)  
+3. 將population由大排到小(`sort(x, decreasing=T)`可將x numeric vector由大排到小)  
 ```{r}
 population <- sort(population, decreasing=T)
 population
 ```
-(@) 排完後population第一個元素值最大，它的名稱即是人口最多的縣市，第二元素值次大，它名稱是人口第二多縣市，依此類推。我們要的是population排完後的元素名稱  
+4. 排完後population第一個元素值最大，它的名稱即是人口最多的縣市，第二元素值次大，它名稱是人口第二多縣市，依此類推。我們要的是population排完後的元素名稱  
 ```{r}
 newLevels <- names(population)
 newLevels
 ```
-(@) 重設levels排序  
+5. 重設levels排序  
 ```{r}
 covid19$`縣市` <- factor(covid19$`縣市`, levels=newLevels)
 levels(covid19$`縣市`)
 ```
-將`covid19$縣市`依縣市目前個案數目由大排到小。（hint: 可使用`table()`來得到個案數統計, 它會自然產生named integer vector）
+將`covid19$縣市`依縣市目前個案數目由大排到小。
 ```{r}
 number <- table(covid19$`縣市`)
 number <- sort(number, decreasing=T)
 covid19$`縣市` <- factor(covid19$`縣市`, levels=names(number))
 levels(covid19$`縣市`)
 ```
-
-
+***  
+年齡應該用年齡區間起始數字排序  
 
 
 
