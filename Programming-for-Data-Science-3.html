@@ -267,13 +267,18 @@ div.tocify {
 
 
 <p><font face="Taipei Sans TC Beta Light"></p>
+<pre><code>## 
+## Attaching package: 'magrittr'</code></pre>
+<pre><code>## The following object is masked from 'package:purrr':
+## 
+##     set_names</code></pre>
 <div id="第5章-programming" class="section level1">
 <h1>第5章 Programming</h1>
 <div id="pipe" class="section level2">
 <h2>5.1 Pipe</h2>
 <div id="原則" class="section level3">
 <h3>5.1.1 原則</h3>
-<p><font color="#0b5395"><strong>範例一</strong>：找出身高最高的人。</font></p>
+<p><font color="#0b5395"><strong>範例 5.1.1</strong>：找出身高最高的人。</font></p>
 <pre class="r"><code>threeHeigths &lt;- c(Gary=178, John=182, Cam=175)
 # 先排序由大到小
 sort(threeHeigths, decreasing=T) -&gt; sorted_heights
@@ -290,35 +295,27 @@ print(highestPerson)</code></pre>
 <li>再把其他有用到中間物件的位置換成<code>.</code>。</li>
 </ul>
 <p>原本：</p>
-<pre class="r"><code>f(w) -&gt; x
+<pre><code>f(w) -&gt; x
 g(x) -&gt; y
 h(y) -&gt; z</code></pre>
 <p>可寫成：</p>
-<pre class="r"><code>f(w) %&gt;%
+<pre><code>f(w) %&gt;%
   g(.) %&gt;% 
   h(.) -&gt; z</code></pre>
 <p>或</p>
-<pre class="r"><code>w %&gt;%
+<pre><code>w %&gt;%
   f(.) %&gt;%
   g(.) %&gt;%
   h(.) -&gt; z</code></pre>
-<p><font color="#0b5395">再回到<strong>範例一</strong></font></p>
-<pre class="r"><code>library(magrittr)</code></pre>
-<pre><code>## 
-## Attaching package: 'magrittr'</code></pre>
-<pre><code>## The following object is masked from 'package:purrr':
-## 
-##     set_names</code></pre>
+<p><font color="#0b5395">再回到<strong>範例 5.1.1</strong>。</font></p>
 <pre class="r"><code>sort(threeHeigths, decreasing=T) %&gt;% 
   names(.) %&gt;%
   .[[1]] -&gt; highestPerson
 print(highestPerson)</code></pre>
 <pre><code>## [1] &quot;John&quot;</code></pre>
-<p><font color="#0b5395"><strong>範例二</strong>：由 cities 創出每個元素對應的北部、東部、中部 region factor。</font></p>
+<p><font color="#0b5395"><strong>範例 5.1.2</strong>：由 cities 創出每個元素對應的北部、東部、中部 region factor。</font></p>
 <pre class="r"><code>cities &lt;- factor(c(&quot;台北&quot;,&quot;花蓮&quot;,&quot;台東&quot;,&quot;台中&quot;))
-levels(cities)</code></pre>
-<pre><code>## [1] &quot;台中&quot; &quot;台北&quot; &quot;台東&quot; &quot;花蓮&quot;</code></pre>
-<pre class="r"><code>region &lt;- cities
+region &lt;- cities
 # pipe operation
 levels(region) %&gt;% 
   str_replace(.,&quot;台北&quot;,&quot;北部&quot;) %&gt;%
@@ -337,20 +334,28 @@ levels(region)</code></pre>
 </div>
 <div id="執行順序" class="section level3">
 <h3>5.1.3 執行順序</h3>
-<p>面對 pipe 時會先把 pipe 走完最後才去做值 assign 給最後物件的動作。</p>
+<p>面對 pipe 時會先把 pipe 走完最後才去做值 assign 給最後物件的動作</p>
 <pre class="r"><code>threeHeigths %&gt;%
   sort(., decreasing=T) %&gt;%
   names(.) %&gt;%
   .[[1]] -&gt; highestPerson</code></pre>
+<p>因為最後才去做值assign給最後物件的動作 (即<code>-&gt;</code>或<code>&lt;-</code>最後進行)，所以上面也可以使用左箭頭成為</p>
+<pre class="r"><code>highestPerson &lt;- 
+  threeHeigths %&gt;%
+  sort(., decreasing=T) %&gt;%
+  names(.) %&gt;%
+  .[[1]]</code></pre>
 </div>
 <div id="省略原則" class="section level3">
 <h3>5.1.4 <code>.</code>省略原則</h3>
-<p>若代表中間物件的<code>.</code>在函數的「<strong>第一位</strong>」則<code>.</code><strong>可省略不寫</strong>，連它後面的<code>,</code>也去掉。小心若不在<strong>第一位</strong>則不可做省略<code>.</code>動作。</p>
+<p>若代表中間物件的<code>.</code>在函數的<strong>第一位</strong>，則<code>.</code><strong>可省略不寫</strong>，連它後面的<code>,</code>也去掉。<br />
+小心若不在<strong>第一位</strong>則不可做省略<code>.</code>動作。</p>
 <pre class="r"><code>levels(region) %&gt;% 
   str_replace(&quot;台北&quot;,&quot;北部&quot;) %&gt;%
   str_replace(&quot;花蓮|台東&quot;,&quot;東部&quot;) %&gt;%
   str_replace(&quot;台中&quot;,&quot;中部&quot;) -&gt; levels(region)</code></pre>
 <p>要小心<code>%&gt;%</code>是將左邊output放到右邊函數，這裡的右邊函數指的是最外圍的函數：</p>
+<p><font color="#0b5395"><strong>範例 5.1.3</strong></font></p>
 <pre class="r"><code>population &lt;- c(`cityA`=500,`cityB`=1500, `cityC`=399)
 cities &lt;- c(&quot;cityA&quot;,&quot;cityA&quot;,&quot;cityB&quot;,&quot;cityB&quot;,&quot;cityC&quot;)
 # 錯誤示範
@@ -358,8 +363,8 @@ population %&gt;%
   names(sort(.)) %&gt;%
   factor(cities, levels=.) -&gt; cities</code></pre>
 <pre><code>## Error in names(., sort(.)): 傳遞了 2 個引數給 'names' 但它需要 1 個</code></pre>
-<p><code>%&gt;%</code>是把population放到names()的input裡，而非sort()，但names()的input位置已被sort佔走。</p>
-<pre class="r"><code># 正確示範
+<p><code>%&gt;%</code>是把 population 放到 names() 的 input 裡，而非 sort()，但 names() 的 input 位置已被 sort 佔走。</p>
+<pre class="r"><code># 正確寫法
 population %&gt;%
   sort() %&gt;%
   names() %&gt;%
@@ -367,12 +372,40 @@ factor(cities, levels=.) -&gt; cities</code></pre>
 </div>
 <div id="串接非單純函數程序" class="section level3">
 <h3>5.1.5 串接非單純函數程序</h3>
-<p>若遇到pipe 串接的下一段並不是單純的<strong>函數</strong>的話，可以用<code>{}</code>把此段內容括起來並把前一段output要放的位置換成<code>.</code>。</p>
-<p><font color="#0b5395"><strong>範例三</strong>：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。</font></p>
+<p>若遇到 pipe 串接的下一段並不是單純的<strong>函數</strong>的話，可以用<code>{}</code>把此段內容括起來並把前一段output要放的位置換成<code>.</code>。</p>
+<p><font color="#0b5395"><strong>範例 5.1.4</strong>：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。</font></p>
 <pre class="r"><code>dataList &lt;- list(
   num=c(2,97,22,15,7),
   chr=c(&quot;2&quot;,&quot;97&quot;,&quot;22&quot;,&quot;15&quot;,&quot;7&quot;)
-)</code></pre>
+)
+map(dataList, ~is.numeric(.x)) %&gt;%
+unlist(.) %&gt;%
+dataList[.] %&gt;%
+{.[[1]][.[[1]] &gt; 50]} -&gt; bigNumber</code></pre>
+<p><font color="#0b5395">再回到<strong>範例 5.1.3</strong>。</font></p>
+<pre class="r"><code>population %&gt;% 
+  {names(sort(.))} %&gt;%
+  factor(cities, levels=.) -&gt; cities</code></pre>
+</div>
+<div id="綜合練習" class="section level3">
+<h3>5.1.6 綜合練習</h3>
+<p><font color="#0b5395"><strong>練習一</strong></font></p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json&quot;) -&gt; covid19
+jsonlite::fromJSON(
+  &quot;https://www.dropbox.com/s/jckqryeh5zeat5w/regionPopulation.json?dl=1&quot;
+) -&gt; population
+unlist(population) -&gt; population</code></pre>
+<pre class="r"><code>covid19$`縣市` &lt;- factor(covid19$`縣市`)
+covid19$`縣市` %&gt;%
+  levels(.) %&gt;%
+  population[.] %&gt;%
+  sort(decreasing = T) %&gt;%
+  names(.) %&gt;%
+  factor(covid19$`縣市`, levels=.) -&gt; covid19$`縣市`
+levels(covid19$`縣市`)</code></pre>
+<pre><code>##  [1] &quot;新北市&quot; &quot;台中市&quot; &quot;高雄市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台南市&quot; &quot;彰化縣&quot; &quot;屏東縣&quot;
+##  [9] &quot;雲林縣&quot; &quot;新竹縣&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot; &quot;宜蘭縣&quot; &quot;新竹市&quot; &quot;基隆市&quot;
+## [17] &quot;嘉義市&quot;</code></pre>
 <p></font></p>
 </div>
 </div>
