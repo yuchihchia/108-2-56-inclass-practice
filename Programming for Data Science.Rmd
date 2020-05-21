@@ -526,11 +526,6 @@ listExample <- list(student="小明",
 length(listExample)
 listExample[[1]]
 listExample[[2]]
-#臺南市運動地圖
-library(jsonlite)
-fromJSON("https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json", simplifyDataFrame = F) -> tainanSportsMap
-length(tainanSportsMap)
-str(tainanSportsMap[[1]]) 
 ```
 * 用名字選: `物件$名字`
 ```{r}
@@ -562,7 +557,6 @@ vectorExample[c(1,3)]
 vectorExample[c(3,2,1)] #產生重新排列效果
 str(listExample, max.level=1)
 listExample[c(1,2)]
-str(tainanSportsMap[c(87,666)])
 ```
 * 用名字選: `物件[名字向量]`
 ```{r}
@@ -1587,6 +1581,151 @@ levels(garbageRoutes$time)
 levels(garbageRoutes$time)[[3]] <- "下午"
 levels(garbageRoutes$time)
 ```
+## 4.8 On list
+### 4.8.1每個元素相同運算
+```{r}
+print(example)
+```
+我們有可能想要拿出其中屬於小新的資料：
+```{r}
+pick_小新 <- example$name == "小新"
+data_selected <- list(name=example$name[pick_小新],
+                      weight=example$weight[pick_小新],
+                      height=example$height[pick_小新],
+                      hobby=example$hobby[pick_小新],
+                      residence=example$residence[pick_小新],
+                      allowance=example$allowance[pick_小新],
+                      bloodType=example$bloodType[pick_小新])
+data_selected
+```
+`data_selected`的產生，相當於進行
+```
+example[[1]][pick_小新],
+example[[2]][pick_小新],
+example[[3]][pick_小新],
+example[[4]][pick_小新],
+example[[5]][pick_小新],
+example[[6]][pick_小新],
+example[[7]][pick_小新]
+```
+再存放在`list()`裡。也就是我們想要：  
+
+* 對`example`底下的每個元素進行  
+* `[pick_小新]`的動作  
+
+purrr底下的`map()`允許我們  
+
+* 使用`.x`來代表每個元素，即`[[1]], [[2]], ..., [[7]]`  
+
+所以  
+
+* 對每個元素進行`[pick_小新]`  
+* 可以寫成`.x[pick_小新]`。  
+
+由於`.x[pick_小新]`是個公式化的動作，在R，`~`代表要形成一個公式(formula)，所以
+
+* 要寫成`~ .x[pick_小新]`
+
+完整的`map()`用法為：
+```
+map(對象物件, ~對每個元素作的動作)
+```
+以一開始的例子為例：  
+
+* 對`example`底下的每個元素進行  
+* `.x[pick_小新]`的動作
+```{r}
+library(purrr)
+map(example, ~.x[pick_小新]) -> data_selected 
+data_selected
+```
+範例：舞蹈表演  
+```{r}
+jsonlite::fromJSON("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=3", simplifyDataFrame = F) -> dance
+# 第一個dance表演名稱
+dance[[1]]$title
+# 第二個dance表演名稱
+dance[[2]]$title
+```
+若想得到所有表演的名稱，我們得：  
+
+* 對 dance 每一個元素(`.x`表示)進行  
+* `.x$title`的動作  
+```{r}
+map(dance, ~.x$title) -> list_titles
+View(list_titles)
+```
+每個表演有時不止演出一場，每個表演的場次總數：  
+```{r}
+# 記載第一個表演的所有場次訊息
+dance[[1]]$showInfo
+str(dance[[1]]$showInfo)
+# 計算第一個表演有幾個場次
+length(dance[[1]]$showInfo)
+# 計算第二個表演有幾個場次
+length(dance[[2]]$showInfo)
+```
+* 對 dance 每個元素進行  
+* `length(.x$showInfo)`的動作  
+```{r}
+map(dance,~length(.x$showInfo)) -> list_numberOfShows 
+View(list_numberOfShows)
+```
+第5個表演有4個場次，想知道它們的日期時間：  
+```{r}
+str(dance[[5]]$showInfo)
+# 這個表演第1個場次的訊息
+dance[[5]]$showInfo[[1]]$time
+# 這個表演第2個場次的訊息
+dance[[5]]$showInfo[[2]]$time
+```
+* 對`dance[[5]]$showInfo`的每個元素(`.x`)表示  
+* 進行`.x$time`動作  
+```{r}
+map(dance[[5]]$showInfo, ~ .x$time) -> list_showTimes_dance5
+```
+找出第8個表演的所有場次時間(time)和地點(location)：
+```{r}
+map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -> list_showInfo_dance8
+```
+### 4.8.2 綜合練習
+1. 新北市公車路線清單  
+   請抓出每條路線的Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)。  
+```{r}
+jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json", simplifyDataFrame = F) -> busRoutes
+map(busRoutes, ~.x[c(1,2,3,4)]) -> busRoutes_info
+```
+2. 一般天氣預報-今明36小時天氣預報
+```{r}
+jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
+```
+2.1 找出有氣象預報資訊的縣市名稱（locationName欄位）
+```{r}
+locationName <- weather_next36hours$cwbopendata$dataset$location$locationName
+```
+2.2 氣象局針對每個縣市提供了不同氣象因子在未來三個時段的預報。每個都市的氣象因子預報有那些，以第一個都市為例，它存在
+```
+weather_next36hours$cwbopendata$dataset$location$weatherElement[[1]]$elementName 
+```
+請取出每個縣市有提供的氣象預報因子名稱。（個別名稱的意思要去看欄位說明文件）
+```{r}
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$elementName) -> elementName
+elementName[[1]]
+```
+2.3 請抓出每縣市在第一個預告時段的  
+
+* 預告開始時間
+* 預告結束時間
+* 這段時間的最高氣溫
+```{r}
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$startTime[[1]]) -> startTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$endTime[[1]]) -> endTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$parameter$parameterName[[1]]) -> highest_1
+```
 
 
 
@@ -1602,5 +1741,4 @@ levels(garbageRoutes$time)
 
 
 
-
-
+ 

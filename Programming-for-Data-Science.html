@@ -945,38 +945,6 @@ length(listExample)</code></pre>
 ## 
 ## $`108-2`[[1]]$grade
 ## [1] 78</code></pre>
-<pre class="r"><code>#臺南市運動地圖
-library(jsonlite)
-fromJSON(&quot;https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json&quot;, simplifyDataFrame = F) -&gt; tainanSportsMap</code></pre>
-<pre><code>## Warning: JSON string contains (illegal) UTF8 byte-order-mark!</code></pre>
-<pre class="r"><code>length(tainanSportsMap)</code></pre>
-<pre><code>## [1] 1076</code></pre>
-<pre class="r"><code>str(tainanSportsMap[[1]]) </code></pre>
-<pre><code>## List of 24
-##  $ lid      : int 14
-##  $ cid      : int 89
-##  $ title    : chr &quot;台南市立游泳池&quot;
-##  $ url      : chr &quot;&quot;
-##  $ address  : chr &quot;台南市南區體育路100號&quot;
-##  $ zip      : int 700
-##  $ city     : chr &quot;台南市&quot;
-##  $ country  : chr &quot;南區&quot;
-##  $ lon      : num 120
-##  $ lat      : num 23
-##  $ zoom     : int 16
-##  $ phone    : chr &quot;06-2156837&quot;
-##  $ mobile   : chr &quot;&quot;
-##  $ fax      : chr &quot;&quot;
-##  $ contemail: chr &quot;&quot;
-##  $ opentime : chr &quot;8:00~22:00&quot;
-##  $ logourl  : chr &quot;&quot;
-##  $ submitter: int 23
-##  $ status   : int 2
-##  $ date     : int 1258938364
-##  $ hits     : int 12304
-##  $ rating   : num 6.5
-##  $ votes    : int 4
-##  $ comments : int 0</code></pre>
 <ul>
 <li>用名字選: <code>物件$名字</code></li>
 </ul>
@@ -1118,58 +1086,6 @@ str(newTaipeiCityVaccine$result, max.level = 1) #顯示到第一層</code></pre>
 ## 
 ## $學期$`108-2`[[1]]$grade
 ## [1] 78</code></pre>
-<pre class="r"><code>str(tainanSportsMap[c(87,666)])</code></pre>
-<pre><code>## List of 2
-##  $ :List of 24
-##   ..$ lid      : int 101
-##   ..$ cid      : int 135
-##   ..$ title    : chr &quot;安慶里體能活力瑜珈班&quot;
-##   ..$ url      : chr &quot;&quot;
-##   ..$ address  : chr &quot;台南市安南區長溪路一段168巷133號(安慶里活動中心)&quot;
-##   ..$ zip      : int 709
-##   ..$ city     : chr &quot;安南區&quot;
-##   ..$ country  : chr &quot;安慶里&quot;
-##   ..$ lon      : num 120
-##   ..$ lat      : num 23
-##   ..$ zoom     : int 16
-##   ..$ phone    : chr &quot;&quot;
-##   ..$ mobile   : chr &quot;&quot;
-##   ..$ fax      : chr &quot;&quot;
-##   ..$ contemail: chr &quot;&quot;
-##   ..$ opentime : chr &quot;每週三六PM8:00-9:00&quot;
-##   ..$ logourl  : chr &quot; &quot;
-##   ..$ submitter: int 35
-##   ..$ status   : int 1
-##   ..$ date     : int 1260254738
-##   ..$ hits     : int 471
-##   ..$ rating   : num 0
-##   ..$ votes    : int 0
-##   ..$ comments : int 0
-##  $ :List of 24
-##   ..$ lid      : int 779
-##   ..$ cid      : int 161
-##   ..$ title    : chr &quot;新營區大宏里外內丹功養身保健協會&quot;
-##   ..$ url      : chr &quot;&quot;
-##   ..$ address  : chr &quot;臺南市新營區大宏里民族路21-61號&quot;
-##   ..$ zip      : int 730
-##   ..$ city     : chr &quot;新營區&quot;
-##   ..$ country  : chr &quot;大宏里&quot;
-##   ..$ lon      : int 0
-##   ..$ lat      : int 0
-##   ..$ zoom     : int 0
-##   ..$ phone    : int 6551731
-##   ..$ mobile   : chr &quot;&quot;
-##   ..$ fax      : chr &quot;&quot;
-##   ..$ contemail: chr &quot;&quot;
-##   ..$ opentime : chr &quot;週二、四 19:30~21:30&quot;
-##   ..$ logourl  : chr &quot; &quot;
-##   ..$ submitter: int 3
-##   ..$ status   : int 1
-##   ..$ date     : int 1317198503
-##   ..$ hits     : int 919
-##   ..$ rating   : num 0
-##   ..$ votes    : int 0
-##   ..$ comments : int 0</code></pre>
 <ul>
 <li>用名字選: <code>物件[名字向量]</code></li>
 </ul>
@@ -2196,8 +2112,8 @@ library(glue)</code></pre>
 </ul>
 <pre class="r"><code>heartSutra &lt;- c(&quot;舍利子，色不異空，空不異色；色即是空，空即是色。&quot;)
 str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
-<div id="htmlwidget-03d1e9e3d52176ccee86" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-03d1e9e3d52176ccee86">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2d2cfc3857437aef2da4" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2d2cfc3857437aef2da4">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(heartSutra,&quot;色&quot;) # 計數</code></pre>
 <pre><code>## [1] 4</code></pre>
 <ul>
@@ -2209,8 +2125,8 @@ str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
 <pre class="r"><code>studentIds &lt;- c(&quot;410873029&quot;,&quot;410773005&quot;,&quot;410772035&quot;,&quot;410562123&quot;)
 # 取出學號中的入學屆為107或108
 str_view_all(studentIds,&quot;(107|108)&quot;) # 可不寫()</code></pre>
-<div id="htmlwidget-52ec6865631d6e7dba10" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-52ec6865631d6e7dba10">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-85f6811670c5dd1dd9cb" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-85f6811670c5dd1dd9cb">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否來自107或108學屆
 str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE</code></pre>
@@ -2229,8 +2145,8 @@ str_detect(studentIds, &quot;107|108&quot;)</code></pre>
 </ul>
 <pre class="r"><code>Ids &lt;- c(&quot;A283743192&quot;,&quot;B829103720&quot;,&quot;A10920402&quot;,&quot;C291022384&quot;)
 str_view_all(Ids, &quot;[AC]&quot;)</code></pre>
-<div id="htmlwidget-f76be1772fe9c766b1cf" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f76be1772fe9c766b1cf">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cb492ff09c510216f08a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cb492ff09c510216f08a">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_detect(Ids, &quot;[AC]&quot;) # 偵測 出現A、C</code></pre>
 <pre><code>## [1]  TRUE FALSE  TRUE  TRUE</code></pre>
 <pre class="r"><code>str_extract(Ids,&quot;[A-Z]&quot;) # 取出 A-Z的字元</code></pre>
@@ -2252,8 +2168,8 @@ claimC &lt;- &quot;我玩了兩次，一次是7蘋果H，另一次是5紅心J&qu
 str_view(c(claimA,claimB,claimC),
          pattern=myRegexSlotMachine
          )</code></pre>
-<div id="htmlwidget-9ec322157294ad9a2062" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9ec322157294ad9a2062">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f83fff33ab8f1cac5e6d" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f83fff33ab8f1cac5e6d">{"x":{"html":"<ul>\n  <li>我得到A檸檬99<\/li>\n  <li>我的是<span class='match'>7777Z<\/span><\/li>\n  <li>我玩了兩次，一次是7蘋果H，另一次是<span class='match'>5紅心J<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># 是否有吻合的出象
 str_detect(c(claimA,claimB,claimC),
            pattern=myRegexSlotMachine
@@ -2266,23 +2182,23 @@ str_detect(c(claimA,claimB,claimC),
 <pre class="r"><code>headline &lt;- &quot;資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。&quot;
 # 顯示所有符合規則的
 str_view_all(headline, &quot;謝陳官&quot;) # 固定字組</code></pre>
-<div id="htmlwidget-50acadd29523d23187ee" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-50acadd29523d23187ee">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ca80d72eb5216ccb66cd" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ca80d72eb5216ccb66cd">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline,&quot;謝陳官&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;[謝陳官]&quot;) # 有1個strip: 出象有3個可能字元 </code></pre>
-<div id="htmlwidget-c158208b304cc9a5ec2a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c158208b304cc9a5ec2a">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2676612a78d6d045d343" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2676612a78d6d045d343">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;[謝陳官]&quot;)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;謝無雙|官求敗&quot;) # 有1個strip，出象有2個字組 </code></pre>
-<div id="htmlwidget-da94abeede307739bb0f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da94abeede307739bb0f">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-685a3b37fb430d02267a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-685a3b37fb430d02267a">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;陳[^官]&quot;) # 固定字元＋有1個strip： 出象為排除官以外的字元</code></pre>
-<div id="htmlwidget-adb5104f29e077e75cf1" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-adb5104f29e077e75cf1">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-572e87ce27d365590dbc" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-572e87ce27d365590dbc">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;陳[^官]&quot;)</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p>請使用<code>str_extract</code>函數粹取出每個地址的“xx號”包含“號”字</p>
@@ -2316,8 +2232,8 @@ myRegexSlotMachine &lt;- &quot;[0-9]+號&quot;
 print(myRegexSlotMachine)</code></pre>
 <pre><code>## [1] &quot;[0-9]+號&quot;</code></pre>
 <pre class="r"><code>str_view_all(addresses, myRegexSlotMachine)</code></pre>
-<div id="htmlwidget-e3f6f3134057e69a1872" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e3f6f3134057e69a1872">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1aae9bfde159444f9551" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1aae9bfde159444f9551">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_extract(addresses, myRegexSlotMachine)</code></pre>
 <pre><code>## [1] &quot;385號&quot; &quot;125號&quot; &quot;99號&quot;  &quot;33號&quot;  &quot;23號&quot;</code></pre>
 <p>了解如何regex形式的描述你的target後，接下來我們進一步學習如何更準確描述target在整個字串的位置</p>
@@ -2336,16 +2252,16 @@ pattern &lt;- glue::glue(&quot;^{target_regex}&quot;)
 print(pattern)</code></pre>
 <pre><code>## ^唧唧</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<p><div id="htmlwidget-f1b0f346957b1057e0a0" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f1b0f346957b1057e0a0">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue套件裡的glue函數會把字串中的<code>{物值名稱}</code>換成目前Environment裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”</p>
+<p><div id="htmlwidget-0eba67023d920ff6d877" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0eba67023d920ff6d877">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue套件裡的glue函數會把字串中的<code>{物值名稱}</code>換成目前Environment裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”</p>
 <pre class="r"><code># 目標是後面的唧唧
 target_regex2 &lt;- &quot;唧唧&quot;
 pattern &lt;- glue::glue(&quot;{target_regex2}$&quot;)
 print(pattern)</code></pre>
 <pre><code>## 唧唧$</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<div id="htmlwidget-519531844600c14f00e4" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-519531844600c14f00e4">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-48b6c0f97e7a092db55b" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-48b6c0f97e7a092db55b">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="前後鄰居描述-look-around" class="section level3">
 <h3>4.6.5 前後鄰居描述 Look around</h3>
@@ -2806,6 +2722,290 @@ levels(garbageRoutes$time)</code></pre>
 <pre class="r"><code>levels(garbageRoutes$time)[[3]] &lt;- &quot;下午&quot;
 levels(garbageRoutes$time)</code></pre>
 <pre><code>## [1] &quot;(一、四)下午&quot; &quot;下午&quot;         &quot;全天&quot;         &quot;晚上&quot;</code></pre>
+</div>
+</div>
+<div id="on-list" class="section level2">
+<h2>4.8 On list</h2>
+<div id="每個元素相同運算" class="section level3">
+<h3>4.8.1每個元素相同運算</h3>
+<pre class="r"><code>print(example)</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $height
+## [1] 175 166 170 160
+## 
+## $weight
+## [1] 77 NA 60 43
+## 
+## $birthday
+## [1] &quot;1998-03-11&quot; &quot;1999-12-22&quot; &quot;1995-08-22&quot; &quot;2001-10-10&quot;
+## 
+## $hobby
+## [1] &quot;美食 旅遊&quot; &quot;旅遊 時尚&quot; &quot;3C 美食&quot;   &quot;音樂 旅遊&quot;
+## 
+## $residence
+## [1] &quot;Taipei&quot;     &quot;New Taipei&quot; &quot;Taichung&quot;   &quot;Kaohsiung&quot; 
+## 
+## $allowance
+## [1] 0-1000    1001-2000 2000+     1001-2000
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+
+## 
+## $bloodType
+## [1] &quot;A&quot; &quot;B&quot; &quot;B&quot; &quot;O&quot;</code></pre>
+<p>我們有可能想要拿出其中屬於小新的資料：</p>
+<pre class="r"><code>pick_小新 &lt;- example$name == &quot;小新&quot;
+data_selected &lt;- list(name=example$name[pick_小新],
+                      weight=example$weight[pick_小新],
+                      height=example$height[pick_小新],
+                      hobby=example$hobby[pick_小新],
+                      residence=example$residence[pick_小新],
+                      allowance=example$allowance[pick_小新],
+                      bloodType=example$bloodType[pick_小新])
+data_selected</code></pre>
+<pre><code>## $name
+## [1] &quot;小新&quot;
+## 
+## $weight
+## [1] 60
+## 
+## $height
+## [1] 170
+## 
+## $hobby
+## [1] &quot;3C 美食&quot;
+## 
+## $residence
+## [1] &quot;Taichung&quot;
+## 
+## $allowance
+## [1] 2000+
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+
+## 
+## $bloodType
+## [1] &quot;B&quot;</code></pre>
+<p><code>data_selected</code>的產生，相當於進行</p>
+<pre><code>example[[1]][pick_小新],
+example[[2]][pick_小新],
+example[[3]][pick_小新],
+example[[4]][pick_小新],
+example[[5]][pick_小新],
+example[[6]][pick_小新],
+example[[7]][pick_小新]</code></pre>
+<p>再存放在<code>list()</code>裡。也就是我們想要：</p>
+<ul>
+<li>對<code>example</code>底下的每個元素進行<br />
+</li>
+<li><code>[pick_小新]</code>的動作</li>
+</ul>
+<p>purrr底下的<code>map()</code>允許我們</p>
+<ul>
+<li>使用<code>.x</code>來代表每個元素，即<code>[[1]], [[2]], ..., [[7]]</code></li>
+</ul>
+<p>所以</p>
+<ul>
+<li>對每個元素進行<code>[pick_小新]</code><br />
+</li>
+<li>可以寫成<code>.x[pick_小新]</code>。</li>
+</ul>
+<p>由於<code>.x[pick_小新]</code>是個公式化的動作，在R，<code>~</code>代表要形成一個公式(formula)，所以</p>
+<ul>
+<li>要寫成<code>~ .x[pick_小新]</code></li>
+</ul>
+<p>完整的<code>map()</code>用法為：</p>
+<pre><code>map(對象物件, ~對每個元素作的動作)</code></pre>
+<p>以一開始的例子為例：</p>
+<ul>
+<li>對<code>example</code>底下的每個元素進行<br />
+</li>
+<li><code>.x[pick_小新]</code>的動作</li>
+</ul>
+<pre class="r"><code>library(purrr)</code></pre>
+<pre><code>## 
+## Attaching package: 'purrr'</code></pre>
+<pre><code>## The following object is masked from 'package:jsonlite':
+## 
+##     flatten</code></pre>
+<pre class="r"><code>map(example, ~.x[pick_小新]) -&gt; data_selected 
+data_selected</code></pre>
+<pre><code>## $name
+## [1] &quot;小新&quot;
+## 
+## $height
+## [1] 170
+## 
+## $weight
+## [1] 60
+## 
+## $birthday
+## [1] &quot;1995-08-22&quot;
+## 
+## $hobby
+## [1] &quot;3C 美食&quot;
+## 
+## $residence
+## [1] &quot;Taichung&quot;
+## 
+## $allowance
+## [1] 2000+
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+
+## 
+## $bloodType
+## [1] &quot;B&quot;</code></pre>
+<p>範例：舞蹈表演</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&amp;category=3&quot;, simplifyDataFrame = F) -&gt; dance
+# 第一個dance表演名稱
+dance[[1]]$title</code></pre>
+<pre><code>## [1] &quot;傳統藝術接班人－傳統工藝推廣計畫&quot;</code></pre>
+<pre class="r"><code># 第二個dance表演名稱
+dance[[2]]$title</code></pre>
+<pre><code>## [1] &quot;尤法．皮克《巴赫d小調》 ─ 取消&quot;</code></pre>
+<p>若想得到所有表演的名稱，我們得：</p>
+<ul>
+<li>對 dance 每一個元素(<code>.x</code>表示)進行<br />
+</li>
+<li><code>.x$title</code>的動作</li>
+</ul>
+<pre class="r"><code>map(dance, ~.x$title) -&gt; list_titles
+View(list_titles)</code></pre>
+<p>每個表演有時不止演出一場，每個表演的場次總數：</p>
+<pre class="r"><code># 記載第一個表演的所有場次訊息
+dance[[1]]$showInfo</code></pre>
+<pre><code>## [[1]]
+## [[1]]$time
+## [1] &quot;2020/01/15 09:00:00&quot;
+## 
+## [[1]]$location
+## [1] &quot;268  宜蘭縣五結鄉五濱路二段201號&quot;
+## 
+## [[1]]$locationName
+## [1] &quot;宜蘭傳藝園區-展示館&quot;
+## 
+## [[1]]$onSales
+## [1] &quot;N&quot;
+## 
+## [[1]]$price
+## [1] &quot;&quot;
+## 
+## [[1]]$latitude
+## NULL
+## 
+## [[1]]$longitude
+## NULL
+## 
+## [[1]]$endTime
+## [1] &quot;2020/12/15 09:00:00&quot;</code></pre>
+<pre class="r"><code>str(dance[[1]]$showInfo)</code></pre>
+<pre><code>## List of 1
+##  $ :List of 8
+##   ..$ time        : chr &quot;2020/01/15 09:00:00&quot;
+##   ..$ location    : chr &quot;268  宜蘭縣五結鄉五濱路二段201號&quot;
+##   ..$ locationName: chr &quot;宜蘭傳藝園區-展示館&quot;
+##   ..$ onSales     : chr &quot;N&quot;
+##   ..$ price       : chr &quot;&quot;
+##   ..$ latitude    : NULL
+##   ..$ longitude   : NULL
+##   ..$ endTime     : chr &quot;2020/12/15 09:00:00&quot;</code></pre>
+<pre class="r"><code># 計算第一個表演有幾個場次
+length(dance[[1]]$showInfo)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code># 計算第二個表演有幾個場次
+length(dance[[2]]$showInfo)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<ul>
+<li>對 dance 每個元素進行<br />
+</li>
+<li><code>length(.x$showInfo)</code>的動作</li>
+</ul>
+<pre class="r"><code>map(dance,~length(.x$showInfo)) -&gt; list_numberOfShows 
+View(list_numberOfShows)</code></pre>
+<p>第5個表演有4個場次，想知道它們的日期時間：</p>
+<pre class="r"><code>str(dance[[5]]$showInfo)</code></pre>
+<pre><code>## List of 4
+##  $ :List of 8
+##   ..$ time        : chr &quot;2020/06/27 14:30:00&quot;
+##   ..$ location    : chr &quot;臺北市中正區八德路一段1號&quot;
+##   ..$ locationName: chr &quot;華山1914文創園區東3館 烏梅劇院&quot;
+##   ..$ onSales     : chr &quot;Y&quot;
+##   ..$ price       : chr &quot;800,2000&quot;
+##   ..$ latitude    : NULL
+##   ..$ longitude   : NULL
+##   ..$ endTime     : chr &quot;&quot;
+##  $ :List of 8
+##   ..$ time        : chr &quot;2020/06/27 19:30:00&quot;
+##   ..$ location    : chr &quot;臺北市中正區八德路一段1號&quot;
+##   ..$ locationName: chr &quot;華山1914文創園區東3館 烏梅劇院&quot;
+##   ..$ onSales     : chr &quot;Y&quot;
+##   ..$ price       : chr &quot;&quot;
+##   ..$ latitude    : NULL
+##   ..$ longitude   : NULL
+##   ..$ endTime     : chr &quot;&quot;
+##  $ :List of 8
+##   ..$ time        : chr &quot;2020/06/27 19:30:00&quot;
+##   ..$ location    : chr &quot;臺北市中正區八德路一段1號&quot;
+##   ..$ locationName: chr &quot;華山1914文創園區東3館 烏梅劇院&quot;
+##   ..$ onSales     : chr &quot;Y&quot;
+##   ..$ price       : chr &quot;800,2000&quot;
+##   ..$ latitude    : NULL
+##   ..$ longitude   : NULL
+##   ..$ endTime     : chr &quot;&quot;
+##  $ :List of 8
+##   ..$ time        : chr &quot;2020/06/28 14:30:00&quot;
+##   ..$ location    : chr &quot;臺北市中正區八德路一段1號&quot;
+##   ..$ locationName: chr &quot;華山1914文創園區東3館 烏梅劇院&quot;
+##   ..$ onSales     : chr &quot;Y&quot;
+##   ..$ price       : chr &quot;800,2000&quot;
+##   ..$ latitude    : NULL
+##   ..$ longitude   : NULL
+##   ..$ endTime     : chr &quot;&quot;</code></pre>
+<pre class="r"><code># 這個表演第1個場次的訊息
+dance[[5]]$showInfo[[1]]$time</code></pre>
+<pre><code>## [1] &quot;2020/06/27 14:30:00&quot;</code></pre>
+<pre class="r"><code># 這個表演第2個場次的訊息
+dance[[5]]$showInfo[[2]]$time</code></pre>
+<pre><code>## [1] &quot;2020/06/27 19:30:00&quot;</code></pre>
+<ul>
+<li>對<code>dance[[5]]$showInfo</code>的每個元素(<code>.x</code>)表示<br />
+</li>
+<li>進行<code>.x$time</code>動作</li>
+</ul>
+<pre class="r"><code>map(dance[[5]]$showInfo, ~ .x$time) -&gt; list_showTimes_dance5</code></pre>
+<p>找出第8個表演的所有場次時間(time)和地點(location)：</p>
+<pre class="r"><code>map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -&gt; list_showInfo_dance8</code></pre>
+</div>
+<div id="綜合練習-2" class="section level3">
+<h3>4.8.2 綜合練習</h3>
+<ol style="list-style-type: decimal">
+<li>新北市公車路線清單<br />
+請抓出每條路線的Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)。</li>
+</ol>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json&quot;, simplifyDataFrame = F) -&gt; busRoutes
+map(busRoutes, ~.x[c(1,2,3,4)]) -&gt; busRoutes_info</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>一般天氣預報-今明36小時天氣預報</li>
+</ol>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours</code></pre>
+<p>2.1 找出有氣象預報資訊的縣市名稱（locationName欄位）</p>
+<pre class="r"><code>locationName &lt;- weather_next36hours$cwbopendata$dataset$location$locationName</code></pre>
+<p>2.2 氣象局針對每個縣市提供了不同氣象因子在未來三個時段的預報。每個都市的氣象因子預報有那些，以第一個都市為例，它存在</p>
+<pre><code>weather_next36hours$cwbopendata$dataset$location$weatherElement[[1]]$elementName </code></pre>
+<p>請取出每個縣市有提供的氣象預報因子名稱。（個別名稱的意思要去看欄位說明文件）</p>
+<pre class="r"><code>map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$elementName) -&gt; elementName
+elementName[[1]]</code></pre>
+<pre><code>## [1] &quot;Wx&quot;   &quot;MaxT&quot; &quot;MinT&quot; &quot;CI&quot;   &quot;PoP&quot;</code></pre>
+<p>2.3 請抓出每縣市在第一個預告時段的</p>
+<ul>
+<li>預告開始時間</li>
+<li>預告結束時間</li>
+<li>這段時間的最高氣溫</li>
+</ul>
+<pre class="r"><code>map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$startTime[[1]]) -&gt; startTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$endTime[[1]]) -&gt; endTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$parameter$parameterName[[1]]) -&gt; highest_1</code></pre>
 </div>
 </div>
 </div>
