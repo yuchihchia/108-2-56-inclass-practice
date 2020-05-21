@@ -10,6 +10,13 @@ output:
       collapsed: false
       smooth_scroll: TRUE
 ---
+<font face="Taipei Sans TC Beta Light">  
+<style>
+.example {
+  background-color: #c8e3fb;
+  color: #0b5395;
+}
+</style>
 # 第4章 Operation on vector and list  
 ## 4.1 選取元素  
 ### 4.1.1 選「一個元素」  
@@ -23,12 +30,10 @@ vectorExample[[3]]
 listExample <- list(student="小明",
                     `學期`=list(`108-1`=list(list(name="個體經濟學",
                                                   teacher="Alice",
-                                                  grade=85)
-                                             ),
+                                                  grade=85)),
                                 `108-2`=list(list(name="總體經濟學",
                                                   teacher="Mark",
-                                                  grade=78)
-                                             )
+                                                  grade=78))
                                 )
                     )
 #確認有多少位置可選
@@ -50,14 +55,6 @@ listExample$student
 listExample[["學期"]]
 listExample$`學期`
 ```
-```{r}
-#新北市各區衛生所之門診時間及疫苗種類彙整表
-library(jsonlite)
-fromJSON("http://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000157-002",
-         simplifyDataFrame = F) -> newTaipeiCityVaccine
-str(newTaipeiCityVaccine$result, max.level = 1) #顯示到第一層
-```
-
 ### 4.1.2 選「多個元素」  
 
 * 用位置選: `物件[數字向量]`
@@ -72,20 +69,11 @@ listExample[c(1,2)]
 ```{r}
 listExample[c("student","學期")]
 ```
-```{r}
-#臺北市夜市資料(來自臺北市食材登錄平台食材來源資訊)
-fromJSON("https://www.dropbox.com/s/qnm9bnz7vccrvcz/taipeiNightMarkets.json?dl=1", simplifyDataFrame = F) -> taipeiNightMarkets
-names(taipeiNightMarkets)
-str(taipeiNightMarkets[c("士林觀光夜市","寧夏觀光夜市","饒河街觀光夜市")])
-```
 * 用邏輯向量選: `物件[邏輯向量]`
 ```{r}
 vectorExample
 vectorExample[c(T,T,F)]
 str(listExample[c(T,T)])
-```
-```{r}
-str(taipeiNightMarkets[c(T,F,F,F,T,F,F,F,F,T,F,F,F,T)])
 ```
 **`[[.]]`與`[.]`比較**
 ```{r}
@@ -480,20 +468,6 @@ example裡誰喜歡美食
 print(example[c("name","hobby")])
 pick_loveFood <- stringr::str_detect(example$hobby,"美食")
 example$name[pick_loveFood]
-```
-新北市垃圾車路線
-```{r}
-jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8?$format=json") -> garbageRoutes
-# typeof(): 查詢電腦實質上如何看待garbageRoutes
-typeof(garbageRoutes)  
-# class(): 查詢電腦把它能進行的操作運算歸屬於哪一類型
-class(garbageRoutes) #代表garbageRoutes這筆資料除了能使用list所有操作手法外，還可以用data.frame的操作
-# 由linename元素判斷垃圾車有幾條路線。
-factor(garbageRoutes$linename) -> garbageRoutes$linename
-levels(garbageRoutes$linename)
-# 由linename創造： 可篩選出下午路線的「要/不要」向量pick_afternoonRoutes。
-pick_afternoonRoutes <- stringr::str_detect(garbageRoutes$linename,"下午")
-garbageRoutes_afternoon <- unique(garbageRoutes$linename[pick_afternoonRoutes])
 ```
 #### 4.4.5.1 閱讀函數說明  
 ```{r eval=FALSE}
@@ -1071,45 +1045,6 @@ forcats::fct_c(factor1, factor2)
 ```{r}
 levels(covid19$`性別`) <- c("Male", "Female")
 ```
-* 以下資料為新北市垃圾車路線  
-```{r}
-jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/EDC3AD26-8AE7-4916-A00B-BC6048D19BF8?$format=json") -> garbageRoutes
-```
-(1) 在garbageRoutes新增route元素，其元素值為對應`garbageRoutes$linename`裡粹取出的"XXX路線"字眼，如原本"A11路線(一、四)下午"的linename, 它的route值為"A11路線 。(`garbageRoutes$route`為factor class)  
-```{r}
-levels(factor(garbageRoutes$linename))
-route <- str_extract(garbageRoutes$linename,
-                 "^[:graph:]+路線")
-route <- factor(route)
-garbageRoutes$route <- route 
-levels(garbageRoutes$route)
-```
-(2) 請設定`garbageRoutes$route`的levels依其路線停靠總站數由小排到大陳列。
-```{r}
-stops <- names(
-  sort(
-    table(garbageRoutes$route)
-  )
-)
-garbageRoutes$route <- factor(garbageRoutes$route, levels=stops)
-```
-(3) linename的"路線"字眼後面接的是營運時間，如"A11路線(一、四)下午"的linename, 它的營運時間為"(一、四)下午"。若沒寫時間的路線，它的營運時間為"全天"。請在garbageRoutes新增time元素，其元素值為對應linename所隱含的營運時間。(`garbageRoutes$time`為factor class， levels會有"(一、四)下午"，"下午"，"下午(1.4版)"，"晚上"，及"全天")
-```{r}
-garbageRoutes$time <- 
-str_extract(
-      garbageRoutes$linename,
-      "(\\(一、四\\)下午|(?<!\\(一、四\\))下午(?!\\(1\\.4版\\))|下午\\(1\\.4版\\)|晚上)"
-    )
-allday <- is.na(garbageRoutes$time)
-garbageRoutes$time[allday] <- "全天"
-garbageRoutes$time <- factor(garbageRoutes$time)
-levels(garbageRoutes$time)
-```
-(4) 將`garbageRoutes$time`的levels中的"下午(1.4版)"改成"下午"。
-```{r}
-levels(garbageRoutes$time)[[3]] <- "下午"
-levels(garbageRoutes$time)
-```
 ## 4.8 On list
 ### 4.8.1每個元素相同運算
 ```{r}
@@ -1200,39 +1135,33 @@ length(dance[[2]]$showInfo)
 map(dance,~length(.x$showInfo)) -> list_numberOfShows 
 View(list_numberOfShows)
 ```
-第5個表演有4個場次，想知道它們的日期時間：  
+第4個表演有4個場次，想知道它們的日期時間：  
 ```{r}
-str(dance[[5]]$showInfo)
+length(dance[[4]]$showInfo)
 # 這個表演第1個場次的訊息
-dance[[5]]$showInfo[[1]]$time
+dance[[4]]$showInfo[[1]]$time
 # 這個表演第2個場次的訊息
-dance[[5]]$showInfo[[2]]$time
+dance[[4]]$showInfo[[2]]$time
 ```
-* 對`dance[[5]]$showInfo`的每個元素(`.x`)表示  
+* 對`dance[[4]]$showInfo`的每個元素(`.x`)表示  
 * 進行`.x$time`動作  
 ```{r}
-map(dance[[5]]$showInfo, ~ .x$time) -> list_showTimes_dance5
+map(dance[[4]]$showInfo, ~ .x$time) -> list_showTimes_dance5
 ```
 找出第8個表演的所有場次時間(time)和地點(location)：
 ```{r}
 map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -> list_showInfo_dance8
 ```
 ### 4.8.2 綜合練習
-1. 新北市公車路線清單  
-   請抓出每條路線的Id(路線代碼)、providerId(業者代碼)、providerName(業者中文名稱)、nameZh(中文名稱)。  
-```{r}
-jsonlite::fromJSON("https://data.ntpc.gov.tw/od/data/api/67BB3C2B-E7D1-43A7-B872-61B2F082E11B?$format=json", simplifyDataFrame = F) -> busRoutes
-map(busRoutes, ~.x[c(1,2,3,4)]) -> busRoutes_info
-```
-2. 一般天氣預報-今明36小時天氣預報
+1. 一般天氣預報-今明36小時天氣預報
 ```{r}
 jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
 ```
-2.1 找出有氣象預報資訊的縣市名稱（locationName欄位）
+1.1 找出有氣象預報資訊的縣市名稱（locationName欄位）
 ```{r}
 locationName <- weather_next36hours$cwbopendata$dataset$location$locationName
 ```
-2.2 氣象局針對每個縣市提供了不同氣象因子在未來三個時段的預報。每個都市的氣象因子預報有那些，以第一個都市為例，它存在
+1.2 氣象局針對每個縣市提供了不同氣象因子在未來三個時段的預報。每個都市的氣象因子預報有那些，以第一個都市為例，它存在
 ```
 weather_next36hours$cwbopendata$dataset$location$weatherElement[[1]]$elementName 
 ```
@@ -1242,7 +1171,7 @@ map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
     ~.x$elementName) -> elementName
 elementName[[1]]
 ```
-2.3 請抓出每縣市在第一個預告時段的  
+1.3 請抓出每縣市在第一個預告時段的  
 
 * 預告開始時間
 * 預告結束時間
@@ -1263,14 +1192,4 @@ map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
 
 
 
-
-
-
-
-
-
-
- 
-
-
-
+</font>
