@@ -12,9 +12,7 @@ output:
 ---
 <font face="Taipei Sans TC Beta Light">  
 ```{r echo=FALSE}
-library(stringr)
-library(purrr)
-library(magrittr)
+library(stringr); library(purrr); library(magrittr)
 ```
 # 第5章 Programming  
 ## 5.1 Pipe  
