@@ -23,8 +23,7 @@ library(stringr); library(purrr); library(magrittr)
 # 第5章 Programming  
 ## 5.1 Pipe  
 ### 5.1.1 原則  
-<div class="example">
-<p>**範例 5.1.1**：找出身高最高的人。</p>
+<font color="#0b5395">**範例 5.1.1**：找出身高最高的人。</font>
 ```{r}
 threeHeigths <- c(Gary=178, John=182, Cam=175)
 # 先排序由大到小
@@ -35,7 +34,6 @@ names(sorted_heights) -> sorted_persons
 sorted_persons[[1]] -> highestPerson
 print(highestPerson)
 ```
-</div>
 **Pipe 原則**：  
 
 * 把`->`中間物件 換成`%>%`。  
@@ -60,17 +58,14 @@ w %>%
   g(.) %>%
   h(.) -> z
 ```
-<div class="example">
-再回到**範例 5.1.1**。
+<font color="#0b5395">回到**範例 5.1.1**。
 ```{r}
 sort(threeHeigths, decreasing=T) %>% 
   names(.) %>%
   .[[1]] -> highestPerson
 print(highestPerson)
 ```
-</div>
-<div class="example">
-**範例 5.1.2**：由 cities 創出每個元素對應的北部、東部、中部 region factor。  
+**範例 5.1.2**：由 cities 創出每個元素對應的北部、東部、中部 region factor。</font>
 ```{r}
 cities <- factor(c("台北","花蓮","台東","台中"))
 region <- cities
@@ -81,7 +76,6 @@ levels(region) %>%
   str_replace(.,"台中","中部") -> levels(region)
 levels(region)
 ```
-</div>
 ### 5.1.2 元素粹取  
 ```{r}
 num <- c(2,97,22,15,7)
@@ -116,8 +110,7 @@ levels(region) %>%
 ```
 要小心`%>%`是將左邊output放到右邊函數，這裡的右邊函數指的是最外圍的函數：  
 
-<div class="example">
-**範例 5.1.3**
+<font color="#0b5395">**範例 5.1.3**</font>
 ```{r error=TRUE}
 population <- c(`cityA`=500,`cityB`=1500, `cityC`=399)
 cities <- c("cityA","cityA","cityB","cityB","cityC")
@@ -126,7 +119,6 @@ population %>%
   names(sort(.)) %>%
   factor(cities, levels=.) -> cities
 ```
-</div>
 `%>%`是把 population 放到 names() 的 input 裡，而非 sort()，但 names() 的 input 位置已被 sort 佔走。  
 ```{r}
 # 正確寫法
@@ -138,8 +130,7 @@ factor(cities, levels=.) -> cities
 ### 5.1.5 串接非單純函數程序
 若遇到 pipe 串接的下一段並不是單純的**函數**的話，可以用`{}`把此段內容括起來並把前一段output要放的位置換成`.`。  
 
-<div class="example">
-**範例 5.1.4**：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。 
+<font color="#0b5395">**範例 5.1.4**：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。
 ```{r}
 dataList <- list(
   num=c(2,97,22,15,7),
@@ -150,18 +141,14 @@ unlist(.) %>%
 dataList[.] %>%
 {.[[1]][.[[1]] > 50]} -> bigNumber
 ```
-</div>
-<div class="example">
-再回到**範例 5.1.3**。 
+再回到**範例 5.1.3**。</font>
 ```{r}
 population %>% 
   {names(sort(.))} %>%
   factor(cities, levels=.) -> cities
 ```
-</div>
 ### 5.1.6 綜合練習
-<div class="example">
-**練習一**
+<font color="#0b5395">**練習一**</font>
 ```{r}
 jsonlite::fromJSON("https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json") -> covid19
 jsonlite::fromJSON(
@@ -179,7 +166,7 @@ covid19$`縣市` %>%
   factor(covid19$`縣市`, levels=.) -> covid19$`縣市`
 levels(covid19$`縣市`)
 ```
-</div>
+
 
 
 
