@@ -1154,46 +1154,46 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 <font color="#0b5395"><strong>範例 4.6.2</strong>：欲擷取「色」。</font></p>
 <pre class="r"><code>heartSutra &lt;- c(&quot;舍利子，色不異空，空不異色；色即是空，空即是色。&quot;)
 str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
-<div id="htmlwidget-38c0838477615205ae00" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-38c0838477615205ae00">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-db793989412b124670be" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-db793989412b124670be">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(heartSutra,&quot;色&quot;) # 計數</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.3</strong>：欲擷取「107」或「108」。</font></p>
 <pre class="r"><code>studentIds &lt;- c(&quot;410873029&quot;,&quot;410773005&quot;,&quot;410772035&quot;,&quot;410562123&quot;)
 
 str_view_all(studentIds,&quot;(107|108)&quot;) </code></pre>
-<div id="htmlwidget-5d44ad3acc45f21397b9" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5d44ad3acc45f21397b9">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a33c78f08db4312e7cce" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a33c78f08db4312e7cce">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_detect(studentIds, &quot;107|108&quot;) # 偵測</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.4</strong>：欲擷取「A」或「C」。</font></p>
 <pre class="r"><code>Ids &lt;- c(&quot;A283743192&quot;,&quot;B829103720&quot;,&quot;A10920402&quot;,&quot;C291022384&quot;)
 str_view_all(Ids, &quot;[AC]&quot;)</code></pre>
-<div id="htmlwidget-0e578cc8b6b75ce865e3" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0e578cc8b6b75ce865e3">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-64e6b07773ccdabfda75" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-64e6b07773ccdabfda75">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_extract(Ids, &quot;[AC]&quot;) # 取出</code></pre>
 <pre><code>## [1] &quot;A&quot; NA  &quot;A&quot; &quot;C&quot;</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.5</strong></font></p>
 <pre class="r"><code>headline &lt;- &quot;資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。&quot;
 # 顯示所有符合規則的
 str_view_all(headline, &quot;謝陳官&quot;)</code></pre>
-<div id="htmlwidget-054c86de844b3653b166" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-054c86de844b3653b166">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9a08fd98c8c18612d0d7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9a08fd98c8c18612d0d7">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline,&quot;謝陳官&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;[謝陳官]&quot;)</code></pre>
-<div id="htmlwidget-83a7b89d537b9cc4be8d" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-83a7b89d537b9cc4be8d">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b1cbbf94a84d582f979a" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1cbbf94a84d582f979a">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;[謝陳官]&quot;)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
-<div id="htmlwidget-174f4a02d66164bf74ab" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-174f4a02d66164bf74ab">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bc5aac245872eb60b675" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bc5aac245872eb60b675">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;陳[^官]&quot;)</code></pre>
-<div id="htmlwidget-0bda56a6d8f25a887145" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0bda56a6d8f25a887145">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6dd2825a400dc76d9efe" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6dd2825a400dc76d9efe">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;陳[^官]&quot;)</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.6</strong>：使用<code>str_extract</code>粹取出每個地址的「xxx 號」。</font></p>
@@ -1224,8 +1224,8 @@ str_extract(addresses, &quot;[0-9][0-9][0-9]號&quot;)</code></pre>
                '金門縣金城鎮賢庵里山前33號',
                '臺中市南屯區工業區二十四路23號1樓')
 str_view_all(addresses, &quot;[0-9]+號&quot;)</code></pre>
-<div id="htmlwidget-8a9951bd00b179c0c095" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8a9951bd00b179c0c095">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dbe018e830ec87c9d44f" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dbe018e830ec87c9d44f">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="頭尾定位-anchors" class="section level3">
 <h3>頭尾定位 Anchors</h3>
@@ -1238,16 +1238,16 @@ pattern &lt;- glue::glue(&quot;^{target_regex}&quot;)
 print(pattern)</code></pre>
 <pre><code>## ^唧唧</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<p><div id="htmlwidget-90451890d6cec305a298" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-90451890d6cec305a298">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue 套件裡的 glue 函數會把字串中的<code>{物值名稱}</code>換成目前 Environment 裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”。</p>
+<p><div id="htmlwidget-a5028dc0ba994fe358c0" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a5028dc0ba994fe358c0">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue 套件裡的 glue 函數會把字串中的<code>{物值名稱}</code>換成目前 Environment 裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”。</p>
 <p><font color="#0b5395">回到<strong>範例 4.6.8</strong>：欲擷取結尾的「唧唧」。</font></p>
 <pre class="r"><code>target_regex2 &lt;- &quot;唧唧&quot;
 pattern &lt;- glue::glue(&quot;{target_regex2}$&quot;)
 print(pattern)</code></pre>
 <pre><code>## 唧唧$</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<div id="htmlwidget-61eeb8aed6a923c18c58" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-61eeb8aed6a923c18c58">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8b452e6f87453aa15fce" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8b452e6f87453aa15fce">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="前後緊鄰-look-arounds" class="section level3">
 <h3>前後緊鄰 Look arounds</h3>
@@ -1398,7 +1398,7 @@ levels(covid19$`縣市`)</code></pre>
 <p><font color="#0b5395">回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，手動輸入排法，將 levels 由「女、男」改成「男、女」。</p>
 <pre class="r"><code>covid19$`性別` &lt;- factor(covid19$`性別`, c(&quot;男&quot;,&quot;女&quot;))</code></pre>
 <hr />
-<p>回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，covid19$縣市的 levels 依其人口由大排到小。<br />
+<p>回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，<code>covid19$縣市</code>的 levels 依其人口由大排到小。<br />
 <strong>Step 1</strong>：下載台灣各縣市人口資料。</p>
 <pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/jckqryeh5zeat5w/regionPopulation.json?dl=1&quot;) -&gt; population
 unlist(population) -&gt; population
@@ -1428,7 +1428,7 @@ population</code></pre>
 ## 4018696 2815261 2773198 2645041 2249037 1880906 1272802  819184  681306  563933 
 ##  苗栗縣  嘉義縣  南投縣  宜蘭縣  新竹市  基隆市  嘉義市 
 ##  545459  503113  494112  454178  448803  368893  267690</code></pre>
-<p><strong>Step 4</strong>：排完後population第一個元素值最大，它的名稱即是人口最多的縣市，第二元素值次大，它名稱是人口第二多縣市，依此類推。我們要的是population排完後的元素名稱。</p>
+<p><strong>Step 4</strong>：排完後 population 第一個元素值最大，即是人口最多的縣市，第二元素值次大，即是人口第二多縣市，依此類推。我們要的是 population 排完後的元素名稱。</p>
 <pre class="r"><code>newLevels &lt;- names(population)
 newLevels</code></pre>
 <pre><code>##  [1] &quot;新北市&quot; &quot;台中市&quot; &quot;高雄市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台南市&quot; &quot;彰化縣&quot; &quot;屏東縣&quot;
@@ -1449,7 +1449,8 @@ levels(covid19$`縣市`)</code></pre>
 <pre><code>##  [1] &quot;台北市&quot; &quot;新北市&quot; &quot;桃園市&quot; &quot;高雄市&quot; &quot;台中市&quot; &quot;彰化縣&quot; &quot;台南市&quot; &quot;屏東縣&quot;
 ##  [9] &quot;新竹市&quot; &quot;新竹縣&quot; &quot;基隆市&quot; &quot;雲林縣&quot; &quot;嘉義市&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot;
 ## [17] &quot;宜蘭縣&quot;</code></pre>
-<p>回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，將年齡層由小至大排序。</p>
+<hr />
+<p>回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，將<code>covid19$年齡層</code>由小至大排序。</p>
 <pre class="r"><code>levels(covid19$`年齡層`)</code></pre>
 <pre><code>##  [1] &quot;10-14&quot; &quot;15-19&quot; &quot;20-24&quot; &quot;25-29&quot; &quot;30-34&quot; &quot;35-39&quot; &quot;4&quot;     &quot;40-44&quot; &quot;45-49&quot;
 ## [10] &quot;5-9&quot;   &quot;50-54&quot; &quot;55-59&quot; &quot;60-64&quot; &quot;65-69&quot; &quot;70+&quot;</code></pre>
@@ -1482,14 +1483,7 @@ levels(covid19$`年齡層`)</code></pre>
 </div>
 <div id="levels-改名" class="section level3">
 <h3>levels 改名</h3>
-<p><code>levels(x) &lt;-</code></p>
-<p>在R裡，若你看到函數f說明在Usage同時寫上<code>f() &lt;-</code>的用法時，它表示此函數除了一般用來產生結果以外，也可以用來設定結果</p>
-<ul>
-<li>levels: 一般用來顯示類別<br />
-</li>
-<li>levels &lt;- : 用來設定類別<br />
-其他常用到設定用法的還有<code>names()</code>,<code>attr()</code>等等</li>
-</ul>
+<p><font color="#0b5395"><strong>範例 4.7.2</strong></p>
 <pre class="r"><code>factor1 &lt;- factor(c(&quot;A&quot;,&quot;A&quot;,&quot;C&quot;,&quot;A&quot;,&quot;D&quot;,&quot;F&quot;,&quot;D&quot;,&quot;D&quot;))
 factor1</code></pre>
 <pre><code>## [1] A A C A D F D D
@@ -1498,27 +1492,26 @@ factor1</code></pre>
 factor1</code></pre>
 <pre><code>## [1] 優   優   佳   優   尚可 普   尚可 尚可
 ## Levels: 優 佳 尚可 普</code></pre>
-<p>也可改levels其中幾個利用元素取代概念</p>
+<p>也可改levels其中幾個利用元素取代概念</font></p>
 <pre class="r"><code>levels(factor1)[[1]] &lt;- &quot;Excellent&quot;
 levels(factor1)[c(3,4)] &lt;- c(&quot;C&quot;,&quot;D&quot;)
 factor1</code></pre>
 <pre><code>## [1] Excellent Excellent 佳        Excellent C         D         C        
 ## [8] C        
 ## Levels: Excellent 佳 C D</code></pre>
-<p>[由於factor內容的呈現是依循levels對照表走，所以levels內容一變，factor的內容呈現也變了]</p>
+<p>factor 內容的呈現是依循 levels 對照表走，所以 levels 內容一變，factor 的內容呈現也變了。</p>
 </div>
 <div id="levels-整併" class="section level3">
 <h3>levels 整併</h3>
+<p><font color="#0b5395">回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，由<code>covid19$縣市</code>建立一個<strong>地區</strong>變數，值為北部、中部、南部、東部，其中：</p>
 <ul>
-<li><p>範例一：原本levels是台灣各縣市，你想改成北/中/南/東部四類<br />
-由covid19$縣市建立一個<strong>地區</strong>變數，值為北部、中部、南部、東部，其中：</p></li>
-<li>北部：“宜蘭縣、基隆市、台/臺北市、新北市、桃園市、新竹市、新竹縣”<br />
+<li>北部：宜蘭縣、基隆市、台/臺北市、新北市、桃園市、新竹市、新竹縣。<br />
 </li>
-<li>中部：“苗栗縣、台/臺中市、彰化縣、南投縣、雲林縣”<br />
+<li>中部：苗栗縣、台/臺中市、彰化縣、南投縣、雲林縣。<br />
 </li>
-<li>南部：“嘉義市、嘉義縣、台/臺南縣、台/臺南市、高雄市、屏東縣、澎湖縣”<br />
+<li>南部：嘉義市、嘉義縣、台/臺南縣、台/臺南市、高雄市、屏東縣、澎湖縣。<br />
 </li>
-<li><p>東部：“花蓮縣、台東縣”</p></li>
+<li>東部：花蓮縣、台東縣。</li>
 </ul>
 <pre class="r"><code>covid19$`地區` &lt;- covid19$`縣市`
 levels(covid19$`地區`)</code></pre>
@@ -1526,7 +1519,6 @@ levels(covid19$`地區`)</code></pre>
 ##  [9] &quot;新竹市&quot; &quot;新竹縣&quot; &quot;基隆市&quot; &quot;雲林縣&quot; &quot;嘉義市&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot;
 ## [17] &quot;宜蘭縣&quot;</code></pre>
 <pre class="r"><code>currentLevels &lt;- levels(covid19$`地區`)
-# 整併
 north_regex &lt;- &quot;宜蘭縣|基隆市|[台臺]北市|新北市|桃園市|新竹市|新竹縣&quot;
 middle_regex &lt;- &quot;苗栗縣|[台臺]中市|彰化縣|南投縣|雲林縣&quot;
 south_regex &lt;- &quot;嘉義市|嘉義縣|[台臺]南[縣市]|高雄市|屏東縣|澎湖縣&quot;
@@ -1539,14 +1531,12 @@ levels(covid19$`地區`) &lt;- newLevels
 levels(covid19$`地區`)</code></pre>
 <pre><code>## [1] &quot;北部&quot; &quot;南部&quot; &quot;中部&quot;</code></pre>
 <hr />
-<ul>
-<li>範例二：將covid19$年齡層，由5歲間距成10歲間距，使改完後的levels為4 &lt; 5-14 &lt; 15-24 &lt; …&lt; 55-64 &lt; 65+</li>
-</ul>
+<p>回到<strong>範例 4.7.1</strong>：嚴重特殊傳染性肺炎，將<code>covid19$年齡層</code>，由 5 歲間距成 10 歲間距，使改完後的 levels 為4 &lt; 5-14 &lt; 15-24 &lt;…&lt; 55-64 &lt; 65+ </font></p>
 <pre class="r"><code>levels(covid19$`年齡層`)</code></pre>
 <pre><code>##  [1] &quot;4&quot;     &quot;5-9&quot;   &quot;10-14&quot; &quot;15-19&quot; &quot;20-24&quot; &quot;25-29&quot; &quot;30-34&quot; &quot;35-39&quot; &quot;40-44&quot;
 ## [10] &quot;45-49&quot; &quot;50-54&quot; &quot;55-59&quot; &quot;60-64&quot; &quot;65-69&quot; &quot;70+&quot;</code></pre>
 <pre class="r"><code># 創造10歲間距的所有可能
-start &lt;- seq(5, 55, by=10) # 由5到55，每個值差10的數值向量
+start &lt;- seq(5, 55, by=10)  # 由5到55，每個值差10的數值向量
 end &lt;- seq(14, 64, by=10)
 middleLevels &lt;- rep(
   paste0(start,&quot;-&quot;,end), each=2 # 每個新間距要2個
@@ -1558,30 +1548,20 @@ levels(covid19$`年齡層`) </code></pre>
 </div>
 <div id="levels-擴充" class="section level3">
 <h3>levels 擴充</h3>
-<p><code>levels &lt;-</code>右邊值的部份包含原本的外，還有想新增的類別</p>
-<pre class="r"><code>factor2 &lt;- factor(c(&quot;好&quot;,&quot;好&quot;,&quot;普通&quot;,&quot;普通&quot;, &quot;好&quot;))
-levels(factor2)</code></pre>
-<pre><code>## [1] &quot;好&quot;   &quot;普通&quot;</code></pre>
-<p>加一筆新資料“差”(之前沒有這類)</p>
-<pre class="r"><code>factor2[[6]] &lt;- &quot;差&quot;</code></pre>
-<pre><code>## Warning in `[[&lt;-.factor`(`*tmp*`, 6, value = &quot;差&quot;): invalid factor level, NA
-## generated</code></pre>
-<pre class="r"><code>factor2 # 元素6變NA</code></pre>
-<pre><code>## [1] 好   好   普通 普通 好   &lt;NA&gt;
-## Levels: 好 普通</code></pre>
-<p>先擴大levels，再加新資料</p>
+<p>需先擴大levels，再加入新資料</p>
+<p><font color="#0b5395"><strong>範例 4.7.3</strong></font></p>
 <pre class="r"><code>factor2 &lt;- factor(c(&quot;好&quot;,&quot;好&quot;,&quot;普通&quot;,&quot;普通&quot;, &quot;好&quot;))
 levels(factor2) </code></pre>
 <pre><code>## [1] &quot;好&quot;   &quot;普通&quot;</code></pre>
-<pre class="r"><code># 先擴大levels
-levels(factor2) &lt;- c(levels(factor2), &quot;差&quot;)
+<pre class="r"><code>levels(factor2) &lt;- c(levels(factor2), &quot;差&quot;)
 levels(factor2)</code></pre>
 <pre><code>## [1] &quot;好&quot;   &quot;普通&quot; &quot;差&quot;</code></pre>
 <pre class="r"><code>factor2[[6]] &lt;- &quot;差&quot;
 factor2</code></pre>
 <pre><code>## [1] 好   好   普通 普通 好   差  
 ## Levels: 好 普通 差</code></pre>
-<p>factor無法用<code>c(...)</code>把兩個factor vector串接在一起：</p>
+<p>factor 無法用<code>c(...)</code>把兩個 factor vector 串接在一起：</p>
+<p><font color="#0b5395"><strong>範例 4.7.4</strong></p>
 <pre class="r"><code># non factor
 char1 &lt;- c(&quot;小明&quot;,&quot;小美&quot;)
 char2 &lt;- c(&quot;大雄&quot;,&quot;技安&quot;)
@@ -1592,14 +1572,13 @@ factor1 &lt;- factor(c(&quot;好&quot;, &quot;壞&quot;, &quot;壞&quot;))
 factor2 &lt;- factor(c(&quot;壞&quot;, &quot;好&quot;, &quot;好&quot;))
 c(factor1, factor2)</code></pre>
 <pre><code>## [1] 1 2 2 2 1 1</code></pre>
-<p>因為<code>The output type is determined from the highest type of the components in the hierarchy NULL &lt; raw &lt; logical &lt; integer</code><br />
-<code>&lt; double &lt; complex &lt; character &lt; list &lt; expression. factor是integer type</code>所以會被當integer後才串接在一起。</p>
+<p>因為 The output type is determined from the highest type of the components in the hierarchy NULL &lt; raw &lt; logical &lt; integer &lt; double &lt; complex &lt; character &lt; list &lt; expression。 factor 是 integer type，所以會被當 integer 後才串接在一起。</p>
 <p>正確接法：</p>
 <pre class="r"><code>factor1[4:6] &lt;- factor2
 factor1</code></pre>
 <pre><code>## [1] 好 壞 壞 壞 好 好
 ## Levels: 好 壞</code></pre>
-<p>或使用套件forcats裡的<code>fct_c</code>函數：</p>
+<p>或使用套件 forcats 裡的<code>fct_c</code>函數：</font></p>
 <pre class="r"><code>forcats::fct_c(factor1, factor2)</code></pre>
 <pre><code>## [1] 好 壞 壞 壞 好 好 壞 好 好
 ## Levels: 好 壞</code></pre>
@@ -1607,7 +1586,182 @@ factor1</code></pre>
 </div>
 <div id="on-list" class="section level2">
 <h2>4.8 On list</h2>
+<div id="對每個元素進行相同運算" class="section level3">
+<h3>對每個元素進行相同運算</h3>
+<p><font color="#0b5395">回顧<strong>範例 4.4.1</strong>。</p>
+<pre class="r"><code>example</code></pre>
+<pre><code>## $name
+## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
+## 
+## $height
+## [1] 175 166 170 160
+## 
+## $weight
+## [1] 77 NA 60 43
+## 
+## $birthday
+## [1] &quot;1998-03-11&quot; &quot;1999-12-22&quot; &quot;1995-08-22&quot; &quot;2001-10-10&quot;
+## 
+## $hobby
+## [1] &quot;美食 旅遊&quot; &quot;旅遊 時尚&quot; &quot;3C 美食&quot;   &quot;音樂 旅遊&quot;
+## 
+## $residence
+## [1] &quot;Taipei&quot;     &quot;New Taipei&quot; &quot;Taichung&quot;   &quot;Kaohsiung&quot; 
+## 
+## $allowance
+## [1] 0-1000    1001-2000 2000+     1001-2000
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+
+## 
+## $bloodType
+## [1] &quot;A&quot; &quot;B&quot; &quot;B&quot; &quot;O&quot;</code></pre>
+<p><strong>範例 4.8.1</strong>：取出其中屬於小新的資料。</font></p>
+<pre class="r"><code>pick_小新 &lt;- example$name == &quot;小新&quot;
+data_selected &lt;- list(name = example$name[pick_小新],
+                      weight = example$weight[pick_小新],
+                      height = example$height[pick_小新],
+                      hobby = example$hobby[pick_小新],
+                      residence = example$residence[pick_小新],
+                      allowance = example$allowance[pick_小新],
+                      bloodType = example$bloodType[pick_小新])</code></pre>
+<p>我們想要對<code>example</code>底下的每個元素進行<code>[pick_小新]</code>的動作。</p>
+<p>purrr 底下的<code>map()</code>允許我們：</p>
+<ul>
+<li><p>使用<code>.x</code>來代表每個元素，即<code>[[1]]</code>、<code>[[2]]</code>、…、<code>[[7]]</code>，<br />
+所以對每個元素進行<code>[pick_小新]</code>，可以寫成<code>.x[pick_小新]</code>。</p></li>
+<li><p>由於<code>.x[pick_小新]</code>是個公式化的動作，在 R，<code>~</code>代表要形成一個公式 (formula)，<br />
+所以要寫成<code>~ .x[pick_小新]</code></p></li>
+</ul>
+<p>完整的<code>map()</code>用法為：</p>
+<pre><code>map(對象物件, ~對每個元素作的動作)</code></pre>
+<p><font color="#0b5395">回到<strong>範例 4.8.1</strong>：取出其中屬於小新的資料。</p>
+<pre class="r"><code>map(example, ~.x[pick_小新]) -&gt; data_selected 
+data_selected</code></pre>
+<pre><code>## $name
+## [1] &quot;小新&quot;
+## 
+## $height
+## [1] 170
+## 
+## $weight
+## [1] 60
+## 
+## $birthday
+## [1] &quot;1995-08-22&quot;
+## 
+## $hobby
+## [1] &quot;3C 美食&quot;
+## 
+## $residence
+## [1] &quot;Taichung&quot;
+## 
+## $allowance
+## [1] 2000+
+## Levels: 0-1000 &lt; 1001-2000 &lt; 2000+
+## 
+## $bloodType
+## [1] &quot;B&quot;</code></pre>
+<p><strong>範例 4.8.2</strong>：舞蹈表演</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&amp;category=3&quot;, simplifyDataFrame = F) -&gt; dance
+str(dance[[1]])</code></pre>
+<pre><code>## List of 21
+##  $ version              : chr &quot;1.4&quot;
+##  $ UID                  : chr &quot;5c9a1560d083a30290d1b36f&quot;
+##  $ title                : chr &quot;傳統藝術接班人－傳統工藝推廣計畫&quot;
+##  $ category             : chr &quot;3&quot;
+##  $ showInfo             :List of 1
+##   ..$ :List of 8
+##   .. ..$ time        : chr &quot;2020/01/15 09:00:00&quot;
+##   .. ..$ location    : chr &quot;268  宜蘭縣五結鄉五濱路二段201號&quot;
+##   .. ..$ locationName: chr &quot;宜蘭傳藝園區-展示館&quot;
+##   .. ..$ onSales     : chr &quot;N&quot;
+##   .. ..$ price       : chr &quot;&quot;
+##   .. ..$ latitude    : NULL
+##   .. ..$ longitude   : NULL
+##   .. ..$ endTime     : chr &quot;2020/12/15 09:00:00&quot;
+##  $ showUnit             : chr &quot;國立傳統藝術中心&quot;
+##  $ discountInfo         : chr &quot;&quot;
+##  $ descriptionFilterHtml: chr &quot;&lt;U+00A0&gt;\r\n\r\n&lt;U+00A0&gt;\r\n\r\n【活動暫停公告】\r\n為周延「嚴重特殊傳染性肺炎（COVID-19）」防疫工作，本中心自&quot;| __truncated__
+##  $ imageUrl             : chr &quot;&quot;
+##  $ masterUnit           : chr &quot;國立傳統藝術中心&quot;
+##  $ subUnit              : list()
+##  $ supportUnit          : list()
+##  $ otherUnit            : list()
+##  $ webSales             : chr &quot;https://event.culture.tw/NCFTA/portal/Registration/C0103MAction?actId=90042&quot;
+##  $ sourceWebPromote     : chr &quot;https://event.culture.tw/NCFTA&quot;
+##  $ comment              : chr &quot;&quot;
+##  $ editModifyDate       : chr &quot;&quot;
+##  $ sourceWebName        : chr &quot;藝文活動報名平台&quot;
+##  $ startDate            : chr &quot;2020/01/15&quot;
+##  $ endDate              : chr &quot;2020/12/15&quot;
+##  $ hitRate              : int 0</code></pre>
+<p>所有表演的名稱</p>
+<pre class="r"><code>map(dance, ~.x$title) -&gt; list_titles
+head(list_titles)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;傳統藝術接班人－傳統工藝推廣計畫&quot;
+## 
+## [[2]]
+## [1] &quot;尤法．皮克《巴赫d小調》 ─ 取消&quot;
+## 
+## [[3]]
+## [1] &quot;【樹林藝文中心幕起系列】 《家·溫℃ +》&quot;
+## 
+## [[4]]
+## [1] &quot;西班牙中庭花園 Patio Andaluz—取消&quot;
+## 
+## [[5]]
+## [1] &quot;世紀當代舞團2020《荒塚的繁花》&quot;
+## 
+## [[6]]
+## [1] &quot;舞蹈成果發表&quot;</code></pre>
+<p>每個表演的場次總數：</p>
+<pre class="r"><code>map(dance,~length(.x$showInfo)) -&gt; list_numberOfShows 
+unlist(list_numberOfShows)</code></pre>
+<pre><code>##  [1] 1 1 2 2 4 1 1 3 1 1 2 1 2 3 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
+<p>第 5 個表演有 4 個場次，想知道它們的日期時間：</p>
+<pre class="r"><code>map(dance[[4]]$showInfo, ~ .x$time) -&gt; list_showTimes_dance5
+list_showTimes_dance5</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;2020/06/27 19:30:00&quot;
+## 
+## [[2]]
+## [1] &quot;2020/06/28 14:30:00&quot;</code></pre>
+<p>找出第 8 個表演的所有場次時間 (time) 和地點 (location)：</font></p>
+<pre class="r"><code>map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -&gt; list_showInfo_dance8</code></pre>
+</div>
+<div id="綜合練習-1" class="section level3">
+<h3>綜合練習</h3>
+<p><font color="#0b5395"><strong>練習 1</strong>：今明 36 小時天氣預報</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours</code></pre>
+<ol style="list-style-type: decimal">
+<li>找出有氣象預報資訊的縣市名稱（locationName欄位）</li>
+</ol>
+<pre class="r"><code>locationName &lt;- weather_next36hours$cwbopendata$dataset$location$locationName</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>氣象局針對每個縣市提供了不同氣象因子在未來三個時段的預報。每個都市的氣象因子預報有那些，以第一個都市為例，它存在</p>
+<pre><code>weather_next36hours$cwbopendata$dataset$location$weatherElement[[1]]$elementName </code></pre>
+<p>請取出每個縣市有提供的氣象預報因子名稱。(個別名稱的意思要去看欄位說明文件)</p></li>
+</ol>
+<pre class="r"><code>map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$elementName) -&gt; elementName
+elementName[[1]]</code></pre>
+<pre><code>## [1] &quot;Wx&quot;   &quot;MaxT&quot; &quot;MinT&quot; &quot;CI&quot;   &quot;PoP&quot;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>請抓出每縣市在第一個預告時段的
+<ul>
+<li>預告開始時間</li>
+<li>預告結束時間</li>
+<li>這段時間的最高氣溫</font></li>
+</ul></li>
+</ol>
+<pre class="r"><code>map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$startTime[[1]]) -&gt; startTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$endTime[[1]]) -&gt; endTime_1
+map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
+    ~.x$time[[2]]$parameter$parameterName[[1]]) -&gt; highest_1</code></pre>
 <p></font></p>
+</div>
 </div>
 </div>
 

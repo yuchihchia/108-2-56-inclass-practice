@@ -953,9 +953,10 @@ list_showTimes_dance5
 找出第 8 個表演的所有場次時間 (time) 和地點 (location)：</font>
 ```{r}
 map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -> list_showInfo_dance8
+list_showInfo_dance8
 ```
 ### 綜合練習
-<font color="#0b5395">練習 1：今明 36 小時天氣預報
+<font color="#0b5395">**練習 1**：今明 36 小時天氣預報
 ```{r}
 jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
 ```
@@ -974,10 +975,9 @@ map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
 elementName[[1]]
 ```
 3. 請抓出每縣市在第一個預告時段的  
-
-* 預告開始時間
-* 預告結束時間
-* 這段時間的最高氣溫</font>
+    * 預告開始時間
+    * 預告結束時間
+    * 這段時間的最高氣溫</font>
 ```{r}
 map(weather_next36hours$cwbopendata$dataset$location$weatherElement,
     ~.x$time[[2]]$startTime[[1]]) -> startTime_1
