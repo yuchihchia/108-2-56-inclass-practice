@@ -808,7 +808,7 @@ table(transcript100to103$`學屆`) # table適用於類別資料或間斷資料�
 <h4>
 <strong>時間比較</strong>
 </h4>
-<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰 1998 年(含)以後出生？</font></p>
+<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰是 1998 年(含)以後出生？</font></p>
 <pre class="r"><code>print(example[c(&quot;name&quot;,&quot;birthday&quot;)])</code></pre>
 <pre><code>## $name
 ## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
@@ -846,9 +846,9 @@ exchangeRate_after98 &lt;- list(`期間` = exchangeRate$`期間`[pick_after98_01
 </h4>
 <p>factor資料可進一步分成可排序與不可排序的，如：</p>
 <ul>
-<li>可排序：以年齡層區分的類別、以所得級距區分的類別等。<br />
+<li><strong>可排序</strong>：以年齡層區分的類別、以所得級距區分的類別等。<br />
 </li>
-<li>不排序：性別、學系等。</li>
+<li><strong>不排序</strong>：性別、學系等。</li>
 </ul>
 <p>factor 的設定內定為不可排序資料，如要改成可排序類別資料，可透過以下兩種方法：</p>
 <ul>
@@ -898,7 +898,7 @@ levels(list_victimAges_female$`年齡層`)</code></pre>
 <pre><code>##  [1] &quot;不詳&quot;     &quot;總計&quot;     &quot;0_5歲&quot;    &quot;6_11歲&quot;   &quot;12_17歲&quot;  &quot;18_23歲&quot; 
 ##  [7] &quot;24_29歲&quot;  &quot;30_39歲&quot;  &quot;40_49歲&quot;  &quot;50_59歲&quot;  &quot;60_64歲&quot;  &quot;65_69歲&quot; 
 ## [13] &quot;70歲以上&quot;</code></pre>
-<p><font color="#0b5395"><strong>範例 4.4.4</strong>：刑事案件被害者人數，「30_39歲以上受害者」的人數為多少？</font></p>
+<p><font color="#0b5395">回到<strong>範例 4.4.4</strong>：刑事案件被害者人數，「30_39歲以上受害者」的人數為多少？</font></p>
 <pre class="r"><code>pick_above30 &lt;- list_victimAges_female$`年齡層` &gt;= &quot;30_39歲&quot;
 sum(list_victimAges_female$`數目`[pick_above30], 
     na.rm = T #將數目中資料為NA的排除再加總，若數值資料中有NA將無法加總運算
@@ -1030,11 +1030,11 @@ head(CDC_chatbox$Question[pick_pneumonia]) #列出前六筆資料</code></pre>
 <div id="arguments" class="section level4">
 <h4><strong>Arguments</strong></h4>
 <ul>
-<li><p>string:<br />
+<li><p><strong>string</strong>:<br />
 input character vector. Either a character vector, or something coercible to one.</p></li>
-<li><p>pattern:<br />
+<li><p><strong>pattern</strong>:<br />
 Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, ““, is equivalent to boundary(”character”).</p></li>
-<li><p>negate:<br />
+<li><p><strong>negate</strong>:<br />
 If TRUE, return non-matching elements.</p></li>
 </ul>
 </div>
@@ -1066,7 +1066,7 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 </li>
 <li><code>|</code>: or</li>
 </ul>
-<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰「喜歡美食」且「血型為 B 型」？</font></p>
+<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰「喜歡美食」而且「血型為 B 型」？</font></p>
 <pre class="r"><code>str(example[c(&quot;name&quot;,&quot;hobby&quot;,&quot;bloodType&quot;)])</code></pre>
 <pre><code>## List of 3
 ##  $ name     : chr [1:4] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
@@ -1074,7 +1074,7 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 ##  $ bloodType: chr [1:4] &quot;A&quot; &quot;B&quot; &quot;B&quot; &quot;O&quot;</code></pre>
 <pre class="r"><code>example$name[pick_loveFood &amp; pick_bloodB]</code></pre>
 <pre><code>## [1] &quot;小新&quot;</code></pre>
-<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰「1998 以後(含)出生」且「不住大台北」？</font></p>
+<p><font color="#0b5395">回到<strong>範例 4.4.1</strong>：學生資料，誰「1998 以後(含)出生」而且「不住大台北」？</font></p>
 <pre class="r"><code>example[c(&quot;name&quot;,&quot;birthday&quot;,&quot;residence&quot;)]</code></pre>
 <pre><code>## $name
 ## [1] &quot;小明&quot; &quot;小花&quot; &quot;小新&quot; &quot;美美&quot;
@@ -1094,7 +1094,6 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 <h3>正規表示式 Regular Expression</h3>
 <p><font color="#0b5395"><strong>範例 4.6.1</strong>：欲擷取年份「108」、「98」。</font></p>
 <pre class="r"><code>c(&quot;民國108年12月5日&quot;,&quot;民國98年10月5日&quot;)</code></pre>
-<pre><code>## [1] &quot;民國108年12月5日&quot; &quot;民國98年10月5日&quot;</code></pre>
 <p>一種廣義描述所要字串規律的表示法，分成兩部份：</p>
 <ul>
 <li><strong>target pattern</strong>： 指對取出字串的描述。
@@ -1130,11 +1129,12 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 吃角子老虎由數條轉輪帶 (reel strip) 組成，每一條 strip 可以有以下幾種設計：</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>固定字元/組</strong>：單寫一個字組或字元，表示那個 strip 固定不動只有一個出象。<br />
-例如：<code>2</code>表示只有「2」一個出象，<code>櫻桃</code>只有「櫻桃」一個出象。</p></li>
+例如：<code>2</code>表示只有「2」一個出象，<code>櫻桃</code>表示只有「櫻桃」一個出象。</p></li>
 <li><p><strong>字「群」組合</strong><code>(..|..|..)</code>：strip 上的出象會出現一組字時使用。<br />
 例如：<code>AB|ab</code>可以產生「AB」或「ab」兩種出象。<br />
 [字群組合規則若很單純前後沒有接其他描述則<code>( )</code>可不寫。]</p></li>
-<li><strong>字「元」組合</strong><code>[]</code>：strip 上的出象「均」是一個字「元」時用。 例如：<code>[af78]</code>可以產生「a」、「f」、「7」、「8」四種字元出象。<br />
+<li><strong>字「元」組合</strong><code>[]</code>：strip 上的出象「均」是一個字「元」時用。<br />
+例如：<code>[af78]</code>可以產生「a」、「f」、「7」、「8」四種字元出象。<br />
 幾種常見的字元模版：
 <ul>
 <li><code>[0-9](或[:digit:])</code><br />
@@ -1154,46 +1154,46 @@ str_detect(fruit, &quot;a&quot;)</code></pre>
 <font color="#0b5395"><strong>範例 4.6.2</strong>：欲擷取「色」。</font></p>
 <pre class="r"><code>heartSutra &lt;- c(&quot;舍利子，色不異空，空不異色；色即是空，空即是色。&quot;)
 str_view_all(heartSutra,&quot;色&quot;) # 檢視</code></pre>
-<div id="htmlwidget-db793989412b124670be" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-db793989412b124670be">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b6c06db847ffac708d51" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b6c06db847ffac708d51">{"x":{"html":"<ul>\n  <li>舍利子，<span class='match'>色<\/span>不異空，空不異<span class='match'>色<\/span>；<span class='match'>色<\/span>即是空，空即是<span class='match'>色<\/span>。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(heartSutra,&quot;色&quot;) # 計數</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.3</strong>：欲擷取「107」或「108」。</font></p>
 <pre class="r"><code>studentIds &lt;- c(&quot;410873029&quot;,&quot;410773005&quot;,&quot;410772035&quot;,&quot;410562123&quot;)
 
 str_view_all(studentIds,&quot;(107|108)&quot;) </code></pre>
-<div id="htmlwidget-a33c78f08db4312e7cce" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a33c78f08db4312e7cce">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7681e24c7be657d161f8" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7681e24c7be657d161f8">{"x":{"html":"<ul>\n  <li>4<span class='match'>108<\/span>73029<\/li>\n  <li>4<span class='match'>107<\/span>73005<\/li>\n  <li>4<span class='match'>107<\/span>72035<\/li>\n  <li>410562123<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_detect(studentIds, &quot;107|108&quot;) # 偵測</code></pre>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.4</strong>：欲擷取「A」或「C」。</font></p>
 <pre class="r"><code>Ids &lt;- c(&quot;A283743192&quot;,&quot;B829103720&quot;,&quot;A10920402&quot;,&quot;C291022384&quot;)
 str_view_all(Ids, &quot;[AC]&quot;)</code></pre>
-<div id="htmlwidget-64e6b07773ccdabfda75" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-64e6b07773ccdabfda75">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0463bc5ff20e0e339189" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0463bc5ff20e0e339189">{"x":{"html":"<ul>\n  <li><span class='match'>A<\/span>283743192<\/li>\n  <li>B829103720<\/li>\n  <li><span class='match'>A<\/span>10920402<\/li>\n  <li><span class='match'>C<\/span>291022384<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_extract(Ids, &quot;[AC]&quot;) # 取出</code></pre>
 <pre><code>## [1] &quot;A&quot; NA  &quot;A&quot; &quot;C&quot;</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.5</strong></font></p>
 <pre class="r"><code>headline &lt;- &quot;資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。&quot;
 # 顯示所有符合規則的
 str_view_all(headline, &quot;謝陳官&quot;)</code></pre>
-<div id="htmlwidget-9a08fd98c8c18612d0d7" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9a08fd98c8c18612d0d7">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b216b5b8fbaf255c7558" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b216b5b8fbaf255c7558">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝陳官<\/span>乃飛鳶書院三大名師，其中謝無雙的策略運算，陳大器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline,&quot;謝陳官&quot;)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;[謝陳官]&quot;)</code></pre>
-<div id="htmlwidget-b1cbbf94a84d582f979a" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b1cbbf94a84d582f979a">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e392996e0ffa7220e8a5" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e392996e0ffa7220e8a5">{"x":{"html":"<ul>\n  <li>資科系的<span class='match'>謝<\/span><span class='match'>陳<\/span><span class='match'>官<\/span>乃飛鳶書院三大名師，其中<span class='match'>謝<\/span>無雙的策略運算，<span class='match'>陳<\/span>大器的數理資科學，及<span class='match'>官<\/span>求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳<\/span>一、<span class='match'>陳<\/span>二、<span class='match'>陳<\/span>三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;[謝陳官]&quot;)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
-<div id="htmlwidget-bc5aac245872eb60b675" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bc5aac245872eb60b675">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-60a746bb607dbdfca946" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-60a746bb607dbdfca946">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中<span class='match'>謝無雙<\/span>的策略運算，陳大器的數理資科學，及<span class='match'>官求敗<\/span>的運算成本更是打通演算思維任督二脈的三大好課。書院目前有陳一、陳二、陳三四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;謝無雙|官求敗&quot;)</code></pre>
 <pre><code>## [1] 2</code></pre>
 <pre class="r"><code>str_view_all(headline, &quot;陳[^官]&quot;)</code></pre>
-<div id="htmlwidget-6dd2825a400dc76d9efe" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6dd2825a400dc76d9efe">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7d11eed3a746dae7df2c" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7d11eed3a746dae7df2c">{"x":{"html":"<ul>\n  <li>資科系的謝陳官乃飛鳶書院三大名師，其中謝無雙的策略運算，<span class='match'>陳大<\/span>器的數理資科學，及官求敗的運算成本更是打通演算思維任督二脈的三大好課。書院目前有<span class='match'>陳一<\/span>、<span class='match'>陳二<\/span>、<span class='match'>陳三<\/span>四這三名學生。<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>str_count(headline, &quot;陳[^官]&quot;)</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p><font color="#0b5395"><strong>範例 4.6.6</strong>：使用<code>str_extract</code>粹取出每個地址的「xxx 號」。</font></p>
@@ -1204,12 +1204,11 @@ str_extract(addresses, &quot;[0-9][0-9][0-9]號&quot;)</code></pre>
 </div>
 <div id="複製次數-quantifiers" class="section level3">
 <h3>複製次數 Quantifiers</h3>
-<p><code>(..|..|...)</code>或<code>[...]</code>只是一條 reel strip。<br />
-有時我們同樣的 strip 想連放很多條，可以在<code>(..|..|...)</code>或<code>[...]</code>後面加上：</p>
+<p><code>(..|..|..)</code>或<code>[...]</code>只是一條 reel strip。有時我們同樣的 strip 想連放很多條，可以在<code>(..|..|..)</code>或<code>[...]</code>後面加上：</p>
 <ul>
 <li><code>{n}</code>(n = 1, 2, 3, …)：放 n 條 strip。<br />
 </li>
-<li><code>{n,m}</code>(n, m = 1, 2, 3, …)：放 n 到 m 條strip。<br />
+<li><code>{n,m}</code>(n, m = 1, 2, 3, …，n &lt; m)：放 n 到 m 條strip。<br />
 </li>
 <li><code>?</code>：放 0 或 1 條的 strip。<br />
 </li>
@@ -1224,8 +1223,8 @@ str_extract(addresses, &quot;[0-9][0-9][0-9]號&quot;)</code></pre>
                '金門縣金城鎮賢庵里山前33號',
                '臺中市南屯區工業區二十四路23號1樓')
 str_view_all(addresses, &quot;[0-9]+號&quot;)</code></pre>
-<div id="htmlwidget-dbe018e830ec87c9d44f" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dbe018e830ec87c9d44f">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ce41a0c30c6a69235c67" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ce41a0c30c6a69235c67">{"x":{"html":"<ul>\n  <li>臺中市后里區公館里尾社路<span class='match'>385號<\/span><\/li>\n  <li>新竹市東區科學園路<span class='match'>125號<\/span>1樓<\/li>\n  <li>新竹市北區竹光路<span class='match'>99號<\/span><\/li>\n  <li>金門縣金城鎮賢庵里山前<span class='match'>33號<\/span><\/li>\n  <li>臺中市南屯區工業區二十四路<span class='match'>23號<\/span>1樓<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="頭尾定位-anchors" class="section level3">
 <h3>頭尾定位 Anchors</h3>
@@ -1238,16 +1237,16 @@ pattern &lt;- glue::glue(&quot;^{target_regex}&quot;)
 print(pattern)</code></pre>
 <pre><code>## ^唧唧</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<p><div id="htmlwidget-a5028dc0ba994fe358c0" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a5028dc0ba994fe358c0">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue 套件裡的 glue 函數會把字串中的<code>{物值名稱}</code>換成目前 Environment 裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”。</p>
+<p><div id="htmlwidget-d4cfc80952e1964c0248" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d4cfc80952e1964c0248">{"x":{"html":"<ul>\n  <li><span class='match'>唧唧<\/span>復唧唧<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script> glue 套件裡的 glue 函數會把字串中的<code>{物值名稱}</code>換成目前 Environment 裡該物件的值。在上面<code>{target_regex}</code>會被換成“唧唧”。</p>
 <p><font color="#0b5395">回到<strong>範例 4.6.8</strong>：欲擷取結尾的「唧唧」。</font></p>
 <pre class="r"><code>target_regex2 &lt;- &quot;唧唧&quot;
 pattern &lt;- glue::glue(&quot;{target_regex2}$&quot;)
 print(pattern)</code></pre>
 <pre><code>## 唧唧$</code></pre>
 <pre class="r"><code>str_view(phrase, pattern) </code></pre>
-<div id="htmlwidget-8b452e6f87453aa15fce" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8b452e6f87453aa15fce">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-32e99ba53c655d0f3283" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-32e99ba53c655d0f3283">{"x":{"html":"<ul>\n  <li>唧唧復<span class='match'>唧唧<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="前後緊鄰-look-arounds" class="section level3">
 <h3>前後緊鄰 Look arounds</h3>
@@ -1468,12 +1467,7 @@ startingAges</code></pre>
 ## 65-69   70+ 
 ##    65    70</code></pre>
 <p><strong>Step 3</strong>：將 startingAges 從小排到大。</p>
-<pre class="r"><code>sort(startingAges) -&gt; startingAges
-startingAges</code></pre>
-<pre><code>##     4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 
-##     4     5    10    15    20    25    30    35    40    45    50    55    60 
-## 65-69   70+ 
-##    65    70</code></pre>
+<pre class="r"><code>sort(startingAges) -&gt; startingAges</code></pre>
 <p><strong>Step 4</strong>：重設 levels 排序。 </font></p>
 <pre class="r"><code>covid19$`年齡層` &lt;- factor(covid19$`年齡層`, 
                            names(startingAges))
@@ -1717,17 +1711,43 @@ head(list_titles)</code></pre>
 <p>每個表演的場次總數：</p>
 <pre class="r"><code>map(dance,~length(.x$showInfo)) -&gt; list_numberOfShows 
 unlist(list_numberOfShows)</code></pre>
-<pre><code>##  [1] 1 1 2 2 4 1 1 3 1 1 2 1 2 3 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
+<pre><code>##  [1] 1 1 2 2 3 1 1 3 1 1 2 1 2 3 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1</code></pre>
 <p>第 5 個表演有 4 個場次，想知道它們的日期時間：</p>
-<pre class="r"><code>map(dance[[4]]$showInfo, ~ .x$time) -&gt; list_showTimes_dance5
+<pre class="r"><code>map(dance[[5]]$showInfo, ~ .x$time) -&gt; list_showTimes_dance5
 list_showTimes_dance5</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;2020/06/27 19:30:00&quot;
+## [1] &quot;2020/06/27 14:30:00&quot;
 ## 
 ## [[2]]
+## [1] &quot;2020/06/27 19:30:00&quot;
+## 
+## [[3]]
 ## [1] &quot;2020/06/28 14:30:00&quot;</code></pre>
 <p>找出第 8 個表演的所有場次時間 (time) 和地點 (location)：</font></p>
-<pre class="r"><code>map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -&gt; list_showInfo_dance8</code></pre>
+<pre class="r"><code>map(dance[[8]]$showInfo, ~ .x[c(1,2)]) -&gt; list_showInfo_dance8
+list_showInfo_dance8</code></pre>
+<pre><code>## [[1]]
+## [[1]]$time
+## [1] &quot;2020/08/22 14:30:00&quot;
+## 
+## [[1]]$location
+## [1] &quot;台北市羅斯福路四段92號10樓&quot;
+## 
+## 
+## [[2]]
+## [[2]]$time
+## [1] &quot;2020/08/22 19:30:00&quot;
+## 
+## [[2]]$location
+## [1] &quot;台北市羅斯福路四段92號10樓&quot;
+## 
+## 
+## [[3]]
+## [[3]]$time
+## [1] &quot;2020/08/23 14:30:00&quot;
+## 
+## [[3]]$location
+## [1] &quot;台北市羅斯福路四段92號10樓&quot;</code></pre>
 </div>
 <div id="綜合練習-1" class="section level3">
 <h3>綜合練習</h3>

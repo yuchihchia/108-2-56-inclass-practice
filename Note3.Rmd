@@ -11,7 +11,7 @@ output:
       smooth_scroll: TRUE
 ---
 <font face="Taipei Sans TC Beta Light">  
-```{r echo=FALSE}
+```{r include=FALSE}
 library(stringr); library(purrr); library(magrittr)
 ```
 <style>

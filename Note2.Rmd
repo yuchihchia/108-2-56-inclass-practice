@@ -295,7 +295,7 @@ table(transcript100to103$`學屆`[pick_above85])
 ```
 <h4>**時間比較**</h4>  
 
-<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰 1998 年(含)以後出生？</font>  
+<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰是 1998 年(含)以後出生？</font>  
 ```{r}
 print(example[c("name","birthday")])
 pick_after98 <- example$birthday >= lubridate::ymd("1998-01-01")
@@ -313,8 +313,8 @@ exchangeRate_after98 <- list(`期間` = exchangeRate$`期間`[pick_after98_01],
 <h4>**可排序類別資料比較**</h4>  
 factor資料可進一步分成可排序與不可排序的，如：  
 
-* 可排序：以年齡層區分的類別、以所得級距區分的類別等。  
-* 不排序：性別、學系等。  
+* **可排序**：以年齡層區分的類別、以所得級距區分的類別等。  
+* **不排序**：性別、學系等。  
 
 factor 的設定內定為不可排序資料，如要改成可排序類別資料，可透過以下兩種方法：  
 
@@ -350,7 +350,7 @@ levels(list_victimAges_female$`年齡層`) <- levels_new
 list_victimAges_female$`年齡層` <- ordered(list_victimAges_female$`年齡層`)
 levels(list_victimAges_female$`年齡層`)
 ```
-<font color="#0b5395">**範例 4.4.4**：刑事案件被害者人數，「30_39歲以上受害者」的人數為多少？</font>
+<font color="#0b5395">回到**範例 4.4.4**：刑事案件被害者人數，「30_39歲以上受害者」的人數為多少？</font>
 ```{r}
 pick_above30 <- list_victimAges_female$`年齡層` >= "30_39歲"
 sum(list_victimAges_female$`數目`[pick_above30], 
@@ -440,13 +440,13 @@ Vectorised over string and pattern. Equivalent to `grep(pattern, x)`. See `str_w
 
 #### **Arguments**  
 
-* string:  
+* **string**:  
   input character vector. Either a character vector, or something coercible to one.
   
-* pattern:  
+* **pattern**:  
   Pattern to look for. The default interpretation is a regular expression, as described in stringi::stringi-search-regex. Control options with regex(). Match a fixed string (i.e. by comparing only bytes), using fixed(). This is fast, but approximate. Generally, for matching human text, you’ll want coll() which respects character matching rules for the specified locale. Match character, word, line and sentence boundaries with boundary(). An empty pattern, "“, is equivalent to boundary(”character").
   
-* negate:  
+* **negate**:  
   If TRUE, return non-matching elements.
 
 #### **Value**  
@@ -467,12 +467,12 @@ str_detect(fruit, "[aeiou]") #有出現a、e、i、o或u
 * `&`: and  
 * `|`: or  
 
-<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰「喜歡美食」且「血型為 B 型」？</font>
+<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰「喜歡美食」而且「血型為 B 型」？</font>
 ```{r}
 str(example[c("name","hobby","bloodType")])
 example$name[pick_loveFood & pick_bloodB]
 ```
-<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰「1998 以後(含)出生」且「不住大台北」？</font>
+<font color="#0b5395">回到**範例 4.4.1**：學生資料，誰「1998 以後(含)出生」而且「不住大台北」？</font>
 ```{r}
 example[c("name","birthday","residence")]
 example$name[pick_after98 | !pick_fromTaipeiMetro]
@@ -482,7 +482,7 @@ example$name[pick_after98 | !pick_fromTaipeiMetro]
 
 ### 正規表示式 Regular Expression  
 <font color="#0b5395">**範例 4.6.1**：欲擷取年份「108」、「98」。</font>
-```{r}
+```{r eval=FALSE}
 c("民國108年12月5日","民國98年10月5日")
 ```
 一種廣義描述所要字串規律的表示法，分成兩部份：  
@@ -490,11 +490,11 @@ c("民國108年12月5日","民國98年10月5日")
 * **target pattern**：
   指對取出字串的描述。  
     + 如果「108」、「98」是我們想取出的字串。我們可以說目標是，「0-9 的字元 2-3 個」：`[:digit:]{2,3}或[0-9]{2,3}`。  
-    
+
 * **target location description**：   
   指 target 位置的情境描述。  
     + 如果是「民國108年」、「民國98年」，我們可以說，target 前面是「民國」後面是「年」：`(?<=民國)target_pattern(?=年)`。  
-    
+
 * 合成 **regular expression** (**regex**)：`(?<=民國)[0-9]{2,3}(?=年)`。  
 
 <font color="#0b5395">回到**範例 4.6.1**：欲擷取「108」、「98」。</font>
@@ -513,13 +513,13 @@ str_extract(
 吃角子老虎由數條轉輪帶 (reel strip) 組成，每一條 strip 可以有以下幾種設計：  
 
 1. **固定字元/組**：單寫一個字組或字元，表示那個 strip 固定不動只有一個出象。  
-  例如：`2`表示只有「2」一個出象，`櫻桃`只有「櫻桃」一個出象。  
+  例如：`2`表示只有「2」一個出象，`櫻桃`表示只有「櫻桃」一個出象。  
 
 2. **字「群」組合**`(..|..|..)`：strip 上的出象會出現一組字時使用。  
   例如：`AB|ab`可以產生「AB」或「ab」兩種出象。  
   [字群組合規則若很單純前後沒有接其他描述則`( )`可不寫。]  
 
-3. **字「元」組合**`[]`：strip 上的出象「均」是一個字「元」時用。
+3. **字「元」組合**`[]`：strip 上的出象「均」是一個字「元」時用。  
   例如：`[af78]`可以產生「a」、「f」、「7」、「8」四種字元出象。  
   幾種常見的字元模版：  
     + `[0-9](或[:digit:])`  
@@ -573,11 +573,10 @@ addresses <- c('臺中市后里區公館里尾社路385號',
 str_extract(addresses, "[0-9][0-9][0-9]號")
 ```
 ### 複製次數 Quantifiers  
-`(..|..|...)`或`[...]`只是一條 reel strip。  
-有時我們同樣的 strip 想連放很多條，可以在`(..|..|...)`或`[...]`後面加上：  
+`(..|..|..)`或`[...]`只是一條 reel strip。有時我們同樣的 strip 想連放很多條，可以在`(..|..|..)`或`[...]`後面加上：  
 
 * `{n}`(n = 1, 2, 3, ...)：放 n 條 strip。  
-* `{n,m}`(n, m = 1, 2, 3, ...)：放 n 到 m 條strip。  
+* `{n,m}`(n, m = 1, 2, 3, ...，n < m)：放 n 到 m 條strip。  
 * `?`：放 0 或 1 條的 strip。  
 * `*`：放 0 條以上的 strip。  
 * `+`：放 1 條以上的 strip。  
@@ -798,7 +797,6 @@ startingAges
 **Step 3**：將 startingAges 從小排到大。
 ```{r}
 sort(startingAges) -> startingAges
-startingAges
 ```
 **Step 4**：重設 levels 排序。 </font>
 ```{r}
@@ -945,9 +943,9 @@ head(list_titles)
 map(dance,~length(.x$showInfo)) -> list_numberOfShows 
 unlist(list_numberOfShows)
 ```
-第 5 個表演有 4 個場次，想知道它們的日期時間：  
+第 5 個表演有 3 個場次，想知道它們的日期時間：  
 ```{r}
-map(dance[[4]]$showInfo, ~ .x$time) -> list_showTimes_dance5
+map(dance[[5]]$showInfo, ~ .x$time) -> list_showTimes_dance5
 list_showTimes_dance5
 ```
 找出第 8 個表演的所有場次時間 (time) 和地點 (location)：</font>
