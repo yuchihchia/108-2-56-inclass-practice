@@ -12,7 +12,7 @@ output:
 ---
 <font face="Taipei Sans TC Beta Light">  
 ```{r include=FALSE}
-library(stringr); library(purrr); library(magrittr)
+library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr)
 ```
 <style>
 .example {
@@ -22,7 +22,7 @@ library(stringr); library(purrr); library(magrittr)
 </style>
 # 第5章 Programming  
 ## 5.1 Pipe  
-### 5.1.1 原則  
+### 原則  
 <font color="#0b5395">**範例 5.1.1**：找出身高最高的人。</font>
 ```{r}
 threeHeigths <- c(Gary=178, John=182, Cam=175)
@@ -76,14 +76,14 @@ levels(region) %>%
   str_replace(.,"台中","中部") -> levels(region)
 levels(region)
 ```
-### 5.1.2 元素粹取  
+### 元素粹取  
 ```{r}
 num <- c(2,97,22,15,7)
 # 選出大於50的數字
 (num > 50) %>%
   num[.]
 ```
-### 5.1.3 執行順序  
+### 執行順序  
 面對 pipe 時會先把 pipe 走完最後才去做值 assign 給最後物件的動作。
 ```{r}
 threeHeigths %>%
@@ -99,9 +99,9 @@ highestPerson <-
   names(.) %>%
   .[[1]]
 ```
-### 5.1.4 `.`省略原則  
+### `.`省略原則  
 若代表中間物件的`.`在函數的**第一位**，則`.`**可省略不寫**，連它後面的`,`也去掉。  
-小心若不在**第一位**則不可做省略`.`動作。  
+小心若不在**第一位**則不可做省略`.`。  
 ```{r}
 levels(region) %>% 
   str_replace("台北","北部") %>%
@@ -125,9 +125,9 @@ population %>%
 population %>%
   sort() %>%
   names() %>%
-factor(cities, levels=.) -> cities
+  factor(cities, levels=.) -> cities
 ```
-### 5.1.5 串接非單純函數程序
+### 串接非單純函數程序
 若遇到 pipe 串接的下一段並不是單純的**函數**的話，可以用`{}`把此段內容括起來並把前一段output要放的位置換成`.`。  
 
 <font color="#0b5395">**範例 5.1.4**：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。
@@ -137,9 +137,11 @@ dataList <- list(
   chr=c("2","97","22","15","7")
 )
 map(dataList, ~is.numeric(.x)) %>%
-unlist(.) %>%
-dataList[.] %>%
-{.[[1]][.[[1]] > 50]} -> bigNumber
+  unlist(.) %>%
+  dataList[.] %>%
+  unlist(.) %>%
+  {.[. > 50]} -> bigNumber
+bigNumber
 ```
 再回到**範例 5.1.3**。</font>
 ```{r}
@@ -147,7 +149,7 @@ population %>%
   {names(sort(.))} %>%
   factor(cities, levels=.) -> cities
 ```
-### 5.1.6 綜合練習
+### 綜合練習
 <font color="#0b5395">**練習一**</font>
 ```{r}
 jsonlite::fromJSON("https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json") -> covid19
@@ -166,6 +168,197 @@ covid19$`縣市` %>%
   factor(covid19$`縣市`, levels=.) -> covid19$`縣市`
 levels(covid19$`縣市`)
 ```
+## 5.2 Funtion
+### 函數定義
+<font color="#0b5395">**範例5.2.1**：需求函數  
+$$ q_d=10-5p $$
+```{r}
+demand <- #創造一個物件(函數) demand
+  function(p){
+    q_d <- 10-5*p 
+  }
+#p=1.2的需求量
+demand(1.2) #既不會顯示在螢幕上，Global Environment也不會有q_d
+q_d1.2 <- demand(1.2)
+q_d1.2
+```
+</font>  
+**return**  
+
+<font color="#0b5395">回到**範例5.2.1**：需求函數</font>
+```{r}
+demand_return <- function(p){
+    q_d <- 10-5*p
+    return(q_d)
+  }
+#p=1.2的需求量
+demand_return(1.2) #顯示在螢幕，但Global Environment並不會有q_d
+q_d1.2 <- demand_return(1.2)
+q_d1.2
+```
+* 最近一步會使用到電腦記憶體的運算值會暫時記在：
+```{r}
+.Last.value
+# 要長久存在Global Environment要指定物件名稱(不要求與q_d同名)
+demand_return(1.2) -> q_d1.2
+```
+* `eturn(q_d)`只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。  
+
+* 實際上，`{...}`裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。  
+
+<font color="#0b5395">**範例5.2.2**：今日天氣  
+只要告訴機器人 askSilly_weather 日期、地點  
+就可以得到該地區今日的最高溫及最低溫。  
+```{r}
+askSilly_weather <- function(locationInput, dateInput){
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
+  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
+  (weatherAtLocation$elementName=="MinT") -> pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+askSilly_weather("新北市", today())
+askSilly_weather("花蓮縣", today())
+```
+**範例5.2.3**：國際時間轉換  
+打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：  
+```
+what_time_it_is("Europe/Paris")
+```
+它會依照你電腦目前時間，即輸入`now()`得到的時間，去告訴你現在巴黎幾點。  </font>
+```{r}
+what_time_it_is <- function(location){
+  now() %>%
+  with_tz(tzone=location) %>%
+  return(.)
+}
+what_time_it_is("Europe/Paris")
+```
+### 函數的組成
+<font color="#0b5395">回到**範例5.2.1**：需求函數
+```{r}
+class(demand_return)
+```
+回到**範例5.2.2**：今日天氣</font>
+```{r}
+# 查詢函數formals arguments要求
+formals(askSilly_weather)
+# 查詢函數主體
+body(askSilly_weather)
+```
+函數可以存在 list 裡。(其實幾乎所有的物件不管什麼 class 都可以存在 list 裡)  
+
+<font color="#0b5395">**範例5.2.4**</font>
+```{r}
+learning_topics <- 
+  list(
+    subject="函數",
+    date=lubridate::ymd("2020-06-03"),
+    functionsCreated=list(
+      demand=demand_return #等號右邊是呼叫demand_return的定義值，也就是function(...){...}值定義本身。
+    )
+  )
+learning_topics$functionsCreated$demand(1.2)
+```
+### Environment
+<font color="#0b5395">回到**範例5.2.1**：需求函數</font>
+```{r}
+typeof(demand_return)
+```
+* __closure__：  
+  function 本身的運作並不能只靠它的定義值`function(...){...}`，還要有適當的環境 (environment) 條件才能生存。若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要包含 (enclose) 它的 (生存) 環境一起存。這種儲存型態叫 closure (閉包)。
+
+<font color="#0b5395">回到**範例5.2.1**：需求函數
+```{r}
+# 查詢函數執行所要求環境
+environment(demand_return)
+# 若函數執行需要Global environment已存在某些物件，查詢需要哪些物件
+codetools::findGlobals(demand_return)
+```
+**範例5.2.5**：需求函數
+```{r error=TRUE}
+intercept <- 10
+slope <- -5
+myDemand <- function(p){
+  q_d <- intercept + slope*p
+  return(q_d)
+}
+environment(myDemand)
+codetools::findGlobals(myDemand) #myDemand對Global environment的要求多了intercept及slope
+# 移除global environment裡的intercept及slope
+rm(intercept, slope)
+demand_return(1.2) # 維持正常運作
+myDemand(1.2) # 無法運作
+```
+myDemand 的運作需要 global environment 裡的 intercept、slope 物件。這表示  
+
+* 沒有 intercept、slope 在 global environment 裡它無法運作。  
+
+* global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 **Lazy evaluation**，惰性求值)
+
+再回到**範例5.2.5**：需求函數</font>
+```{r}
+intercept <- 10
+slope <- -5
+myDemand(1.2) #q_d = 10-5p
+slope <- -1
+myDemand(1.2) #q_d = 10-1.2p
+intercept <- 5
+slope <- -1.2
+myDemand(1.2) #q_d = 5-1.2p
+```
+### 預設值
+函數lazy evaluation的特性，讓函數的運作：  
+
+* 具有隨時可改變運作狀態的彈性；但  
+
+* 該工具若落在電腦知識不足的使用者手上會有誤動global environment而產生運作錯誤的危機。  
+
+<font color="#0b5395">**範例5.2.6**：需求函數</font>
+```{r}
+myDemand2 <- function(p, intercept=10, slope=-5){
+  q_d <- intercept + slope*p
+  return(q_d)
+}
+environment(myDemand2)
+findGlobals(myDemand2) # 不依靠Global environment裡的intercept、slope
+myDemand2(1.2)
+myDemand2(1.2, slope=-1)
+myDemand2(1.2, intercept=5, slope=-1.2)
+```
+預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。  
+
+### 綜合練習
+```{r}
+when_busArrives <- function(busRoute, busStop){
+  # 公車預估到站時間 https://data.ntpc.gov.tw/datasets/07F7CCB3-ED00-43C4-966D-08E9DAB24E95
+  busArrivalForecast <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busArrivalForecast.csv")
+  # 公車路線清單 https://data.ntpc.gov.tw/datasets/0EE4E6BF-CEE6-4EC8-8FE1-71F544015127
+  busRoutes <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busRoutes.csv")
+  # 公車站位資訊 https://data.ntpc.gov.tw/datasets/34B402A8-53D9-483D-9406-24A682C2D6DC
+  busStopsInfo <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busStopsInfo.csv")
+  pickRoute <- busRoutes$Id[busRoutes$nameZh == busRoute]
+  pickStop <- busStopsInfo$Id[busStopsInfo$nameZh == busStop]
+  busArrivalForecast$EstimateTime[
+  busArrivalForecast$RouteID %in% pickRoute &
+  busArrivalForecast$StopID %in% pickStop]
+}
+when_busArrives("916","臺北大學正門")
+```
+
+
+#第6章 Big Data
+
+
+
+
+
+
+
 
 
 

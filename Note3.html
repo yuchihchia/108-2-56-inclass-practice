@@ -278,7 +278,7 @@ div.tocify {
 <div id="pipe" class="section level2">
 <h2>5.1 Pipe</h2>
 <div id="原則" class="section level3">
-<h3>5.1.1 原則</h3>
+<h3>原則</h3>
 <p><font color="#0b5395"><strong>範例 5.1.1</strong>：找出身高最高的人。</font></p>
 <pre class="r"><code>threeHeigths &lt;- c(Gary=178, John=182, Cam=175)
 # 先排序由大到小
@@ -326,7 +326,7 @@ levels(region)</code></pre>
 <pre><code>## [1] &quot;中部&quot; &quot;北部&quot; &quot;東部&quot;</code></pre>
 </div>
 <div id="元素粹取" class="section level3">
-<h3>5.1.2 元素粹取</h3>
+<h3>元素粹取</h3>
 <pre class="r"><code>num &lt;- c(2,97,22,15,7)
 # 選出大於50的數字
 (num &gt; 50) %&gt;%
@@ -334,7 +334,7 @@ levels(region)</code></pre>
 <pre><code>## [1] 97</code></pre>
 </div>
 <div id="執行順序" class="section level3">
-<h3>5.1.3 執行順序</h3>
+<h3>執行順序</h3>
 <p>面對 pipe 時會先把 pipe 走完最後才去做值 assign 給最後物件的動作。</p>
 <pre class="r"><code>threeHeigths %&gt;%
   sort(., decreasing=T) %&gt;%
@@ -348,9 +348,9 @@ levels(region)</code></pre>
   .[[1]]</code></pre>
 </div>
 <div id="省略原則" class="section level3">
-<h3>5.1.4 <code>.</code>省略原則</h3>
+<h3><code>.</code>省略原則</h3>
 <p>若代表中間物件的<code>.</code>在函數的<strong>第一位</strong>，則<code>.</code><strong>可省略不寫</strong>，連它後面的<code>,</code>也去掉。<br />
-小心若不在<strong>第一位</strong>則不可做省略<code>.</code>動作。</p>
+小心若不在<strong>第一位</strong>則不可做省略<code>.</code>。</p>
 <pre class="r"><code>levels(region) %&gt;% 
   str_replace(&quot;台北&quot;,&quot;北部&quot;) %&gt;%
   str_replace(&quot;花蓮|台東&quot;,&quot;東部&quot;) %&gt;%
@@ -369,10 +369,10 @@ population %&gt;%
 population %&gt;%
   sort() %&gt;%
   names() %&gt;%
-factor(cities, levels=.) -&gt; cities</code></pre>
+  factor(cities, levels=.) -&gt; cities</code></pre>
 </div>
 <div id="串接非單純函數程序" class="section level3">
-<h3>5.1.5 串接非單純函數程序</h3>
+<h3>串接非單純函數程序</h3>
 <p>若遇到 pipe 串接的下一段並不是單純的<strong>函數</strong>的話，可以用<code>{}</code>把此段內容括起來並把前一段output要放的位置換成<code>.</code>。</p>
 <p><font color="#0b5395"><strong>範例 5.1.4</strong>：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。</p>
 <pre class="r"><code>dataList &lt;- list(
@@ -380,16 +380,20 @@ factor(cities, levels=.) -&gt; cities</code></pre>
   chr=c(&quot;2&quot;,&quot;97&quot;,&quot;22&quot;,&quot;15&quot;,&quot;7&quot;)
 )
 map(dataList, ~is.numeric(.x)) %&gt;%
-unlist(.) %&gt;%
-dataList[.] %&gt;%
-{.[[1]][.[[1]] &gt; 50]} -&gt; bigNumber</code></pre>
+  unlist(.) %&gt;%
+  dataList[.] %&gt;%
+  unlist(.) %&gt;%
+  {.[. &gt; 50]} -&gt; bigNumber
+bigNumber</code></pre>
+<pre><code>## num2 
+##   97</code></pre>
 <p>再回到<strong>範例 5.1.3</strong>。</font></p>
 <pre class="r"><code>population %&gt;% 
   {names(sort(.))} %&gt;%
   factor(cities, levels=.) -&gt; cities</code></pre>
 </div>
 <div id="綜合練習" class="section level3">
-<h3>5.1.6 綜合練習</h3>
+<h3>綜合練習</h3>
 <p><font color="#0b5395"><strong>練習一</strong></font></p>
 <pre class="r"><code>jsonlite::fromJSON(&quot;https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json&quot;) -&gt; covid19
 jsonlite::fromJSON(
@@ -407,9 +411,251 @@ levels(covid19$`縣市`)</code></pre>
 <pre><code>##  [1] &quot;新北市&quot; &quot;台中市&quot; &quot;高雄市&quot; &quot;台北市&quot; &quot;桃園市&quot; &quot;台南市&quot; &quot;彰化縣&quot; &quot;屏東縣&quot;
 ##  [9] &quot;雲林縣&quot; &quot;新竹縣&quot; &quot;苗栗縣&quot; &quot;嘉義縣&quot; &quot;南投縣&quot; &quot;宜蘭縣&quot; &quot;新竹市&quot; &quot;基隆市&quot;
 ## [17] &quot;嘉義市&quot;</code></pre>
+</div>
+</div>
+<div id="funtion" class="section level2">
+<h2>5.2 Funtion</h2>
+<div id="函數定義" class="section level3">
+<h3>函數定義</h3>
+<p><font color="#0b5395"><strong>範例5.2.1</strong>：需求函數<br />
+<span class="math display">\[ q_d=10-5p \]</span></p>
+<pre class="r"><code>demand &lt;- #創造一個物件(函數) demand
+  function(p){
+    q_d &lt;- 10-5*p 
+  }
+#p=1.2的需求量
+demand(1.2) #既不會顯示在螢幕上，Global Environment也不會有q_d
+q_d1.2 &lt;- demand(1.2)
+q_d1.2</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p></font><br />
+<strong>return</strong></p>
+<p><font color="#0b5395">回到<strong>範例5.2.1</strong>：需求函數</font></p>
+<pre class="r"><code>demand_return &lt;- function(p){
+    q_d &lt;- 10-5*p
+    return(q_d)
+  }
+#p=1.2的需求量
+demand_return(1.2) #顯示在螢幕，但Global Environment並不會有q_d</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>q_d1.2 &lt;- demand_return(1.2)
+q_d1.2</code></pre>
+<pre><code>## [1] 4</code></pre>
+<ul>
+<li>最近一步會使用到電腦記憶體的運算值會暫時記在：</li>
+</ul>
+<pre class="r"><code>.Last.value</code></pre>
+<pre><code>## $help_type
+## NULL</code></pre>
+<pre class="r"><code># 要長久存在Global Environment要指定物件名稱(不要求與q_d同名)
+demand_return(1.2) -&gt; q_d1.2</code></pre>
+<ul>
+<li><p><code>eturn(q_d)</code>只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。</p></li>
+<li><p>實際上，<code>{...}</code>裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。</p></li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.2.2</strong>：今日天氣<br />
+只要告訴機器人 askSilly_weather 日期、地點<br />
+就可以得到該地區今日的最高溫及最低溫。</p>
+<pre class="r"><code>askSilly_weather &lt;- function(locationInput, dateInput){
+  jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours
+  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -&gt; pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt; pick_MaxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt; pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
+  glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
+}
+askSilly_weather(&quot;新北市&quot;, today())</code></pre>
+<pre><code>## 新北市 2020-06-05 氣溫，最高31度，最低26度。</code></pre>
+<pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
+<pre><code>## 花蓮縣 2020-06-05 氣溫，最高31度，最低26度。</code></pre>
+<p><strong>範例5.2.3</strong>：國際時間轉換<br />
+打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
+<pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
+<p>它會依照你電腦目前時間，即輸入<code>now()</code>得到的時間，去告訴你現在巴黎幾點。 </font></p>
+<pre class="r"><code>what_time_it_is &lt;- function(location){
+  now() %&gt;%
+  with_tz(tzone=location) %&gt;%
+  return(.)
+}
+what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
+<pre><code>## [1] &quot;2020-06-05 12:59:33 CEST&quot;</code></pre>
+</div>
+<div id="函數的組成" class="section level3">
+<h3>函數的組成</h3>
+<p><font color="#0b5395">回到<strong>範例5.2.1</strong>：需求函數</p>
+<pre class="r"><code>class(demand_return)</code></pre>
+<pre><code>## [1] &quot;function&quot;</code></pre>
+<p>回到<strong>範例5.2.2</strong>：今日天氣</font></p>
+<pre class="r"><code># 查詢函數formals arguments要求
+formals(askSilly_weather)</code></pre>
+<pre><code>## $locationInput
+## 
+## 
+## $dateInput</code></pre>
+<pre class="r"><code># 查詢函數主體
+body(askSilly_weather)</code></pre>
+<pre><code>## {
+##     weather_next36hours &lt;- jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;)
+##     pick_location &lt;- (weather_next36hours$cwbopendata$dataset$location$locationName == 
+##         locationInput)
+##     weatherAtLocation &lt;- weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]]
+##     pick_MaxT &lt;- (weatherAtLocation$elementName == &quot;MaxT&quot;)
+##     pick_MinT &lt;- (weatherAtLocation$elementName == &quot;MinT&quot;)
+##     maxT &lt;- weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]]
+##     minT &lt;- weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]]
+##     glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
+## }</code></pre>
+<p>函數可以存在 list 裡。(其實幾乎所有的物件不管什麼 class 都可以存在 list 裡)</p>
+<p><font color="#0b5395"><strong>範例5.2.4</strong></font></p>
+<pre class="r"><code>learning_topics &lt;- 
+  list(
+    subject=&quot;函數&quot;,
+    date=lubridate::ymd(&quot;2020-06-03&quot;),
+    functionsCreated=list(
+      demand=demand_return #等號右邊是呼叫demand_return的定義值，也就是function(...){...}值定義本身。
+    )
+  )
+learning_topics$functionsCreated$demand(1.2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+</div>
+<div id="environment" class="section level3">
+<h3>Environment</h3>
+<p><font color="#0b5395">回到<strong>範例5.2.1</strong>：需求函數</font></p>
+<pre class="r"><code>typeof(demand_return)</code></pre>
+<pre><code>## [1] &quot;closure&quot;</code></pre>
+<ul>
+<li><strong>closure</strong>：<br />
+function 本身的運作並不能只靠它的定義值<code>function(...){...}</code>，還要有適當的環境 (environment) 條件才能生存。若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要包含 (enclose) 它的 (生存) 環境一起存。這種儲存型態叫 closure (閉包)。</li>
+</ul>
+<p><font color="#0b5395">回到<strong>範例5.2.1</strong>：需求函數</p>
+<pre class="r"><code># 查詢函數執行所要求環境
+environment(demand_return)</code></pre>
+<pre><code>## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<pre class="r"><code># 若函數執行需要Global environment已存在某些物件，查詢需要哪些物件
+codetools::findGlobals(demand_return)</code></pre>
+<pre><code>## [1] &quot;-&quot;      &quot;*&quot;      &quot;{&quot;      &quot;&lt;-&quot;     &quot;return&quot;</code></pre>
+<p><strong>範例5.2.5</strong>：需求函數</p>
+<pre class="r"><code>intercept &lt;- 10
+slope &lt;- -5
+myDemand &lt;- function(p){
+  q_d &lt;- intercept + slope*p
+  return(q_d)
+}
+environment(myDemand)</code></pre>
+<pre><code>## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<pre class="r"><code>codetools::findGlobals(myDemand) #myDemand對Global environment的要求多了intercept及slope</code></pre>
+<pre><code>## [1] &quot;*&quot;         &quot;{&quot;         &quot;+&quot;         &quot;&lt;-&quot;        &quot;intercept&quot; &quot;return&quot;   
+## [7] &quot;slope&quot;</code></pre>
+<pre class="r"><code># 移除global environment裡的intercept及slope
+rm(intercept, slope)
+demand_return(1.2) # 維持正常運作</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>myDemand(1.2) # 無法運作</code></pre>
+<pre><code>## Error in myDemand(1.2): 找不到物件 'intercept'</code></pre>
+<p>myDemand 的運作需要 global environment 裡的 intercept、slope 物件。這表示</p>
+<ul>
+<li><p>沒有 intercept、slope 在 global environment 裡它無法運作。</p></li>
+<li><p>global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 <strong>Lazy evaluation</strong>，惰性求值)</p></li>
+</ul>
+<p>再回到<strong>範例5.2.5</strong>：需求函數</font></p>
+<pre class="r"><code>intercept &lt;- 10
+slope &lt;- -5
+myDemand(1.2) #q_d = 10-5p</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>slope &lt;- -1
+myDemand(1.2) #q_d = 10-1.2p</code></pre>
+<pre><code>## [1] 8.8</code></pre>
+<pre class="r"><code>intercept &lt;- 5
+slope &lt;- -1.2
+myDemand(1.2) #q_d = 5-1.2p</code></pre>
+<pre><code>## [1] 3.56</code></pre>
+</div>
+<div id="預設值" class="section level3">
+<h3>預設值</h3>
+<p>函數lazy evaluation的特性，讓函數的運作：</p>
+<ul>
+<li><p>具有隨時可改變運作狀態的彈性；但</p></li>
+<li><p>該工具若落在電腦知識不足的使用者手上會有誤動global environment而產生運作錯誤的危機。</p></li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.2.6</strong>：需求函數</font></p>
+<pre class="r"><code>myDemand2 &lt;- function(p, intercept=10, slope=-5){
+  q_d &lt;- intercept + slope*p
+  return(q_d)
+}
+environment(myDemand2)</code></pre>
+<pre><code>## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<pre class="r"><code>findGlobals(myDemand2) # 不依靠Global environment裡的intercept、slope</code></pre>
+<pre><code>## [1] &quot;-&quot;      &quot;*&quot;      &quot;{&quot;      &quot;+&quot;      &quot;&lt;-&quot;     &quot;return&quot;</code></pre>
+<pre class="r"><code>myDemand2(1.2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>myDemand2(1.2, slope=-1)</code></pre>
+<pre><code>## [1] 8.8</code></pre>
+<pre class="r"><code>myDemand2(1.2, intercept=5, slope=-1.2)</code></pre>
+<pre><code>## [1] 3.56</code></pre>
+<p>預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。</p>
+</div>
+<div id="綜合練習-1" class="section level3">
+<h3>綜合練習</h3>
+<pre class="r"><code>when_busArrives &lt;- function(busRoute, busStop){
+  # 公車預估到站時間 https://data.ntpc.gov.tw/datasets/07F7CCB3-ED00-43C4-966D-08E9DAB24E95
+  busArrivalForecast &lt;- read_csv(&quot;C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busArrivalForecast.csv&quot;)
+  # 公車路線清單 https://data.ntpc.gov.tw/datasets/0EE4E6BF-CEE6-4EC8-8FE1-71F544015127
+  busRoutes &lt;- read_csv(&quot;C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busRoutes.csv&quot;)
+  # 公車站位資訊 https://data.ntpc.gov.tw/datasets/34B402A8-53D9-483D-9406-24A682C2D6DC
+  busStopsInfo &lt;- read_csv(&quot;C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busStopsInfo.csv&quot;)
+  pickRoute &lt;- busRoutes$Id[busRoutes$nameZh == busRoute]
+  pickStop &lt;- busStopsInfo$Id[busStopsInfo$nameZh == busStop]
+  busArrivalForecast$EstimateTime[
+  busArrivalForecast$RouteID %in% pickRoute &amp;
+  busArrivalForecast$StopID %in% pickStop]
+}
+when_busArrives(&quot;916&quot;,&quot;臺北大學正門&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   RouteID = col_double(),
+##   StopID = col_double(),
+##   EstimateTime = col_double(),
+##   GoBack = col_double()
+## )</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   Id = col_double(),
+##   providerId = col_double(),
+##   pathAttributeId = col_double(),
+##   buildPeriod = col_double(),
+##   realSequence = col_double(),
+##   distance = col_double(),
+##   holidayOffPeakHeadway = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Id = col_double(),
+##   routeId = col_double(),
+##   nameZh = col_character(),
+##   nameEn = col_character(),
+##   seqNo = col_double(),
+##   pgp = col_double(),
+##   goBack = col_double(),
+##   longitude = col_double(),
+##   latitude = col_double(),
+##   address = col_character(),
+##   stopLocationId = col_double(),
+##   showLon = col_double(),
+##   showLat = col_double(),
+##   vector = col_character()
+## )</code></pre>
+<pre><code>## [1]  89 383</code></pre>
+</div>
+</div>
+</div>
+<div id="第6章-big-data" class="section level1">
+<h1>第6章 Big Data</h1>
 <p></font></p>
-</div>
-</div>
 </div>
 
 
