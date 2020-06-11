@@ -354,8 +354,8 @@ when_busArrives("916","臺北大學正門")
 ### if 
 ```
 if(condition){
-  Body for TRUE
-  }
+  body for TRUE
+}
 ```
 * 用在「某個條件符合才執行」的狀況。
 * condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)  
@@ -386,7 +386,7 @@ if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；
 }
 lubridate::ymd_hms("2020-07-01 13:00:00 GMT")
 ```
-**範例5.3.3**：在**範例4.6.9**中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。
+**範例5.3.3**：在 **範例4.6.9** 中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。
 ```{r}
 convert_TaiwanDate2WesternDate <- function(twDate){
   if(!require("stringr")){
@@ -409,33 +409,15 @@ convert_TaiwanDate2WesternDate <- function(twDate){
 twDate <-  c("民國108年12月5日","民國98年10月5日")
 convert_TaiwanDate2WesternDate(twDate)
 ```
-**範例5.3.4**：  
-1. 寫一個`check_package(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。
-```{r error=T}
-check_package <- function(pkgName){
-  if(!require(pkgName)){
-    install.packages(pkgName)
-  }
-}
-# 測試
-check_package("clipr")
-check_package("SOAR")
-```
-2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。
-```{r error=T}
-check_packages <- function(pkgNames){
-  for(i in pkgNames){
-    if(!require(i)){
-      install.packages(i)
-    }
-  }
-}
-# 測試
-check_packages(c("clipr","SOAR"))
-```
-**範例5.3.5**：在**範例5.2.2**中我們建立了機器人 askSilly_weather。  
+**練習5.3.4**：  
+
+1. 寫一個`check_package(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。  
+
+2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。  
+
+**練習5.3.5**：在**範例5.2.2**中我們建立了機器人 askSilly_weather。  
 若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。
-```{r}
+```{r results='hide'}
 askSilly_weather <- function(locationInput, dateInput){
   if(!require(jsonlite)){
     install.packages(jsonlite)
@@ -451,8 +433,58 @@ askSilly_weather <- function(locationInput, dateInput){
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
+```
+```{r}
 askSilly_weather("台南市", today())
 ```
+**範例5.3.6**：不重覆下載。  
+```{r}
+# 檢視步驟耗時elapse time
+system.time(
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+  weather_next36hours
+)
+```
+`SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 移到那裡放。
+```{r results='hide'}
+askSilly_weather2 <- function(locationInput,dateInput){
+  if(!exists("weather_next36hours")){
+      jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+      weather_next36hours
+    SOAR::Store(weather_next36hours) # 存在.R_cache environment中
+  }  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
+  (weatherAtLocation$elementName=="MinT") -> pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+```
+```{r}
+system.time(
+  askSilly_weather("新北市",today())
+)
+system.time(
+  askSilly_weather("臺北市",today())
+)
+askSilly_weather("新北市",today())
+askSilly_weather("臺北市",today())
+SOAR::Remove(weather_next36hours)
+system.time(
+  askSilly_weather2("新北市",today())
+)
+system.time(
+  askSilly_weather2("臺北市",today())
+)
+
+askSilly_weather2("新北市",today())
+askSilly_weather2("臺北市",today())
+```
+
+
 </font>
 
 
@@ -469,12 +501,26 @@ askSilly_weather("台南市", today())
 
 
 
-
-
-
-
 ### if else
+```
+if(condition){
+  body for TRUE condition
+} else {
+  body for FALSE condition
+}
+```
 ### if...else if...else
+```
+if(condition A){
+  body for A 
+} else if(condition B){
+  body for B
+} else if(condition C){
+  body for C
+} else {
+  body for none of the above
+}
+```
 ### switch
 ### logical condition
 
