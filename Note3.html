@@ -481,7 +481,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-11 13:11:33 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-11 13:13:01 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -740,7 +740,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.02    0.23</code></pre>
+##    0.04    0.00    0.28</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -758,10 +758,10 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.28</code></pre>
+##    0.01    0.02    0.29</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.27</code></pre>
+##    0.01    0.00    0.24</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
 <pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
@@ -771,7 +771,7 @@ system.time(
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.01</code></pre>
+##    0.02    0.00    0.02</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
@@ -877,6 +877,7 @@ mean(examSubmissionTime$howEarly[pick_78])</code></pre>
 <ul>
 <li>各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。</li>
 </ul>
+<p><font color="#0b5395">回到<strong>範例5.3.9</strong>：成績等級。 </font></p>
 <pre class="r"><code>grade &lt;- 80
 if(grade &gt;=90){
   print(&quot;優&quot;)
