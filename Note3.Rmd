@@ -350,11 +350,9 @@ when_busArrives <- function(busRoute, busStop){
 when_busArrives("916","臺北大學正門")
 ```
 
-
-#第6章 Big Data
-
-
-
+## 5.3 Conditional Execution
+### if 
+用在「某個條件符合才執行」的狀況。
 
 
 
@@ -362,5 +360,10 @@ when_busArrives("916","臺北大學正門")
 
 
 
+
+### if else
+### if...else if...else
+### switch
+### logical condition
 
 </font>
