@@ -360,19 +360,107 @@ if(condition){
 * 用在「某個條件符合才執行」的狀況。
 * condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)  
 
-<font color="#0b5395">**範例5.3.1**：判斷學號輸入正確與否  
-`readline()`在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。  </font>
-```{r}
-# 先執行此行輸入學號
-readline(prompt = "請輸入你的學號") -> studentId 
+<font color="#0b5395">**範例5.3.1**：判斷學號輸入是否正確。  
 
-# 之後才執行以下程式
+`readline()`在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。  
+```{r eval=FALSE}
+readline(prompt = "請輸入你的學號") -> studentId 
+```
+```
+## 請輸入你的學號4105731111
+```
+```{r eval=FALSE}
 if(
-  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$',negate=T) # condition: 是否輸入學號正確？
+  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$', negate=T) #negate=T：如果不符合出現TRUE
 ) {
   warning("你所輸入的學號不正確")
 }
 ```
+```
+## Warning: 你所輸入的學號不正確
+```
+**範例5.3.2**：確認使用者有安裝需要套件。
+```{r}
+if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；反之，出現TRUE
+  install.packages("lubridate")
+}
+lubridate::ymd_hms("2020-07-01 13:00:00 GMT")
+```
+**範例5.3.3**：在**範例4.6.9**中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。</font>
+```{r}
+convert_TaiwanDate2WesternDate <- function(twDate){
+  if(!require("stringr")){
+    install.packages("stringr")
+  }
+  if(!require("lubridate")){
+    install.packages("lubridate")
+  }
+  regex_pattern <- "(?<=民國)[0-9]+(?=年)"
+  year <- str_extract(twDate,
+                      regex_pattern)
+  westernYear <- as.integer(year)+1911
+  str_replace(twDate,
+              regex_pattern,
+              as.character(westernYear) 
+              ) -> twDate_reformat
+  ymd(twDate_reformat) -> westernDate
+  return(westernDate)
+}
+twDate <-  c("民國108年12月5日","民國98年10月5日")
+convert_TaiwanDate2WesternDate(twDate)
+```
+**範例5.3.4**：  
+1. 寫一個`check_package(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。
+```{r error=T}
+check_package <- function(pkgName){
+  if(!require(pkgName)){
+    install.packages(pkgName)
+  }
+}
+# 測試
+check_package("clipr")
+check_package("SOAR")
+```
+2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。
+```{r error=T}
+check_packages <- function(pkgNames){
+  for(i in pkgNames){
+    if(!require(i)){
+      install.packages(i)
+    }
+  }
+}
+# 測試
+check_packages(c("clipr","SOAR"))
+```
+**範例5.3.5**：在**範例5.2.2**中我們建立了機器人 askSilly_weather。  
+若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。
+```{r}
+askSilly_weather <- function(locationInput, dateInput){
+  if(!require(jsonlite)){
+    install.packages(jsonlite)
+  }
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
+  
+  locationInput1 <- str_replace(locationInput, "台", "臺")
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput1) -> pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
+  (weatherAtLocation$elementName=="MinT") -> pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+askSilly_weather("台南市", today())
+```
+</font>
+
+
+
+
+
+
+
 
 
 
@@ -389,5 +477,5 @@ if(
 ### if...else if...else
 ### switch
 ### logical condition
-
+## 期末考
 </font>
