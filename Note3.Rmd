@@ -386,7 +386,7 @@ if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；
 }
 lubridate::ymd_hms("2020-07-01 13:00:00 GMT")
 ```
-**範例5.3.3**：在**範例4.6.9**中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。</font>
+**範例5.3.3**：在**範例4.6.9**中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。
 ```{r}
 convert_TaiwanDate2WesternDate <- function(twDate){
   if(!require("stringr")){
@@ -477,5 +477,7 @@ askSilly_weather("台南市", today())
 ### if...else if...else
 ### switch
 ### logical condition
+
 ## 期末考
+
 </font>

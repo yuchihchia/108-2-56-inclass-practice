@@ -481,7 +481,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-11 07:53:52 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-11 09:10:56 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -663,18 +663,110 @@ when_busArrives(&quot;916&quot;,&quot;臺北大學正門&quot;)</code></pre>
 <li>用在「某個條件符合才執行」的狀況。</li>
 <li>condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)</li>
 </ul>
-<p><font color="#0b5395"><strong>範例5.3.1</strong>：判斷學號輸入正確與否<br />
-<code>readline()</code>在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。 </font></p>
-<pre class="r"><code># 先執行此行輸入學號
-readline(prompt = &quot;請輸入你的學號&quot;) -&gt; studentId </code></pre>
-<pre><code>## 請輸入你的學號</code></pre>
-<pre class="r"><code># 之後才執行以下程式
-if(
-  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$',negate=T) # condition: 是否輸入學號正確？
+<p><font color="#0b5395"><strong>範例5.3.1</strong>：判斷學號輸入是否正確。</p>
+<p><code>readline()</code>在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。</p>
+<pre class="r"><code>readline(prompt = &quot;請輸入你的學號&quot;) -&gt; studentId </code></pre>
+<pre><code>## 請輸入你的學號4105731111</code></pre>
+<pre class="r"><code>if(
+  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$', negate=T) #negate=T：如果不符合出現TRUE
 ) {
   warning(&quot;你所輸入的學號不正確&quot;)
 }</code></pre>
 <pre><code>## Warning: 你所輸入的學號不正確</code></pre>
+<p><strong>範例5.3.2</strong>：確認使用者有安裝需要套件。</p>
+<pre class="r"><code>if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；反之，出現TRUE
+  install.packages(&quot;lubridate&quot;)
+}
+lubridate::ymd_hms(&quot;2020-07-01 13:00:00 GMT&quot;)</code></pre>
+<pre><code>## [1] &quot;2020-07-01 13:00:00 UTC&quot;</code></pre>
+<p><strong>範例5.3.3</strong>：在<strong>範例4.6.9</strong>中我們將民國年月日存成 date class，我們可以把它形成一個<code>convert_TaiwanDate2WesternDate()</code>函數。</p>
+<pre class="r"><code>convert_TaiwanDate2WesternDate &lt;- function(twDate){
+  if(!require(&quot;stringr&quot;)){
+    install.packages(&quot;stringr&quot;)
+  }
+  if(!require(&quot;lubridate&quot;)){
+    install.packages(&quot;lubridate&quot;)
+  }
+  regex_pattern &lt;- &quot;(?&lt;=民國)[0-9]+(?=年)&quot;
+  year &lt;- str_extract(twDate,
+                      regex_pattern)
+  westernYear &lt;- as.integer(year)+1911
+  str_replace(twDate,
+              regex_pattern,
+              as.character(westernYear) 
+              ) -&gt; twDate_reformat
+  ymd(twDate_reformat) -&gt; westernDate
+  return(westernDate)
+}
+twDate &lt;-  c(&quot;民國108年12月5日&quot;,&quot;民國98年10月5日&quot;)
+convert_TaiwanDate2WesternDate(twDate)</code></pre>
+<pre><code>## [1] &quot;2019-12-05&quot; &quot;2009-10-05&quot;</code></pre>
+<p><strong>範例5.3.4</strong>：<br />
+1. 寫一個<code>check_package(pkgName)</code>函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。</p>
+<pre class="r"><code>check_package &lt;- function(pkgName){
+  if(!require(pkgName)){
+    install.packages(pkgName)
+  }
+}
+# 測試
+check_package(&quot;clipr&quot;)</code></pre>
+<pre><code>## Loading required package: pkgName</code></pre>
+<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'pkgName'</code></pre>
+<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
+## (as 'lib' is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<pre class="r"><code>check_package(&quot;SOAR&quot;)</code></pre>
+<pre><code>## Loading required package: pkgName</code></pre>
+<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'pkgName'</code></pre>
+<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
+## (as 'lib' is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><code>check_package()</code>一次只能偵測一個套件是否有安裝。寫一個<code>check_packages(pkgNames)</code> (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。</li>
+</ol>
+<pre class="r"><code>check_packages &lt;- function(pkgNames){
+  for(i in pkgNames){
+    if(!require(i)){
+      install.packages(i)
+    }
+  }
+}
+# 測試
+check_packages(c(&quot;clipr&quot;,&quot;SOAR&quot;))</code></pre>
+<pre><code>## Loading required package: i</code></pre>
+<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'i'</code></pre>
+<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
+## (as 'lib' is unspecified)</code></pre>
+<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
+<p><strong>範例5.3.5</strong>：在<strong>範例5.2.2</strong>中我們建立了機器人 askSilly_weather。<br />
+若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</p>
+<pre class="r"><code>askSilly_weather &lt;- function(locationInput, dateInput){
+  if(!require(jsonlite)){
+    install.packages(jsonlite)
+  }
+  jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours
+  
+  locationInput1 &lt;- str_replace(locationInput, &quot;台&quot;, &quot;臺&quot;)
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput1) -&gt; pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt; pick_MaxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt; pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
+  glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
+}
+askSilly_weather(&quot;台南市&quot;, today())</code></pre>
+<pre><code>## Loading required package: jsonlite</code></pre>
+<pre><code>## 
+## Attaching package: 'jsonlite'</code></pre>
+<pre><code>## The following object is masked from 'package:purrr':
+## 
+##     flatten</code></pre>
+<pre><code>## 台南市 2020-06-11 氣溫，最高33度，最低31度。</code></pre>
+<p></font></p>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
@@ -687,8 +779,11 @@ if(
 </div>
 <div id="logical-condition" class="section level3">
 <h3>logical condition</h3>
-<p></font></p>
 </div>
+</div>
+<div id="期末考" class="section level2">
+<h2>期末考</h2>
+<p></font></p>
 </div>
 </div>
 
