@@ -381,7 +381,7 @@ if(
 ```
 **範例5.3.2**：確認使用者有安裝需要套件。
 ```{r}
-if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；反之，出現TRUE
+if(!require(lubridate)){ # require(套件)：如果套件不存在環境需下載套件，會出現TRUE
   install.packages("lubridate")
 }
 lubridate::ymd_hms("2020-07-01 13:00:00 GMT")
@@ -411,13 +411,13 @@ convert_TaiwanDate2WesternDate(twDate)
 ```
 **練習5.3.4**：  
 
-1. 寫一個`check_package(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。  
+1. 寫一個`check_packagee(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。  
 
 2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。  
 
 **練習5.3.5**：在**範例5.2.2**中我們建立了機器人 askSilly_weather。  
-若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。
-```{r results='hide'}
+若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</font>
+```{r}
 askSilly_weather <- function(locationInput, dateInput){
   if(!require(jsonlite)){
     install.packages(jsonlite)
@@ -433,11 +433,13 @@ askSilly_weather <- function(locationInput, dateInput){
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
-```
-```{r}
 askSilly_weather("台南市", today())
 ```
-**範例5.3.6**：不重覆下載。  
+**不重覆下載**  
+* 若每執行一次程式，就要匯入外部檔案，徒增運算時間。  
+
+
+<font color="#0b5395">**範例5.3.6**  
 ```{r}
 # 檢視步驟耗時elapse time
 system.time(
@@ -445,9 +447,9 @@ system.time(
   weather_next36hours
 )
 ```
-`SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 移到那裡放。
+`SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font>
 ```{r results='hide'}
-askSilly_weather2 <- function(locationInput,dateInput){
+askSilly_weather2 <- function(locationInput, dateInput){
   if(!exists("weather_next36hours")){
       jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
       weather_next36hours
@@ -459,48 +461,20 @@ askSilly_weather2 <- function(locationInput,dateInput){
   (weatherAtLocation$elementName=="MinT") -> pick_MinT
   weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
-  
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
 ```
 ```{r}
-system.time(
-  askSilly_weather("新北市",today())
-)
-system.time(
-  askSilly_weather("臺北市",today())
-)
+system.time(askSilly_weather("新北市",today()))
+system.time(askSilly_weather("臺北市",today()))
 askSilly_weather("新北市",today())
 askSilly_weather("臺北市",today())
 SOAR::Remove(weather_next36hours)
-system.time(
-  askSilly_weather2("新北市",today())
-)
-system.time(
-  askSilly_weather2("臺北市",today())
-)
-
+system.time(askSilly_weather2("新北市",today()))
+system.time(askSilly_weather2("臺北市",today()))
 askSilly_weather2("新北市",today())
 askSilly_weather2("臺北市",today())
 ```
-
-
-</font>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### if else
 ```
 if(condition){
@@ -508,6 +482,52 @@ if(condition){
 } else {
   body for FALSE condition
 }
+```
+
+<font color="#0b5395">**範例5.3.7**：  
+$$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
+
+```{r}
+myFun <- function(n){
+  if(n %% 2==1){
+    fvalue <- -(n+1)/2
+  } else {
+    fvalue <- n/2
+  }
+  return(fvalue)
+}
+myFun(54)
+myFun(33)
+```
+**範例5.3.8**：交卷提早時間</font>
+```{r}
+jsonlite::fromJSON("https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1") -> examSubmissionTime
+head(examSubmissionTime$section)
+head(examSubmissionTime$time)
+compute_howEarly <- function(student_i_section, student_i_time){
+  if(student_i_section=="56"){
+    deadline <- lubridate::ymd_hms("2020-05-27 15:00:00", tz="Asia/Taipei")
+  } else {
+    deadline <- lubridate::ymd_hms("2020-05-27 17:00:00", tz="Asia/Taipei")
+  }
+  howEarly <- deadline - lubridate::ymd_hms(student_i_time, tz="Asia/Taipei")
+  return(howEarly)
+}
+studentSequence <- 1:length(examSubmissionTime$section)
+map(studentSequence,
+    ~compute_howEarly(
+      examSubmissionTime$section[[.x]],
+      examSubmissionTime$time[[.x]])
+    ) -> list_howEarly
+list_howEarly %>%
+  unlist() -> examSubmissionTime$howEarly
+pick_56 <- examSubmissionTime$section=="56"
+mean(examSubmissionTime$howEarly[pick_56])
+median(examSubmissionTime$howEarly[pick_56])
+pick_78 <- examSubmissionTime$section=="78"
+mean(examSubmissionTime$howEarly[pick_78])
+median(examSubmissionTime$howEarly[pick_78])
 ```
 ### if...else if...else
 ```
@@ -521,6 +541,68 @@ if(condition A){
   body for none of the above
 }
 ```
+* 用在「流程需要的分歧不只兩種情境」的狀況。  
+* 依需要可以不斷增加`else if(...){....}`的部份在中間。  
+* `else if` 或`else`前面一定要保有前一段情境的結束`}`。  
+
+<font color="#0b5395">**範例5.3.9**：成績等級。  
+
+* 90 以上：優。
+* 80 ~ 89：良。
+* 70 ~ 79：尚可。
+* 未達 70：待加強。</font>
+```{r eval=FALSE}
+readline("請輸入你的成績(整數)：") -> grade
+```
+```{r include=FALSE}
+grade <- 85
+```
+```
+## 請輸入你的成績(整數)：85
+```
+```{r}
+if(grade >=90){
+  print("優")
+} else if(grade>=80 & grade<=89){
+  print("良")
+} else if(grade>=70 & grade<=79){
+  print("尚可")
+} else {
+  print("待加強")
+}
+```
+* 各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。
+```{r}
+grade <- 80
+if(grade >=90){
+  print("優")
+} else if(grade>=75 & grade<=89){
+  print("良")
+} else if(grade>=70 & grade<=85){
+  print("尚可")
+} else {
+  print("待加強")
+}
+if(grade >=90){
+  print("優")
+} else if(grade>=70 & grade<=85){
+  print("尚可")
+} else if(grade>=75 & grade<=89){
+  print("良")
+} else {
+  print("待加強")
+}
+```
+
+
+
+
+
+
+
+
+
+
 ### switch
 ### logical condition
 

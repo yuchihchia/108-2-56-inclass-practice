@@ -468,9 +468,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-11 氣溫，最高32度，最低29度。</code></pre>
+<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-11 氣溫，最高33度，最低30度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-11 氣溫，最高30度，最低26度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -481,7 +481,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-11 09:10:56 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-11 13:11:33 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -657,8 +657,8 @@ when_busArrives(&quot;916&quot;,&quot;臺北大學正門&quot;)</code></pre>
 <div id="if" class="section level3">
 <h3>if</h3>
 <pre><code>if(condition){
-  Body for TRUE
-  }</code></pre>
+  body for TRUE
+}</code></pre>
 <ul>
 <li>用在「某個條件符合才執行」的狀況。</li>
 <li>condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)</li>
@@ -674,12 +674,12 @@ when_busArrives(&quot;916&quot;,&quot;臺北大學正門&quot;)</code></pre>
 }</code></pre>
 <pre><code>## Warning: 你所輸入的學號不正確</code></pre>
 <p><strong>範例5.3.2</strong>：確認使用者有安裝需要套件。</p>
-<pre class="r"><code>if(!require(lubridate)){ # require(套件)：如果存在套件，出現FALSE；反之，出現TRUE
+<pre class="r"><code>if(!require(lubridate)){ # require(套件)：如果套件不存在環境需下載套件，會出現TRUE
   install.packages(&quot;lubridate&quot;)
 }
 lubridate::ymd_hms(&quot;2020-07-01 13:00:00 GMT&quot;)</code></pre>
 <pre><code>## [1] &quot;2020-07-01 13:00:00 UTC&quot;</code></pre>
-<p><strong>範例5.3.3</strong>：在<strong>範例4.6.9</strong>中我們將民國年月日存成 date class，我們可以把它形成一個<code>convert_TaiwanDate2WesternDate()</code>函數。</p>
+<p><strong>範例5.3.3</strong>：在 <strong>範例4.6.9</strong> 中我們將民國年月日存成 date class，我們可以把它形成一個<code>convert_TaiwanDate2WesternDate()</code>函數。</p>
 <pre class="r"><code>convert_TaiwanDate2WesternDate &lt;- function(twDate){
   if(!require(&quot;stringr&quot;)){
     install.packages(&quot;stringr&quot;)
@@ -701,48 +701,13 @@ lubridate::ymd_hms(&quot;2020-07-01 13:00:00 GMT&quot;)</code></pre>
 twDate &lt;-  c(&quot;民國108年12月5日&quot;,&quot;民國98年10月5日&quot;)
 convert_TaiwanDate2WesternDate(twDate)</code></pre>
 <pre><code>## [1] &quot;2019-12-05&quot; &quot;2009-10-05&quot;</code></pre>
-<p><strong>範例5.3.4</strong>：<br />
-1. 寫一個<code>check_package(pkgName)</code>函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。</p>
-<pre class="r"><code>check_package &lt;- function(pkgName){
-  if(!require(pkgName)){
-    install.packages(pkgName)
-  }
-}
-# 測試
-check_package(&quot;clipr&quot;)</code></pre>
-<pre><code>## Loading required package: pkgName</code></pre>
-<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-## logical.return = TRUE, : there is no package called 'pkgName'</code></pre>
-<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
-## (as 'lib' is unspecified)</code></pre>
-<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
-<pre class="r"><code>check_package(&quot;SOAR&quot;)</code></pre>
-<pre><code>## Loading required package: pkgName</code></pre>
-<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-## logical.return = TRUE, : there is no package called 'pkgName'</code></pre>
-<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
-## (as 'lib' is unspecified)</code></pre>
-<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li><code>check_package()</code>一次只能偵測一個套件是否有安裝。寫一個<code>check_packages(pkgNames)</code> (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。</li>
+<p><strong>練習5.3.4</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><p>寫一個<code>check_packagee(pkgName)</code>函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。</p></li>
+<li><p><code>check_package()</code>一次只能偵測一個套件是否有安裝。寫一個<code>check_packages(pkgNames)</code> (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。</p></li>
 </ol>
-<pre class="r"><code>check_packages &lt;- function(pkgNames){
-  for(i in pkgNames){
-    if(!require(i)){
-      install.packages(i)
-    }
-  }
-}
-# 測試
-check_packages(c(&quot;clipr&quot;,&quot;SOAR&quot;))</code></pre>
-<pre><code>## Loading required package: i</code></pre>
-<pre><code>## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-## logical.return = TRUE, : there is no package called 'i'</code></pre>
-<pre><code>## Installing package into 'C:/Users/USER/Documents/R/win-library/3.6'
-## (as 'lib' is unspecified)</code></pre>
-<pre><code>## Error in contrib.url(repos, &quot;source&quot;): trying to use CRAN without setting a mirror</code></pre>
-<p><strong>範例5.3.5</strong>：在<strong>範例5.2.2</strong>中我們建立了機器人 askSilly_weather。<br />
-若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</p>
+<p><strong>練習5.3.5</strong>：在<strong>範例5.2.2</strong>中我們建立了機器人 askSilly_weather。<br />
+若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</font></p>
 <pre class="r"><code>askSilly_weather &lt;- function(locationInput, dateInput){
   if(!require(jsonlite)){
     install.packages(jsonlite)
@@ -765,14 +730,174 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<pre><code>## 台南市 2020-06-11 氣溫，最高33度，最低31度。</code></pre>
-<p></font></p>
+<pre><code>## 台南市 2020-06-11 氣溫，最高31度，最低28度。</code></pre>
+<p><strong>不重覆下載</strong><br />
+* 若每執行一次程式，就要匯入外部檔案，徒增運算時間。</p>
+<p><font color="#0b5395"><strong>範例5.3.6</strong></p>
+<pre class="r"><code># 檢視步驟耗時elapse time
+system.time(
+  jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt;
+  weather_next36hours
+)</code></pre>
+<pre><code>##    user  system elapsed 
+##    0.03    0.02    0.23</code></pre>
+<p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
+<pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
+  if(!exists(&quot;weather_next36hours&quot;)){
+      jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt;
+      weather_next36hours
+    SOAR::Store(weather_next36hours) # 存在.R_cache environment中
+  }  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -&gt; pick_location
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt; pick_MaxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt; pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
+  glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
+}</code></pre>
+<pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
+<pre><code>##    user  system elapsed 
+##    0.03    0.00    0.28</code></pre>
+<pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
+<pre><code>##    user  system elapsed 
+##    0.01    0.00    0.27</code></pre>
+<pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
+<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
+<pre><code>## 臺北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre class="r"><code>SOAR::Remove(weather_next36hours)</code></pre>
+<pre><code>## Warning: Object weather_next36hours not found and hence not removed</code></pre>
+<pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
+<pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
+<pre><code>##    user  system elapsed 
+##    0.01    0.00    0.01</code></pre>
+<pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
+<pre><code>##    user  system elapsed 
+##       0       0       0</code></pre>
+<pre class="r"><code>askSilly_weather2(&quot;新北市&quot;,today())</code></pre>
+<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre class="r"><code>askSilly_weather2(&quot;臺北市&quot;,today())</code></pre>
+<pre><code>## 臺北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
+<pre><code>if(condition){
+  body for TRUE condition
+} else {
+  body for FALSE condition
+}</code></pre>
+<p><font color="#0b5395"><strong>範例5.3.7</strong>：<br />
+<span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></p>
+<pre class="r"><code>myFun &lt;- function(n){
+  if(n %% 2==1){
+    fvalue &lt;- -(n+1)/2
+  } else {
+    fvalue &lt;- n/2
+  }
+  return(fvalue)
+}
+myFun(54)</code></pre>
+<pre><code>## [1] 27</code></pre>
+<pre class="r"><code>myFun(33)</code></pre>
+<pre><code>## [1] -17</code></pre>
+<p><strong>範例5.3.8</strong>：交卷提早時間</font></p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1&quot;) -&gt; examSubmissionTime
+head(examSubmissionTime$section)</code></pre>
+<pre><code>## [1] &quot;56&quot; &quot;78&quot; &quot;78&quot; &quot;78&quot; &quot;56&quot; &quot;78&quot;</code></pre>
+<pre class="r"><code>head(examSubmissionTime$time)</code></pre>
+<pre><code>## [1] &quot;2020-05-27 14:49:18&quot; &quot;2020-05-27 16:43:41&quot; &quot;2020-05-27 16:36:14&quot;
+## [4] &quot;2020-05-27 16:36:11&quot; &quot;2020-05-27 14:57:03&quot; &quot;2020-05-27 15:47:22&quot;</code></pre>
+<pre class="r"><code>compute_howEarly &lt;- function(student_i_section, student_i_time){
+  if(student_i_section==&quot;56&quot;){
+    deadline &lt;- lubridate::ymd_hms(&quot;2020-05-27 15:00:00&quot;, tz=&quot;Asia/Taipei&quot;)
+  } else {
+    deadline &lt;- lubridate::ymd_hms(&quot;2020-05-27 17:00:00&quot;, tz=&quot;Asia/Taipei&quot;)
+  }
+  howEarly &lt;- deadline - lubridate::ymd_hms(student_i_time, tz=&quot;Asia/Taipei&quot;)
+  return(howEarly)
+}
+studentSequence &lt;- 1:length(examSubmissionTime$section)
+map(studentSequence,
+    ~compute_howEarly(
+      examSubmissionTime$section[[.x]],
+      examSubmissionTime$time[[.x]])
+    ) -&gt; list_howEarly
+list_howEarly %&gt;%
+  unlist() -&gt; examSubmissionTime$howEarly
+pick_56 &lt;- examSubmissionTime$section==&quot;56&quot;
+mean(examSubmissionTime$howEarly[pick_56])</code></pre>
+<pre><code>## [1] 4.926104</code></pre>
+<pre class="r"><code>median(examSubmissionTime$howEarly[pick_56])</code></pre>
+<pre><code>## [1] 3.883333</code></pre>
+<pre class="r"><code>pick_78 &lt;- examSubmissionTime$section==&quot;78&quot;
+mean(examSubmissionTime$howEarly[pick_78])</code></pre>
+<pre><code>## [1] 9.105044</code></pre>
+<pre class="r"><code>median(examSubmissionTime$howEarly[pick_78])</code></pre>
+<pre><code>## [1] 6.166667</code></pre>
 </div>
 <div id="ifelse-ifelse" class="section level3">
 <h3>if…else if…else</h3>
+<pre><code>if(condition A){
+  body for A 
+} else if(condition B){
+  body for B
+} else if(condition C){
+  body for C
+} else {
+  body for none of the above
+}</code></pre>
+<ul>
+<li>用在「流程需要的分歧不只兩種情境」的狀況。<br />
+</li>
+<li>依需要可以不斷增加<code>else if(...){....}</code>的部份在中間。<br />
+</li>
+<li><code>else if</code> 或<code>else</code>前面一定要保有前一段情境的結束<code>}</code>。</li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.3.9</strong>：成績等級。</p>
+<ul>
+<li>90 以上：優。</li>
+<li>80 ~ 89：良。</li>
+<li>70 ~ 79：尚可。</li>
+<li>未達 70：待加強。</font></li>
+</ul>
+<pre class="r"><code>readline(&quot;請輸入你的成績(整數)：&quot;) -&gt; grade</code></pre>
+<pre><code>## 請輸入你的成績(整數)：85</code></pre>
+<pre class="r"><code>if(grade &gt;=90){
+  print(&quot;優&quot;)
+} else if(grade&gt;=80 &amp; grade&lt;=89){
+  print(&quot;良&quot;)
+} else if(grade&gt;=70 &amp; grade&lt;=79){
+  print(&quot;尚可&quot;)
+} else {
+  print(&quot;待加強&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;良&quot;</code></pre>
+<ul>
+<li>各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。</li>
+</ul>
+<pre class="r"><code>grade &lt;- 80
+if(grade &gt;=90){
+  print(&quot;優&quot;)
+} else if(grade&gt;=75 &amp; grade&lt;=89){
+  print(&quot;良&quot;)
+} else if(grade&gt;=70 &amp; grade&lt;=85){
+  print(&quot;尚可&quot;)
+} else {
+  print(&quot;待加強&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;良&quot;</code></pre>
+<pre class="r"><code>if(grade &gt;=90){
+  print(&quot;優&quot;)
+} else if(grade&gt;=70 &amp; grade&lt;=85){
+  print(&quot;尚可&quot;)
+} else if(grade&gt;=75 &amp; grade&lt;=89){
+  print(&quot;良&quot;)
+} else {
+  print(&quot;待加強&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;尚可&quot;</code></pre>
 </div>
 <div id="switch" class="section level3">
 <h3>switch</h3>
