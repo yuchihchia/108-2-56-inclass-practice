@@ -352,7 +352,31 @@ when_busArrives("916","臺北大學正門")
 
 ## 5.3 Conditional Execution
 ### if 
-用在「某個條件符合才執行」的狀況。
+```
+if(condition){
+  Body for TRUE
+  }
+```
+* 用在「某個條件符合才執行」的狀況。
+* condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)  
+
+<font color="#0b5395">**範例5.3.1**：判斷學號輸入正確與否  
+`readline()`在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。  </font>
+```{r}
+# 先執行此行輸入學號
+readline(prompt = "請輸入你的學號") -> studentId 
+
+# 之後才執行以下程式
+if(
+  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$',negate=T) # condition: 是否輸入學號正確？
+) {
+  warning("你所輸入的學號不正確")
+}
+```
+
+
+
+
 
 
 

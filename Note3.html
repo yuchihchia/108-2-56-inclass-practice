@@ -468,9 +468,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-05 氣溫，最高31度，最低26度。</code></pre>
+<pre><code>## 新北市 2020-06-11 氣溫，最高32度，最低29度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-05 氣溫，最高31度，最低26度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-11 氣溫，最高33度，最低30度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -481,7 +481,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-05 12:59:33 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-11 07:53:52 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -652,10 +652,44 @@ when_busArrives(&quot;916&quot;,&quot;臺北大學正門&quot;)</code></pre>
 <pre><code>## [1]  89 383</code></pre>
 </div>
 </div>
+<div id="conditional-execution" class="section level2">
+<h2>5.3 Conditional Execution</h2>
+<div id="if" class="section level3">
+<h3>if</h3>
+<pre><code>if(condition){
+  Body for TRUE
+  }</code></pre>
+<ul>
+<li>用在「某個條件符合才執行」的狀況。</li>
+<li>condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)</li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.3.1</strong>：判斷學號輸入正確與否<br />
+<code>readline()</code>在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。 </font></p>
+<pre class="r"><code># 先執行此行輸入學號
+readline(prompt = &quot;請輸入你的學號&quot;) -&gt; studentId </code></pre>
+<pre><code>## 請輸入你的學號</code></pre>
+<pre class="r"><code># 之後才執行以下程式
+if(
+  str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$',negate=T) # condition: 是否輸入學號正確？
+) {
+  warning(&quot;你所輸入的學號不正確&quot;)
+}</code></pre>
+<pre><code>## Warning: 你所輸入的學號不正確</code></pre>
 </div>
-<div id="第6章-big-data" class="section level1">
-<h1>第6章 Big Data</h1>
+<div id="if-else" class="section level3">
+<h3>if else</h3>
+</div>
+<div id="ifelse-ifelse" class="section level3">
+<h3>if…else if…else</h3>
+</div>
+<div id="switch" class="section level3">
+<h3>switch</h3>
+</div>
+<div id="logical-condition" class="section level3">
+<h3>logical condition</h3>
 <p></font></p>
+</div>
+</div>
 </div>
 
 
