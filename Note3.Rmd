@@ -327,7 +327,9 @@ myDemand2(1.2, intercept=5, slope=-1.2)
 ```
 預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。  
 
-### 綜合練習
+### 綜合練習.
+
+<font color="#0b5395">**練習一**</font>
 ```{r}
 when_busArrives <- function(busRoute, busStop){
   # 公車預估到站時間 https://data.ntpc.gov.tw/datasets/07F7CCB3-ED00-43C4-966D-08E9DAB24E95
@@ -806,12 +808,118 @@ whatNeedToDo_butler <- function(who, nowtime=now()){
 whatNeedToDo_butler("Mother")
 ```
 ### logical condition
+__all__、**any**
+```{r}
+myAnswer <- c(2,3,6)
+correctAnswer <- c(2,3,5)
+if(all(myAnswer == correctAnswer)){ # 要全TRUE
+  print("你答對了")
+}
+if(any(myAnswer == correctAnswer)){ # 只要有一個TRUE
+  print("裡頭有數字是對的")
+}
+```
+**&&**、**||**
 
-
-
-
+* `&`會計算所有 relations，`&&`只計算到第一個出現 FALSE 的 relation。  
+    + `&&`用在「有一個錯就算錯」的情境。  
+* `|`會計算所有 relations，`||`只計算到第一個出現 TRUE 的 relation。  
+    + `||`用在「有一個對就算對」的情境。  
+* 在進行 condition execution 時，使用`&&`、`||`會比`&`、`|`更有運算效率。  
+```{r}
+myAnswer <- c(1,2,3)
+correctAnswer <- factor(c(1,2,3))
+if(is.factor(myAnswer) && all(myAnswer==correctAnswer)){
+  print("答對了")
+  10
+} else {
+  print("答錯了")
+  0
+}-> myGrade
+myGrade
+```
+<font color="#0b5395">**範例5.3.14**：  
+只要符合以下任一資格均可申請補助：  
+1. 年齡 65 歲以上。
+2. 家庭子孩數 3 位以上。</font>
+```{r}
+apply_subsidy <- function(myAge, myChildrenNumber){
+  if(myAge >=65 | myChildrenNumber >3){
+    "符合申請資格"
+  } else {
+    warning("不符合申請資格")
+  }
+}
+apply_subsidy(40,5)
+```
+### case_when
+```
+case_when(
+  condition A ~ body for A,
+  condition B ~ body for B,
+  condition C ~ body for C,
+)
+```
+* `case_when()`的運作類似`switch()`，內含多個 logical relations。  
+```{r}
+y <- sample(40:100,20, replace=T)
+y
+dplyr::case_when(
+  y < 60 ~ "F",
+  60<=y & y < 70 ~"D",
+  71<=y & y < 80 ~"C",
+  80<=y & y < 90 ~"B",
+  90<=y ~ "A"
+)
+```
 ### 綜合練習
+<font color="#0b5395">**練習一**：消費者選擇  
+效用函數：  
+$$U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m$$
+$$a1$$是該商品提供之服務所帶來的愉快程度，  
+$$a2$$是該商品操作簡便性，  
+$$\alpha\in(0,1)$$，
+$$m$$是購買此商品所要付出的金額。  
+想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組$$(a1,a2,m)$$的數字組合來代表，n 個 App 可表示成一個集合$$\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}$$，消費者只選擇這些 App 中效用函數值最高的那個。  
 
+1. 創造`Ufun(a1, a2, m, alpha = 0.5)`函數，其中  
+
+Arguments：a1、a2、m、alpha 均為 class numeric  
+
+Value：回傳 arugment values 下所對應的效用函數值 (class numeric)  
+```{r}
+Ufun <- function(a1, a2, m, alpha = 0.5){
+  u <- a1^alpha*a2^(1-alpha)-m
+  return(u)
+}
+```
+2. 以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10) 
+```{r}
+Apps_10 <- list(
+  c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
+  c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
+  c(0.41,0.49,0.35), c(0.49,0.35,0.20))
+
+```
+3. 最大效用下消費者會買那一個 App？
+
+4. 若 alpha = 0.3，消費者要買那一個 App？
+
+5. 若 alpha = 0.95，消費者要買那一個 App？
+
+**練習二**：中文組距  
+原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿 200,000 元"、"200,000 ~ 299,999 元"、"300,000 元及以上"。
+描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。  
+請寫一個str_cut(x, cutpoints)函數，它能萬用的將x轉成依中文組距描述的類別資料
+
+Arguement:
+
+* x: class integer.
+
+* cutpoints: class character, 如c(“未滿200,000元”, “200,000～299,999元”, “300,000元及以上”)
+
+Value: 回傳值為x依中文組距描述分類後的factor。
+</font>
 
 ## 5.4 Iteration
 ### for loop
