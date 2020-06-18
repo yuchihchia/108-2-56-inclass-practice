@@ -12,14 +12,9 @@ output:
 ---
 <font face="Taipei Sans TC Beta Light">  
 ```{r include=FALSE}
-library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr)
+library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr); library(dplyr)
 ```
-<style>
-.example {
-  background-color: #c8e3fb;
-  color: #0b5395;
-}
-</style>
+
 # 第5章 Programming  
 ## 5.1 Pipe  
 ### 原則  
@@ -483,11 +478,9 @@ if(condition){
   body for FALSE condition
 }
 ```
-
 <font color="#0b5395">**範例5.3.7**：  
 $$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
-
 ```{r}
 myFun <- function(n){
   if(n %% 2==1){
@@ -595,18 +588,100 @@ if(grade >=90){
   print("待加強")
 }
 ```
-
-
-
-
-
-
-
-
-
-
 ### switch
+```
+switch(實現的conditionExpression, #class character
+       "conditionExpression1"= {    },
+       "conditionExpression2"= {    },
+       :
+       :
+       "conditionExpressionN"= {    },
+       {    })
+```
+* 另一種條件式執行，常用在 condition 種類煩雜或要全部以「是/否」問句來切出所有互斥 condition 情境不容易設計時。  
+
+* condition 改成用文字描述，即 conditionExpression。
+
+* 不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：  
+  `"conditionExpression文字"={body 內容}` 的 name = value pair  
+
+<font color="#0b5395">**範例5.3.10**：</font>  
+$$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
+```{r}
+n<- 540
+conditionExpression_outcome = ifelse(n %% 2==0, "even", "odd") 
+switch(
+  conditionExpression_outcome,
+  "even"={fvalue <- n/2}, # 偶數
+  "odd"=fvalue <- -(n+1)/2, # 奇數；只有一行指令可省略{}
+  warning("n要整數喔")  
+)
+```
+* `ifelse(test, yes, no)`函數：  
+    + `test`：class logical 測試條件的結果。  
+    + `yes`：結果為 TRUE 時你希望的回傳值。  
+    + `no`：結果為 FALSE 時你希望的回傳值。  
+
+* 在R裡`{...}` (大括號，brace)：  
+    + 若指令只有一行時，`{}`符號可省略。  
+    + `function(...){....}`的 body 若只有一行指令可省略`{`、`}`改寫成`function(...) ...`, 要小心的是，body 要接在`function(...)`之後不可換行。  
+```{r}
+miniFun <- function() now()
+miniFun()
+```
+    + 若最後一個被執行的指令會產生 print 在螢幕的效果，則可以用`{...}->`或`<-{...}`將這 print 的值存出來。  
+```{r}
+result <- 
+  {
+    x <- 2
+    y <- 3
+    x**y+15
+  }
+print(result)
+result2 <-
+  {
+    x <- 2
+    y <- 3
+    if(x< 3){
+      warning("x值太小")
+    } else {
+      x**y+15
+    }
+  }
+print(result2)
+```
+    + 依照上一個特性，`function(...){....}`的 body 若最後一個「被執行」的指令是會印在螢幕的值，如該值要當回傳值可以不用`return(...)`就可以產生值回傳效果。  
+```{r}
+myFun <- function(x,y){
+  return(x**y+15)
+}
+# 等同於
+myFun2 <- function(x,y){
+  x**y+15
+}
+myFun(5,3) -> outcome
+myFun2(5,3) -> outcome2
+print(outcome)
+print(outcome2)
+```
+
+
+
+
+
+
+
 ### logical condition
+
+
+
+
+### 綜合練習
+
+
+## 5.4 Iteration
+### for loop
 
 ## 期末考
 

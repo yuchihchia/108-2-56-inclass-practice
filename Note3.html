@@ -267,12 +267,6 @@ div.tocify {
 
 
 <p><font face="Taipei Sans TC Beta Light"></p>
-<style>
-.example {
-  background-color: #c8e3fb;
-  color: #0b5395;
-}
-</style>
 <div id="第5章-programming" class="section level1">
 <h1>第5章 Programming</h1>
 <div id="pipe" class="section level2">
@@ -468,9 +462,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-11 氣溫，最高30度，最低26度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-18 氣溫，最高33度，最低31度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -481,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-11 13:13:01 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 08:07:02 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -730,7 +724,7 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<pre><code>## 台南市 2020-06-11 氣溫，最高31度，最低28度。</code></pre>
+<pre><code>## 台南市 2020-06-18 氣溫，最高33度，最低31度。</code></pre>
 <p><strong>不重覆下載</strong><br />
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。</p>
 <p><font color="#0b5395"><strong>範例5.3.6</strong></p>
@@ -740,7 +734,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.04    0.00    0.28</code></pre>
+##    0.05    0.00    0.10</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -758,27 +752,27 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.02    0.29</code></pre>
+##    0.03    0.00    0.10</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.24</code></pre>
+##    0.05    0.00    0.09</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre><code>## 臺北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>SOAR::Remove(weather_next36hours)</code></pre>
 <pre><code>## Warning: Object weather_next36hours not found and hence not removed</code></pre>
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.02</code></pre>
+##    0.02    0.00    0.01</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-11 氣溫，最高29度，最低26度。</code></pre>
+<pre><code>## 臺北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
@@ -902,9 +896,97 @@ if(grade &gt;=90){
 </div>
 <div id="switch" class="section level3">
 <h3>switch</h3>
+<pre><code>switch(實現的conditionExpression, #class character
+       &quot;conditionExpression1&quot;= {    },
+       &quot;conditionExpression2&quot;= {    },
+       :
+       :
+       &quot;conditionExpressionN&quot;= {    },
+       {    })</code></pre>
+<ul>
+<li><p>另一種條件式執行，常用在 condition 種類煩雜或要全部以「是/否」問句來切出所有互斥 condition 情境不容易設計時。</p></li>
+<li><p>condition 改成用文字描述，即 conditionExpression。</p></li>
+<li><p>不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：<br />
+<code>&quot;conditionExpression文字&quot;={body 內容}</code> 的 name = value pair</p></li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.3.10</strong>：</font><br />
+<span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></p>
+<pre class="r"><code>n&lt;- 540
+conditionExpression_outcome = ifelse(n %% 2==0, &quot;even&quot;, &quot;odd&quot;) 
+switch(
+  conditionExpression_outcome,
+  &quot;even&quot;={fvalue &lt;- n/2}, # 偶數
+  &quot;odd&quot;=fvalue &lt;- -(n+1)/2, # 奇數；只有一行指令可省略{}
+  warning(&quot;n要整數喔&quot;)  
+)</code></pre>
+<ul>
+<li><code>ifelse(test, yes, no)</code>函數：
+<ul>
+<li><code>test</code>：class logical 測試條件的結果。<br />
+</li>
+<li><code>yes</code>：結果為 TRUE 時你希望的回傳值。<br />
+</li>
+<li><code>no</code>：結果為 FALSE 時你希望的回傳值。</li>
+</ul></li>
+<li>在R裡<code>{...}</code> (大括號，brace)：
+<ul>
+<li>若指令只有一行時，<code>{}</code>符號可省略。<br />
+</li>
+<li><code>function(...){....}</code>的 body 若只有一行指令可省略<code>{</code>、<code>}</code>改寫成<code>function(...) ...</code>, 要小心的是，body 要接在<code>function(...)</code>之後不可換行。</li>
+</ul></li>
+</ul>
+<pre class="r"><code>miniFun &lt;- function() now()
+miniFun()</code></pre>
+<pre><code>## [1] &quot;2020-06-18 14:07:07 CST&quot;</code></pre>
+<pre><code>+ 若最後一個被執行的指令會產生 print 在螢幕的效果，則可以用`{...}-&gt;`或`&lt;-{...}`將這 print 的值存出來。  </code></pre>
+<pre class="r"><code>result &lt;- 
+  {
+    x &lt;- 2
+    y &lt;- 3
+    x**y+15
+  }
+print(result)</code></pre>
+<pre><code>## [1] 23</code></pre>
+<pre class="r"><code>result2 &lt;-
+  {
+    x &lt;- 2
+    y &lt;- 3
+    if(x&lt; 3){
+      warning(&quot;x值太小&quot;)
+    } else {
+      x**y+15
+    }
+  }</code></pre>
+<pre><code>## Warning: x值太小</code></pre>
+<pre class="r"><code>print(result2)</code></pre>
+<pre><code>## [1] &quot;x值太小&quot;</code></pre>
+<pre><code>+ 依照上一個特性，`function(...){....}`的 body 若最後一個「被執行」的指令是會印在螢幕的值，如該值要當回傳值可以不用`return(...)`就可以產生值回傳效果。  </code></pre>
+<pre class="r"><code>myFun &lt;- function(x,y){
+  return(x**y+15)
+}
+# 等同於
+myFun2 &lt;- function(x,y){
+  x**y+15
+}
+myFun(5,3) -&gt; outcome
+myFun2(5,3) -&gt; outcome2
+print(outcome)</code></pre>
+<pre><code>## [1] 140</code></pre>
+<pre class="r"><code>print(outcome2)</code></pre>
+<pre><code>## [1] 140</code></pre>
 </div>
 <div id="logical-condition" class="section level3">
 <h3>logical condition</h3>
+</div>
+<div id="綜合練習-2" class="section level3">
+<h3>綜合練習</h3>
+</div>
+</div>
+<div id="iteration" class="section level2">
+<h2>5.4 Iteration</h2>
+<div id="for-loop" class="section level3">
+<h3>for loop</h3>
 </div>
 </div>
 <div id="期末考" class="section level2">
