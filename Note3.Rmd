@@ -12,7 +12,7 @@ output:
 ---
 <font face="Taipei Sans TC Beta Light">  
 ```{r include=FALSE}
-library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr); library(dplyr)
+library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr); library(dplyr); library(glue)
 ```
 
 # 第5章 Programming  
@@ -738,22 +738,73 @@ compute_letterGrade(50) -> letterGrade
 letterGrade
 ```
 **範例5.3.13**：管家機器人  
+
 * 早上 (06:00-09:00)：  
-    + 媽媽讀《經濟學人》(<https://economist.com>[link](economist.com))。  
-    + 爸爸讀《WSJ》(<https://www.wsj.com/>[link](www.wsj.com))。  
+    + 媽媽讀《經濟學人》([https://economist.com](https://economist.com))。  
+    + 爸爸讀《WSJ》([https://www.wsj.com/](https://www.wsj.com/))。  
     + 提醒小明"檢查書包東西都有帶嗎？"。  
 * 傍晚 (17:00-19:00)：  
-    + 媽媽準備全家晚餐點 foodpanda (<https://www.foodpanda.com.tw/>[link](www.foodpanda.com.tw))。  
-    + 爸爸瀏覽 tripadvisor (<https://www.tripadvisor.com/>[link](www.tripadvisor.com))規劃週末全家旅行。  
+    + 媽媽準備全家晚餐點 foodpanda ([https://www.foodpanda.com.tw/](https://www.foodpanda.com.tw/))。  
+    + 爸爸瀏覽 tripadvisor ([https://www.tripadvisor.com/](https://www.tripadvisor.com/))規劃週末全家旅行。  
     + 提醒小明"作業寫好了嗎？"。  
-
 * 晚上 (23:30-次日淩晨1點)：
-    + 媽媽聆聽Spotify Jazz Classics (<https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt>[link](open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt))。  
+    + 媽媽聆聽Spotify Jazz Classics ([https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt](https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt))。  
+* 其他時段："尚未規畫行程！"</font>
+```{r}
+whatNeedToDo_butler <- function(who, nowtime=now()){
+  who <- tolower(who)
 
-* 其他時段："尚未規畫行程"</font>
-
-
-
+  # 建立可當cutpoints的一天時間點
+  cutpoints <- c(glue("{today()} 06:00:00"),
+                 glue("{today()} 09:00:00"),
+                 glue("{today()} 17:00:00"),
+                 glue("{today()} 19:00:00"),
+                 glue("{today()} 23:30:00"),
+                 glue("{today()+days(1)} 01:00:00"))
+  cutpoints %>%
+    ymd_hms(tz="Asia/Taipei") -> cutpoints
+  
+  # 將nowtime轉成它對應的時段是"morning"、"evening"、"jazz time"或其他
+  cut(nowtime, cutpoints) -> nowtime
+  levels(nowtime)[c(1,3,5)] <-
+    c("morning","evening","jazz time")
+  
+  # 使用switch決定要做什麼事
+  switch(
+    as.character(nowtime),
+    "morning"={
+      if(str_detect(who, "mom|mommy|mother")){
+        print("要不要來閱讀點財經時事？")
+        browseURL("https://economist.com")
+      } else if(str_detect(who, "dad|daddy|father")){
+        print("要不要來閱讀點國際新聞？")
+        browseURL("https://www.wsj.com/")
+      } else if(str_detect(who, "ming")){
+        print("檢查書包東西都有帶嗎？")
+      }
+    },
+    "evening"={
+      if(str_detect(who, "mom|mommy|mother")){
+        print("需不需要點餐呢？")
+        browseURL("https://www.foodpanda.com.tw/")
+      } else if(str_detect(who, "dad|daddy|father")){
+        print("要不要來規劃週末旅行呢？")
+        browseURL("https://www.tripadvisor.com/")
+      } else if(str_detect(who, "ming")){
+        print("作業寫好了嗎？")
+      }
+    },
+    "jazz time"={
+      print("放鬆聽點 Jazz。")
+      browseURL("https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt")
+    },
+    {
+      print("尚未規畫行程！")
+    }
+  )
+}
+whatNeedToDo_butler("Mother")
+```
 ### logical condition
 
 

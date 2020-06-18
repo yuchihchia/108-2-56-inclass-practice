@@ -475,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-18 08:07:02 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 09:45:17 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -734,7 +734,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.10</code></pre>
+##    0.03    0.00    0.10</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -752,10 +752,10 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.10</code></pre>
+##    0.03    0.00    0.07</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.05    0.00    0.09</code></pre>
+##    0.02    0.00    0.10</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
 <pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
@@ -765,7 +765,7 @@ system.time(
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.01</code></pre>
+##       0       0       0</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
@@ -909,17 +909,19 @@ if(grade &gt;=90){
 <li><p>不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：<br />
 <code>&quot;conditionExpression文字&quot;={body 內容}</code> 的 name = value pair</p></li>
 </ul>
-<p><font color="#0b5395"><strong>範例5.3.10</strong>：</font><br />
+<p><font color="#0b5395"><strong>範例5.3.10</strong>：<br />
 <span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
--(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></p>
+-(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></font></p>
 <pre class="r"><code>n&lt;- 540
-conditionExpression_outcome = ifelse(n %% 2==0, &quot;even&quot;, &quot;odd&quot;) 
+conditionExpression_outcome &lt;- ifelse(n %% 2==0, &quot;even&quot;, &quot;odd&quot;) 
 switch(
   conditionExpression_outcome,
   &quot;even&quot;={fvalue &lt;- n/2}, # 偶數
   &quot;odd&quot;=fvalue &lt;- -(n+1)/2, # 奇數；只有一行指令可省略{}
   warning(&quot;n要整數喔&quot;)  
-)</code></pre>
+)
+fvalue</code></pre>
+<pre><code>## [1] 270</code></pre>
 <ul>
 <li><code>ifelse(test, yes, no)</code>函數：
 <ul>
@@ -929,17 +931,19 @@ switch(
 </li>
 <li><code>no</code>：結果為 FALSE 時你希望的回傳值。</li>
 </ul></li>
-<li>在R裡<code>{...}</code> (大括號，brace)：
+</ul>
+<p><strong><code>{...}</code> (大括號，brace)</strong>：</p>
 <ul>
 <li>若指令只有一行時，<code>{}</code>符號可省略。<br />
 </li>
-<li><code>function(...){....}</code>的 body 若只有一行指令可省略<code>{</code>、<code>}</code>改寫成<code>function(...) ...</code>, 要小心的是，body 要接在<code>function(...)</code>之後不可換行。</li>
-</ul></li>
+<li><code>function(...){....}</code>的 body 若只有一行指令可省略<code>{</code>、<code>}</code>改寫成<code>function(...) ...</code>。要小心的是，body 要接在<code>function(...)</code>之後不可換行。</li>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-18 14:07:07 CST&quot;</code></pre>
-<pre><code>+ 若最後一個被執行的指令會產生 print 在螢幕的效果，則可以用`{...}-&gt;`或`&lt;-{...}`將這 print 的值存出來。  </code></pre>
+<pre><code>## [1] &quot;2020-06-18 15:45:22 CST&quot;</code></pre>
+<ul>
+<li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
+</ul>
 <pre class="r"><code>result &lt;- 
   {
     x &lt;- 2
@@ -961,20 +965,180 @@ print(result)</code></pre>
 <pre><code>## Warning: x值太小</code></pre>
 <pre class="r"><code>print(result2)</code></pre>
 <pre><code>## [1] &quot;x值太小&quot;</code></pre>
-<pre><code>+ 依照上一個特性，`function(...){....}`的 body 若最後一個「被執行」的指令是會印在螢幕的值，如該值要當回傳值可以不用`return(...)`就可以產生值回傳效果。  </code></pre>
+<ul>
+<li>依照上一個特性，<code>function(...){....}</code>的 body 若最後一個「被執行」的指令是 print，如該值要當回傳值可以不用<code>return(...)</code>就可以產生值回傳效果。</li>
+</ul>
 <pre class="r"><code>myFun &lt;- function(x,y){
   return(x**y+15)
 }
+myFun(5,3) -&gt; outcome
 # 等同於
 myFun2 &lt;- function(x,y){
   x**y+15
 }
-myFun(5,3) -&gt; outcome
 myFun2(5,3) -&gt; outcome2
 print(outcome)</code></pre>
 <pre><code>## [1] 140</code></pre>
 <pre class="r"><code>print(outcome2)</code></pre>
 <pre><code>## [1] 140</code></pre>
+</div>
+<div id="cut" class="section level3">
+<h3>cut</h3>
+<p><code>cut()</code>函數可將「連續型」數值變數的 condition 轉成需要的字串表示。</p>
+<pre><code>cut(x, c(a,b,c))</code></pre>
+<p>cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。</p>
+<ul>
+<li>x 的 type 只要是 integer 或 double 都可使用，所以日期、時間也可以使用。<br />
+</li>
+<li>其中最小值可以是負無窮<code>-Inf</code>, 最大值可以是正無窮<code>Inf</code>。</li>
+</ul>
+<pre class="r"><code>a &lt;- c(1,2,3)
+cut(a, c(1,2,3))</code></pre>
+<pre><code>## [1] &lt;NA&gt;  (1,2] (2,3]
+## Levels: (1,2] (2,3]</code></pre>
+<p><font color="#0b5395"><strong>範例5.3.11</strong>：成績等級。</p>
+<ul>
+<li>90 以上：A，同時螢幕出現“優”。 (89&lt;…&lt;=100)<br />
+</li>
+<li>80 ~ 89：B，同時螢幕出現“良”。 (79&lt;…&lt;=89)<br />
+</li>
+<li>70 ~ 79：C，同時螢幕出現“尚可”。 (69&lt;…&lt;=79)<br />
+</li>
+<li>未達 70：D，同時螢幕出現“待加強”。 (-1&lt;…&lt;=69)</li>
+</ul>
+<pre class="r"><code>grade &lt;- sample(1:100, 10, replace=T) #隨機抽出1~100的數字，重複抽10次
+grade %&gt;%
+  cut(c(-1,69,79,89,100)) -&gt; grade
+levels(grade)</code></pre>
+<pre><code>## [1] &quot;(-1,69]&quot;  &quot;(69,79]&quot;  &quot;(79,89]&quot;  &quot;(89,100]&quot;</code></pre>
+<pre class="r"><code>switch(
+  as.character(grade[[1]]),
+  &quot;(-1,69]&quot;={
+    print(&quot;-_-&quot;)
+    &quot;F&quot;},
+  &quot;(69,79]&quot;={
+    print(&quot;棒&quot;)
+    &quot;C&quot;
+    },
+  &quot;(79,89]&quot;={
+    print(&quot;好棒&quot;)
+    &quot;B&quot;
+    },
+  &quot;(89,100]&quot;={
+    print(&quot;好棒棒&quot;)
+    &quot;A&quot;
+    }
+) -&gt; letterGrade # 有回存時要螢幕印出的訊息一定要加print</code></pre>
+<pre><code>## [1] &quot;好棒&quot;</code></pre>
+<pre class="r"><code>letterGrade</code></pre>
+<pre><code>## [1] &quot;B&quot;</code></pre>
+<p><strong>範例5.3.12</strong>：依照<strong>範例5.3.11</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
+<pre class="r"><code>compute_letterGrade &lt;- function(myGrade){
+  myGrade %&gt;% cut(c(-1,69,79,89,100)) -&gt; myGrade
+  switch(
+    as.character(grade[[1]]),
+    &quot;(-1,69]&quot;={
+      print(&quot;-_-&quot;)
+    &quot;F&quot;},
+    &quot;(69,79]&quot;={
+      print(&quot;棒&quot;)
+      &quot;C&quot;
+      },
+    &quot;(79,89]&quot;={
+      print(&quot;好棒&quot;)
+      &quot;B&quot;
+      },
+    &quot;(89,100]&quot;={
+      print(&quot;好棒棒&quot;)
+      &quot;A&quot;
+      }
+  ) -&gt; letterGrade
+}
+compute_letterGrade(50) -&gt; letterGrade </code></pre>
+<pre><code>## [1] &quot;好棒&quot;</code></pre>
+<pre class="r"><code>letterGrade</code></pre>
+<pre><code>## [1] &quot;B&quot;</code></pre>
+<p><strong>範例5.3.13</strong>：管家機器人</p>
+<ul>
+<li>早上 (06:00-09:00)：
+<ul>
+<li>媽媽讀《經濟學人》(<a href="https://economist.com" class="uri">https://economist.com</a>)。<br />
+</li>
+<li>爸爸讀《WSJ》(<a href="https://www.wsj.com/" class="uri">https://www.wsj.com/</a>)。<br />
+</li>
+<li>提醒小明“檢查書包東西都有帶嗎？”。<br />
+</li>
+</ul></li>
+<li>傍晚 (17:00-19:00)：
+<ul>
+<li>媽媽準備全家晚餐點 foodpanda (<a href="https://www.foodpanda.com.tw/" class="uri">https://www.foodpanda.com.tw/</a>)。<br />
+</li>
+<li>爸爸瀏覽 tripadvisor (<a href="https://www.tripadvisor.com/" class="uri">https://www.tripadvisor.com/</a>)規劃週末全家旅行。<br />
+</li>
+<li>提醒小明“作業寫好了嗎？”。<br />
+</li>
+</ul></li>
+<li>晚上 (23:30-次日淩晨1點)：
+<ul>
+<li>媽媽聆聽Spotify Jazz Classics (<a href="https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt" class="uri">https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt</a>)。<br />
+</li>
+</ul></li>
+<li>其他時段：“尚未規畫行程！”</font></li>
+</ul>
+<pre class="r"><code>whatNeedToDo_butler &lt;- function(who, nowtime=now()){
+  who &lt;- tolower(who)
+
+  # 建立可當cutpoints的一天時間點
+  cutpoints &lt;- c(glue(&quot;{today()} 06:00:00&quot;),
+                 glue(&quot;{today()} 09:00:00&quot;),
+                 glue(&quot;{today()} 17:00:00&quot;),
+                 glue(&quot;{today()} 19:00:00&quot;),
+                 glue(&quot;{today()} 23:30:00&quot;),
+                 glue(&quot;{today()+days(1)} 01:00:00&quot;))
+  cutpoints %&gt;%
+    ymd_hms(tz=&quot;Asia/Taipei&quot;) -&gt; cutpoints
+  
+  # 將nowtime轉成它對應的時段是&quot;morning&quot;、&quot;evening&quot;、&quot;jazz time&quot;或其他
+  cut(nowtime, cutpoints) -&gt; nowtime
+  levels(nowtime)[c(1,3,5)] &lt;-
+    c(&quot;morning&quot;,&quot;evening&quot;,&quot;jazz time&quot;)
+  
+  # 使用switch決定要做什麼事
+  switch(
+    as.character(nowtime),
+    &quot;morning&quot;={
+      if(str_detect(who, &quot;mom|mommy|mother&quot;)){
+        print(&quot;要不要來閱讀點財經時事？&quot;)
+        browseURL(&quot;https://economist.com&quot;)
+      } else if(str_detect(who, &quot;dad|daddy|father&quot;)){
+        print(&quot;要不要來閱讀點國際新聞？&quot;)
+        browseURL(&quot;https://www.wsj.com/&quot;)
+      } else if(str_detect(who, &quot;ming&quot;)){
+        print(&quot;檢查書包東西都有帶嗎？&quot;)
+      }
+    },
+    &quot;evening&quot;={
+      if(str_detect(who, &quot;mom|mommy|mother&quot;)){
+        print(&quot;需不需要點餐呢？&quot;)
+        browseURL(&quot;https://www.foodpanda.com.tw/&quot;)
+      } else if(str_detect(who, &quot;dad|daddy|father&quot;)){
+        print(&quot;要不要來規劃週末旅行呢？&quot;)
+        browseURL(&quot;https://www.tripadvisor.com/&quot;)
+      } else if(str_detect(who, &quot;ming&quot;)){
+        print(&quot;作業寫好了嗎？&quot;)
+      }
+    },
+    &quot;jazz time&quot;={
+      print(&quot;放鬆聽點 Jazz。&quot;)
+      browseURL(&quot;https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt&quot;)
+    },
+    {
+      print(&quot;尚未規畫行程！&quot;)
+    }
+  )
+}
+whatNeedToDo_butler(&quot;Mother&quot;)</code></pre>
+<pre><code>## [1] &quot;尚未規畫行程！&quot;</code></pre>
 </div>
 <div id="logical-condition" class="section level3">
 <h3>logical condition</h3>
