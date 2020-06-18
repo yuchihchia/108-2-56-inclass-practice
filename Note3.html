@@ -475,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-18 11:05:04 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 14:58:45 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -735,7 +735,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.01    0.11</code></pre>
+##    0.03    0.00    0.07</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -753,10 +753,10 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.04    0.00    0.14</code></pre>
+##    0.05    0.01    0.09</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.12</code></pre>
+##    0.07    0.00    0.09</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
 <pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
@@ -941,7 +941,7 @@ fvalue</code></pre>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-18 17:05:09 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 20:58:50 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -982,9 +982,8 @@ print(outcome)</code></pre>
 <pre><code>## [1] 140</code></pre>
 <pre class="r"><code>print(outcome2)</code></pre>
 <pre><code>## [1] 140</code></pre>
-</div>
-<div id="cut" class="section level3">
-<h3>cut</h3>
+<div id="cut" class="section level4">
+<h4><strong>cut</strong></h4>
 <p><code>cut()</code>函數可將「連續型」數值變數的 condition 轉成需要的字串表示。</p>
 <pre><code>cut(x, c(a,b,c))</code></pre>
 <p>cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。</p>
@@ -1030,9 +1029,9 @@ levels(grade)</code></pre>
     &quot;A&quot;
     }
 ) -&gt; letterGrade # 有回存時要螢幕印出的訊息一定要加print</code></pre>
-<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
+<pre><code>## [1] &quot;-_-&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;A&quot;</code></pre>
+<pre><code>## [1] &quot;F&quot;</code></pre>
 <p><strong>範例5.3.12</strong>：依照<strong>範例5.3.11</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
 <pre class="r"><code>compute_letterGrade &lt;- function(myGrade){
   myGrade %&gt;% cut(c(-1,69,79,89,100)) -&gt; myGrade
@@ -1056,9 +1055,9 @@ levels(grade)</code></pre>
   ) -&gt; letterGrade
 }
 compute_letterGrade(50) -&gt; letterGrade </code></pre>
-<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
+<pre><code>## [1] &quot;-_-&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;A&quot;</code></pre>
+<pre><code>## [1] &quot;F&quot;</code></pre>
 <p><strong>範例5.3.13</strong>：管家機器人</p>
 <ul>
 <li>早上 (06:00-09:00)：
@@ -1139,7 +1138,8 @@ compute_letterGrade(50) -&gt; letterGrade </code></pre>
   )
 }
 whatNeedToDo_butler(&quot;Mother&quot;)</code></pre>
-<pre><code>## [1] &quot;需不需要點餐呢？&quot;</code></pre>
+<pre><code>## [1] &quot;尚未規畫行程！&quot;</code></pre>
+</div>
 </div>
 <div id="logical-condition" class="section level3">
 <h3>logical condition</h3>
@@ -1181,7 +1181,8 @@ if(is.factor(myAnswer) &amp;&amp; all(myAnswer==correctAnswer)){
 <pre><code>## [1] 0</code></pre>
 <p><font color="#0b5395"><strong>範例5.3.14</strong>：<br />
 只要符合以下任一資格均可申請補助：<br />
-1. 年齡 65 歲以上。 2. 家庭子孩數 3 位以上。</font></p>
+1. 年齡 65 歲以上。<br />
+2. 家庭子孩數 3 位以上。</font></p>
 <pre class="r"><code>apply_subsidy &lt;- function(myAge, myChildrenNumber){
   if(myAge &gt;=65 | myChildrenNumber &gt;3){
     &quot;符合申請資格&quot;
@@ -1191,9 +1192,8 @@ if(is.factor(myAnswer) &amp;&amp; all(myAnswer==correctAnswer)){
 }
 apply_subsidy(40,5)</code></pre>
 <pre><code>## [1] &quot;符合申請資格&quot;</code></pre>
-</div>
-<div id="case_when" class="section level3">
-<h3>case_when</h3>
+<div id="case_when" class="section level4">
+<h4><strong>case_when</strong></h4>
 <pre><code>case_when(
   condition A ~ body for A,
   condition B ~ body for B,
@@ -1204,7 +1204,7 @@ apply_subsidy(40,5)</code></pre>
 </ul>
 <pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
 y</code></pre>
-<pre><code>##  [1] 94 58 79 73 48 61 99 81 52 87 43 40 52 53 94 90 87 79 42 43</code></pre>
+<pre><code>##  [1] 42 73 50 48 69 88 78 73 81 58 58 43 53 85 69 87 75 90 62 81</code></pre>
 <pre class="r"><code>dplyr::case_when(
   y &lt; 60 ~ &quot;F&quot;,
   60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
@@ -1212,22 +1212,21 @@ y</code></pre>
   80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
   90&lt;=y ~ &quot;A&quot;
 )</code></pre>
-<pre><code>##  [1] &quot;A&quot; &quot;F&quot; &quot;C&quot; &quot;C&quot; &quot;F&quot; &quot;D&quot; &quot;A&quot; &quot;B&quot; &quot;F&quot; &quot;B&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;F&quot;
-## [20] &quot;F&quot;</code></pre>
+<pre><code>##  [1] &quot;F&quot; &quot;C&quot; &quot;F&quot; &quot;F&quot; &quot;D&quot; &quot;B&quot; &quot;C&quot; &quot;C&quot; &quot;B&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;D&quot;
+## [20] &quot;B&quot;</code></pre>
+</div>
 </div>
 <div id="綜合練習-1" class="section level3">
 <h3>綜合練習</h3>
 <p><font color="#0b5395"><strong>練習一</strong>：消費者選擇<br />
 效用函數：<br />
-<span class="math display">\[U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m\]</span> <span class="math display">\[a1\]</span>是該商品提供之服務所帶來的愉快程度，<br />
-<span class="math display">\[a2\]</span>是該商品操作簡便性，<br />
-<span class="math display">\[\alpha\in(0,1)\]</span>， <span class="math display">\[m\]</span>是購買此商品所要付出的金額。<br />
-想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組<span class="math display">\[(a1,a2,m)\]</span>的數字組合來代表，n 個 App 可表示成一個集合<span class="math display">\[\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}\]</span>，消費者只選擇這些 App 中效用函數值最高的那個。</p>
+<span class="math display">\[U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m\]</span> 其中 <span class="math inline">\(a1\)</span> 是該商品提供之服務所帶來的愉快程度，<span class="math inline">\(a2\)</span> 是該商品操作簡便性，<span class="math inline">\(\alpha\in(0,1)\)</span>，<span class="math inline">\(m\)</span> 是購買此商品所要付出的金額。</p>
+<p>想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組 <span class="math inline">\((a1,a2,m)\)</span> 的數字組合來代表，n 個 App 可表示成一個集合 <span class="math inline">\(\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}\)</span>，消費者只選擇這些 App 中效用函數值最高的那個。</p>
 <ol style="list-style-type: decimal">
-<li>創造<code>Ufun(a1, a2, m, alpha = 0.5)</code>函數，其中</li>
-</ol>
+<li><p>創造<code>Ufun(a1, a2, m, alpha = 0.5)</code>函數，其中</p>
 <p>Arguments：a1、a2、m、alpha 均為 class numeric</p>
-<p>Value：回傳 arugment values 下所對應的效用函數值 (class numeric)</p>
+<p>Value：回傳 arugment values 下所對應的效用函數值 (class numeric)</p></li>
+</ol>
 <pre class="r"><code>Ufun &lt;- function(a1, a2, m, alpha = 0.5){
   u &lt;- a1^alpha*a2^(1-alpha)-m
   return(u)
@@ -1235,24 +1234,67 @@ y</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10)</li>
 </ol>
-<pre class="r"><code>Apps_10 &lt;- list(
-  c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
-  c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
-  c(0.41,0.49,0.35), c(0.49,0.35,0.20))</code></pre>
+<pre class="r"><code>Apps_10 &lt;- list(c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
+                c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
+                c(0.41,0.49,0.35), c(0.49,0.35,0.20))
+ufun &lt;- function(vec1, alpha=0.5){
+  a1 &lt;- vec1[[1]]
+  a2 &lt;- vec1[[2]]
+  m &lt;- vec1[[3]]
+  Ufun(a1, a2, m, alpha)
+}
+Apps_10 %&gt;% 
+  map(~ufun(.x)) %&gt;%
+  unlist() -&gt; utility
+utility</code></pre>
+<pre><code>##  [1]  0.340282943  0.163556372  0.089878031  0.009145451  0.279929574
+##  [6] -0.004833395  0.393709130  0.374580419  0.098218697  0.214125585</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>最大效用下消費者會買那一個 App？</p></li>
-<li><p>若 alpha = 0.3，消費者要買那一個 App？</p></li>
-<li><p>若 alpha = 0.95，消費者要買那一個 App？</p></li>
+<li>最大效用下消費者會買那一個 App？</li>
 </ol>
+<pre class="r"><code>which.max(utility)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>若 alpha = 0.3，消費者要買那一個 App？</li>
+</ol>
+<pre class="r"><code>Apps_10 %&gt;% 
+  map(~ufun(.x, 0.3)) %&gt;%
+  unlist() -&gt; utility1
+which.max(utility1)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>若 alpha = 0.95，消費者要買那一個 App？</li>
+</ol>
+<pre class="r"><code>Apps_10 %&gt;% 
+  map(~ufun(.x, 0.95)) %&gt;%
+  unlist() -&gt; utility2
+which.max(utility2)</code></pre>
+<pre><code>## [1] 5</code></pre>
 <p><strong>練習二</strong>：中文組距<br />
-原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似：“未滿 200,000 元”、“200,000 ~ 299,999 元”、“300,000 元及以上”。 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。<br />
-請寫一個str_cut(x, cutpoints)函數，它能萬用的將x轉成依中文組距描述的類別資料</p>
-<p>Arguement:</p>
+原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似：“未滿200,000元”、“200,000~299,999元”、“300,000元及以上”。<br />
+描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。</p>
+<ol style="list-style-type: decimal">
+<li><p>請寫一個<code>str_cut(x, cutpoints)</code>函數，它能萬用的將 x 轉成依中文組距描述的類別資料。</p>
+Arguement：
 <ul>
-<li><p>x: class integer.</p></li>
-<li><p>cutpoints: class character, 如c(“未滿200,000元”, “200,000～299,999元”, “300,000元及以上”)</p></li>
+<li>x：class integer.<br />
+</li>
+<li>cutpoints：class character, 如：c(“未滿200,000元”, “200,000～299,999元”, “300,000元及以上”)</li>
 </ul>
-<p>Value: 回傳值為x依中文組距描述分類後的factor。 </font></p>
+<p>Value：回傳值為 x 依中文組距描述分類後的 factor。</font></p></li>
+</ol>
+<pre class="r"><code>str_cut &lt;- function(x, cutpoints){
+  cutpoints[2:length(cutpoints)] %&gt;%
+    str_remove_all(&quot;,&quot;) %&gt;%
+    str_extract(&quot;[0-9]+&quot;) %&gt;%
+    as.integer() -&gt; cuts
+  x &lt;- cut(x, c(-Inf, cuts-1, Inf))
+  levels(x) &lt;- cutpoints
+  return(x)
+}
+str_cut(200000, c(&quot;未滿200,000元&quot;, &quot;200,000～299,999元&quot;, &quot;300,000元及以上&quot;))</code></pre>
+<pre><code>## [1] 200,000～299,999元
+## Levels: 未滿200,000元 200,000～299,999元 300,000元及以上</code></pre>
 </div>
 </div>
 <div id="iteration" class="section level2">
