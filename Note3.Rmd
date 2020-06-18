@@ -876,17 +876,15 @@ dplyr::case_when(
 <font color="#0b5395">**練習一**：消費者選擇  
 效用函數：  
 $$U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m$$
-$$a1$$是該商品提供之服務所帶來的愉快程度，  
-$$a2$$是該商品操作簡便性，  
-$$\alpha\in(0,1)$$，
-$$m$$是購買此商品所要付出的金額。  
+其中 a1 是該商品提供之服務所帶來的愉快程度，a2 是該商品操作簡便性，α 是個介於 0 與 1 之間的數字，m 是購買此商品所要付出的金額。  
+
 想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組$$(a1,a2,m)$$的數字組合來代表，n 個 App 可表示成一個集合$$\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}$$，消費者只選擇這些 App 中效用函數值最高的那個。  
 
 1. 創造`Ufun(a1, a2, m, alpha = 0.5)`函數，其中  
 
-Arguments：a1、a2、m、alpha 均為 class numeric  
+    Arguments：a1、a2、m、alpha 均為 class numeric  
 
-Value：回傳 arugment values 下所對應的效用函數值 (class numeric)  
+    Value：回傳 arugment values 下所對應的效用函數值 (class numeric)  
 ```{r}
 Ufun <- function(a1, a2, m, alpha = 0.5){
   u <- a1^alpha*a2^(1-alpha)-m
@@ -899,14 +897,35 @@ Apps_10 <- list(
   c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
   c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
   c(0.41,0.49,0.35), c(0.49,0.35,0.20))
-
+ufun <- function(vec1, alpha=0.5){
+  a1 <- vec1[[1]]
+  a2 <- vec1[[2]]
+  m <- vec1[[3]]
+  Ufun(a1, a2, m, alpha)
+}
+Apps_10 %>% 
+  map(~ufun(.x)) %>%
+  unlist() -> utility
+utility
 ```
 3. 最大效用下消費者會買那一個 App？
-
+```{r}
+which.max(utility)
+```
 4. 若 alpha = 0.3，消費者要買那一個 App？
-
+```{r}
+Apps_10 %>% 
+  map(~ufun(.x, 0.3)) %>%
+  unlist() -> utility1
+which.max(utility1)
+```
 5. 若 alpha = 0.95，消費者要買那一個 App？
-
+```{r}
+Apps_10 %>% 
+  map(~ufun(.x, 0.95)) %>%
+  unlist() -> utility2
+which.max(utility2)
+```
 **練習二**：中文組距  
 原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿 200,000 元"、"200,000 ~ 299,999 元"、"300,000 元及以上"。
 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。  

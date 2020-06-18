@@ -462,9 +462,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-18 氣溫，最高33度，最低31度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-18 氣溫，最高30度，最低26度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -475,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-18 09:45:17 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 11:05:04 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -591,8 +591,9 @@ environment(myDemand2)</code></pre>
 <pre><code>## [1] 3.56</code></pre>
 <p>預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。</p>
 </div>
-<div id="綜合練習-1" class="section level3">
-<h3>綜合練習</h3>
+<div id="綜合練習." class="section level3">
+<h3>綜合練習.</h3>
+<p><font color="#0b5395"><strong>練習一</strong></font></p>
 <pre class="r"><code>when_busArrives &lt;- function(busRoute, busStop){
   # 公車預估到站時間 https://data.ntpc.gov.tw/datasets/07F7CCB3-ED00-43C4-966D-08E9DAB24E95
   busArrivalForecast &lt;- read_csv(&quot;C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busArrivalForecast.csv&quot;)
@@ -724,7 +725,7 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<pre><code>## 台南市 2020-06-18 氣溫，最高33度，最低31度。</code></pre>
+<pre><code>## 台南市 2020-06-18 氣溫，最高31度，最低28度。</code></pre>
 <p><strong>不重覆下載</strong><br />
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。</p>
 <p><font color="#0b5395"><strong>範例5.3.6</strong></p>
@@ -734,7 +735,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.10</code></pre>
+##    0.03    0.01    0.11</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -752,14 +753,14 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.07</code></pre>
+##    0.04    0.00    0.14</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.02    0.00    0.10</code></pre>
+##    0.03    0.00    0.12</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 臺北市 2020-06-18 氣溫，最高32度，最低26度。</code></pre>
 <pre class="r"><code>SOAR::Remove(weather_next36hours)</code></pre>
 <pre><code>## Warning: Object weather_next36hours not found and hence not removed</code></pre>
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
@@ -770,9 +771,9 @@ system.time(
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-18 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 臺北市 2020-06-18 氣溫，最高32度，最低26度。</code></pre>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
@@ -940,7 +941,7 @@ fvalue</code></pre>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-18 15:45:22 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-18 17:05:09 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -1029,9 +1030,9 @@ levels(grade)</code></pre>
     &quot;A&quot;
     }
 ) -&gt; letterGrade # 有回存時要螢幕印出的訊息一定要加print</code></pre>
-<pre><code>## [1] &quot;好棒&quot;</code></pre>
+<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;B&quot;</code></pre>
+<pre><code>## [1] &quot;A&quot;</code></pre>
 <p><strong>範例5.3.12</strong>：依照<strong>範例5.3.11</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
 <pre class="r"><code>compute_letterGrade &lt;- function(myGrade){
   myGrade %&gt;% cut(c(-1,69,79,89,100)) -&gt; myGrade
@@ -1055,9 +1056,9 @@ levels(grade)</code></pre>
   ) -&gt; letterGrade
 }
 compute_letterGrade(50) -&gt; letterGrade </code></pre>
-<pre><code>## [1] &quot;好棒&quot;</code></pre>
+<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;B&quot;</code></pre>
+<pre><code>## [1] &quot;A&quot;</code></pre>
 <p><strong>範例5.3.13</strong>：管家機器人</p>
 <ul>
 <li>早上 (06:00-09:00)：
@@ -1138,13 +1139,120 @@ compute_letterGrade(50) -&gt; letterGrade </code></pre>
   )
 }
 whatNeedToDo_butler(&quot;Mother&quot;)</code></pre>
-<pre><code>## [1] &quot;尚未規畫行程！&quot;</code></pre>
+<pre><code>## [1] &quot;需不需要點餐呢？&quot;</code></pre>
 </div>
 <div id="logical-condition" class="section level3">
 <h3>logical condition</h3>
+<p><strong>all</strong>、<strong>any</strong></p>
+<pre class="r"><code>myAnswer &lt;- c(2,3,6)
+correctAnswer &lt;- c(2,3,5)
+if(all(myAnswer == correctAnswer)){ # 要全TRUE
+  print(&quot;你答對了&quot;)
+}
+if(any(myAnswer == correctAnswer)){ # 只要有一個TRUE
+  print(&quot;裡頭有數字是對的&quot;)
+}</code></pre>
+<pre><code>## [1] &quot;裡頭有數字是對的&quot;</code></pre>
+<p><strong>&amp;&amp;</strong>、<strong>||</strong></p>
+<ul>
+<li><code>&amp;</code>會計算所有 relations，<code>&amp;&amp;</code>只計算到第一個出現 FALSE 的 relation。
+<ul>
+<li><code>&amp;&amp;</code>用在「有一個錯就算錯」的情境。<br />
+</li>
+</ul></li>
+<li><code>|</code>會計算所有 relations，<code>||</code>只計算到第一個出現 TRUE 的 relation。
+<ul>
+<li><code>||</code>用在「有一個對就算對」的情境。<br />
+</li>
+</ul></li>
+<li>在進行 condition execution 時，使用<code>&amp;&amp;</code>、<code>||</code>會比<code>&amp;</code>、<code>|</code>更有運算效率。</li>
+</ul>
+<pre class="r"><code>myAnswer &lt;- c(1,2,3)
+correctAnswer &lt;- factor(c(1,2,3))
+if(is.factor(myAnswer) &amp;&amp; all(myAnswer==correctAnswer)){
+  print(&quot;答對了&quot;)
+  10
+} else {
+  print(&quot;答錯了&quot;)
+  0
+}-&gt; myGrade</code></pre>
+<pre><code>## [1] &quot;答錯了&quot;</code></pre>
+<pre class="r"><code>myGrade</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p><font color="#0b5395"><strong>範例5.3.14</strong>：<br />
+只要符合以下任一資格均可申請補助：<br />
+1. 年齡 65 歲以上。 2. 家庭子孩數 3 位以上。</font></p>
+<pre class="r"><code>apply_subsidy &lt;- function(myAge, myChildrenNumber){
+  if(myAge &gt;=65 | myChildrenNumber &gt;3){
+    &quot;符合申請資格&quot;
+  } else {
+    warning(&quot;不符合申請資格&quot;)
+  }
+}
+apply_subsidy(40,5)</code></pre>
+<pre><code>## [1] &quot;符合申請資格&quot;</code></pre>
 </div>
-<div id="綜合練習-2" class="section level3">
+<div id="case_when" class="section level3">
+<h3>case_when</h3>
+<pre><code>case_when(
+  condition A ~ body for A,
+  condition B ~ body for B,
+  condition C ~ body for C,
+)</code></pre>
+<ul>
+<li><code>case_when()</code>的運作類似<code>switch()</code>，內含多個 logical relations。</li>
+</ul>
+<pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
+y</code></pre>
+<pre><code>##  [1] 94 58 79 73 48 61 99 81 52 87 43 40 52 53 94 90 87 79 42 43</code></pre>
+<pre class="r"><code>dplyr::case_when(
+  y &lt; 60 ~ &quot;F&quot;,
+  60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
+  71&lt;=y &amp; y &lt; 80 ~&quot;C&quot;,
+  80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
+  90&lt;=y ~ &quot;A&quot;
+)</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;F&quot; &quot;C&quot; &quot;C&quot; &quot;F&quot; &quot;D&quot; &quot;A&quot; &quot;B&quot; &quot;F&quot; &quot;B&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;F&quot;
+## [20] &quot;F&quot;</code></pre>
+</div>
+<div id="綜合練習-1" class="section level3">
 <h3>綜合練習</h3>
+<p><font color="#0b5395"><strong>練習一</strong>：消費者選擇<br />
+效用函數：<br />
+<span class="math display">\[U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m\]</span> <span class="math display">\[a1\]</span>是該商品提供之服務所帶來的愉快程度，<br />
+<span class="math display">\[a2\]</span>是該商品操作簡便性，<br />
+<span class="math display">\[\alpha\in(0,1)\]</span>， <span class="math display">\[m\]</span>是購買此商品所要付出的金額。<br />
+想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組<span class="math display">\[(a1,a2,m)\]</span>的數字組合來代表，n 個 App 可表示成一個集合<span class="math display">\[\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}\]</span>，消費者只選擇這些 App 中效用函數值最高的那個。</p>
+<ol style="list-style-type: decimal">
+<li>創造<code>Ufun(a1, a2, m, alpha = 0.5)</code>函數，其中</li>
+</ol>
+<p>Arguments：a1、a2、m、alpha 均為 class numeric</p>
+<p>Value：回傳 arugment values 下所對應的效用函數值 (class numeric)</p>
+<pre class="r"><code>Ufun &lt;- function(a1, a2, m, alpha = 0.5){
+  u &lt;- a1^alpha*a2^(1-alpha)-m
+  return(u)
+}</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10)</li>
+</ol>
+<pre class="r"><code>Apps_10 &lt;- list(
+  c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
+  c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
+  c(0.41,0.49,0.35), c(0.49,0.35,0.20))</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li><p>最大效用下消費者會買那一個 App？</p></li>
+<li><p>若 alpha = 0.3，消費者要買那一個 App？</p></li>
+<li><p>若 alpha = 0.95，消費者要買那一個 App？</p></li>
+</ol>
+<p><strong>練習二</strong>：中文組距<br />
+原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似：“未滿 200,000 元”、“200,000 ~ 299,999 元”、“300,000 元及以上”。 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。<br />
+請寫一個str_cut(x, cutpoints)函數，它能萬用的將x轉成依中文組距描述的類別資料</p>
+<p>Arguement:</p>
+<ul>
+<li><p>x: class integer.</p></li>
+<li><p>cutpoints: class character, 如c(“未滿200,000元”, “200,000～299,999元”, “300,000元及以上”)</p></li>
+</ul>
+<p>Value: 回傳值為x依中文組距描述分類後的factor。 </font></p>
 </div>
 </div>
 <div id="iteration" class="section level2">
