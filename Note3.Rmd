@@ -927,19 +927,29 @@ Apps_10 %>%
 which.max(utility2)
 ```
 **練習二**：中文組距  
-原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿 200,000 元"、"200,000 ~ 299,999 元"、"300,000 元及以上"。
+原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿 200,000 元"、"200,000 ~ 299,999 元"、"300,000 元及以上"。  
 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。  
-請寫一個str_cut(x, cutpoints)函數，它能萬用的將x轉成依中文組距描述的類別資料
 
-Arguement:
+1. 請寫一個`str_cut(x, cutpoints)`函數，它能萬用的將 x 轉成依中文組距描述的類別資料。  
 
-* x: class integer.
+    Arguement:  
 
-* cutpoints: class character, 如c(“未滿200,000元”, “200,000～299,999元”, “300,000元及以上”)
+    * x: class integer.  
+    * cutpoints: class character, 如：c("未滿200,000元", "200,000～299,999元", "300,000元及以上")  
 
-Value: 回傳值為x依中文組距描述分類後的factor。
-</font>
-
+    Value: 回傳值為x依中文組距描述分類後的factor。</font>
+```{r}
+str_cut <- function(x, cutpoints){
+  cutpoints[2:length(cutpoints)] %>%
+    str_remove_all(",") %>%
+    str_extract("[0-9]+") %>%
+    as.integer() -> cuts
+  x <- cut(x, c(-Inf, cuts-1, Inf))
+  levels(x) <- cutpoints
+  return(x)
+}
+str_cut(200000, c("未滿200,000元", "200,000～299,999元", "300,000元及以上"))
+```
 ## 5.4 Iteration
 ### for loop
 
