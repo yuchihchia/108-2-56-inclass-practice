@@ -949,7 +949,11 @@ str_cut <- function(x, cutpoints){
 str_cut(200000, c("未滿200,000元", "200,000～299,999元", "300,000元及以上"))
 ```
 ## 5.4 Iteration
+### Iteration components
+### Two types of sequence
 ### for loop
+### while loop
+
 
 ## 期末考
 
