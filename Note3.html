@@ -462,9 +462,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-18 氣溫，最高30度，最低26度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-24 氣溫，最高33度，最低27度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -475,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-18 14:58:45 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-24 04:19:44 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -725,7 +725,7 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<pre><code>## 台南市 2020-06-18 氣溫，最高31度，最低28度。</code></pre>
+<pre><code>## 台南市 2020-06-24 氣溫，最高32度，最低29度。</code></pre>
 <p><strong>不重覆下載</strong><br />
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。</p>
 <p><font color="#0b5395"><strong>範例5.3.6</strong></p>
@@ -753,27 +753,27 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.05    0.01    0.09</code></pre>
+##    0.03    0.00    0.08</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.07    0.00    0.09</code></pre>
+##    0.01    0.00    0.10</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-18 氣溫，最高32度，最低26度。</code></pre>
+<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低27度。</code></pre>
 <pre class="r"><code>SOAR::Remove(weather_next36hours)</code></pre>
 <pre><code>## Warning: Object weather_next36hours not found and hence not removed</code></pre>
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##       0       0       0</code></pre>
+##    0.01    0.00    0.02</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-18 氣溫，最高32度，最低27度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-18 氣溫，最高32度，最低26度。</code></pre>
+<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低27度。</code></pre>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
@@ -941,7 +941,7 @@ fvalue</code></pre>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-18 20:58:50 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-24 10:19:49 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -1204,7 +1204,7 @@ apply_subsidy(40,5)</code></pre>
 </ul>
 <pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
 y</code></pre>
-<pre><code>##  [1] 42 73 50 48 69 88 78 73 81 58 58 43 53 85 69 87 75 90 62 81</code></pre>
+<pre><code>##  [1] 85 62 56 53 89 44 92 42 88 61 74 53 55 60 68 77 89 97 79 82</code></pre>
 <pre class="r"><code>dplyr::case_when(
   y &lt; 60 ~ &quot;F&quot;,
   60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
@@ -1212,7 +1212,7 @@ y</code></pre>
   80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
   90&lt;=y ~ &quot;A&quot;
 )</code></pre>
-<pre><code>##  [1] &quot;F&quot; &quot;C&quot; &quot;F&quot; &quot;F&quot; &quot;D&quot; &quot;B&quot; &quot;C&quot; &quot;C&quot; &quot;B&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;D&quot;
+<pre><code>##  [1] &quot;B&quot; &quot;D&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;F&quot; &quot;A&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;C&quot; &quot;F&quot; &quot;F&quot; &quot;D&quot; &quot;D&quot; &quot;C&quot; &quot;B&quot; &quot;A&quot; &quot;C&quot;
 ## [20] &quot;B&quot;</code></pre>
 </div>
 </div>
@@ -1299,8 +1299,189 @@ str_cut(200000, c(&quot;未滿200,000元&quot;, &quot;200,000～299,999元&quot;
 </div>
 <div id="iteration" class="section level2">
 <h2>5.4 Iteration</h2>
+<p><font color="#0b5395"><strong>範例5.4.1</strong>：找出哪幾筆為“男”</font></p>
+<pre class="r"><code>sampleData &lt;- list(list(&quot;男&quot;, 45), list(&quot;女&quot;, 32), list(&quot;男&quot;,50), list(&quot;男&quot;,33), list(&quot;女&quot;, 21))
+sampleData[[1]][[1]]</code></pre>
+<pre><code>## [1] &quot;男&quot;</code></pre>
+<div id="iteration-components" class="section level3">
+<h3>Iteration components</h3>
+<p>我們在使用 map 時寫 copy/paste 程序3次，目的在確認：</p>
+<ul>
+<li>Sequence：即<code>[[1]]</code>、<code>[[2]]</code>、<code>[[3]]</code>出現的位置。<br />
+</li>
+<li>Body：要重覆做的 SOP，即<code>~.x[[1]]</code>。</li>
+</ul>
+<p>而 map 最後會把每次 body 的執行結果存在：</p>
+<ul>
+<li>Output：每次 body 執行完要存的形式，即 map 最後的 list class output。</li>
+</ul>
+</div>
+<div id="two-types-of-sequence" class="section level3">
+<h3>Two types of sequence</h3>
+<p><font color="#0b5395">回到<strong>範例5.4.1</strong>：找出哪幾筆為“男”<br />
+使用 pipe 寫法可以清楚分離 sequence 及 body(SOP)。<br />
+兩種 sequence 表示：</p>
+<pre class="r"><code># 串接寫法(I): external dispatch
+map(sampleData, ~{.x[[1]]})</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;男&quot;
+## 
+## [[2]]
+## [1] &quot;女&quot;
+## 
+## [[3]]
+## [1] &quot;男&quot;
+## 
+## [[4]]
+## [1] &quot;男&quot;
+## 
+## [[5]]
+## [1] &quot;女&quot;</code></pre>
+<pre class="r"><code># 串接寫法(II): internal dispatch
+map(1:5, ~{sampleData[[.x]][[1]]}) </code></pre>
+<pre><code>## [[1]]
+## [1] &quot;男&quot;
+## 
+## [[2]]
+## [1] &quot;女&quot;
+## 
+## [[3]]
+## [1] &quot;男&quot;
+## 
+## [[4]]
+## [1] &quot;男&quot;
+## 
+## [[5]]
+## [1] &quot;女&quot;</code></pre>
+<pre class="r"><code># map在單維度遞迴時，.x也可以只寫.
+# 也就是 map(1:5, ~{sampleData[[.]][[1]]}) </code></pre>
+<p><strong>範例5.4.2</strong></font></p>
+<pre class="r"><code>eggs &lt;- rep(&quot;雞蛋x1&quot;, 8)
+fryEgg &lt;- function(egg) str_replace(egg, &quot;雞蛋&quot;, &quot;荷包蛋&quot;)
+# external dispatch
+map(eggs, ~fryEgg(.x)) -&gt; friedEggs1
+# internal dispatch
+map(1:8, ~{fryEgg(eggs[[.]])}) -&gt; friedEggs2</code></pre>
+<div id="vectorized-function" class="section level4">
+<h4>Vectorized function</h4>
+<p><font color="#0b5395"><strong>範例5.4.3</strong></font></p>
+<pre class="r"><code>grade &lt;- c(45, 74, NA)
+i&lt;-3
+grade_i &lt;- grade[[i]]
+pass_or_fail &lt;- function(grade_i){
+  if(!is.na(grade_i)){
+    if(grade_i &gt;= 60){
+      &quot;P&quot;
+    } else if(grade_i &lt; 60 ) {
+      &quot;F&quot;
+    }
+  } else {
+    &quot;缺考&quot;
+  }
+}
+map_pass_fail &lt;- function(grade) map_chr(grade, ~pass_or_fail(.))
+map_pass_fail(grade)</code></pre>
+<pre><code>## [1] &quot;F&quot;    &quot;P&quot;    &quot;缺考&quot;</code></pre>
+<p>若你確信你 map 的 list 輸出每個元素只有一個值，且大家都是相同的 class，則你可以依 class 的類型使用：</p>
+<ul>
+<li>map_chr<br />
+</li>
+<li>map_lgl<br />
+</li>
+<li>map_dbl、map_int</li>
+</ul>
+<p>省了 unlist 那一步。</p>
+</div>
+<div id="internal-dispatching的優勢" class="section level4">
+<h4>Internal dispatching的優勢</h4>
+<p>當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：</p>
+<p><font color="#0b5395"><strong>範例5.4.4</strong></p>
+<pre class="r"><code>eggs &lt;- rep(&quot;雞蛋x1&quot;,10)
+ham &lt;- rep(&quot;火腿x1&quot;, 10)
+toast &lt;- rep(&quot;土司2片&quot;,10)
+toast_withEggHam &lt;- function(toast=NULL, egg=NULL, ham=NULL){
+  if(is.null(toast) || !str_detect(toast, &quot;土司&quot;)){stop(&quot;少了土司&quot;)}
+  # stop(...)：function中的函數。用來停止函數運算，並輸出Error: ...。
+  if(is.null(egg) || !str_detect(egg, &quot;蛋&quot;)){stop(&quot;少了蛋&quot;)}
+  if(is.null(ham) || !str_detect(ham, &quot;火腿&quot;)){stop(&quot;少了火腿&quot;)}
+  &quot;火腿蛋三明治&quot;
+}
+map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})</code></pre>
+<pre><code>##  [1] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;
+##  [6] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;</code></pre>
+</div>
+<div id="各系課程規劃" class="section level4">
+<h4>各系課程規劃</h4>
+<p>臺北大學 100~107 學年的開課資料 courseStructure：</p>
+<pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1&quot;) -&gt; courseStructure</code></pre>
+<p>以100學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼？</p>
+<pre class="r"><code>entranceYear &lt;- 100
+major &lt;- &quot;經濟系&quot;
+allGrades &lt;- paste0(major, 1:4)
+academicYears &lt;- entranceYear + 0:3
+get_courses &lt;- function(acadYear_i, grade_i, courseStructure){
+  pick &lt;- (courseStructure$`學年`==acadYear_i &amp;
+           str_detect(courseStructure$`應修系級`, grade_i))
+  return(
+    unique(courseStructure$`科目名稱`[pick])
+  )
+}
+map(1:4, ~{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)})</code></pre>
+<pre><code>## [[1]]
+##  [1] &quot;男生軍訓１&quot;           &quot;微積分&quot;               &quot;女生軍訓１&quot;          
+##  [4] &quot;經濟學原理&quot;           &quot;歷史&quot;                 &quot;會計學&quot;              
+##  [7] &quot;國文：經典閱讀與詮釋&quot; &quot;企業管理&quot;             &quot;外文&quot;                
+## [10] &quot;體育&quot;                 &quot;社會學&quot;               &quot;英語聽講練習&quot;        
+## [13] &quot;男生軍訓２&quot;           &quot;女生軍訓２&quot;          
+## 
+## [[2]]
+## [1] &quot;統計學&quot;     &quot;資料處理&quot;   &quot;中級會計學&quot; &quot;線性代數&quot;   &quot;總體經濟學&quot;
+## [6] &quot;個體經濟學&quot; &quot;民法概要&quot;  
+## 
+## [[3]]
+##  [1] &quot;財務管理&quot;         &quot;公共經濟學&quot;       &quot;國際經濟學&quot;       &quot;貨幣銀行學&quot;      
+##  [5] &quot;經濟思想史&quot;       &quot;租稅各論&quot;         &quot;經濟論壇（一）&quot;   &quot;高等統計學&quot;      
+##  [9] &quot;賽局理論（一）&quot;   &quot;經濟數學&quot;         &quot;資源經濟學&quot;       &quot;計量經濟學&quot;      
+## [13] &quot;產業經濟學&quot;       &quot;經濟成長&quot;         &quot;作業研究&quot;         &quot;中小企業研究&quot;    
+## [17] &quot;經濟論壇（二）&quot;   &quot;醫療經濟學&quot;       &quot;多國籍公司經濟學&quot; &quot;金融市場（一）&quot;  
+## [21] &quot;法律經濟學&quot;      
+## 
+## [[4]]
+##  [1] &quot;經濟論壇（一）&quot;       &quot;反托拉斯經濟學(一)&quot;   &quot;經濟成長&quot;            
+##  [4] &quot;福利經濟&quot;             &quot;國際貿易理論與政策&quot;   &quot;商事法&quot;              
+##  [7] &quot;經濟問題與政策（一）&quot; &quot;國際貿易實務&quot;         &quot;經濟理論分析&quot;        
+## [10] &quot;投資學&quot;               &quot;保險學&quot;               &quot;中小企業研究&quot;        
+## [13] &quot;多國籍公司經濟學&quot;     &quot;反托拉斯經濟學(二)&quot;   &quot;經濟問題與政策（二）&quot;
+## [16] &quot;期貨交易理論與實務&quot;   &quot;個體經濟理論分析&quot;     &quot;資訊經濟學（一）&quot;</code></pre>
+<p>Iteration in functional: <code>map</code></p>
+<ul>
+<li>Sequence：<code>1:4</code>。<br />
+</li>
+<li>Body：<code>{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}</code>, 以 formula (另一種 function 形式)包裝。<br />
+</li>
+<li>Output：<code>list class, length=Sequence length</code>。</font></li>
+</ul>
+</div>
+</div>
 <div id="for-loop" class="section level3">
 <h3>for loop</h3>
+<pre><code>output &lt;- vector(&quot;{type}&quot;, length={len})
+for(.x in {sequence}){
+  {body}
+}</code></pre>
+<ul>
+<li>這裡<code>{...}</code>均是需要視情況定義的部份。<br />
+</li>
+<li><code>vector(mode, length)</code>
+<ul>
+<li>mode：character class，代表 container 所要用來裝的值之 type。<br />
+</li>
+<li>length：integer class，代表 container 要有幾個空位。</li>
+</ul></li>
+</ul>
+</div>
+<div id="while-loop" class="section level3">
+<h3>while loop</h3>
 </div>
 </div>
 <div id="期末考" class="section level2">
