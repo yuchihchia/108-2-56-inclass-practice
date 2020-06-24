@@ -1016,7 +1016,7 @@ map_pass_fail(grade)
 #### Internal dispatching的優勢
 當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：  
 
-<font color="#0b5395">**範例5.4.4**
+<font color="#0b5395">**範例5.4.4**：火腿蛋三明治
 ```{r}
 eggs <- rep("雞蛋x1",10)
 ham <- rep("火腿x1", 10)
@@ -1030,7 +1030,7 @@ toast_withEggHam <- function(toast=NULL, egg=NULL, ham=NULL){
 }
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})
 ```
-#### 各系課程規劃
+**範例5.4.5**：各系課程規劃
 臺北大學 100~107 學年的開課資料 courseStructure：  
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1") -> courseStructure
@@ -1068,8 +1068,156 @@ for(.x in {sequence}){
     + mode：character class，代表 container 所要用來裝的值之 type。  
     + length：integer class，代表 container 要有幾個空位。  
 
+<font color="#0b5395">**範例5.4.6**：
+```{r eval=FALSE}
+# map iteration
+map(1:4, ~{get_courses(academicYears[[.x]], allGrades[[.x]], courseStructure)})
+# for iteration
+output <- vector("list", length=4)
+for(i in 1:4){
+  get_courses(academicYears[[i]],
+              allGrades[[i]], 
+              courseStructure) -> output[[i]]
+}
+```
+其中，`1:4`=`1:length(academicYears)`=`seq_along(academicYears)`。  
 
+回到**範例5.4.4**：火腿蛋三明治</font>
+```{r eval=FALSE}
+# map iteration
+map(1:10, ~toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]))
+# for iteration
+output <- vector("character", 10)
+for(.x in 1:10){
+  toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]) -> output[[.x]]
+}
+```
+#### 累計型 output
+<font color="#0b5395">**範例5.4.7**：Summation  
+$$\sum_{i=1}^{10} a_{i}$$ 
+where $a_i \in [1, 100] \cap \mathbb{N}$, $\forall i \in \mathbb{N}$.<font>
+```{r}
+a <- sample(1:100, 10, replace=T) 
+print(a)
+sum <- 0
+for(.x in 1:10) sum <- sum + a[[.x]] # 指令只有一行，{}符號可省略
+print(sum)
+```
+#### 長度不一型 output
+<font color="#0b5395">**範例5.4.8**：  
+每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。<font>
+```{r}
+output <- c()
+for(.x in 1:10){
+  new <- sample(1:100,1)
+  if(new %% 3==0){
+    output <- c(output, new)
+  }
+}
+print(output)
+```
+#### next、break
+* __next__：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。  
+* __break__：.x 對應元素若符合條件會完全終止迴圈。  
+
+<font color="#0b5395">**範例5.4.9**：批改學生作業<font>
+```{r}
+list(list("student A", c(2,3,4,5)),
+     list("student B", NA), # 沒交作業
+     list("student C", factor(c(2,3,4,5))),
+     list("student D", factor(c(2,3,5)))
+     ) -> collectionHWs
+correctAns <- factor(c(2,3,4,5))
+output <- vector("integer", length(collectionHWs))
+nameVector <- vector("character", length(collectionHWs))
+for(.x in seq_along(collectionHWs)){
+  nameVector[[.x]] <- collectionHWs[[.x]][[1]]
+  studentAns <- collectionHWs[[.x]][[2]] 
+  if(is.na(studentAns)){
+    output[[.x]] <- 0
+    next
+  } 
+  if(identical(studentAns, correctAns)){
+    output[[.x]] <- 10
+  } else if (class(studentAns)!=class(correctAns) && identical(as.character(studentAns),as.character(correctAns))) {
+    output[[.x]] <- 5
+  } else {
+    output[[.x]] <- 0
+  }
+}
+names(output) <- nameVector
+print(output)
+```
 ### while loop
+```
+while(continueCondition){
+  body
+}
+```
+while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。  
+
+<font color="#0b5395">**範例5.4.10**：總共要擲幾次硬幣，才能得到五次正面。<font>
+```{r}
+sum <- 0
+count <- 0
+while(sum<5){
+  count <- count+1
+  newToss <- sample(c("正","反"), 1, replace=T)
+  if(newToss == "正") sum <- sum+1
+  print(glue::glue("已擲{count}次得到{sum}次正面"))
+}
+```
+之前的 (有限) 迴圈也可以用 while 寫：
+
+<font color="#0b5395">回到**範例5.4.7**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
+```{r}
+# for loop
+set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
+output <- c()
+for(.x in 1:10){
+  new <- sample(0:100,1)
+  if(new %% 3==0){
+    output <- c(output, new)
+  }
+}
+print(output)
+# while loop
+set.seed(1000)
+count <- 0 
+output <- c()
+while(count <= 10){ 
+  count <- count+1 
+  new <- sample(0:100,1)
+  if(new %% 3==0){
+    output <- c(output, new)
+  }
+}
+print(output)
+```
+<font>
+```{r}
+a <- sample(1:100, 10, replace=T)
+print(a)
+
+sum <- 0
+for(.x in 1:10){ 
+  sum <- sum+a[[.x]]
+}
+
+print(sum)
+count <- 0 # 計數器起始值
+sum <- 0
+while(count <= 10){ # 計數上限條件
+  count <- count+1 # 計數器+1
+  sum <- sum+a[[count]]
+}
+
+print(sum)
+```
+
+
+
+
 
 
 ## 期末考
