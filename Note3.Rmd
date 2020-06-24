@@ -1095,7 +1095,7 @@ for(.x in 1:10){
 #### 累計型 output
 <font color="#0b5395">**範例5.4.7**：Summation  
 $$\sum_{i=1}^{10} a_{i}$$ 
-where $a_i \in [1, 100] \cap \mathbb{N}$, $\forall i \in \mathbb{N}$.<font>
+where $a_i \in [1, 100] \cap \mathbb{N}$, $\forall i \in \mathbb{N}$.</font>
 ```{r}
 a <- sample(1:100, 10, replace=T) 
 print(a)
@@ -1105,7 +1105,7 @@ print(sum)
 ```
 #### 長度不一型 output
 <font color="#0b5395">**範例5.4.8**：  
-每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。<font>
+每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</font>
 ```{r}
 output <- c()
 for(.x in 1:10){
@@ -1120,7 +1120,7 @@ print(output)
 * __next__：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。  
 * __break__：.x 對應元素若符合條件會完全終止迴圈。  
 
-<font color="#0b5395">**範例5.4.9**：批改學生作業<font>
+<font color="#0b5395">**範例5.4.9**：批改學生作業</font>
 ```{r}
 list(list("student A", c(2,3,4,5)),
      list("student B", NA), # 沒交作業
@@ -1156,7 +1156,7 @@ while(continueCondition){
 ```
 while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。  
 
-<font color="#0b5395">**範例5.4.10**：總共要擲幾次硬幣，才能得到五次正面。<font>
+<font color="#0b5395">**範例5.4.10**：總共要擲幾次硬幣，才能得到五次正面。</font>
 ```{r}
 sum <- 0
 count <- 0
@@ -1169,7 +1169,7 @@ while(sum<5){
 ```
 之前的 (有限) 迴圈也可以用 while 寫：
 
-<font color="#0b5395">回到**範例5.4.7**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
+<font color="#0b5395">回到**範例5.4.8**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
 ```{r}
 # for loop
 set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
@@ -1194,32 +1194,130 @@ while(count <= 10){
 }
 print(output)
 ```
-<font>
+回到**範例5.4.7**</font>
 ```{r}
 a <- sample(1:100, 10, replace=T)
 print(a)
-
+# for loop
 sum <- 0
 for(.x in 1:10){ 
   sum <- sum+a[[.x]]
 }
-
 print(sum)
-count <- 0 # 計數器起始值
+# while loop
+count <- 1
 sum <- 0
-while(count <= 10){ # 計數上限條件
-  count <- count+1 # 計數器+1
-  sum <- sum+a[[count]]
+while(count <= 10){
+  sum <- sum + a[[count]]
+  count <- count + 1
 }
-
 print(sum)
+```
+### 綜合練習
+<font color="#0b5395">**練習一**：Mathematical function  
+$$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
+針對以上的函數我們架構了 myFun
+```{r}
+myFun <- function(n) {
+    if (as.logical(n%%2)) {
+        fvalue <- -(n + 1)/2
+    } else {
+        fvalue <- n/2
+    }
+    return(fvalue)
+}
+```
+但它並不是 vectorized function，請將它升級成 vectorized function，myFun2，使得以下指令可正常運作：
+```
+myFun2(c(-11,32,19,20))
+```
+```{r}
+myFun2 <- function(vec){
+  map_dbl(seq_along(vec), ~{myFun(vec[[.x]])})
+}
+myFun2(c(-11,32,19,20))
+```
+**練習二**：askSilly_weather 3.0  
+```{r}
+askSilly_weather2 <- function(locationInput,dateInput){
+  if(!exists("weather_next36hours")){
+      jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
+      weather_next36hours
+    SOAR::Store(weather_next36hours) # 存在.R_cache environment中
+  }  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") ->
+    pick_MaxT
+  (weatherAtLocation$elementName=="MinT") ->
+    pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
+}
+```
+askSilly_weather2 並不是個 vectorized function，一次要查詢多個城市時 (如下) 它只會回傳第一個城市的氣溫：
+```{r}
+askSilly_weather2(c("臺北市","新北市","臺中市"), lubridate::now())
+```
+請創造 askSilly_weather3，它是 vectorized function。
+```{r}
+askSilly_weather3 <- function(location, time){
+  map(seq_along(location), ~{askSilly_weather2(location[[.x]], time)})
+}
+askSilly_weather3(c("臺北市","新北市","臺中市"), lubridate::now())
+```
+**練習三**：平均值與標準差  
+以下程式隨機自 0-100 抽出 30 個數字：
+```{r}
+a <- sample(0:100,30, replace=T)
+print(a)
+```
+1. 請計算其平均值 a_mean。
+```{r}
+a_mean <- mean(a)
+```
+2. 請計算其樣本標準差 sample_sd。
+$$\sqrt{\sum_{i=1}^{30}(a_i-\mu)^2/(30-1)}$$
+```{r}
+(a - a_mean)**2 %>%
+  sum()/29 %>%
+  sqrt() -> sample_sd
+```
+**練習四**：現值  
+若利率 $R$ 維持每年不變，則未來 N 年現金流 $a_0$、$a_1$、$a_2$、...、$a_N$ 的現值為：  
+$$a_0+\frac{a_1}{1+R}+\frac{a_2}{(1+R)^2}+...+\frac{a_N}{(1+R)^N}$$
+其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。
+執行以下程式得到 20 年的現金流 (介於1萬到5萬)，`a['0']`代表 $a_0$，`a['1']`代表 $a_1$，依此類推。
+```{r}
+a <- sample(10000:50000,20,replace=T)
+names(a) <- 0:19
+R <- 0.03
+```
+請寫一個函數 DV(a,R)：  
+arguments：  
+
+* a：現金流 class numeric。  
+* R：年利率。  
+
+value：回傳現金流的現值。
+```{r}
+DV <- function(a,R){
+  value <- 0
+  for (i in seq_along(a)) {
+    value <- value + a[[i]]/(1+R)**i
+  }
+  return(value)
+}
+DV(a,R)
 ```
 
 
 
 
-
-
+</font>
 ## 期末考
 
 </font>
