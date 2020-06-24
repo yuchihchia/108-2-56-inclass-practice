@@ -462,9 +462,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低33度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-24 氣溫，最高33度，最低27度。</code></pre>
+<pre><code>## 花蓮縣 2020-06-24 氣溫，最高34度，最低31度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -475,7 +475,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-24 04:19:44 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-24 06:45:56 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -725,7 +725,7 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<pre><code>## 台南市 2020-06-24 氣溫，最高32度，最低29度。</code></pre>
+<pre><code>## 台南市 2020-06-24 氣溫，最高34度，最低32度。</code></pre>
 <p><strong>不重覆下載</strong><br />
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。</p>
 <p><font color="#0b5395"><strong>範例5.3.6</strong></p>
@@ -735,7 +735,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.07</code></pre>
+##    0.02    0.00    0.10</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -753,27 +753,27 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.08</code></pre>
+##    0.06    0.00    0.13</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.10</code></pre>
+##    0.03    0.00    0.10</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低33度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低27度。</code></pre>
+<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低33度。</code></pre>
 <pre class="r"><code>SOAR::Remove(weather_next36hours)</code></pre>
 <pre><code>## Warning: Object weather_next36hours not found and hence not removed</code></pre>
 <pre><code>## Warning: ./.R_Cache does not currently exist. A call to 'Store' will create it.</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.02</code></pre>
+##    0.02    0.00    0.01</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;新北市&quot;,today())</code></pre>
-<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低28度。</code></pre>
+<pre><code>## 新北市 2020-06-24 氣溫，最高37度，最低33度。</code></pre>
 <pre class="r"><code>askSilly_weather2(&quot;臺北市&quot;,today())</code></pre>
-<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低27度。</code></pre>
+<pre><code>## 臺北市 2020-06-24 氣溫，最高37度，最低33度。</code></pre>
 </div>
 <div id="if-else" class="section level3">
 <h3>if else</h3>
@@ -941,7 +941,7 @@ fvalue</code></pre>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-24 10:19:49 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-24 12:46:01 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -1204,7 +1204,8 @@ apply_subsidy(40,5)</code></pre>
 </ul>
 <pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
 y</code></pre>
-<pre><code>##  [1] 85 62 56 53 89 44 92 42 88 61 74 53 55 60 68 77 89 97 79 82</code></pre>
+<pre><code>##  [1]  49  98  53  40  87  76  45  64  93  59  44  89  59 100  76  75  91  94  51
+## [20]  83</code></pre>
 <pre class="r"><code>dplyr::case_when(
   y &lt; 60 ~ &quot;F&quot;,
   60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
@@ -1212,7 +1213,7 @@ y</code></pre>
   80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
   90&lt;=y ~ &quot;A&quot;
 )</code></pre>
-<pre><code>##  [1] &quot;B&quot; &quot;D&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;F&quot; &quot;A&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;C&quot; &quot;F&quot; &quot;F&quot; &quot;D&quot; &quot;D&quot; &quot;C&quot; &quot;B&quot; &quot;A&quot; &quot;C&quot;
+<pre><code>##  [1] &quot;F&quot; &quot;A&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;C&quot; &quot;F&quot; &quot;D&quot; &quot;A&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;F&quot; &quot;A&quot; &quot;C&quot; &quot;C&quot; &quot;A&quot; &quot;A&quot; &quot;F&quot;
 ## [20] &quot;B&quot;</code></pre>
 </div>
 </div>
@@ -1395,7 +1396,7 @@ map_pass_fail(grade)</code></pre>
 <div id="internal-dispatching的優勢" class="section level4">
 <h4>Internal dispatching的優勢</h4>
 <p>當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：</p>
-<p><font color="#0b5395"><strong>範例5.4.4</strong></p>
+<p><font color="#0b5395"><strong>範例5.4.4</strong>：火腿蛋三明治</p>
 <pre class="r"><code>eggs &lt;- rep(&quot;雞蛋x1&quot;,10)
 ham &lt;- rep(&quot;火腿x1&quot;, 10)
 toast &lt;- rep(&quot;土司2片&quot;,10)
@@ -1409,10 +1410,7 @@ toast_withEggHam &lt;- function(toast=NULL, egg=NULL, ham=NULL){
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})</code></pre>
 <pre><code>##  [1] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;
 ##  [6] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;</code></pre>
-</div>
-<div id="各系課程規劃" class="section level4">
-<h4>各系課程規劃</h4>
-<p>臺北大學 100~107 學年的開課資料 courseStructure：</p>
+<p><strong>範例5.4.5</strong>：各系課程規劃 臺北大學 100~107 學年的開課資料 courseStructure：</p>
 <pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1&quot;) -&gt; courseStructure</code></pre>
 <p>以100學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼？</p>
 <pre class="r"><code>entranceYear &lt;- 100
@@ -1479,14 +1477,267 @@ for(.x in {sequence}){
 <li>length：integer class，代表 container 要有幾個空位。</li>
 </ul></li>
 </ul>
+<p><font color="#0b5395"><strong>範例5.4.6</strong>：</p>
+<pre class="r"><code># map iteration
+map(1:4, ~{get_courses(academicYears[[.x]], allGrades[[.x]], courseStructure)})
+# for iteration
+output &lt;- vector(&quot;list&quot;, length=4)
+for(i in 1:4){
+  get_courses(academicYears[[i]],
+              allGrades[[i]], 
+              courseStructure) -&gt; output[[i]]
+}</code></pre>
+<p>其中，<code>1:4</code>=<code>1:length(academicYears)</code>=<code>seq_along(academicYears)</code>。</p>
+<p>回到<strong>範例5.4.4</strong>：火腿蛋三明治</font></p>
+<pre class="r"><code># map iteration
+map(1:10, ~toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]))
+# for iteration
+output &lt;- vector(&quot;character&quot;, 10)
+for(.x in 1:10){
+  toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]) -&gt; output[[.x]]
+}</code></pre>
+<div id="累計型-output" class="section level4">
+<h4>累計型 output</h4>
+<p><font color="#0b5395"><strong>範例5.4.7</strong>：Summation<br />
+<span class="math display">\[\sum_{i=1}^{10} a_{i}\]</span> where <span class="math inline">\(a_i \in [1, 100] \cap \mathbb{N}\)</span>, <span class="math inline">\(\forall i \in \mathbb{N}\)</span>.</font></p>
+<pre class="r"><code>a &lt;- sample(1:100, 10, replace=T) 
+print(a)</code></pre>
+<pre><code>##  [1] 100  68  44  39  18  33  47  74  34   1</code></pre>
+<pre class="r"><code>sum &lt;- 0
+for(.x in 1:10) sum &lt;- sum + a[[.x]] # 指令只有一行，{}符號可省略
+print(sum)</code></pre>
+<pre><code>## [1] 458</code></pre>
+</div>
+<div id="長度不一型-output" class="section level4">
+<h4>長度不一型 output</h4>
+<p><font color="#0b5395"><strong>範例5.4.8</strong>：<br />
+每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</font></p>
+<pre class="r"><code>output &lt;- c()
+for(.x in 1:10){
+  new &lt;- sample(1:100,1)
+  if(new %% 3==0){
+    output &lt;- c(output, new)
+  }
+}
+print(output)</code></pre>
+<pre><code>## [1] 54 66 81 36 18</code></pre>
+</div>
+<div id="nextbreak" class="section level4">
+<h4>next、break</h4>
+<ul>
+<li><strong>next</strong>：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。<br />
+</li>
+<li><strong>break</strong>：.x 對應元素若符合條件會完全終止迴圈。</li>
+</ul>
+<p><font color="#0b5395"><strong>範例5.4.9</strong>：批改學生作業</font></p>
+<pre class="r"><code>list(list(&quot;student A&quot;, c(2,3,4,5)),
+     list(&quot;student B&quot;, NA), # 沒交作業
+     list(&quot;student C&quot;, factor(c(2,3,4,5))),
+     list(&quot;student D&quot;, factor(c(2,3,5)))
+     ) -&gt; collectionHWs
+correctAns &lt;- factor(c(2,3,4,5))
+output &lt;- vector(&quot;integer&quot;, length(collectionHWs))
+nameVector &lt;- vector(&quot;character&quot;, length(collectionHWs))
+for(.x in seq_along(collectionHWs)){
+  nameVector[[.x]] &lt;- collectionHWs[[.x]][[1]]
+  studentAns &lt;- collectionHWs[[.x]][[2]] 
+  if(is.na(studentAns)){
+    output[[.x]] &lt;- 0
+    next
+  } 
+  if(identical(studentAns, correctAns)){
+    output[[.x]] &lt;- 10
+  } else if (class(studentAns)!=class(correctAns) &amp;&amp; identical(as.character(studentAns),as.character(correctAns))) {
+    output[[.x]] &lt;- 5
+  } else {
+    output[[.x]] &lt;- 0
+  }
+}</code></pre>
+<pre><code>## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素
+
+## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素
+
+## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素</code></pre>
+<pre class="r"><code>names(output) &lt;- nameVector
+print(output)</code></pre>
+<pre><code>## student A student B student C student D 
+##         5         0        10         0</code></pre>
+</div>
 </div>
 <div id="while-loop" class="section level3">
 <h3>while loop</h3>
+<pre><code>while(continueCondition){
+  body
+}</code></pre>
+<p>while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。</p>
+<p><font color="#0b5395"><strong>範例5.4.10</strong>：總共要擲幾次硬幣，才能得到五次正面。</font></p>
+<pre class="r"><code>sum &lt;- 0
+count &lt;- 0
+while(sum&lt;5){
+  count &lt;- count+1
+  newToss &lt;- sample(c(&quot;正&quot;,&quot;反&quot;), 1, replace=T)
+  if(newToss == &quot;正&quot;) sum &lt;- sum+1
+  print(glue::glue(&quot;已擲{count}次得到{sum}次正面&quot;))
+}</code></pre>
+<pre><code>## 已擲1次得到1次正面
+## 已擲2次得到1次正面
+## 已擲3次得到1次正面
+## 已擲4次得到2次正面
+## 已擲5次得到3次正面
+## 已擲6次得到3次正面
+## 已擲7次得到3次正面
+## 已擲8次得到3次正面
+## 已擲9次得到3次正面
+## 已擲10次得到4次正面
+## 已擲11次得到4次正面
+## 已擲12次得到5次正面</code></pre>
+<p>之前的 (有限) 迴圈也可以用 while 寫：</p>
+<p><font color="#0b5395">回到<strong>範例5.4.8</strong>：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</p>
+<pre class="r"><code># for loop
+set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
+output &lt;- c()
+for(.x in 1:10){
+  new &lt;- sample(0:100,1)
+  if(new %% 3==0){
+    output &lt;- c(output, new)
+  }
+}
+print(output)</code></pre>
+<pre><code>## [1] 42 87 60 21</code></pre>
+<pre class="r"><code># while loop
+set.seed(1000)
+count &lt;- 0 
+output &lt;- c()
+while(count &lt;= 10){ 
+  count &lt;- count+1 
+  new &lt;- sample(0:100,1)
+  if(new %% 3==0){
+    output &lt;- c(output, new)
+  }
+}
+print(output)</code></pre>
+<pre><code>## [1] 42 87 60 21</code></pre>
+<p>回到<strong>範例5.4.7</strong></font></p>
+<pre class="r"><code>a &lt;- sample(1:100, 10, replace=T)
+print(a)</code></pre>
+<pre><code>##  [1] 38 33 41 29 26 58 55 18 37 96</code></pre>
+<pre class="r"><code># for loop
+sum &lt;- 0
+for(.x in 1:10){ 
+  sum &lt;- sum+a[[.x]]
+}
+print(sum)</code></pre>
+<pre><code>## [1] 431</code></pre>
+<pre class="r"><code># while loop
+count &lt;- 1
+sum &lt;- 0
+while(count &lt;= 10){
+  sum &lt;- sum + a[[count]]
+  count &lt;- count + 1
+}
+print(sum)</code></pre>
+<pre><code>## [1] 431</code></pre>
 </div>
-</div>
-<div id="期末考" class="section level2">
-<h2>期末考</h2>
+<div id="綜合練習-2" class="section level3">
+<h3>綜合練習</h3>
+<p><font color="#0b5395"><strong>練習一</strong>：Mathematical function<br />
+<span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
+-(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span> 針對以上的函數我們架構了 myFun</p>
+<pre class="r"><code>myFun &lt;- function(n) {
+    if (as.logical(n%%2)) {
+        fvalue &lt;- -(n + 1)/2
+    } else {
+        fvalue &lt;- n/2
+    }
+    return(fvalue)
+}</code></pre>
+<p>但它並不是 vectorized function，請將它升級成 vectorized function，myFun2，使得以下指令可正常運作：</p>
+<pre><code>myFun2(c(-11,32,19,20))</code></pre>
+<pre class="r"><code>myFun2 &lt;- function(vec){
+  map_dbl(seq_along(vec), ~{myFun(vec[[.x]])})
+}
+myFun2(c(-11,32,19,20))</code></pre>
+<pre><code>## [1]   5  16 -10  10</code></pre>
+<p><strong>練習二</strong>：askSilly_weather 3.0</p>
+<pre class="r"><code>askSilly_weather2 &lt;- function(locationInput,dateInput){
+  if(!exists(&quot;weather_next36hours&quot;)){
+      jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt;
+      weather_next36hours
+    SOAR::Store(weather_next36hours) # 存在.R_cache environment中
+  }  
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -&gt; pick_location
+  
+  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt;
+    pick_MaxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt;
+    pick_MinT
+  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
+  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
+  glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
+}</code></pre>
+<p>askSilly_weather2 並不是個 vectorized function，一次要查詢多個城市時 (如下) 它只會回傳第一個城市的氣溫：</p>
+<pre class="r"><code>askSilly_weather2(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
+<pre><code>## Warning in weather_next36hours$cwbopendata$dataset$location$locationName == : 較
+## 長的物件長度並非較短物件長度的倍數</code></pre>
+<pre><code>## 臺北市 2020-06-24 12:46:10 氣溫，最高37度，最低33度。
+## 新北市 2020-06-24 12:46:10 氣溫，最高37度，最低33度。
+## 臺中市 2020-06-24 12:46:10 氣溫，最高37度，最低33度。</code></pre>
+<p>請創造 askSilly_weather3，它是 vectorized function。</p>
+<pre class="r"><code>askSilly_weather3 &lt;- function(location, time){
+  map(seq_along(location), ~{askSilly_weather2(location[[.x]], time)})
+}
+askSilly_weather3(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
+<pre><code>## [[1]]
+## 臺北市 2020-06-24 12:46:10 氣溫，最高37度，最低33度。
+## 
+## [[2]]
+## 新北市 2020-06-24 12:46:10 氣溫，最高37度，最低33度。
+## 
+## [[3]]
+## 臺中市 2020-06-24 12:46:10 氣溫，最高34度，最低32度。</code></pre>
+<p><strong>練習三</strong>：平均值與標準差<br />
+以下程式隨機自 0-100 抽出 30 個數字：</p>
+<pre class="r"><code>a &lt;- sample(0:100,30, replace=T)
+print(a)</code></pre>
+<pre><code>##  [1] 93 50 47 60 73 72 57 70 87 11 53 23 27 58  7 34 26 69  6 21 69 70 15 27  7
+## [26] 34 20 17 79 16</code></pre>
+<ol style="list-style-type: decimal">
+<li>請計算其平均值 a_mean。</li>
+</ol>
+<pre class="r"><code>a_mean &lt;- mean(a)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>請計算其樣本標準差 sample_sd。 <span class="math display">\[\sqrt{\sum_{i=1}^{30}(a_i-\mu)^2/(30-1)}\]</span></li>
+</ol>
+<pre class="r"><code>(a - a_mean)**2 %&gt;%
+  sum()/29 %&gt;%
+  sqrt() -&gt; sample_sd</code></pre>
+<p><strong>練習四</strong>：現值<br />
+若利率 <span class="math inline">\(R\)</span> 維持每年不變，則未來 N 年現金流 <span class="math inline">\(a_0\)</span>、<span class="math inline">\(a_1\)</span>、<span class="math inline">\(a_2\)</span>、…、<span class="math inline">\(a_N\)</span> 的現值為：<br />
+<span class="math display">\[a_0+\frac{a_1}{1+R}+\frac{a_2}{(1+R)^2}+...+\frac{a_N}{(1+R)^N}\]</span> 其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。 執行以下程式得到 20 年的現金流 (介於1萬到5萬)，<code>a['0']</code>代表 <span class="math inline">\(a_0\)</span>，<code>a['1']</code>代表 <span class="math inline">\(a_1\)</span>，依此類推。</p>
+<pre class="r"><code>a &lt;- sample(10000:50000,20,replace=T)
+names(a) &lt;- 0:19
+R &lt;- 0.03</code></pre>
+<p>請寫一個函數 DV(a,R)：<br />
+arguments：</p>
+<ul>
+<li>a：現金流 class numeric。<br />
+</li>
+<li>R：年利率。</li>
+</ul>
+<p>value：回傳現金流的現值。</p>
+<pre class="r"><code>DV &lt;- function(a,R){
+  value &lt;- 0
+  for (i in seq_along(a)) {
+    value &lt;- value + a[[i]]/(1+R)**i
+  }
+  return(value)
+}
+DV(a,R)</code></pre>
+<pre><code>## [1] 464367.5</code></pre>
+<p></font> ## 期末考</p>
 <p></font></p>
+</div>
 </div>
 </div>
 
