@@ -169,7 +169,7 @@ levels(covid19$`縣市`)
 ```
 ## 5.2 Function
 ### 函數定義
-<font color="#0b5395">**範例5.2.1**：需求函數  
+<font color="#0b5395">**範例 5.2.1**：需求函數  
 $$ q_{d} = 10 - 5p $$
 ```{r}
 demand <- #創造一個物件(函數) demand
@@ -184,7 +184,7 @@ q_d1.2
 </font>  
 **return**  
 
-<font color="#0b5395">回到**範例5.2.1**：需求函數</font>
+<font color="#0b5395">回到**範例 5.2.1**：需求函數</font>
 ```{r}
 demand_return <- function(p){
     q_d <- 10-5*p
@@ -204,7 +204,7 @@ demand_return(1.2) -> q_d1.2
 * `return(q_d)`只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。  
 * 實際上，`{...}`裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。  
 
-<font color="#0b5395">**範例5.2.2**：今日天氣  
+<font color="#0b5395">**範例 5.2.2**：今日天氣  
 建立 askSilly_weather(locationInput, dateInput) 函數，其中  
 
 * Arguments：  
@@ -227,7 +227,7 @@ askSilly_weather <- function(locationInput, dateInput){
 askSilly_weather("新北市", today())
 askSilly_weather("屏東縣", today())
 ```
-**範例5.2.3**：國際時間轉換  
+**範例 5.2.3**：國際時間轉換  
 建立 what_time_it_is 函數，其中  
 
 * Arguments：location 為 class character。  
@@ -247,11 +247,11 @@ what_time_it_is <- function(location){
 what_time_it_is("Europe/Paris")
 ```
 ### 函數的組成
-<font color="#0b5395">回到**範例5.2.1**：需求函數。  
+<font color="#0b5395">回到**範例 5.2.1**：需求函數。  
 ```{r}
 class(demand_return)
 ```
-回到**範例5.2.2**：今日天氣。  </font>
+回到**範例 5.2.2**：今日天氣。  </font>
 ```{r}
 # 查詢函數formals arguments要求
 formals(askSilly_weather)
@@ -260,7 +260,7 @@ body(askSilly_weather)
 ```
 函數可以存在 list 裡。(其實幾乎所有的物件不管什麼 class 都可以存在 list 裡)  
 
-<font color="#0b5395">**範例5.2.4**：使用**範例5.2.1**的需求函數 demand_return。</font>
+<font color="#0b5395">**範例 5.2.4**：使用**範例 5.2.1**的需求函數 demand_return。</font>
 ```{r}
 learning_topics <- 
   list(
@@ -279,7 +279,7 @@ __closure__：
 *  若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要連同 (enclose) 它的 (生存) 環境一起存。  
 *  這種儲存型態叫 closure (閉包)。  
 
-<font color="#0b5395">回到**範例5.2.1**：需求函數
+<font color="#0b5395">回到**範例 5.2.1**：需求函數
 ```{r}
 typeof(demand_return)
 # 查詢函數執行所要求環境
@@ -308,7 +308,7 @@ myDemand 的運作需要 global environment 裡的 intercept、slope 物件。�
 
 * global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 **lazy evaluation**，惰性求值)
 
-<font color="#0b5395">再回到**範例5.2.5**：需求函數</font>
+<font color="#0b5395">再回到**範例 5.2.5**：需求函數</font>
 ```{r}
 intercept <- 10
 slope <- -5
@@ -325,7 +325,7 @@ myDemand(1.2) #q_d = 5-1.2*p
 * 讓函數的運作具有隨時可改變運作狀態的彈性。  
 * 若誤動 global environment 將產生運作錯誤。  
 
-<font color="#0b5395">**範例5.2.6**：需求函數</font>
+<font color="#0b5395">**範例 5.2.6**：需求函數</font>
 ```{r}
 myDemand2 <- function(p, intercept=10, slope=-5){ 
   #預設intercept=10、slope=-5，仍可透過輸入參數，改變其值
@@ -339,38 +339,17 @@ myDemand2(1.2, slope=-1)
 myDemand2(1.2, intercept=5, slope=-1.2) #若有依照參數順序輸入，可省略參數名稱
 ```
 預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。  
-
-### 綜合練習
-<font color="#0b5395">**練習一**</font>
-```{r}
-when_busArrives <- function(busRoute, busStop){
-  # 公車預估到站時間 https://data.ntpc.gov.tw/datasets/07F7CCB3-ED00-43C4-966D-08E9DAB24E95
-  busArrivalForecast <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busArrivalForecast.csv")
-  # 公車路線清單 https://data.ntpc.gov.tw/datasets/0EE4E6BF-CEE6-4EC8-8FE1-71F544015127
-  busRoutes <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busRoutes.csv")
-  # 公車站位資訊 https://data.ntpc.gov.tw/datasets/34B402A8-53D9-483D-9406-24A682C2D6DC
-  busStopsInfo <- read_csv("C:/Users/USER/Documents/GitHub/108-2-56-inclass-practice/when_busArrives/busStopsInfo.csv")
-  pickRoute <- busRoutes$Id[busRoutes$nameZh == busRoute]
-  pickStop <- busStopsInfo$Id[busStopsInfo$nameZh == busStop]
-  busArrivalForecast$EstimateTime[
-  busArrivalForecast$RouteID %in% pickRoute &
-  busArrivalForecast$StopID %in% pickStop]
-}
-when_busArrives("916","臺北大學正門")
-```
-
 ## 5.3 Conditional Execution
 ### if 
 ```
-if(condition){
+if (condition) {
   body for TRUE
 }
 ```
 * 用在「某個條件符合才執行」的狀況。
 * condition：為「是/否」問句。 (使用條件判斷來產生答案 T/F，是個 logical。)  
 
-<font color="#0b5395">**範例5.3.1**：判斷學號輸入是否正確。  
-
+<font color="#0b5395">**範例 5.3.1**：判斷學號輸入是否正確。  
 `readline()`在 Rmd 裡只有當它單獨執行時才能正常運作，因為 readline 是個即時互動 (interactive) 函數，Rmd 不是個即時互動環境。  
 ```{r eval=FALSE}
 readline(prompt = "請輸入你的學號") -> studentId 
@@ -379,7 +358,7 @@ readline(prompt = "請輸入你的學號") -> studentId
 ## 請輸入你的學號4105731111
 ```
 ```{r eval=FALSE}
-if(
+if (
   str_detect(studentId,'^[43](1[01][0-9]|9[0-9])[0-9]{5}$', negate=T) #negate=T：如果不符合出現TRUE
 ) {
   warning("你所輸入的學號不正確")
@@ -388,14 +367,14 @@ if(
 ```
 ## Warning: 你所輸入的學號不正確
 ```
-**範例5.3.2**：確認使用者有安裝需要套件。
+**範例 5.3.2**：確認使用者有安裝需要套件。
 ```{r}
 if(!require(lubridate)){ # require(套件)：如果套件不存在環境需下載套件，會出現TRUE
   install.packages("lubridate")
 }
 lubridate::ymd_hms("2020-07-01 13:00:00 GMT")
 ```
-**範例5.3.3**：在 **範例4.6.9** 中我們將民國年月日存成 date class，我們可以把它形成一個`convert_TaiwanDate2WesternDate()`函數。
+**範例 5.3.3**：在 **範例4.6.9** 中我們將民國年月日存成 date class，我們可以把它寫成一個`convert_TaiwanDate2WesternDate()`函數。
 ```{r}
 convert_TaiwanDate2WesternDate <- function(twDate){
   if(!require("stringr")){
@@ -404,27 +383,23 @@ convert_TaiwanDate2WesternDate <- function(twDate){
   if(!require("lubridate")){
     install.packages("lubridate")
   }
-  regex_pattern <- "(?<=民國)[0-9]+(?=年)"
-  year <- str_extract(twDate,
-                      regex_pattern)
-  westernYear <- as.integer(year)+1911
-  str_replace(twDate,
-              regex_pattern,
-              as.character(westernYear) 
-              ) -> twDate_reformat
-  ymd(twDate_reformat) -> westernDate
-  return(westernDate)
+  twDate %>%
+    str_extract("(?<=民國)[0-9]+(?=年)") %>%
+    {as.integer(.)+1911} %>%
+    as.character() %>%
+    {str_replace(twDate, "(?<=民國)[0-9]+(?=年)", .)} %>%
+    ymd()  %>%
+    return()
 }
 twDate <-  c("民國108年12月5日","民國98年10月5日")
 convert_TaiwanDate2WesternDate(twDate)
 ```
-**練習5.3.4**：  
+**練習 5.3.4**：  
 
 1. 寫一個`check_packagee(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。  
-
 2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。  
 
-**練習5.3.5**：在**範例5.2.2**中我們建立了機器人 askSilly_weather。  
+**練習 5.3.5**：在**範例 5.2.2**中我們建立了機器人 askSilly_weather。  
 若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</font>
 ```{r}
 askSilly_weather <- function(locationInput, dateInput){
@@ -448,7 +423,7 @@ askSilly_weather("台南市", today())
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。  
 
 
-<font color="#0b5395">**範例5.3.6**  
+<font color="#0b5395">**範例 5.3.6**  
 ```{r}
 # 檢視步驟耗時elapse time
 system.time(
@@ -492,7 +467,7 @@ if(condition){
   body for FALSE condition
 }
 ```
-<font color="#0b5395">**範例5.3.7**：  
+<font color="#0b5395">**範例 5.3.7**：  
 $$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
 ```{r}
@@ -507,7 +482,7 @@ myFun <- function(n){
 myFun(54)
 myFun(33)
 ```
-**範例5.3.8**：交卷提早時間</font>
+**範例 5.3.8**：交卷提早時間</font>
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1") -> examSubmissionTime
 head(examSubmissionTime$section)
@@ -552,7 +527,7 @@ if(condition A){
 * 依需要可以不斷增加`else if(...){....}`的部份在中間。  
 * `else if` 或`else`前面一定要保有前一段情境的結束`}`。  
 
-<font color="#0b5395">**範例5.3.9**：成績等級。  
+<font color="#0b5395">**範例 5.3.9**：成績等級。  
 
 * 90 以上：優。
 * 80 ~ 89：良。
@@ -580,7 +555,7 @@ if(grade >=90){
 ```
 * 各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。  
 
-<font color="#0b5395">回到**範例5.3.9**：成績等級。  </font>
+<font color="#0b5395">回到**範例 5.3.9**：成績等級。  </font>
 ```{r}
 grade <- 80
 if(grade >=90){
@@ -619,7 +594,7 @@ switch(實現的conditionExpression, #class character
 * 不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：  
   `"conditionExpression文字"={body 內容}` 的 name = value pair  
 
-<font color="#0b5395">**範例5.3.10**：  
+<font color="#0b5395">**範例 5.3.10**：  
 $$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$</font>  
 ```{r}
@@ -694,7 +669,7 @@ cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。
 a <- c(1,2,3)
 cut(a, c(1,2,3))
 ```
-<font color="#0b5395">**範例5.3.11**：成績等級。  
+<font color="#0b5395">**範例 5.3.11**：成績等級。  
 
 * 90 以上：A，同時螢幕出現"優"。 (89<...<=100)  
 * 80 ~ 89：B，同時螢幕出現"良"。  (79<...<=89)  
@@ -725,7 +700,7 @@ switch(
 ) -> letterGrade # 有回存時要螢幕印出的訊息一定要加print
 letterGrade
 ```
-**範例5.3.12**：依照**範例5.3.11**，建立`compute_letterGrade(myGrade)`函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。  
+**範例 5.3.12**：依照**範例 5.3.11**，建立`compute_letterGrade(myGrade)`函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。  
 ```{r}
 compute_letterGrade <- function(myGrade){
   myGrade %>% cut(c(-1,69,79,89,100)) -> myGrade
@@ -751,7 +726,7 @@ compute_letterGrade <- function(myGrade){
 compute_letterGrade(50) -> letterGrade 
 letterGrade
 ```
-**範例5.3.13**：管家機器人  
+**範例 5.3.13**：管家機器人  
 
 * 早上 (06:00-09:00)：  
     + 媽媽讀《經濟學人》([https://economist.com](https://economist.com))。  
@@ -850,7 +825,7 @@ if(is.factor(myAnswer) && all(myAnswer==correctAnswer)){
 }-> myGrade
 myGrade
 ```
-<font color="#0b5395">**範例5.3.14**：  
+<font color="#0b5395">**範例 5.3.14**：  
 只要符合以下任一資格均可申請補助：  
 1. 年齡 65 歲以上。  
 2. 家庭子孩數 3 位以上。</font>
@@ -961,7 +936,7 @@ str_cut <- function(x, cutpoints){
 str_cut(200000, c("未滿200,000元", "200,000～299,999元", "300,000元及以上"))
 ```
 ## 5.4 Iteration
-<font color="#0b5395">**範例5.4.1**：找出哪幾筆為"男"</font>
+<font color="#0b5395">**範例 5.4.1**：找出哪幾筆為"男"</font>
 ```{r}
 sampleData <- list(list("男", 45), list("女", 32), list("男",50), list("男",33), list("女", 21))
 sampleData[[1]][[1]]
@@ -977,7 +952,7 @@ sampleData[[1]][[1]]
 * Output：每次 body 執行完要存的形式，即 map 最後的 list class output。
 
 ### Two types of sequence
-<font color="#0b5395">回到**範例5.4.1**：找出哪幾筆為"男"  
+<font color="#0b5395">回到**範例 5.4.1**：找出哪幾筆為"男"  
 使用 pipe 寫法可以清楚分離 sequence 及 body(SOP)。  
 兩種 sequence 表示：
 ```{r}
@@ -988,7 +963,7 @@ map(1:5, ~{sampleData[[.x]][[1]]})
 # map在單維度遞迴時，.x也可以只寫.
 # 也就是 map(1:5, ~{sampleData[[.]][[1]]}) 
 ```
-**範例5.4.2**</font>
+**範例 5.4.2**</font>
 ```{r}
 eggs <- rep("雞蛋x1", 8)
 fryEgg <- function(egg) str_replace(egg, "雞蛋", "荷包蛋")
@@ -998,7 +973,7 @@ map(eggs, ~fryEgg(.x)) -> friedEggs1
 map(1:8, ~{fryEgg(eggs[[.]])}) -> friedEggs2
 ```
 #### Vectorized function
-<font color="#0b5395">**範例5.4.3**</font>
+<font color="#0b5395">**範例 5.4.3**</font>
 ```{r}
 grade <- c(45, 74, NA)
 i<-3
@@ -1028,7 +1003,7 @@ map_pass_fail(grade)
 #### Internal dispatching的優勢
 當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：  
 
-<font color="#0b5395">**範例5.4.4**：火腿蛋三明治
+<font color="#0b5395">**範例 5.4.4**：火腿蛋三明治
 ```{r}
 eggs <- rep("雞蛋x1",10)
 ham <- rep("火腿x1", 10)
@@ -1042,7 +1017,7 @@ toast_withEggHam <- function(toast=NULL, egg=NULL, ham=NULL){
 }
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})
 ```
-**範例5.4.5**：各系課程規劃
+**範例 5.4.5**：各系課程規劃
 臺北大學 100~107 學年的開課資料 courseStructure：  
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1") -> courseStructure
@@ -1080,7 +1055,7 @@ for(.x in {sequence}){
     + mode：character class，代表 container 所要用來裝的值之 type。  
     + length：integer class，代表 container 要有幾個空位。  
 
-<font color="#0b5395">**範例5.4.6**：
+<font color="#0b5395">**範例 5.4.6**：
 ```{r eval=FALSE}
 # map iteration
 map(1:4, ~{get_courses(academicYears[[.x]], allGrades[[.x]], courseStructure)})
@@ -1094,7 +1069,7 @@ for(i in 1:4){
 ```
 其中，`1:4`=`1:length(academicYears)`=`seq_along(academicYears)`。  
 
-回到**範例5.4.4**：火腿蛋三明治</font>
+回到**範例 5.4.4**：火腿蛋三明治</font>
 ```{r eval=FALSE}
 # map iteration
 map(1:10, ~toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]))
@@ -1105,7 +1080,7 @@ for(.x in 1:10){
 }
 ```
 #### 累計型 output
-<font color="#0b5395">**範例5.4.7**：Summation  
+<font color="#0b5395">**範例 5.4.7**：Summation  
 $$\sum_{i=1}^{10} a_{i}$$ 
 where $a_i \in [1, 100] \cap \mathbb{N}$, $\forall i \in \mathbb{N}$.</font>
 ```{r}
@@ -1116,7 +1091,7 @@ for(.x in 1:10) sum <- sum + a[[.x]] # 指令只有一行，{}符號可省略
 print(sum)
 ```
 #### 長度不一型 output
-<font color="#0b5395">**範例5.4.8**：  
+<font color="#0b5395">**範例 5.4.8**：  
 每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</font>
 ```{r}
 output <- c()
@@ -1132,7 +1107,7 @@ print(output)
 * __next__：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。  
 * __break__：.x 對應元素若符合條件會完全終止迴圈。  
 
-<font color="#0b5395">**範例5.4.9**：批改學生作業</font>
+<font color="#0b5395">**範例 5.4.9**：批改學生作業</font>
 ```{r}
 list(list("student A", c(2,3,4,5)),
      list("student B", NA), # 沒交作業
@@ -1168,7 +1143,7 @@ while(continueCondition){
 ```
 while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。  
 
-<font color="#0b5395">**範例5.4.10**：總共要擲幾次硬幣，才能得到五次正面。</font>
+<font color="#0b5395">**範例 5.4.10**：總共要擲幾次硬幣，才能得到五次正面。</font>
 ```{r}
 sum <- 0
 count <- 0
@@ -1181,7 +1156,7 @@ while(sum<5){
 ```
 之前的 (有限) 迴圈也可以用 while 寫：
 
-<font color="#0b5395">回到**範例5.4.8**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
+<font color="#0b5395">回到**範例 5.4.8**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
 ```{r}
 # for loop
 set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
@@ -1206,7 +1181,7 @@ while(count <= 10){
 }
 print(output)
 ```
-回到**範例5.4.7**</font>
+回到**範例 5.4.7**</font>
 ```{r}
 a <- sample(1:100, 10, replace=T)
 print(a)
