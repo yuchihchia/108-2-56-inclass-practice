@@ -339,6 +339,7 @@ myDemand2(1.2, slope=-1)
 myDemand2(1.2, intercept=5, slope=-1.2) #若有依照參數順序輸入，可省略參數名稱
 ```
 預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。  
+
 ## 5.3 Conditional Execution
 ### if 
 ```
@@ -394,12 +395,7 @@ convert_TaiwanDate2WesternDate <- function(twDate){
 twDate <-  c("民國108年12月5日","民國98年10月5日")
 convert_TaiwanDate2WesternDate(twDate)
 ```
-**練習 5.3.4**：  
-
-1. 寫一個`check_packagee(pkgName)`函數，它會檢查使用者是否有安裝 pkgName 值 (class character，length = 1) 的套件，如果沒有就安裝。  
-2. `check_package()`一次只能偵測一個套件是否有安裝。寫一個`check_packages(pkgNames)` (packages 是複數)，給它 pkgNames input，pkgNames 為 class character，length 任意。  
-
-**練習 5.3.5**：在**範例 5.2.2**中我們建立了機器人 askSilly_weather。  
+**練習 5.3.4**：在**範例 5.2.2**中我們建立了函數 askSilly_weather。  
 若使用者沒有安裝 jsonlite，或縣市裡的「臺」使用簡體「台」都會產生錯誤訊息。請修改 askSilly_weather，解決上述問題。</font>
 ```{r}
 askSilly_weather <- function(locationInput, dateInput){
@@ -407,36 +403,34 @@ askSilly_weather <- function(locationInput, dateInput){
     install.packages(jsonlite)
   }
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
-  
-  locationInput1 <- str_replace(locationInput, "台", "臺")
-  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput1) -> pick_location
-  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
-  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
-  (weatherAtLocation$elementName=="MinT") -> pick_MinT
-  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
-  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  locationInput <- str_replace(locationInput, "台", "臺")
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
+    {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") %>%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> maxT
+  (weatherAtLocation$elementName=="MinT") %>%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
 askSilly_weather("台南市", today())
 ```
-**不重覆下載**  
+**不重複下載**  
+
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。  
 
-
-<font color="#0b5395">**範例 5.3.6**  
+<font color="#0b5395">**範例 5.3.5**  
 ```{r}
 # 檢視步驟耗時elapse time
 system.time(
-  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
-  weather_next36hours
+  jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
 )
 ```
 `SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font>
-```{r results='hide'}
+```{r warning=FALSE}
 askSilly_weather2 <- function(locationInput, dateInput){
-  if(!exists("weather_next36hours")){
-      jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
-      weather_next36hours
+  if(!exists("weather_next36hours")){ #exist(...) 確認該物件是否存在，...限用字串形式
+    jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
     SOAR::Store(weather_next36hours) # 存在.R_cache environment中
   }  
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
@@ -447,27 +441,21 @@ askSilly_weather2 <- function(locationInput, dateInput){
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
-```
-```{r}
 system.time(askSilly_weather("新北市",today()))
 system.time(askSilly_weather("臺北市",today()))
-askSilly_weather("新北市",today())
-askSilly_weather("臺北市",today())
 SOAR::Remove(weather_next36hours)
 system.time(askSilly_weather2("新北市",today()))
 system.time(askSilly_weather2("臺北市",today()))
-askSilly_weather2("新北市",today())
-askSilly_weather2("臺北市",today())
 ```
 ### if else
 ```
-if(condition){
+if (condition) {
   body for TRUE condition
 } else {
   body for FALSE condition
 }
 ```
-<font color="#0b5395">**範例 5.3.7**：  
+<font color="#0b5395">**範例 5.3.6**：  
 $$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$
 ```{r}
@@ -482,7 +470,7 @@ myFun <- function(n){
 myFun(54)
 myFun(33)
 ```
-**範例 5.3.8**：交卷提早時間</font>
+**範例 5.3.7**：交卷提早時間</font>
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1") -> examSubmissionTime
 head(examSubmissionTime$section)
@@ -496,13 +484,11 @@ compute_howEarly <- function(student_i_section, student_i_time){
   howEarly <- deadline - lubridate::ymd_hms(student_i_time, tz="Asia/Taipei")
   return(howEarly)
 }
-studentSequence <- 1:length(examSubmissionTime$section)
-map(studentSequence,
+map(1:length(examSubmissionTime$section),
     ~compute_howEarly(
       examSubmissionTime$section[[.x]],
       examSubmissionTime$time[[.x]])
-    ) -> list_howEarly
-list_howEarly %>%
+    ) %>%
   unlist() -> examSubmissionTime$howEarly
 pick_56 <- examSubmissionTime$section=="56"
 mean(examSubmissionTime$howEarly[pick_56])
@@ -513,21 +499,21 @@ median(examSubmissionTime$howEarly[pick_78])
 ```
 ### if...else if...else
 ```
-if(condition A){
+if (condition A) {
   body for A 
-} else if(condition B){
+} else if (condition B) {
   body for B
-} else if(condition C){
+} else if (condition C) {
   body for C
 } else {
   body for none of the above
 }
 ```
 * 用在「流程需要的分歧不只兩種情境」的狀況。  
-* 依需要可以不斷增加`else if(...){....}`的部份在中間。  
+* 依需要可以不斷增加`else if (...) {....}`的部份在中間。  
 * `else if` 或`else`前面一定要保有前一段情境的結束`}`。  
 
-<font color="#0b5395">**範例 5.3.9**：成績等級。  
+<font color="#0b5395">**範例 5.3.8**：成績等級。  
 
 * 90 以上：優。
 * 80 ~ 89：良。
@@ -553,9 +539,9 @@ if(grade >=90){
   print("待加強")
 }
 ```
-* 各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。  
+* 各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個吻合情境的 body 來執行。  
 
-<font color="#0b5395">回到**範例 5.3.9**：成績等級。  </font>
+<font color="#0b5395">回到**範例 5.3.8**：成績等級。  </font>
 ```{r}
 grade <- 80
 if(grade >=90){
@@ -588,13 +574,11 @@ switch(實現的conditionExpression, #class character
        {    })
 ```
 * 另一種條件式執行，常用在 condition 種類煩雜或要全部以「是/否」問句來切出所有互斥 condition 情境不容易設計時。  
-
-* condition 改成用文字描述，即 conditionExpression。
-
+* condition 改成用文字描述，即 conditionExpression。  
 * 不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：  
   `"conditionExpression文字"={body 內容}` 的 name = value pair  
 
-<font color="#0b5395">**範例 5.3.10**：  
+<font color="#0b5395">**範例 5.3.9**：  
 $$ f(n)=\begin{cases}n/2 & \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 & \mbox{if }n\mbox{ is odd}\end{cases}$$</font>  
 ```{r}
@@ -608,7 +592,7 @@ switch(
 )
 fvalue
 ```
-* `ifelse(test, yes, no)`函數：  
+* `ifelse(test, yes, no)`函數  
     + `test`：class logical 測試條件的結果。  
     + `yes`：結果為 TRUE 時你希望的回傳值。  
     + `no`：結果為 FALSE 時你希望的回傳值。  
@@ -616,7 +600,8 @@ fvalue
 **`{...}` (大括號，brace)**：  
 
 * 若指令只有一行時，`{}`符號可省略。  
-* `function(...){....}`的 body 若只有一行指令可省略`{`、`}`改寫成`function(...) ...`。要小心的是，body 要接在`function(...)`之後不可換行。  
+* `function(...){....}`的 body 若只有一行指令可省略`{`、`}`改寫成`function(...) ...`。  
+    要小心的是，body 要接在`function(...)`之後不可換行。  
 ```{r}
 miniFun <- function() now()
 miniFun()
@@ -659,7 +644,7 @@ print(outcome2)
 #### **cut**  
 `cut()`函數可將「連續型」數值變數的 condition 轉成需要的字串表示。
 ```
-cut(x, c(a,b,c))
+cut(x, c(a,b,c)) #其中 a < b < c
 ```
 cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。  
 
@@ -669,7 +654,7 @@ cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。
 a <- c(1,2,3)
 cut(a, c(1,2,3))
 ```
-<font color="#0b5395">**範例 5.3.11**：成績等級。  
+<font color="#0b5395">**範例 5.3.10**：成績等級。  
 
 * 90 以上：A，同時螢幕出現"優"。 (89<...<=100)  
 * 80 ~ 89：B，同時螢幕出現"良"。  (79<...<=89)  
@@ -679,9 +664,8 @@ cut(a, c(1,2,3))
 grade <- sample(1:100, 10, replace=T) #隨機抽出1~100的數字，重複抽10次
 grade %>%
   cut(c(-1,69,79,89,100)) -> grade
-levels(grade)
-switch(
-  as.character(grade[[1]]),
+grade
+switch(as.character(grade[[1]]),
   "(-1,69]"={
     print("-_-")
     "F"},
@@ -700,12 +684,12 @@ switch(
 ) -> letterGrade # 有回存時要螢幕印出的訊息一定要加print
 letterGrade
 ```
-**範例 5.3.12**：依照**範例 5.3.11**，建立`compute_letterGrade(myGrade)`函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。  
+**範例 5.3.11**：依照**範例 5.3.10**，建立`compute_letterGrade(myGrade)`函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。  
 ```{r}
 compute_letterGrade <- function(myGrade){
   myGrade %>% cut(c(-1,69,79,89,100)) -> myGrade
   switch(
-    as.character(grade[[1]]),
+    as.character(myGrade),
     "(-1,69]"={
       print("-_-")
     "F"},
@@ -726,7 +710,7 @@ compute_letterGrade <- function(myGrade){
 compute_letterGrade(50) -> letterGrade 
 letterGrade
 ```
-**範例 5.3.13**：管家機器人  
+**範例 5.3.12**：管家機器人  
 
 * 早上 (06:00-09:00)：  
     + 媽媽讀《經濟學人》([https://economist.com](https://economist.com))。  
@@ -742,7 +726,6 @@ letterGrade
 ```{r}
 whatNeedToDo_butler <- function(who, nowtime=now()){
   who <- tolower(who)
-
   # 建立可當cutpoints的一天時間點
   cutpoints <- c(glue("{today()} 06:00:00"),
                  glue("{today()} 09:00:00"),
@@ -752,47 +735,52 @@ whatNeedToDo_butler <- function(who, nowtime=now()){
                  glue("{today()+days(1)} 01:00:00"))
   cutpoints %>%
     ymd_hms(tz="Asia/Taipei") -> cutpoints
-  
   # 將nowtime轉成它對應的時段是"morning"、"evening"、"jazz time"或其他
-  cut(nowtime, cutpoints) -> nowtime
-  levels(nowtime)[c(1,3,5)] <-
-    c("morning","evening","jazz time")
-  
+  nowtime <- cut(nowtime, cutpoints)
+  levels(nowtime)[c(1,3,5)] <- c("morning","evening","jazz time")
   # 使用switch決定要做什麼事
-  switch(
-    as.character(nowtime),
-    "morning"={
-      if(str_detect(who, "mom|mommy|mother")){
-        print("要不要來閱讀點財經時事？")
+  if (str_detect(who, "媽|mom|mommy|mother")){
+    switch(
+      as.character(nowtime),
+      "morning"={
+        print("要不要閱讀點財經時事？")
         browseURL("https://economist.com")
-      } else if(str_detect(who, "dad|daddy|father")){
-        print("要不要來閱讀點國際新聞？")
-        browseURL("https://www.wsj.com/")
-      } else if(str_detect(who, "ming")){
-        print("檢查書包東西都有帶嗎？")
-      }
-    },
-    "evening"={
-      if(str_detect(who, "mom|mommy|mother")){
+      },
+      "evening"={
         print("需不需要點餐呢？")
         browseURL("https://www.foodpanda.com.tw/")
-      } else if(str_detect(who, "dad|daddy|father")){
+      },
+      "jazz time"={
+        print("放鬆聽點 Jazz。")
+        browseURL("https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt")
+      },
+      print("尚未規畫行程！")
+    )
+  }
+  if (str_detect(who, "爸|dad|daddy|father")){
+    switch(
+      as.character(nowtime),
+      "morning"={
+        print("要不要來了解國際動態？")
+        browseURL("https://www.wsj.com/")
+      },
+      "evening"={
         print("要不要來規劃週末旅行呢？")
         browseURL("https://www.tripadvisor.com/")
-      } else if(str_detect(who, "ming")){
-        print("作業寫好了嗎？")
-      }
-    },
-    "jazz time"={
-      print("放鬆聽點 Jazz。")
-      browseURL("https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt")
-    },
-    {
+      },
       print("尚未規畫行程！")
-    }
-  )
+    )
+  }
+  if (str_detect(who, "明|ming")){
+    switch(
+      as.character(nowtime),
+      "morning"= print("檢查書包東西都有帶嗎？"),
+      "evening"= print("作業寫好了嗎？"),
+      print("尚未規畫行程！")
+    )
+  }
 }
-whatNeedToDo_butler("Mother")
+whatNeedToDo_butler("小明")
 ```
 ### logical condition
 __all__、**any**
@@ -825,10 +813,10 @@ if(is.factor(myAnswer) && all(myAnswer==correctAnswer)){
 }-> myGrade
 myGrade
 ```
-<font color="#0b5395">**範例 5.3.14**：  
-只要符合以下任一資格均可申請補助：  
+<font color="#0b5395">**範例 5.3.13**：只要符合以下任一資格均可申請補助  
+
 1. 年齡 65 歲以上。  
-2. 家庭子孩數 3 位以上。</font>
+2. 家庭孩子數 3 位以上。</font>
 ```{r}
 apply_subsidy <- function(myAge, myChildrenNumber){
   if(myAge >=65 | myChildrenNumber >3){
@@ -945,7 +933,7 @@ sampleData[[1]][[1]]
 我們在使用 map 時寫 copy/paste 程序3次，目的在確認：  
 
 * Sequence：即`[[1]]`、`[[2]]`、`[[3]]`出現的位置。  
-* Body：要重覆做的 SOP，即`~.x[[1]]`。  
+* Body：要重複做的 SOP，即`~.x[[1]]`。  
 
 而 map 最後會把每次 body 的執行結果存在：  
 
