@@ -97,24 +97,26 @@ highestPerson <-
 ### `.`省略原則  
 若代表中間物件的`.`在函數的**第一位**，則`.`**可省略不寫**，連它後面的`,`也一起去掉。  
 小心若**不在第一位**則不可省略`.`。  
+
+<font color="#0b5395">回到**範例 5.1.2**
 ```{r}
 levels(region) %>% 
   str_replace("台北","北部") %>%
   str_replace("花蓮|台東","東部") %>%
   str_replace("台中","中部") -> levels(region)
 ```
-要小心`%>%`是將左邊output放到右邊函數，這裡的右邊函數指的是最外圍的函數：  
+要小心`%>%`是將左邊output放到右邊函數，這裡的右邊函數指的是最外圍的函數。  
 
-<font color="#0b5395">**範例 5.1.3**</font>
+**範例 5.1.3**
 ```{r error=TRUE}
 population <- c(`cityA`=500,`cityB`=1500, `cityC`=399)
 cities <- c("cityA","cityA","cityB","cityB","cityC")
-# 錯誤示範
+# 錯誤寫法
 population %>% 
   names(sort(.)) %>%
   factor(cities, levels=.) -> cities
 ```
-`%>%`是把 population 放到 names() 的 input 裡，而非 sort()，但 names() 的 input 位置已被 sort 佔走。  
+`%>%`會把 population 放到`names()`的 input 裡，而非`sort()`，但`names()`的 input 位置已被 `sort`佔走。</font>  
 ```{r}
 # 正確寫法
 population %>%
@@ -123,7 +125,7 @@ population %>%
   factor(cities, levels=.) -> cities
 ```
 ### 串接非單純函數程序
-若遇到 pipe 串接的下一段並不是單純的**函數**的話，可以用`{}`把此段內容括起來並把前一段output要放的位置換成`.`。  
+若遇到 pipe 串接的下一段並不是單純的**函數**的話，可以用`{}`把此段內容括起來並把前一段 output 要放的位置換成`.`。  
 
 <font color="#0b5395">**範例 5.1.4**：找出 dataList 中元素 class 為 numeric 裡那些大於 50 的數字。
 ```{r}
@@ -138,8 +140,9 @@ map(dataList, ~is.numeric(.x)) %>%
   {.[. > 50]} -> bigNumber
 bigNumber
 ```
-再回到**範例 5.1.3**。</font>
+回到**範例 5.1.3**。</font>
 ```{r}
+# 也可以這樣寫
 population %>% 
   {names(sort(.))} %>%
   factor(cities, levels=.) -> cities
@@ -147,26 +150,27 @@ population %>%
 ### 綜合練習
 <font color="#0b5395">**練習一**</font>
 ```{r}
+# 新型冠狀病毒各縣市感染人數
 jsonlite::fromJSON("https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.json") -> covid19
+# 各縣市人口
 jsonlite::fromJSON(
   "https://www.dropbox.com/s/jckqryeh5zeat5w/regionPopulation.json?dl=1"
-) -> population
-unlist(population) -> population
-```
-```{r}
+) %>%
+unlist() -> population
+
 covid19$`縣市` <- factor(covid19$`縣市`)
 covid19$`縣市` %>%
-  levels(.) %>%
+  levels() %>%
   population[.] %>%
   sort(decreasing = T) %>%
-  names(.) %>%
+  names() %>%
   factor(covid19$`縣市`, levels=.) -> covid19$`縣市`
 levels(covid19$`縣市`)
 ```
-## 5.2 Funtion
+## 5.2 Function
 ### 函數定義
 <font color="#0b5395">**範例5.2.1**：需求函數  
-$$ q_d=10-5p $$
+$$ q_{d} = 10 - 5p $$
 ```{r}
 demand <- #創造一個物件(函數) demand
   function(p){
@@ -194,26 +198,25 @@ q_d1.2
 * 最近一步會使用到電腦記憶體的運算值會暫時記在：
 ```{r}
 .Last.value
-# 要長久存在Global Environment要指定物件名稱(不要求與q_d同名)
+# 要長久存在Global Environment要指定物件名稱(沒有一定要與q_d同名)
 demand_return(1.2) -> q_d1.2
 ```
-* `eturn(q_d)`只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。  
-
+* `return(q_d)`只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。  
 * 實際上，`{...}`裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。  
 
 <font color="#0b5395">**範例5.2.2**：今日天氣  
-只要告訴機器人 askSilly_weather 日期、地點  
-就可以得到該地區今日的最高溫及最低溫。  
+只要告訴機器人 askSilly_weather 日期、地點，就可以得到該地區今日的最高溫及最低溫。  
 ```{r}
 askSilly_weather <- function(locationInput, dateInput){
+  # 今明 36 小時天氣預報
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
   
-  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
-  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
-  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
-  (weatherAtLocation$elementName=="MinT") -> pick_MinT
-  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
-  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
+    weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]] -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") %>%
+    weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]] -> maxT
+  (weatherAtLocation$elementName=="MinT") %>%
+    weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]] -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
 askSilly_weather("新北市", today())
@@ -1318,6 +1321,6 @@ DV(a,R)
 
 
 </font>
-## 期末考
 
+## 期末考
 </font>
