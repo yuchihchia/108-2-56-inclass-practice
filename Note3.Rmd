@@ -205,29 +205,39 @@ demand_return(1.2) -> q_d1.2
 * 實際上，`{...}`裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。  
 
 <font color="#0b5395">**範例5.2.2**：今日天氣  
-只要告訴機器人 askSilly_weather 日期、地點，就可以得到該地區今日的最高溫及最低溫。  
+建立 askSilly_weather(locationInput, dateInput) 函數，其中  
+
+* Arguments：  
+    - locationInput：縣市 class character。  
+    - dateInput：日期 class date。  
+* Value：回傳該地區當日的最高溫及最低溫。
 ```{r}
 askSilly_weather <- function(locationInput, dateInput){
-  # 今明 36 小時天氣預報
+  # 今明36小時天氣預報
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
   
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
-    weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]] -> weatherAtLocation
+    {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -> weatherAtLocation
   (weatherAtLocation$elementName=="MaxT") %>%
-    weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]] -> maxT
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> maxT
   (weatherAtLocation$elementName=="MinT") %>%
-    weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]] -> minT
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
 askSilly_weather("新北市", today())
-askSilly_weather("花蓮縣", today())
+askSilly_weather("屏東縣", today())
 ```
 **範例5.2.3**：國際時間轉換  
-打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：  
+建立 what_time_it_is 函數，其中  
+
+* Arguments：location 為 class character。  
+* Value：回傳現在該地點幾點了。
+
+使用方式如：  
 ```
 what_time_it_is("Europe/Paris")
 ```
-它會依照你電腦目前時間，即輸入`now()`得到的時間，去告訴你現在巴黎幾點。  </font>
+依照你電腦目前時間，告訴你現在巴黎幾點了。  </font>
 ```{r}
 what_time_it_is <- function(location){
   now() %>%
@@ -237,11 +247,11 @@ what_time_it_is <- function(location){
 what_time_it_is("Europe/Paris")
 ```
 ### 函數的組成
-<font color="#0b5395">回到**範例5.2.1**：需求函數
+<font color="#0b5395">回到**範例5.2.1**：需求函數。  
 ```{r}
 class(demand_return)
 ```
-回到**範例5.2.2**：今日天氣</font>
+回到**範例5.2.2**：今日天氣。  </font>
 ```{r}
 # 查詢函數formals arguments要求
 formals(askSilly_weather)
@@ -250,34 +260,34 @@ body(askSilly_weather)
 ```
 函數可以存在 list 裡。(其實幾乎所有的物件不管什麼 class 都可以存在 list 裡)  
 
-<font color="#0b5395">**範例5.2.4**</font>
+<font color="#0b5395">**範例5.2.4**：使用**範例5.2.1**的需求函數 demand_return。</font>
 ```{r}
 learning_topics <- 
   list(
     subject="函數",
     date=lubridate::ymd("2020-06-03"),
     functionsCreated=list(
-      demand=demand_return #等號右邊是呼叫demand_return的定義值，也就是function(...){...}值定義本身。
+      demand = demand_return #等號右邊是呼叫demand_return的定義值，也就是function(...){...}值定義本身。
     )
   )
 learning_topics$functionsCreated$demand(1.2)
 ```
 ### Environment
-<font color="#0b5395">回到**範例5.2.1**：需求函數</font>
-```{r}
-typeof(demand_return)
-```
-* __closure__：  
-  function 本身的運作並不能只靠它的定義值`function(...){...}`，還要有適當的環境 (environment) 條件才能生存。若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要包含 (enclose) 它的 (生存) 環境一起存。這種儲存型態叫 closure (閉包)。
+__closure__：  
+
+*  function 本身的運作並不能只靠它的定義值`function(...){...}`，還要有適當的環境 (environment) 條件才能生存。  
+*  若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要連同 (enclose) 它的 (生存) 環境一起存。  
+*  這種儲存型態叫 closure (閉包)。  
 
 <font color="#0b5395">回到**範例5.2.1**：需求函數
 ```{r}
+typeof(demand_return)
 # 查詢函數執行所要求環境
 environment(demand_return)
 # 若函數執行需要Global environment已存在某些物件，查詢需要哪些物件
 codetools::findGlobals(demand_return)
 ```
-**範例5.2.5**：需求函數
+**範例5.2.5**：需求函數</font>
 ```{r error=TRUE}
 intercept <- 10
 slope <- -5
@@ -296,42 +306,41 @@ myDemand 的運作需要 global environment 裡的 intercept、slope 物件。�
 
 * 沒有 intercept、slope 在 global environment 裡它無法運作。  
 
-* global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 **Lazy evaluation**，惰性求值)
+* global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 **lazy evaluation**，惰性求值)
 
-再回到**範例5.2.5**：需求函數</font>
+<font color="#0b5395">再回到**範例5.2.5**：需求函數</font>
 ```{r}
 intercept <- 10
 slope <- -5
-myDemand(1.2) #q_d = 10-5p
+myDemand(1.2) #q_d = 10-5*p
 slope <- -1
-myDemand(1.2) #q_d = 10-1.2p
+myDemand(1.2) #q_d = 10-1*p
 intercept <- 5
 slope <- -1.2
-myDemand(1.2) #q_d = 5-1.2p
+myDemand(1.2) #q_d = 5-1.2*p
 ```
 ### 預設值
-函數lazy evaluation的特性，讓函數的運作：  
+函數 lazy evaluation 的特性：  
 
-* 具有隨時可改變運作狀態的彈性；但  
-
-* 該工具若落在電腦知識不足的使用者手上會有誤動global environment而產生運作錯誤的危機。  
+* 讓函數的運作具有隨時可改變運作狀態的彈性。  
+* 若誤動 global environment 將產生運作錯誤。  
 
 <font color="#0b5395">**範例5.2.6**：需求函數</font>
 ```{r}
-myDemand2 <- function(p, intercept=10, slope=-5){
+myDemand2 <- function(p, intercept=10, slope=-5){ 
+  #預設intercept=10、slope=-5，仍可透過輸入參數，改變其值
   q_d <- intercept + slope*p
   return(q_d)
 }
 environment(myDemand2)
-findGlobals(myDemand2) # 不依靠Global environment裡的intercept、slope
+findGlobals(myDemand2) #不依靠Global environment裡的intercept、slope
 myDemand2(1.2)
 myDemand2(1.2, slope=-1)
-myDemand2(1.2, intercept=5, slope=-1.2)
+myDemand2(1.2, intercept=5, slope=-1.2) #若有依照參數順序輸入，可省略參數名稱
 ```
 預設值是「平常不需要動到的彈性 arguments」，習慣上定義時最好放在 arguments 的最後面。  
 
-### 綜合練習.
-
+### 綜合練習
 <font color="#0b5395">**練習一**</font>
 ```{r}
 when_busArrives <- function(busRoute, busStop){
@@ -934,9 +943,9 @@ which.max(utility2)
 
 1. 請寫一個`str_cut(x, cutpoints)`函數，它能萬用的將 x 轉成依中文組距描述的類別資料。  
 
-    Arguement：  
+    Argument：  
     * x：class integer.  
-    * cutpoints：class character, 如：c("未滿200,000元", "200,000～299,999元", "300,000元及以上")  
+    * cutpoints：class character，如：`c("未滿200,000元", "200,000～299,999元", "300,000元及以上")`。  
 
     Value：回傳值為 x 依中文組距描述分類後的 factor。</font>
 ```{r}

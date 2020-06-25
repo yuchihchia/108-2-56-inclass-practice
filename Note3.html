@@ -446,30 +446,31 @@ q_d1.2</code></pre>
 <pre class="r"><code>.Last.value</code></pre>
 <pre><code>## $help_type
 ## NULL</code></pre>
-<pre class="r"><code># 要長久存在Global Environment要指定物件名稱(不要求與q_d同名)
+<pre class="r"><code># 要長久存在Global Environment要指定物件名稱(沒有一定要與q_d同名)
 demand_return(1.2) -&gt; q_d1.2</code></pre>
 <ul>
-<li><p><code>eturn(q_d)</code>只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。</p></li>
-<li><p>實際上，<code>{...}</code>裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。</p></li>
+<li><code>return(q_d)</code>只會回傳 q_d 的「值」但不會回傳整個 q_d 物件在 global environment 裡。<br />
+</li>
+<li>實際上，<code>{...}</code>裡所創造的物件都只是「暫時的」且「不放在 global environment」，函數運作完就刪除，所以 global environment 裡就算有同名物件，也不會因函數運作而被不小心更動。</li>
 </ul>
 <p><font color="#0b5395"><strong>範例5.2.2</strong>：今日天氣<br />
-只要告訴機器人 askSilly_weather 日期、地點<br />
-就可以得到該地區今日的最高溫及最低溫。</p>
+只要告訴機器人 askSilly_weather 日期、地點，就可以得到該地區今日的最高溫及最低溫。</p>
 <pre class="r"><code>askSilly_weather &lt;- function(locationInput, dateInput){
+  # 今明36小時天氣預報
   jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours
   
-  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -&gt; pick_location
-  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
-  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt; pick_MaxT
-  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt; pick_MinT
-  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
-  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %&gt;% 
+    {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -&gt; weatherAtLocation
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) %&gt;%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -&gt; maxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) %&gt;%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -&gt; minT
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
 <pre><code>## 新北市 2020-06-25 氣溫，最高36度，最低32度。</code></pre>
-<pre class="r"><code>askSilly_weather(&quot;花蓮縣&quot;, today())</code></pre>
-<pre><code>## 花蓮縣 2020-06-25 氣溫，最高33度，最低30度。</code></pre>
+<pre class="r"><code>askSilly_weather(&quot;屏東縣&quot;, today())</code></pre>
+<pre><code>## 屏東縣 2020-06-25 氣溫，最高34度，最低31度。</code></pre>
 <p><strong>範例5.2.3</strong>：國際時間轉換<br />
 打造一個國際時間轉換機器人叫what_time_it_is，使用方式如：</p>
 <pre><code>what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
@@ -480,7 +481,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-25 06:12:22 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-25 06:39:08 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -498,13 +499,16 @@ formals(askSilly_weather)</code></pre>
 body(askSilly_weather)</code></pre>
 <pre><code>## {
 ##     weather_next36hours &lt;- jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;)
-##     pick_location &lt;- (weather_next36hours$cwbopendata$dataset$location$locationName == 
-##         locationInput)
-##     weatherAtLocation &lt;- weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]]
-##     pick_MaxT &lt;- (weatherAtLocation$elementName == &quot;MaxT&quot;)
-##     pick_MinT &lt;- (weatherAtLocation$elementName == &quot;MinT&quot;)
-##     maxT &lt;- weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]]
-##     minT &lt;- weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]]
+##     weatherAtLocation &lt;- (weather_next36hours$cwbopendata$dataset$location$locationName == 
+##         locationInput) %&gt;% {
+##         weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]
+##     }
+##     maxT &lt;- (weatherAtLocation$elementName == &quot;MaxT&quot;) %&gt;% {
+##         weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]
+##     }
+##     minT &lt;- (weatherAtLocation$elementName == &quot;MinT&quot;) %&gt;% {
+##         weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]
+##     }
 ##     glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 ## }</code></pre>
 <p>函數可以存在 list 裡。(其實幾乎所有的物件不管什麼 class 都可以存在 list 裡)</p>
@@ -740,7 +744,7 @@ system.time(
   weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.08</code></pre>
+##    0.02    0.00    0.06</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
@@ -758,10 +762,10 @@ system.time(
 }</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.07</code></pre>
+##    0.06    0.00    0.11</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.01    0.00    0.08</code></pre>
+##    0.03    0.00    0.10</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;新北市&quot;,today())</code></pre>
 <pre><code>## 新北市 2020-06-25 氣溫，最高36度，最低32度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;臺北市&quot;,today())</code></pre>
@@ -946,7 +950,7 @@ fvalue</code></pre>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-25 12:12:28 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-25 12:39:14 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -1034,9 +1038,9 @@ levels(grade)</code></pre>
     &quot;A&quot;
     }
 ) -&gt; letterGrade # 有回存時要螢幕印出的訊息一定要加print</code></pre>
-<pre><code>## [1] &quot;-_-&quot;</code></pre>
+<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;F&quot;</code></pre>
+<pre><code>## [1] &quot;A&quot;</code></pre>
 <p><strong>範例5.3.12</strong>：依照<strong>範例5.3.11</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
 <pre class="r"><code>compute_letterGrade &lt;- function(myGrade){
   myGrade %&gt;% cut(c(-1,69,79,89,100)) -&gt; myGrade
@@ -1060,9 +1064,9 @@ levels(grade)</code></pre>
   ) -&gt; letterGrade
 }
 compute_letterGrade(50) -&gt; letterGrade </code></pre>
-<pre><code>## [1] &quot;-_-&quot;</code></pre>
+<pre><code>## [1] &quot;好棒棒&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;F&quot;</code></pre>
+<pre><code>## [1] &quot;A&quot;</code></pre>
 <p><strong>範例5.3.13</strong>：管家機器人</p>
 <ul>
 <li>早上 (06:00-09:00)：
@@ -1209,8 +1213,7 @@ apply_subsidy(40,5)</code></pre>
 </ul>
 <pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
 y</code></pre>
-<pre><code>##  [1] 100  94  71  85  66  47  49  75  48  94  67  67  41  88  79  87  55  79  88
-## [20]  89</code></pre>
+<pre><code>##  [1] 83 75 93 91 62 44 51 48 69 84 81 40 88 67 92 76 50 58 73 76</code></pre>
 <pre class="r"><code>dplyr::case_when(
   y &lt; 60 ~ &quot;F&quot;,
   60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
@@ -1218,8 +1221,8 @@ y</code></pre>
   80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
   90&lt;=y ~ &quot;A&quot;
 )</code></pre>
-<pre><code>##  [1] &quot;A&quot; &quot;A&quot; &quot;C&quot; &quot;B&quot; &quot;D&quot; &quot;F&quot; &quot;F&quot; &quot;C&quot; &quot;F&quot; &quot;A&quot; &quot;D&quot; &quot;D&quot; &quot;F&quot; &quot;B&quot; &quot;C&quot; &quot;B&quot; &quot;F&quot; &quot;C&quot; &quot;B&quot;
-## [20] &quot;B&quot;</code></pre>
+<pre><code>##  [1] &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;A&quot; &quot;D&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; &quot;D&quot; &quot;B&quot; &quot;B&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;A&quot; &quot;C&quot; &quot;F&quot; &quot;F&quot; &quot;C&quot;
+## [20] &quot;C&quot;</code></pre>
 </div>
 </div>
 <div id="綜合練習-1" class="section level3">
@@ -1507,11 +1510,11 @@ for(.x in 1:10){
 <span class="math display">\[\sum_{i=1}^{10} a_{i}\]</span> where <span class="math inline">\(a_i \in [1, 100] \cap \mathbb{N}\)</span>, <span class="math inline">\(\forall i \in \mathbb{N}\)</span>.</font></p>
 <pre class="r"><code>a &lt;- sample(1:100, 10, replace=T) 
 print(a)</code></pre>
-<pre><code>##  [1] 38 67 82 11 98  7 25 99 84 14</code></pre>
+<pre><code>##  [1] 25 67 52 44 11 42 41 53 34 64</code></pre>
 <pre class="r"><code>sum &lt;- 0
 for(.x in 1:10) sum &lt;- sum + a[[.x]] # 指令只有一行，{}符號可省略
 print(sum)</code></pre>
-<pre><code>## [1] 525</code></pre>
+<pre><code>## [1] 433</code></pre>
 </div>
 <div id="長度不一型-output" class="section level4">
 <h4>長度不一型 output</h4>
@@ -1525,7 +1528,7 @@ for(.x in 1:10){
   }
 }
 print(output)</code></pre>
-<pre><code>## [1] 18 69</code></pre>
+<pre><code>## [1] 36 96</code></pre>
 </div>
 <div id="nextbreak" class="section level4">
 <h4>next、break</h4>
@@ -1584,12 +1587,15 @@ while(sum&lt;5){
   if(newToss == &quot;正&quot;) sum &lt;- sum+1
   print(glue::glue(&quot;已擲{count}次得到{sum}次正面&quot;))
 }</code></pre>
-<pre><code>## 已擲1次得到1次正面
-## 已擲2次得到2次正面
-## 已擲3次得到3次正面
-## 已擲4次得到4次正面
-## 已擲5次得到4次正面
-## 已擲6次得到5次正面</code></pre>
+<pre><code>## 已擲1次得到0次正面
+## 已擲2次得到1次正面
+## 已擲3次得到2次正面
+## 已擲4次得到3次正面
+## 已擲5次得到3次正面
+## 已擲6次得到3次正面
+## 已擲7次得到3次正面
+## 已擲8次得到4次正面
+## 已擲9次得到5次正面</code></pre>
 <p>之前的 (有限) 迴圈也可以用 while 寫：</p>
 <p><font color="#0b5395">回到<strong>範例5.4.8</strong>：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</p>
 <pre class="r"><code># for loop
@@ -1679,22 +1685,22 @@ myFun2(c(-11,32,19,20))</code></pre>
 <pre class="r"><code>askSilly_weather2(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
 <pre><code>## Warning in weather_next36hours$cwbopendata$dataset$location$locationName == : 較
 ## 長的物件長度並非較短物件長度的倍數</code></pre>
-<pre><code>## 臺北市 2020-06-25 12:13:08 氣溫，最高37度，最低32度。
-## 新北市 2020-06-25 12:13:08 氣溫，最高37度，最低32度。
-## 臺中市 2020-06-25 12:13:08 氣溫，最高37度，最低32度。</code></pre>
+<pre><code>## 臺北市 2020-06-25 12:39:52 氣溫，最高37度，最低32度。
+## 新北市 2020-06-25 12:39:52 氣溫，最高37度，最低32度。
+## 臺中市 2020-06-25 12:39:52 氣溫，最高37度，最低32度。</code></pre>
 <p>請創造 askSilly_weather3，它是 vectorized function。</p>
 <pre class="r"><code>askSilly_weather3 &lt;- function(location, time){
   map(seq_along(location), ~{askSilly_weather2(location[[.x]], time)})
 }
 askSilly_weather3(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
 <pre><code>## [[1]]
-## 臺北市 2020-06-25 12:13:08 氣溫，最高37度，最低32度。
+## 臺北市 2020-06-25 12:39:52 氣溫，最高37度，最低32度。
 ## 
 ## [[2]]
-## 新北市 2020-06-25 12:13:08 氣溫，最高36度，最低32度。
+## 新北市 2020-06-25 12:39:52 氣溫，最高36度，最低32度。
 ## 
 ## [[3]]
-## 臺中市 2020-06-25 12:13:08 氣溫，最高34度，最低31度。</code></pre>
+## 臺中市 2020-06-25 12:39:52 氣溫，最高34度，最低31度。</code></pre>
 <p><strong>練習三</strong>：平均值與標準差<br />
 以下程式隨機自 0-100 抽出 30 個數字：</p>
 <pre class="r"><code>a &lt;- sample(0:100,30, replace=T)
@@ -1734,9 +1740,12 @@ arguments：</p>
 }
 DV(a,R)</code></pre>
 <pre><code>## [1] 464367.5</code></pre>
-<p></font> ## 期末考</p>
 <p></font></p>
 </div>
+</div>
+<div id="期末考" class="section level2">
+<h2>期末考</h2>
+<p></font></p>
 </div>
 </div>
 
