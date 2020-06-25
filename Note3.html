@@ -1601,7 +1601,7 @@ levels(region)</code></pre>
 <h3><code>.</code>省略原則</h3>
 <p>若代表中間物件的<code>.</code>在函數的<strong>第一位</strong>，則<code>.</code><strong>可省略不寫</strong>，連它後面的<code>,</code>也一起去掉。<br />
 小心若<strong>不在第一位</strong>則不可省略<code>.</code>。</p>
-<p><font color="#0b5395">回到<strong>範例 5.1.2</strong></p>
+<p><font color="#0b5395">回到<strong>範例 5.1.2</strong>。</p>
 <pre class="r"><code>levels(region) %&gt;% 
   str_replace(&quot;台北&quot;,&quot;北部&quot;) %&gt;%
   str_replace(&quot;花蓮|台東&quot;,&quot;東部&quot;) %&gt;%
@@ -1672,7 +1672,7 @@ levels(covid19$`縣市`)</code></pre>
 <h2>5.2 Function</h2>
 <div id="函數定義" class="section level3">
 <h3>函數定義</h3>
-<p><font color="#0b5395"><strong>範例 5.2.1</strong>：需求函數<br />
+<p><font color="#0b5395"><strong>範例 5.2.1</strong>：需求函數。<br />
 <span class="math display">\[ q_{d} = 10 - 5p \]</span></p>
 <pre class="r"><code>demand &lt;- #創造一個物件(函數) demand
   function(p){
@@ -1685,7 +1685,7 @@ q_d1.2</code></pre>
 <pre><code>## [1] 4</code></pre>
 <p></font><br />
 <strong>return</strong></p>
-<p><font color="#0b5395">回到<strong>範例 5.2.1</strong>：需求函數</font></p>
+<p><font color="#0b5395">回到<strong>範例 5.2.1</strong>：需求函數。</font></p>
 <pre class="r"><code>demand_return &lt;- function(p){
     q_d &lt;- 10-5*p
     return(q_d)
@@ -1734,9 +1734,9 @@ demand_return(1.2) -&gt; q_d1.2</code></pre>
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
 }
 askSilly_weather(&quot;新北市&quot;, today())</code></pre>
-<pre><code>## 新北市 2020-06-25 氣溫，最高36度，最低32度。</code></pre>
+<pre><code>## 新北市 2020-06-25 氣溫，最高32度，最低28度。</code></pre>
 <pre class="r"><code>askSilly_weather(&quot;屏東縣&quot;, today())</code></pre>
-<pre><code>## 屏東縣 2020-06-25 氣溫，最高34度，最低31度。</code></pre>
+<pre><code>## 屏東縣 2020-06-25 氣溫，最高30度，最低26度。</code></pre>
 <p><strong>範例 5.2.3</strong>：國際時間轉換<br />
 建立 what_time_it_is 函數，其中</p>
 <ul>
@@ -1753,7 +1753,7 @@ askSilly_weather(&quot;新北市&quot;, today())</code></pre>
   return(.)
 }
 what_time_it_is(&quot;Europe/Paris&quot;)</code></pre>
-<pre><code>## [1] &quot;2020-06-25 09:13:59 CEST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-25 11:40:26 CEST&quot;</code></pre>
 </div>
 <div id="函數的組成" class="section level3">
 <h3>函數的組成</h3>
@@ -1806,7 +1806,7 @@ learning_topics$functionsCreated$demand(1.2)</code></pre>
 </li>
 <li>這種儲存型態叫 closure (閉包)。</li>
 </ul>
-<p><font color="#0b5395">回到<strong>範例 5.2.1</strong>：需求函數</p>
+<p><font color="#0b5395">回到<strong>範例 5.2.1</strong>：需求函數。</p>
 <pre class="r"><code>typeof(demand_return)</code></pre>
 <pre><code>## [1] &quot;closure&quot;</code></pre>
 <pre class="r"><code># 查詢函數執行所要求環境
@@ -1815,7 +1815,7 @@ environment(demand_return)</code></pre>
 <pre class="r"><code># 若函數執行需要Global environment已存在某些物件，查詢需要哪些物件
 codetools::findGlobals(demand_return)</code></pre>
 <pre><code>## [1] &quot;-&quot;      &quot;*&quot;      &quot;{&quot;      &quot;&lt;-&quot;     &quot;return&quot;</code></pre>
-<p><strong>範例5.2.5</strong>：需求函數</font></p>
+<p><strong>範例5.2.5</strong>：需求函數。</font></p>
 <pre class="r"><code>intercept &lt;- 10
 slope &lt;- -5
 myDemand &lt;- function(p){
@@ -1838,7 +1838,7 @@ demand_return(1.2) # 維持正常運作</code></pre>
 <li><p>沒有 intercept、slope 在 global environment 裡它無法運作。</p></li>
 <li><p>global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 <strong>lazy evaluation</strong>，惰性求值)</p></li>
 </ul>
-<p><font color="#0b5395">再回到<strong>範例 5.2.5</strong>：需求函數</font></p>
+<p><font color="#0b5395">再回到<strong>範例 5.2.5</strong>：需求函數。</font></p>
 <pre class="r"><code>intercept &lt;- 10
 slope &lt;- -5
 myDemand(1.2) #q_d = 10-5*p</code></pre>
@@ -1859,7 +1859,7 @@ myDemand(1.2) #q_d = 5-1.2*p</code></pre>
 </li>
 <li>若誤動 global environment 將產生運作錯誤。</li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.2.6</strong>：需求函數</font></p>
+<p><font color="#0b5395"><strong>範例 5.2.6</strong>：需求函數。</font></p>
 <pre class="r"><code>myDemand2 &lt;- function(p, intercept=10, slope=-5){ 
   #預設intercept=10、slope=-5，仍可透過輸入參數，改變其值
   q_d &lt;- intercept + slope*p
@@ -1948,18 +1948,18 @@ askSilly_weather(&quot;台南市&quot;, today())</code></pre>
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     flatten</code></pre>
-<pre><code>## 臺南市 2020-06-25 氣溫，最高32度，最低31度。</code></pre>
+<pre><code>## 臺南市 2020-06-25 氣溫，最高31度，最低28度。</code></pre>
 <p><strong>不重複下載</strong></p>
 <ul>
 <li>若每執行一次程式，就要匯入外部檔案，徒增運算時間。</li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.3.6</strong></p>
+<p><font color="#0b5395"><strong>範例 5.3.5</strong></p>
 <pre class="r"><code># 檢視步驟耗時elapse time
 system.time(
   jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt; weather_next36hours
 )</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.02    0.08</code></pre>
+##    0.03    0.01    0.10</code></pre>
 <p><code>SOAR::Store(weather_next36hours)</code>會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font></p>
 <pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){ #exist(...) 確認該物件是否存在，...限用字串形式
@@ -1976,14 +1976,14 @@ system.time(
 }
 system.time(askSilly_weather(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.08    0.00    0.13</code></pre>
+##    0.03    0.00    0.11</code></pre>
 <pre class="r"><code>system.time(askSilly_weather(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.06    0.00    0.11</code></pre>
+##    0.05    0.00    0.10</code></pre>
 <pre class="r"><code>SOAR::Remove(weather_next36hours)
 system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
-##    0.03    0.00    0.03</code></pre>
+##    0.02    0.00    0.01</code></pre>
 <pre class="r"><code>system.time(askSilly_weather2(&quot;臺北市&quot;,today()))</code></pre>
 <pre><code>##    user  system elapsed 
 ##       0       0       0</code></pre>
@@ -1995,7 +1995,7 @@ system.time(askSilly_weather2(&quot;新北市&quot;,today()))</code></pre>
 } else {
   body for FALSE condition
 }</code></pre>
-<p><font color="#0b5395"><strong>範例 5.3.7</strong>：<br />
+<p><font color="#0b5395"><strong>範例 5.3.6</strong>：<br />
 <span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></p>
 <pre class="r"><code>myFun &lt;- function(n){
@@ -2010,7 +2010,7 @@ myFun(54)</code></pre>
 <pre><code>## [1] 27</code></pre>
 <pre class="r"><code>myFun(33)</code></pre>
 <pre><code>## [1] -17</code></pre>
-<p><strong>範例 5.3.8</strong>：交卷提早時間</font></p>
+<p><strong>範例 5.3.7</strong>：交卷提早時間。</font></p>
 <pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1&quot;) -&gt; examSubmissionTime
 head(examSubmissionTime$section)</code></pre>
 <pre><code>## [1] &quot;56&quot; &quot;78&quot; &quot;78&quot; &quot;78&quot; &quot;56&quot; &quot;78&quot;</code></pre>
@@ -2045,11 +2045,11 @@ mean(examSubmissionTime$howEarly[pick_78])</code></pre>
 </div>
 <div id="ifelse-ifelse" class="section level3">
 <h3>if…else if…else</h3>
-<pre><code>if(condition A){
+<pre><code>if (condition A) {
   body for A 
-} else if(condition B){
+} else if (condition B) {
   body for B
-} else if(condition C){
+} else if (condition C) {
   body for C
 } else {
   body for none of the above
@@ -2057,11 +2057,11 @@ mean(examSubmissionTime$howEarly[pick_78])</code></pre>
 <ul>
 <li>用在「流程需要的分歧不只兩種情境」的狀況。<br />
 </li>
-<li>依需要可以不斷增加<code>else if(...){....}</code>的部份在中間。<br />
+<li>依需要可以不斷增加<code>else if (...) {....}</code>的部份在中間。<br />
 </li>
 <li><code>else if</code> 或<code>else</code>前面一定要保有前一段情境的結束<code>}</code>。</li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.3.9</strong>：成績等級。</p>
+<p><font color="#0b5395"><strong>範例 5.3.8</strong>：成績等級。</p>
 <ul>
 <li>90 以上：優。</li>
 <li>80 ~ 89：良。</li>
@@ -2081,9 +2081,9 @@ mean(examSubmissionTime$howEarly[pick_78])</code></pre>
 }</code></pre>
 <pre><code>## [1] &quot;良&quot;</code></pre>
 <ul>
-<li>各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個結果的 body 來執行。</li>
+<li>各情境一定要互斥，即不可以有兩個情境有可能同時為 TRUE，如果發生多個情境吻合會以第一個吻合情境的 body 來執行。</li>
 </ul>
-<p><font color="#0b5395">回到<strong>範例 5.3.9</strong>：成績等級。 </font></p>
+<p><font color="#0b5395">回到<strong>範例 5.3.8</strong>：成績等級。 </font></p>
 <pre class="r"><code>grade &lt;- 80
 if(grade &gt;=90){
   print(&quot;優&quot;)
@@ -2116,12 +2116,14 @@ if(grade &gt;=90){
        &quot;conditionExpressionN&quot;= {    },
        {    })</code></pre>
 <ul>
-<li><p>另一種條件式執行，常用在 condition 種類煩雜或要全部以「是/否」問句來切出所有互斥 condition 情境不容易設計時。</p></li>
-<li><p>condition 改成用文字描述，即 conditionExpression。</p></li>
-<li><p>不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：<br />
-<code>&quot;conditionExpression文字&quot;={body 內容}</code> 的 name = value pair</p></li>
+<li>另一種條件式執行，常用在 condition 種類煩雜或要全部以「是/否」問句來切出所有互斥 condition 情境不容易設計時。<br />
+</li>
+<li>condition 改成用文字描述，即 conditionExpression。<br />
+</li>
+<li>不同 conditionExpression 與對應 body 內容改成使用配對成一對的方式：<br />
+<code>&quot;conditionExpression文字&quot;={body 內容}</code> 的 name = value pair</li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.3.10</strong>：<br />
+<p><font color="#0b5395"><strong>範例 5.3.9</strong>：<br />
 <span class="math display">\[ f(n)=\begin{cases}n/2 &amp; \mbox{if }n\mbox{ is even} \\
 -(n+1)/2 &amp; \mbox{if }n\mbox{ is odd}\end{cases}\]</span></font></p>
 <pre class="r"><code>n&lt;- 540
@@ -2135,7 +2137,7 @@ switch(
 fvalue</code></pre>
 <pre><code>## [1] 270</code></pre>
 <ul>
-<li><code>ifelse(test, yes, no)</code>函數：
+<li><code>ifelse(test, yes, no)</code>函數
 <ul>
 <li><code>test</code>：class logical 測試條件的結果。<br />
 </li>
@@ -2148,11 +2150,12 @@ fvalue</code></pre>
 <ul>
 <li>若指令只有一行時，<code>{}</code>符號可省略。<br />
 </li>
-<li><code>function(...){....}</code>的 body 若只有一行指令可省略<code>{</code>、<code>}</code>改寫成<code>function(...) ...</code>。要小心的是，body 要接在<code>function(...)</code>之後不可換行。</li>
+<li><code>function(...){....}</code>的 body 若只有一行指令可省略<code>{</code>、<code>}</code>改寫成<code>function(...) ...</code>。<br />
+要小心的是，body 要接在<code>function(...)</code>之後不可換行。</li>
 </ul>
 <pre class="r"><code>miniFun &lt;- function() now()
 miniFun()</code></pre>
-<pre><code>## [1] &quot;2020-06-25 15:14:07 CST&quot;</code></pre>
+<pre><code>## [1] &quot;2020-06-25 17:40:31 CST&quot;</code></pre>
 <ul>
 <li>若最後一個被執行的指令是 print ，則可以用<code>{...}-&gt;</code>或<code>&lt;-{...}</code>將這 print 的值存出來。</li>
 </ul>
@@ -2196,7 +2199,7 @@ print(outcome)</code></pre>
 <div id="cut" class="section level4">
 <h4><strong>cut</strong></h4>
 <p><code>cut()</code>函數可將「連續型」數值變數的 condition 轉成需要的字串表示。</p>
-<pre><code>cut(x, c(a,b,c))</code></pre>
+<pre><code>cut(x, c(a,b,c)) #其中 a &lt; b &lt; c</code></pre>
 <p>cut 會將 x 分成 (a,b]、(b,c]、及 NA 三大類。</p>
 <ul>
 <li>x 的 type 只要是 integer 或 double 都可使用，所以日期、時間也可以使用。<br />
@@ -2207,7 +2210,7 @@ print(outcome)</code></pre>
 cut(a, c(1,2,3))</code></pre>
 <pre><code>## [1] &lt;NA&gt;  (1,2] (2,3]
 ## Levels: (1,2] (2,3]</code></pre>
-<p><font color="#0b5395"><strong>範例 5.3.11</strong>：成績等級。</p>
+<p><font color="#0b5395"><strong>範例 5.3.10</strong>：成績等級。</p>
 <ul>
 <li>90 以上：A，同時螢幕出現“優”。 (89&lt;…&lt;=100)<br />
 </li>
@@ -2220,10 +2223,11 @@ cut(a, c(1,2,3))</code></pre>
 <pre class="r"><code>grade &lt;- sample(1:100, 10, replace=T) #隨機抽出1~100的數字，重複抽10次
 grade %&gt;%
   cut(c(-1,69,79,89,100)) -&gt; grade
-levels(grade)</code></pre>
-<pre><code>## [1] &quot;(-1,69]&quot;  &quot;(69,79]&quot;  &quot;(79,89]&quot;  &quot;(89,100]&quot;</code></pre>
-<pre class="r"><code>switch(
-  as.character(grade[[1]]),
+grade</code></pre>
+<pre><code>##  [1] (-1,69]  (-1,69]  (79,89]  (-1,69]  (89,100] (79,89]  (69,79]  (69,79] 
+##  [9] (-1,69]  (89,100]
+## Levels: (-1,69] (69,79] (79,89] (89,100]</code></pre>
+<pre class="r"><code>switch(as.character(grade[[1]]),
   &quot;(-1,69]&quot;={
     print(&quot;-_-&quot;)
     &quot;F&quot;},
@@ -2240,14 +2244,14 @@ levels(grade)</code></pre>
     &quot;A&quot;
     }
 ) -&gt; letterGrade # 有回存時要螢幕印出的訊息一定要加print</code></pre>
-<pre><code>## [1] &quot;棒&quot;</code></pre>
+<pre><code>## [1] &quot;-_-&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;C&quot;</code></pre>
-<p><strong>範例 5.3.12</strong>：依照<strong>範例 5.3.11</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
+<pre><code>## [1] &quot;F&quot;</code></pre>
+<p><strong>範例 5.3.11</strong>：依照<strong>範例 5.3.10</strong>，建立<code>compute_letterGrade(myGrade)</code>函數, 可以依 myGrade 不同而回傳 letterGrade 且出現要求文字。</p>
 <pre class="r"><code>compute_letterGrade &lt;- function(myGrade){
   myGrade %&gt;% cut(c(-1,69,79,89,100)) -&gt; myGrade
   switch(
-    as.character(grade[[1]]),
+    as.character(myGrade),
     &quot;(-1,69]&quot;={
       print(&quot;-_-&quot;)
     &quot;F&quot;},
@@ -2266,10 +2270,10 @@ levels(grade)</code></pre>
   ) -&gt; letterGrade
 }
 compute_letterGrade(50) -&gt; letterGrade </code></pre>
-<pre><code>## [1] &quot;棒&quot;</code></pre>
+<pre><code>## [1] &quot;-_-&quot;</code></pre>
 <pre class="r"><code>letterGrade</code></pre>
-<pre><code>## [1] &quot;C&quot;</code></pre>
-<p><strong>範例 5.3.13</strong>：管家機器人</p>
+<pre><code>## [1] &quot;F&quot;</code></pre>
+<p><strong>範例 5.3.12</strong>：管家機器人</p>
 <ul>
 <li>早上 (06:00-09:00)：
 <ul>
@@ -2298,7 +2302,6 @@ compute_letterGrade(50) -&gt; letterGrade </code></pre>
 </ul>
 <pre class="r"><code>whatNeedToDo_butler &lt;- function(who, nowtime=now()){
   who &lt;- tolower(who)
-
   # 建立可當cutpoints的一天時間點
   cutpoints &lt;- c(glue(&quot;{today()} 06:00:00&quot;),
                  glue(&quot;{today()} 09:00:00&quot;),
@@ -2308,48 +2311,53 @@ compute_letterGrade(50) -&gt; letterGrade </code></pre>
                  glue(&quot;{today()+days(1)} 01:00:00&quot;))
   cutpoints %&gt;%
     ymd_hms(tz=&quot;Asia/Taipei&quot;) -&gt; cutpoints
-  
   # 將nowtime轉成它對應的時段是&quot;morning&quot;、&quot;evening&quot;、&quot;jazz time&quot;或其他
-  cut(nowtime, cutpoints) -&gt; nowtime
-  levels(nowtime)[c(1,3,5)] &lt;-
-    c(&quot;morning&quot;,&quot;evening&quot;,&quot;jazz time&quot;)
-  
+  nowtime &lt;- cut(nowtime, cutpoints)
+  levels(nowtime)[c(1,3,5)] &lt;- c(&quot;morning&quot;,&quot;evening&quot;,&quot;jazz time&quot;)
   # 使用switch決定要做什麼事
-  switch(
-    as.character(nowtime),
-    &quot;morning&quot;={
-      if(str_detect(who, &quot;mom|mommy|mother&quot;)){
-        print(&quot;要不要來閱讀點財經時事？&quot;)
+  if (str_detect(who, &quot;媽|mom|mommy|mother&quot;)){
+    switch(
+      as.character(nowtime),
+      &quot;morning&quot;={
+        print(&quot;要不要閱讀點財經時事？&quot;)
         browseURL(&quot;https://economist.com&quot;)
-      } else if(str_detect(who, &quot;dad|daddy|father&quot;)){
-        print(&quot;要不要來閱讀點國際新聞？&quot;)
-        browseURL(&quot;https://www.wsj.com/&quot;)
-      } else if(str_detect(who, &quot;ming&quot;)){
-        print(&quot;檢查書包東西都有帶嗎？&quot;)
-      }
-    },
-    &quot;evening&quot;={
-      if(str_detect(who, &quot;mom|mommy|mother&quot;)){
+      },
+      &quot;evening&quot;={
         print(&quot;需不需要點餐呢？&quot;)
         browseURL(&quot;https://www.foodpanda.com.tw/&quot;)
-      } else if(str_detect(who, &quot;dad|daddy|father&quot;)){
+      },
+      &quot;jazz time&quot;={
+        print(&quot;放鬆聽點 Jazz。&quot;)
+        browseURL(&quot;https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt&quot;)
+      },
+      print(&quot;尚未規畫行程！&quot;)
+    )
+  }
+  if (str_detect(who, &quot;爸|dad|daddy|father&quot;)){
+    switch(
+      as.character(nowtime),
+      &quot;morning&quot;={
+        print(&quot;要不要來了解國際動態？&quot;)
+        browseURL(&quot;https://www.wsj.com/&quot;)
+      },
+      &quot;evening&quot;={
         print(&quot;要不要來規劃週末旅行呢？&quot;)
         browseURL(&quot;https://www.tripadvisor.com/&quot;)
-      } else if(str_detect(who, &quot;ming&quot;)){
-        print(&quot;作業寫好了嗎？&quot;)
-      }
-    },
-    &quot;jazz time&quot;={
-      print(&quot;放鬆聽點 Jazz。&quot;)
-      browseURL(&quot;https://open.spotify.com/playlist/37i9dQZF1DXbITWG1ZJKYt&quot;)
-    },
-    {
+      },
       print(&quot;尚未規畫行程！&quot;)
-    }
-  )
+    )
+  }
+  if (str_detect(who, &quot;明|ming&quot;)){
+    switch(
+      as.character(nowtime),
+      &quot;morning&quot;= print(&quot;檢查書包東西都有帶嗎？&quot;),
+      &quot;evening&quot;= print(&quot;作業寫好了嗎？&quot;),
+      print(&quot;尚未規畫行程！&quot;)
+    )
+  }
 }
-whatNeedToDo_butler(&quot;Mother&quot;)</code></pre>
-<pre><code>## [1] &quot;尚未規畫行程！&quot;</code></pre>
+whatNeedToDo_butler(&quot;小明&quot;)</code></pre>
+<pre><code>## [1] &quot;作業寫好了嗎？&quot;</code></pre>
 </div>
 </div>
 <div id="logical-condition" class="section level3">
@@ -2390,12 +2398,14 @@ if(is.factor(myAnswer) &amp;&amp; all(myAnswer==correctAnswer)){
 <pre><code>## [1] &quot;答錯了&quot;</code></pre>
 <pre class="r"><code>myGrade</code></pre>
 <pre><code>## [1] 0</code></pre>
-<p><font color="#0b5395"><strong>範例 5.3.14</strong>：<br />
-只要符合以下任一資格均可申請補助：<br />
-1. 年齡 65 歲以上。<br />
-2. 家庭子孩數 3 位以上。</font></p>
+<p><font color="#0b5395"><strong>範例 5.3.13</strong>：只要符合以下任一資格均可申請補助</p>
+<ol style="list-style-type: decimal">
+<li>年齡 65 歲以上。<br />
+</li>
+<li>家庭孩子數 3 位以上。</font></li>
+</ol>
 <pre class="r"><code>apply_subsidy &lt;- function(myAge, myChildrenNumber){
-  if(myAge &gt;=65 | myChildrenNumber &gt;3){
+  if (myAge &gt;=65 || myChildrenNumber &gt;3) {
     &quot;符合申請資格&quot;
   } else {
     warning(&quot;不符合申請資格&quot;)
@@ -2403,19 +2413,25 @@ if(is.factor(myAnswer) &amp;&amp; all(myAnswer==correctAnswer)){
 }
 apply_subsidy(40,5)</code></pre>
 <pre><code>## [1] &quot;符合申請資格&quot;</code></pre>
-<div id="case_when" class="section level4">
-<h4><strong>case_when</strong></h4>
-<pre><code>case_when(
-  condition A ~ body for A,
-  condition B ~ body for B,
-  condition C ~ body for C,
-)</code></pre>
+<div id="依情境不同產生不同值的conditional-assignment" class="section level4">
+<h4>「<strong>依情境不同產生不同值</strong>」的conditional assignment</h4>
+<p>一個 logical relation：</p>
 <ul>
-<li><code>case_when()</code>的運作類似<code>switch()</code>，內含多個 logical relations。</li>
+<li><code>ifelse(condition, yes, no)</code></li>
 </ul>
 <pre class="r"><code>y &lt;- sample(40:100,20, replace=T)
 y</code></pre>
-<pre><code>##  [1] 74 91 96 70 70 60 47 98 42 50 83 97 63 94 91 69 54 84 75 87</code></pre>
+<pre><code>##  [1]  94  97  43  44  73  64  57  70  66  43  67 100  40  58  83  66  46  85  79
+## [20]  98</code></pre>
+<pre class="r"><code>ifelse(y &lt; 60, &quot;Fail&quot;, &quot;Pass&quot;)</code></pre>
+<pre><code>##  [1] &quot;Pass&quot; &quot;Pass&quot; &quot;Fail&quot; &quot;Fail&quot; &quot;Pass&quot; &quot;Pass&quot; &quot;Fail&quot; &quot;Pass&quot; &quot;Pass&quot; &quot;Fail&quot;
+## [11] &quot;Pass&quot; &quot;Pass&quot; &quot;Fail&quot; &quot;Fail&quot; &quot;Pass&quot; &quot;Pass&quot; &quot;Fail&quot; &quot;Pass&quot; &quot;Pass&quot; &quot;Pass&quot;</code></pre>
+<p>多個 logical relations：</p>
+<pre><code>dplyr::case_when(
+  condition A ~ value A,
+  condition B ~ value B,
+  condition C ~ value C
+)</code></pre>
 <pre class="r"><code>dplyr::case_when(
   y &lt; 60 ~ &quot;F&quot;,
   60&lt;=y &amp; y &lt; 70 ~&quot;D&quot;,
@@ -2423,8 +2439,8 @@ y</code></pre>
   80&lt;=y &amp; y &lt; 90 ~&quot;B&quot;,
   90&lt;=y ~ &quot;A&quot;
 )</code></pre>
-<pre><code>##  [1] &quot;C&quot; &quot;A&quot; &quot;A&quot; NA  NA  &quot;D&quot; &quot;F&quot; &quot;A&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;A&quot; &quot;D&quot; &quot;A&quot; &quot;A&quot; &quot;D&quot; &quot;F&quot; &quot;B&quot; &quot;C&quot;
-## [20] &quot;B&quot;</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;A&quot; &quot;F&quot; &quot;F&quot; &quot;C&quot; &quot;D&quot; &quot;F&quot; NA  &quot;D&quot; &quot;F&quot; &quot;D&quot; &quot;A&quot; &quot;F&quot; &quot;F&quot; &quot;B&quot; &quot;D&quot; &quot;F&quot; &quot;B&quot; &quot;C&quot;
+## [20] &quot;A&quot;</code></pre>
 </div>
 </div>
 <div id="綜合練習-1" class="section level3">
@@ -2432,30 +2448,27 @@ y</code></pre>
 <p><font color="#0b5395"><strong>練習一</strong>：消費者選擇<br />
 效用函數：<br />
 <span class="math display">\[U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m\]</span> 其中 <span class="math inline">\(a1\)</span> 是該商品提供之服務所帶來的愉快程度，<span class="math inline">\(a2\)</span> 是該商品操作簡便性，<span class="math inline">\(\alpha\in(0,1)\)</span>，<span class="math inline">\(m\)</span> 是購買此商品所要付出的金額。</p>
-<p>想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組 <span class="math inline">\((a1,a2,m)\)</span> 的數字組合來代表，n 個 App 可表示成一個集合 <span class="math inline">\(\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}\)</span>，消費者只選擇這些 App 中效用函數值最高的那個。</p>
+<p>想像你正在考慮從有一系列類似的 App 中挑選購買一個 App，每個 App 可用一組 <span class="math inline">\((a1,a2,m)\)</span> 的數字組合來代表，n 個 App 可表示成一個集合 <span class="math inline">\(\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}\)</span>，消費者只選擇這些 App 中效用函數值最高的那個。</p>
 <ol style="list-style-type: decimal">
 <li><p>創造<code>Ufun(a1, a2, m, alpha = 0.5)</code>函數，其中</p>
-<p>Arguments：a1、a2、m、alpha 均為 class numeric</p>
-<p>Value：回傳 arugment values 下所對應的效用函數值 (class numeric)</p></li>
+<ul>
+<li>Arguments：a1、a2、m、alpha 均為 class numeric。<br />
+</li>
+<li>Value：回傳 arugment values 下所對應的效用函數值 (class numeric)。</li>
+</ul></li>
 </ol>
 <pre class="r"><code>Ufun &lt;- function(a1, a2, m, alpha = 0.5){
   u &lt;- a1^alpha*a2^(1-alpha)-m
   return(u)
 }</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10)</li>
+<li>以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10)。</li>
 </ol>
 <pre class="r"><code>Apps_10 &lt;- list(c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
                 c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
                 c(0.41,0.49,0.35), c(0.49,0.35,0.20))
-ufun &lt;- function(vec1, alpha=0.5){
-  a1 &lt;- vec1[[1]]
-  a2 &lt;- vec1[[2]]
-  m &lt;- vec1[[3]]
-  Ufun(a1, a2, m, alpha)
-}
 Apps_10 %&gt;% 
-  map(~ufun(.x)) %&gt;%
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]])) %&gt;%
   unlist() -&gt; utility
 utility</code></pre>
 <pre><code>##  [1]  0.340282943  0.163556372  0.089878031  0.009145451  0.279929574
@@ -2469,30 +2482,33 @@ utility</code></pre>
 <li>若 alpha = 0.3，消費者要買那一個 App？</li>
 </ol>
 <pre class="r"><code>Apps_10 %&gt;% 
-  map(~ufun(.x, 0.3)) %&gt;%
-  unlist() -&gt; utility1
-which.max(utility1)</code></pre>
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.3)) %&gt;%
+  unlist() %&gt;%
+  which.max()</code></pre>
 <pre><code>## [1] 1</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>若 alpha = 0.95，消費者要買那一個 App？</li>
 </ol>
 <pre class="r"><code>Apps_10 %&gt;% 
-  map(~ufun(.x, 0.95)) %&gt;%
-  unlist() -&gt; utility2
-which.max(utility2)</code></pre>
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.95)) %&gt;%
+  unlist() %&gt;%
+  which.max()</code></pre>
 <pre><code>## [1] 5</code></pre>
 <p><strong>練習二</strong>：中文組距<br />
 原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似：“未滿200,000元”、“200,000~299,999元”、“300,000元及以上”。<br />
 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。</p>
 <ol style="list-style-type: decimal">
 <li><p>請寫一個<code>str_cut(x, cutpoints)</code>函數，它能萬用的將 x 轉成依中文組距描述的類別資料。</p>
-<p>Argument：</p>
+<ul>
+<li>Argument：
 <ul>
 <li>x：class integer.<br />
 </li>
-<li>cutpoints：class character，如：<code>c(&quot;未滿200,000元&quot;, &quot;200,000～299,999元&quot;, &quot;300,000元及以上&quot;)</code>。</li>
-</ul>
-<p>Value：回傳值為 x 依中文組距描述分類後的 factor。</font></p></li>
+<li>cutpoints：class character，如：<code>c(&quot;未滿200,000元&quot;, &quot;200,000～299,999元&quot;, &quot;300,000元及以上&quot;)</code>。<br />
+</li>
+</ul></li>
+<li>Value：回傳值為 x 依中文組距描述分類後的 factor。</font></li>
+</ul></li>
 </ol>
 <pre class="r"><code>str_cut &lt;- function(x, cutpoints){
   cutpoints[2:length(cutpoints)] %&gt;%
@@ -2510,10 +2526,11 @@ str_cut(200000, c(&quot;未滿200,000元&quot;, &quot;200,000～299,999元&quot;
 </div>
 <div id="iteration" class="section level2">
 <h2>5.4 Iteration</h2>
-<p><font color="#0b5395"><strong>範例 5.4.1</strong>：找出哪幾筆為“男”</font></p>
+<p><font color="#0b5395"><strong>範例 5.4.1</strong>：找出哪幾筆為“男”。</font></p>
 <pre class="r"><code>sampleData &lt;- list(list(&quot;男&quot;, 45), list(&quot;女&quot;, 32), list(&quot;男&quot;,50), list(&quot;男&quot;,33), list(&quot;女&quot;, 21))
-sampleData[[1]][[1]]</code></pre>
-<pre><code>## [1] &quot;男&quot;</code></pre>
+sampleData[[1]][[1]]
+sampleData[[2]][[1]]
+sampleData[[3]][[1]]</code></pre>
 <div id="iteration-components" class="section level3">
 <h3>Iteration components</h3>
 <p>我們在使用 map 時寫 copy/paste 程序3次，目的在確認：</p>
@@ -2531,50 +2548,26 @@ sampleData[[1]][[1]]</code></pre>
 <h3>Two types of sequence</h3>
 <p><font color="#0b5395">回到<strong>範例 5.4.1</strong>：找出哪幾筆為“男”<br />
 使用 pipe 寫法可以清楚分離 sequence 及 body(SOP)。<br />
-兩種 sequence 表示：</p>
-<pre class="r"><code># 串接寫法(I): external dispatch
-map(sampleData, ~{.x[[1]]})</code></pre>
-<pre><code>## [[1]]
-## [1] &quot;男&quot;
-## 
-## [[2]]
-## [1] &quot;女&quot;
-## 
-## [[3]]
-## [1] &quot;男&quot;
-## 
-## [[4]]
-## [1] &quot;男&quot;
-## 
-## [[5]]
-## [1] &quot;女&quot;</code></pre>
-<pre class="r"><code># 串接寫法(II): internal dispatch
-map(1:5, ~{sampleData[[.x]][[1]]}) </code></pre>
-<pre><code>## [[1]]
-## [1] &quot;男&quot;
-## 
-## [[2]]
-## [1] &quot;女&quot;
-## 
-## [[3]]
-## [1] &quot;男&quot;
-## 
-## [[4]]
-## [1] &quot;男&quot;
-## 
-## [[5]]
-## [1] &quot;女&quot;</code></pre>
-<pre class="r"><code># map在單維度遞迴時，.x也可以只寫.
+兩種 sequence 表示：</font></p>
+<ol style="list-style-type: decimal">
+<li><strong>external dispatch</strong></li>
+</ol>
+<pre class="r"><code>map(sampleData, ~{.x[[1]]})</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>internal dispatch</strong></li>
+</ol>
+<pre class="r"><code>map(1:5, ~{sampleData[[.x]][[1]]}) 
+# map在單維度遞迴時，.x也可以只寫.
 # 也就是 map(1:5, ~{sampleData[[.]][[1]]}) </code></pre>
-<p><strong>範例 5.4.2</strong></font></p>
+<p><font color="#0b5395"><strong>範例 5.4.2</strong></font></p>
 <pre class="r"><code>eggs &lt;- rep(&quot;雞蛋x1&quot;, 8)
 fryEgg &lt;- function(egg) str_replace(egg, &quot;雞蛋&quot;, &quot;荷包蛋&quot;)
 # external dispatch
-map(eggs, ~fryEgg(.x)) -&gt; friedEggs1
+friedEggs1 &lt;- map(eggs, ~fryEgg(.))
 # internal dispatch
-map(1:8, ~{fryEgg(eggs[[.]])}) -&gt; friedEggs2</code></pre>
+friedEggs2 &lt;- map(1:8, ~{fryEgg(eggs[[.]])})</code></pre>
 <div id="vectorized-function" class="section level4">
-<h4>Vectorized function</h4>
+<h4><strong>Vectorized function</strong></h4>
 <p><font color="#0b5395"><strong>範例 5.4.3</strong></font></p>
 <pre class="r"><code>grade &lt;- c(45, 74, NA)
 i&lt;-3
@@ -2593,19 +2586,11 @@ pass_or_fail &lt;- function(grade_i){
 map_pass_fail &lt;- function(grade) map_chr(grade, ~pass_or_fail(.))
 map_pass_fail(grade)</code></pre>
 <pre><code>## [1] &quot;F&quot;    &quot;P&quot;    &quot;缺考&quot;</code></pre>
-<p>若你確信你 map 的 list 輸出每個元素只有一個值，且大家都是相同的 class，則你可以依 class 的類型使用：</p>
-<ul>
-<li>map_chr<br />
-</li>
-<li>map_lgl<br />
-</li>
-<li>map_dbl、map_int</li>
-</ul>
-<p>省了 unlist 那一步。</p>
+<p>若你確信你 map 的 list 輸出每個元素只有一個值，且大家都是相同的 class，則你可以依 class 的類型使用<code>map_chr</code>、<code>map_lgl</code>、<code>map_dbl</code>、<code>map_int</code>，省去 unlist 步驟。</p>
 </div>
 <div id="internal-dispatching的優勢" class="section level4">
-<h4>Internal dispatching的優勢</h4>
-<p>當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：</p>
+<h4><strong>Internal dispatching的優勢</strong></h4>
+<p>當 body 要同時對多個物件同時進行「元素處理」時，internal dispatch 便顯得便利：</p>
 <p><font color="#0b5395"><strong>範例 5.4.4</strong>：火腿蛋三明治</p>
 <pre class="r"><code>eggs &lt;- rep(&quot;雞蛋x1&quot;,10)
 ham &lt;- rep(&quot;火腿x1&quot;, 10)
@@ -2620,10 +2605,12 @@ toast_withEggHam &lt;- function(toast=NULL, egg=NULL, ham=NULL){
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})</code></pre>
 <pre><code>##  [1] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;
 ##  [6] &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot; &quot;火腿蛋三明治&quot;</code></pre>
-<p><strong>範例 5.4.5</strong>：各系課程規劃 臺北大學 100~107 學年的開課資料 courseStructure：</p>
-<pre class="r"><code>jsonlite::fromJSON(&quot;https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1&quot;) -&gt; courseStructure</code></pre>
-<p>以100學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼？</p>
-<pre class="r"><code>entranceYear &lt;- 100
+<p><strong>範例 5.4.5</strong>：各系課程規劃<br />
+以 104 學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼。</p>
+<pre class="r"><code># 臺北大學 100~107 學年的開課資料
+jsonlite::fromJSON(&quot;https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1&quot;) -&gt; courseStructure
+
+entranceYear &lt;- 104
 major &lt;- &quot;經濟系&quot;
 allGrades &lt;- paste0(major, 1:4)
 academicYears &lt;- entranceYear + 0:3
@@ -2636,36 +2623,40 @@ get_courses &lt;- function(acadYear_i, grade_i, courseStructure){
 }
 map(1:4, ~{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)})</code></pre>
 <pre><code>## [[1]]
-##  [1] &quot;男生軍訓１&quot;           &quot;微積分&quot;               &quot;女生軍訓１&quot;          
-##  [4] &quot;經濟學原理&quot;           &quot;歷史&quot;                 &quot;會計學&quot;              
-##  [7] &quot;國文：經典閱讀與詮釋&quot; &quot;企業管理&quot;             &quot;外文&quot;                
-## [10] &quot;體育&quot;                 &quot;社會學&quot;               &quot;英語聽講練習&quot;        
-## [13] &quot;男生軍訓２&quot;           &quot;女生軍訓２&quot;          
+##  [1] &quot;微積分&quot;                   &quot;經濟閱讀&quot;                
+##  [3] &quot;企業管理&quot;                 &quot;經濟學原理&quot;              
+##  [5] &quot;會計學&quot;                   &quot;大一國文：經典閱讀與詮釋&quot;
+##  [7] &quot;大學英文&quot;                 &quot;大學英文：英語聽講練習&quot;  
+##  [9] &quot;電腦概論&quot;                 &quot;社會學&quot;                  
+## [11] &quot;政治學&quot;                  
 ## 
 ## [[2]]
-## [1] &quot;統計學&quot;     &quot;資料處理&quot;   &quot;中級會計學&quot; &quot;線性代數&quot;   &quot;總體經濟學&quot;
-## [6] &quot;個體經濟學&quot; &quot;民法概要&quot;  
+## [1] &quot;統計學&quot;     &quot;商用英文&quot;   &quot;企業實習&quot;   &quot;民法概要&quot;   &quot;總體經濟學&quot;
+## [6] &quot;資料處理&quot;   &quot;中級會計學&quot; &quot;線性代數&quot;   &quot;個體經濟學&quot;
 ## 
 ## [[3]]
-##  [1] &quot;財務管理&quot;         &quot;公共經濟學&quot;       &quot;國際經濟學&quot;       &quot;貨幣銀行學&quot;      
-##  [5] &quot;經濟思想史&quot;       &quot;租稅各論&quot;         &quot;經濟論壇（一）&quot;   &quot;高等統計學&quot;      
-##  [9] &quot;賽局理論（一）&quot;   &quot;經濟數學&quot;         &quot;資源經濟學&quot;       &quot;計量經濟學&quot;      
-## [13] &quot;產業經濟學&quot;       &quot;經濟成長&quot;         &quot;作業研究&quot;         &quot;中小企業研究&quot;    
-## [17] &quot;經濟論壇（二）&quot;   &quot;醫療經濟學&quot;       &quot;多國籍公司經濟學&quot; &quot;金融市場（一）&quot;  
-## [21] &quot;法律經濟學&quot;      
+##  [1] &quot;醫療經濟學&quot;           &quot;財務管理&quot;             &quot;公共經濟學&quot;          
+##  [4] &quot;貨幣銀行學&quot;           &quot;經濟思想史&quot;           &quot;經濟論壇（一）&quot;      
+##  [7] &quot;創新經濟學&quot;           &quot;實證總體經濟學&quot;       &quot;租稅各論&quot;            
+## [10] &quot;國際經濟學&quot;           &quot;資訊經濟學&quot;           &quot;實驗經濟學&quot;          
+## [13] &quot;賽局理論（一）&quot;       &quot;資源經濟學&quot;           &quot;高等統計學&quot;          
+## [16] &quot;產業經濟學&quot;           &quot;經濟數學&quot;             &quot;勞動經濟學&quot;          
+## [19] &quot;管理經濟學&quot;           &quot;計量經濟學&quot;           &quot;經濟成長&quot;            
+## [22] &quot;成本效益分析&quot;         &quot;作業研究&quot;             &quot;中小企業研究&quot;        
+## [25] &quot;財務經濟學&quot;           &quot;經濟時事與多媒體出版&quot; &quot;多國籍公司經濟學&quot;    
 ## 
 ## [[4]]
-##  [1] &quot;經濟論壇（一）&quot;       &quot;反托拉斯經濟學(一)&quot;   &quot;經濟成長&quot;            
-##  [4] &quot;福利經濟&quot;             &quot;國際貿易理論與政策&quot;   &quot;商事法&quot;              
-##  [7] &quot;經濟問題與政策（一）&quot; &quot;國際貿易實務&quot;         &quot;經濟理論分析&quot;        
-## [10] &quot;投資學&quot;               &quot;保險學&quot;               &quot;中小企業研究&quot;        
-## [13] &quot;多國籍公司經濟學&quot;     &quot;反托拉斯經濟學(二)&quot;   &quot;經濟問題與政策（二）&quot;
-## [16] &quot;期貨交易理論與實務&quot;   &quot;個體經濟理論分析&quot;     &quot;資訊經濟學（一）&quot;</code></pre>
+##  [1] &quot;資料科學程式設計(一)&quot;   &quot;高等微積分&quot;             &quot;反托拉斯經濟學專題研究&quot;
+##  [4] &quot;實證總體經濟學&quot;         &quot;實驗經濟學&quot;             &quot;經濟成長&quot;              
+##  [7] &quot;商事法&quot;                 &quot;經濟問題與政策（一）&quot;   &quot;動態經濟方法&quot;          
+## [10] &quot;保險學&quot;                 &quot;投資學&quot;                 &quot;中小企業研究&quot;          
+## [13] &quot;多國籍公司經濟學&quot;       &quot;運動經濟學&quot;             &quot;機器學習&quot;              
+## [16] &quot;國際金融理論&quot;           &quot;經濟問題與政策（二）&quot;   &quot;資料科學程式設計(二)&quot;</code></pre>
 <p>Iteration in functional: <code>map</code></p>
 <ul>
 <li>Sequence：<code>1:4</code>。<br />
 </li>
-<li>Body：<code>{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}</code>, 以 formula (另一種 function 形式)包裝。<br />
+<li>Body：<code>{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}</code>，以 formula (另一種 function 形式) 包裝。<br />
 </li>
 <li>Output：<code>list class, length=Sequence length</code>。</font></li>
 </ul>
@@ -2674,7 +2665,7 @@ map(1:4, ~{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)})</c
 <div id="for-loop" class="section level3">
 <h3>for loop</h3>
 <pre><code>output &lt;- vector(&quot;{type}&quot;, length={len})
-for(.x in {sequence}){
+for (.x in {sequence}) { #不一定要用.x
   {body}
 }</code></pre>
 <ul>
@@ -2687,7 +2678,7 @@ for(.x in {sequence}){
 <li>length：integer class，代表 container 要有幾個空位。</li>
 </ul></li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.4.6</strong>：</p>
+<p><font color="#0b5395">回到<strong>範例 5.4.5</strong>：</p>
 <pre class="r"><code># map iteration
 map(1:4, ~{get_courses(academicYears[[.x]], allGrades[[.x]], courseStructure)})
 # for iteration
@@ -2697,7 +2688,7 @@ for(i in 1:4){
               allGrades[[i]], 
               courseStructure) -&gt; output[[i]]
 }</code></pre>
-<p>其中，<code>1:4</code>=<code>1:length(academicYears)</code>=<code>seq_along(academicYears)</code>。</p>
+<p>其中，<code>1:4</code>等於<code>1:length(academicYears)</code>等於<code>seq_along(academicYears)</code>。</p>
 <p>回到<strong>範例 5.4.4</strong>：火腿蛋三明治</font></p>
 <pre class="r"><code># map iteration
 map(1:10, ~toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]))
@@ -2707,21 +2698,21 @@ for(.x in 1:10){
   toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]) -&gt; output[[.x]]
 }</code></pre>
 <div id="累計型-output" class="section level4">
-<h4>累計型 output</h4>
-<p><font color="#0b5395"><strong>範例 5.4.7</strong>：Summation<br />
+<h4><strong>累計型 output</strong></h4>
+<p><font color="#0b5395"><strong>範例 5.4.6</strong>：Summation<br />
 <span class="math display">\[\sum_{i=1}^{10} a_{i}\]</span> where <span class="math inline">\(a_i \in [1, 100] \cap \mathbb{N}\)</span>, <span class="math inline">\(\forall i \in \mathbb{N}\)</span>.</font></p>
 <pre class="r"><code>a &lt;- sample(1:100, 10, replace=T) 
 print(a)</code></pre>
-<pre><code>##  [1] 26 90 13 25 83 25 42 67 73 44</code></pre>
+<pre><code>##  [1] 88 62 78 11 47 81 80 25 91 44</code></pre>
 <pre class="r"><code>sum &lt;- 0
-for(.x in 1:10) sum &lt;- sum + a[[.x]] # 指令只有一行，{}符號可省略
+for(.x in 1:10) sum &lt;- sum + a[[.x]] 
 print(sum)</code></pre>
-<pre><code>## [1] 488</code></pre>
+<pre><code>## [1] 607</code></pre>
 </div>
 <div id="長度不一型-output" class="section level4">
-<h4>長度不一型 output</h4>
-<p><font color="#0b5395"><strong>範例 5.4.8</strong>：<br />
-每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</font></p>
+<h4><strong>長度不一型 output</strong></h4>
+<p><font color="#0b5395"><strong>範例 5.4.7</strong>：<br />
+每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽 10 次，但每次必須是 3 的倍數才留下來。</font></p>
 <pre class="r"><code>output &lt;- c()
 for(.x in 1:10){
   new &lt;- sample(1:100,1)
@@ -2730,16 +2721,16 @@ for(.x in 1:10){
   }
 }
 print(output)</code></pre>
-<pre><code>## [1] 15 21 15 48  3</code></pre>
+<pre><code>## NULL</code></pre>
 </div>
 <div id="nextbreak" class="section level4">
-<h4>next、break</h4>
+<h4><strong>next</strong>、<strong>break</strong></h4>
 <ul>
-<li><strong>next</strong>：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。<br />
+<li><strong>next</strong>：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body，直接跳到下一個 sequence 值。<br />
 </li>
 <li><strong>break</strong>：.x 對應元素若符合條件會完全終止迴圈。</li>
 </ul>
-<p><font color="#0b5395"><strong>範例 5.4.9</strong>：批改學生作業</font></p>
+<p><font color="#0b5395"><strong>範例 5.4.8</strong>：批改學生作業</font></p>
 <pre class="r"><code>list(list(&quot;student A&quot;, c(2,3,4,5)),
      list(&quot;student B&quot;, NA), # 沒交作業
      list(&quot;student C&quot;, factor(c(2,3,4,5))),
@@ -2762,13 +2753,8 @@ for(.x in seq_along(collectionHWs)){
   } else {
     output[[.x]] &lt;- 0
   }
-}</code></pre>
-<pre><code>## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素
-
-## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素
-
-## Warning in if (is.na(studentAns)) {: 條件的長度 &gt; 1，因此只能用其第一元素</code></pre>
-<pre class="r"><code>names(output) &lt;- nameVector
+}
+names(output) &lt;- nameVector
 print(output)</code></pre>
 <pre><code>## student A student B student C student D 
 ##         5         0        10         0</code></pre>
@@ -2776,31 +2762,34 @@ print(output)</code></pre>
 </div>
 <div id="while-loop" class="section level3">
 <h3>while loop</h3>
-<pre><code>while(continueCondition){
+<pre><code>while (continueCondition) {
   body
 }</code></pre>
 <p>while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。</p>
-<p><font color="#0b5395"><strong>範例 5.4.10</strong>：總共要擲幾次硬幣，才能得到五次正面。</font></p>
+<p><font color="#0b5395"><strong>範例 5.4.9</strong>：總共要擲幾次硬幣，才能得到五次正面。</font></p>
 <pre class="r"><code>sum &lt;- 0
 count &lt;- 0
 while(sum&lt;5){
   count &lt;- count+1
   newToss &lt;- sample(c(&quot;正&quot;,&quot;反&quot;), 1, replace=T)
   if(newToss == &quot;正&quot;) sum &lt;- sum+1
-  print(glue::glue(&quot;已擲{count}次得到{sum}次正面&quot;))
+  print(glue::glue(&quot;第{count}次：得到{newToss}面&quot;))
 }</code></pre>
-<pre><code>## 已擲1次得到1次正面
-## 已擲2次得到2次正面
-## 已擲3次得到2次正面
-## 已擲4次得到2次正面
-## 已擲5次得到2次正面
-## 已擲6次得到2次正面
-## 已擲7次得到2次正面
-## 已擲8次得到3次正面
-## 已擲9次得到4次正面
-## 已擲10次得到5次正面</code></pre>
+<pre><code>## 第1次：得到反面
+## 第2次：得到反面
+## 第3次：得到正面
+## 第4次：得到反面
+## 第5次：得到反面
+## 第6次：得到正面
+## 第7次：得到正面
+## 第8次：得到反面
+## 第9次：得到反面
+## 第10次：得到正面
+## 第11次：得到正面</code></pre>
+<pre class="r"><code>print(glue::glue(&quot;總共擲了{count}次&quot;))</code></pre>
+<pre><code>## 總共擲了11次</code></pre>
 <p>之前的 (有限) 迴圈也可以用 while 寫：</p>
-<p><font color="#0b5395">回到<strong>範例 5.4.8</strong>：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</p>
+<p><font color="#0b5395">回到<strong>範例 5.4.7</strong>：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</p>
 <pre class="r"><code># for loop
 set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
 output &lt;- c()
@@ -2825,7 +2814,7 @@ while(count &lt;= 10){
 }
 print(output)</code></pre>
 <pre><code>## [1] 42 87 60 21</code></pre>
-<p>回到<strong>範例 5.4.7</strong></font></p>
+<p>回到<strong>範例 5.4.6</strong>：Summation。</font></p>
 <pre class="r"><code>a &lt;- sample(1:100, 10, replace=T)
 print(a)</code></pre>
 <pre><code>##  [1] 38 33 41 29 26 58 55 18 37 96</code></pre>
@@ -2867,19 +2856,16 @@ print(sum)</code></pre>
 myFun2(c(-11,32,19,20))</code></pre>
 <pre><code>## [1]   5  16 -10  10</code></pre>
 <p><strong>練習二</strong>：askSilly_weather 3.0</p>
-<pre class="r"><code>askSilly_weather2 &lt;- function(locationInput,dateInput){
+<pre class="r"><code>askSilly_weather2 &lt;- function(locationInput, dateInput){
   if(!exists(&quot;weather_next36hours&quot;)){
       jsonlite::fromJSON(&quot;https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&amp;format=JSON&quot;) -&gt;
       weather_next36hours
     SOAR::Store(weather_next36hours) # 存在.R_cache environment中
   }  
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -&gt; pick_location
-  
   weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -&gt; weatherAtLocation
-  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt;
-    pick_MaxT
-  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt;
-    pick_MinT
+  (weatherAtLocation$elementName==&quot;MaxT&quot;) -&gt; pick_MaxT
+  (weatherAtLocation$elementName==&quot;MinT&quot;) -&gt; pick_MinT
   weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -&gt; maxT
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -&gt; minT
   glue::glue(&quot;{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。&quot;)
@@ -2888,22 +2874,22 @@ myFun2(c(-11,32,19,20))</code></pre>
 <pre class="r"><code>askSilly_weather2(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
 <pre><code>## Warning in weather_next36hours$cwbopendata$dataset$location$locationName == : 較
 ## 長的物件長度並非較短物件長度的倍數</code></pre>
-<pre><code>## 臺北市 2020-06-25 15:14:16 氣溫，最高37度，最低32度。
-## 新北市 2020-06-25 15:14:16 氣溫，最高37度，最低32度。
-## 臺中市 2020-06-25 15:14:16 氣溫，最高37度，最低32度。</code></pre>
+<pre><code>## 臺北市 2020-06-25 17:40:38 氣溫，最高31度，最低27度。
+## 新北市 2020-06-25 17:40:38 氣溫，最高31度，最低27度。
+## 臺中市 2020-06-25 17:40:38 氣溫，最高31度，最低27度。</code></pre>
 <p>請創造 askSilly_weather3，它是 vectorized function。</p>
-<pre class="r"><code>askSilly_weather3 &lt;- function(location, time){
-  map(seq_along(location), ~{askSilly_weather2(location[[.x]], time)})
+<pre class="r"><code>askSilly_weather3 &lt;- function(locationInputs, dateInput){
+  map(seq_along(locationInputs), ~{askSilly_weather2(locationInputs[[.x]], dateInput)})
 }
-askSilly_weather3(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::now())</code></pre>
+askSilly_weather3(c(&quot;臺北市&quot;,&quot;新北市&quot;,&quot;臺中市&quot;), lubridate::today())</code></pre>
 <pre><code>## [[1]]
-## 臺北市 2020-06-25 15:14:16 氣溫，最高37度，最低32度。
+## 臺北市 2020-06-25 氣溫，最高31度，最低27度。
 ## 
 ## [[2]]
-## 新北市 2020-06-25 15:14:16 氣溫，最高36度，最低32度。
+## 新北市 2020-06-25 氣溫，最高32度，最低28度。
 ## 
 ## [[3]]
-## 臺中市 2020-06-25 15:14:16 氣溫，最高34度，最低31度。</code></pre>
+## 臺中市 2020-06-25 氣溫，最高31度，最低27度。</code></pre>
 <p><strong>練習三</strong>：平均值與標準差<br />
 以下程式隨機自 0-100 抽出 30 個數字：</p>
 <pre class="r"><code>a &lt;- sample(0:100,30, replace=T)
@@ -2921,28 +2907,33 @@ print(a)</code></pre>
   sum()/29 %&gt;%
   sqrt() -&gt; sample_sd</code></pre>
 <p><strong>練習四</strong>：現值<br />
-若利率 <span class="math inline">\(R\)</span> 維持每年不變，則未來 N 年現金流 <span class="math inline">\(a_0\)</span>、<span class="math inline">\(a_1\)</span>、<span class="math inline">\(a_2\)</span>、…、<span class="math inline">\(a_N\)</span> 的現值為：<br />
-<span class="math display">\[a_0+\frac{a_1}{1+R}+\frac{a_2}{(1+R)^2}+...+\frac{a_N}{(1+R)^N}\]</span> 其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。 執行以下程式得到 20 年的現金流 (介於1萬到5萬)，<code>a[&#39;0&#39;]</code>代表 <span class="math inline">\(a_0\)</span>，<code>a[&#39;1&#39;]</code>代表 <span class="math inline">\(a_1\)</span>，依此類推。</p>
-<pre class="r"><code>a &lt;- sample(10000:50000,20,replace=T)
+若利率 <span class="math inline">\(R\)</span> 每年維持不變，則未來 N 年現金流 <span class="math inline">\(a_0\)</span>、<span class="math inline">\(a_1\)</span>、<span class="math inline">\(a_2\)</span>、…、<span class="math inline">\(a_N\)</span> 的現值為：<br />
+<span class="math display">\[a_0+\frac{a_1}{1+R}+\frac{a_2}{(1+R)^2}+...+\frac{a_N}{(1+R)^N}\]</span> 其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。<br />
+執行以下程式得到 20 年的現金流 (介於 1 萬到 5 萬)，<code>a[&#39;0&#39;]</code>代表 <span class="math inline">\(a_0\)</span>，<code>a[&#39;1&#39;]</code>代表 <span class="math inline">\(a_1\)</span>，依此類推。</p>
+<pre class="r"><code>a &lt;- sample(10000:50000, 20, replace=T)
 names(a) &lt;- 0:19
 R &lt;- 0.03</code></pre>
-<p>請寫一個函數 DV(a,R)：<br />
-arguments：</p>
+<p>請寫一個函數 DV(a, R)，其中</p>
+<ul>
+<li>Arguments：
 <ul>
 <li>a：現金流 class numeric。<br />
 </li>
-<li>R：年利率。</li>
+<li>R：年利率。<br />
+</li>
+</ul></li>
+<li>Value：回傳現金流的現值。</li>
 </ul>
-<p>value：回傳現金流的現值。</p>
-<pre class="r"><code>DV &lt;- function(a,R){
+<pre class="r"><code>DV &lt;- function(a, R){
   value &lt;- 0
-  for (i in seq_along(a)) {
-    value &lt;- value + a[[i]]/(1+R)**i
+  for (i in names(a)) {
+    value &lt;- value + a[i]/(1+R)**as.integer(i)
   }
+  names(value) &lt;- NULL
   return(value)
 }
-DV(a,R)</code></pre>
-<pre><code>## [1] 464367.5</code></pre>
+DV(a, R)</code></pre>
+<pre><code>## [1] 478298.6</code></pre>
 <p></font></p>
 </div>
 </div>

@@ -98,7 +98,7 @@ highestPerson <-
 若代表中間物件的`.`在函數的**第一位**，則`.`**可省略不寫**，連它後面的`,`也一起去掉。  
 小心若**不在第一位**則不可省略`.`。  
 
-<font color="#0b5395">回到**範例 5.1.2**
+<font color="#0b5395">回到**範例 5.1.2**。  
 ```{r}
 levels(region) %>% 
   str_replace("台北","北部") %>%
@@ -169,7 +169,7 @@ levels(covid19$`縣市`)
 ```
 ## 5.2 Function
 ### 函數定義
-<font color="#0b5395">**範例 5.2.1**：需求函數  
+<font color="#0b5395">**範例 5.2.1**：需求函數。  
 $$ q_{d} = 10 - 5p $$
 ```{r}
 demand <- #創造一個物件(函數) demand
@@ -184,7 +184,7 @@ q_d1.2
 </font>  
 **return**  
 
-<font color="#0b5395">回到**範例 5.2.1**：需求函數</font>
+<font color="#0b5395">回到**範例 5.2.1**：需求函數。</font>
 ```{r}
 demand_return <- function(p){
     q_d <- 10-5*p
@@ -279,7 +279,7 @@ __closure__：
 *  若物件的生存運作需要有適當的環境，表示電腦要存這個物件時還需要連同 (enclose) 它的 (生存) 環境一起存。  
 *  這種儲存型態叫 closure (閉包)。  
 
-<font color="#0b5395">回到**範例 5.2.1**：需求函數
+<font color="#0b5395">回到**範例 5.2.1**：需求函數。
 ```{r}
 typeof(demand_return)
 # 查詢函數執行所要求環境
@@ -287,7 +287,7 @@ environment(demand_return)
 # 若函數執行需要Global environment已存在某些物件，查詢需要哪些物件
 codetools::findGlobals(demand_return)
 ```
-**範例5.2.5**：需求函數</font>
+**範例5.2.5**：需求函數。</font>
 ```{r error=TRUE}
 intercept <- 10
 slope <- -5
@@ -308,7 +308,7 @@ myDemand 的運作需要 global environment 裡的 intercept、slope 物件。�
 
 * global environment 裡的 intercept、slope 值若有改變，它的運作結果也會不同。(這種「要運作才去呼叫值」的特性叫 **lazy evaluation**，惰性求值)
 
-<font color="#0b5395">再回到**範例 5.2.5**：需求函數</font>
+<font color="#0b5395">再回到**範例 5.2.5**：需求函數。</font>
 ```{r}
 intercept <- 10
 slope <- -5
@@ -325,7 +325,7 @@ myDemand(1.2) #q_d = 5-1.2*p
 * 讓函數的運作具有隨時可改變運作狀態的彈性。  
 * 若誤動 global environment 將產生運作錯誤。  
 
-<font color="#0b5395">**範例 5.2.6**：需求函數</font>
+<font color="#0b5395">**範例 5.2.6**：需求函數。</font>
 ```{r}
 myDemand2 <- function(p, intercept=10, slope=-5){ 
   #預設intercept=10、slope=-5，仍可透過輸入參數，改變其值
@@ -470,7 +470,7 @@ myFun <- function(n){
 myFun(54)
 myFun(33)
 ```
-**範例 5.3.7**：交卷提早時間</font>
+**範例 5.3.7**：交卷提早時間。</font>
 ```{r}
 jsonlite::fromJSON("https://www.dropbox.com/s/d14j5hp3i5ps657/examSubmissionTimes.json?dl=1") -> examSubmissionTime
 head(examSubmissionTime$section)
@@ -819,7 +819,7 @@ myGrade
 2. 家庭孩子數 3 位以上。</font>
 ```{r}
 apply_subsidy <- function(myAge, myChildrenNumber){
-  if(myAge >=65 | myChildrenNumber >3){
+  if (myAge >=65 || myChildrenNumber >3) {
     "符合申請資格"
   } else {
     warning("不符合申請資格")
@@ -827,18 +827,24 @@ apply_subsidy <- function(myAge, myChildrenNumber){
 }
 apply_subsidy(40,5)
 ```
-#### **case_when**
-```
-case_when(
-  condition A ~ body for A,
-  condition B ~ body for B,
-  condition C ~ body for C,
-)
-```
-* `case_when()`的運作類似`switch()`，內含多個 logical relations。  
+#### 「**依情境不同產生不同值**」的conditional assignment
+一個 logical relation：  
+
+* `ifelse(condition, yes, no)`
 ```{r}
 y <- sample(40:100,20, replace=T)
 y
+ifelse(y < 60, "Fail", "Pass")
+```
+多個 logical relations：  
+```
+dplyr::case_when(
+  condition A ~ value A,
+  condition B ~ value B,
+  condition C ~ value C
+)
+```
+```{r}
 dplyr::case_when(
   y < 60 ~ "F",
   60<=y & y < 70 ~"D",
@@ -853,32 +859,25 @@ dplyr::case_when(
 $$U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m$$
 其中 $a1$ 是該商品提供之服務所帶來的愉快程度，$a2$ 是該商品操作簡便性，$\alpha\in(0,1)$，$m$ 是購買此商品所要付出的金額。  
 
-想像有一系列類似的 App 你在考慮購買且只買一次、只買一個，每個 App 可用一組 $(a1,a2,m)$ 的數字組合來代表，n 個 App 可表示成一個集合 $\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}$，消費者只選擇這些 App 中效用函數值最高的那個。  
+想像你正在考慮從有一系列類似的 App 中挑選購買一個 App，每個 App 可用一組 $(a1,a2,m)$ 的數字組合來代表，n 個 App 可表示成一個集合 $\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}$，消費者只選擇這些 App 中效用函數值最高的那個。  
 
 1. 創造`Ufun(a1, a2, m, alpha = 0.5)`函數，其中  
 
-    Arguments：a1、a2、m、alpha 均為 class numeric  
-
-    Value：回傳 arugment values 下所對應的效用函數值 (class numeric)  
+    * Arguments：a1、a2、m、alpha 均為 class numeric。  
+    * Value：回傳 arugment values 下所對應的效用函數值 (class numeric)。  
 ```{r}
 Ufun <- function(a1, a2, m, alpha = 0.5){
   u <- a1^alpha*a2^(1-alpha)-m
   return(u)
 }
 ```
-2. 以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10) 
+2. 以下 10 個 App 計算並回傳它們的效用值 (class numeric, length=10)。 
 ```{r}
 Apps_10 <- list(c(0.38,0.74,0.19), c(0.39,0.46,0.26), c(0.56,0.3,0.32), c(0.54,0.31,0.40), 
                 c(0.90,0.56,0.43), c(0.39,0.13,0.23), c(0.83,0.74,0.39), c(0.66,0.84,0.37), 
                 c(0.41,0.49,0.35), c(0.49,0.35,0.20))
-ufun <- function(vec1, alpha=0.5){
-  a1 <- vec1[[1]]
-  a2 <- vec1[[2]]
-  m <- vec1[[3]]
-  Ufun(a1, a2, m, alpha)
-}
 Apps_10 %>% 
-  map(~ufun(.x)) %>%
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]])) %>%
   unlist() -> utility
 utility
 ```
@@ -889,16 +888,16 @@ which.max(utility)
 4. 若 alpha = 0.3，消費者要買那一個 App？
 ```{r}
 Apps_10 %>% 
-  map(~ufun(.x, 0.3)) %>%
-  unlist() -> utility1
-which.max(utility1)
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.3)) %>%
+  unlist() %>%
+  which.max()
 ```
 5. 若 alpha = 0.95，消費者要買那一個 App？
 ```{r}
 Apps_10 %>% 
-  map(~ufun(.x, 0.95)) %>%
-  unlist() -> utility2
-which.max(utility2)
+  map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.95)) %>%
+  unlist() %>%
+  which.max()
 ```
 **練習二**：中文組距  
 原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿200,000元"、"200,000~299,999元"、"300,000元及以上"。  
@@ -906,11 +905,10 @@ which.max(utility2)
 
 1. 請寫一個`str_cut(x, cutpoints)`函數，它能萬用的將 x 轉成依中文組距描述的類別資料。  
 
-    Argument：  
-    * x：class integer.  
-    * cutpoints：class character，如：`c("未滿200,000元", "200,000～299,999元", "300,000元及以上")`。  
-
-    Value：回傳值為 x 依中文組距描述分類後的 factor。</font>
+    * Argument：  
+        + x：class integer.  
+        + cutpoints：class character，如：`c("未滿200,000元", "200,000～299,999元", "300,000元及以上")`。  
+    * Value：回傳值為 x 依中文組距描述分類後的 factor。</font>
 ```{r}
 str_cut <- function(x, cutpoints){
   cutpoints[2:length(cutpoints)] %>%
@@ -924,10 +922,12 @@ str_cut <- function(x, cutpoints){
 str_cut(200000, c("未滿200,000元", "200,000～299,999元", "300,000元及以上"))
 ```
 ## 5.4 Iteration
-<font color="#0b5395">**範例 5.4.1**：找出哪幾筆為"男"</font>
-```{r}
+<font color="#0b5395">**範例 5.4.1**：找出哪幾筆為"男"。</font>
+```{r eval=FALSE}
 sampleData <- list(list("男", 45), list("女", 32), list("男",50), list("男",33), list("女", 21))
 sampleData[[1]][[1]]
+sampleData[[2]][[1]]
+sampleData[[3]][[1]]
 ```
 ### Iteration components
 我們在使用 map 時寫 copy/paste 程序3次，目的在確認：  
@@ -942,25 +942,28 @@ sampleData[[1]][[1]]
 ### Two types of sequence
 <font color="#0b5395">回到**範例 5.4.1**：找出哪幾筆為"男"  
 使用 pipe 寫法可以清楚分離 sequence 及 body(SOP)。  
-兩種 sequence 表示：
-```{r}
-# 串接寫法(I): external dispatch
+兩種 sequence 表示：</font>  
+
+1. __external dispatch__
+```{r eval=FALSE}
 map(sampleData, ~{.x[[1]]})
-# 串接寫法(II): internal dispatch
+```
+2. __internal dispatch__
+```{r eval=FALSE}
 map(1:5, ~{sampleData[[.x]][[1]]}) 
 # map在單維度遞迴時，.x也可以只寫.
 # 也就是 map(1:5, ~{sampleData[[.]][[1]]}) 
 ```
-**範例 5.4.2**</font>
+<font color="#0b5395">**範例 5.4.2**</font>
 ```{r}
 eggs <- rep("雞蛋x1", 8)
 fryEgg <- function(egg) str_replace(egg, "雞蛋", "荷包蛋")
 # external dispatch
-map(eggs, ~fryEgg(.x)) -> friedEggs1
+friedEggs1 <- map(eggs, ~fryEgg(.))
 # internal dispatch
-map(1:8, ~{fryEgg(eggs[[.]])}) -> friedEggs2
+friedEggs2 <- map(1:8, ~{fryEgg(eggs[[.]])})
 ```
-#### Vectorized function
+#### __Vectorized function__
 <font color="#0b5395">**範例 5.4.3**</font>
 ```{r}
 grade <- c(45, 74, NA)
@@ -980,16 +983,10 @@ pass_or_fail <- function(grade_i){
 map_pass_fail <- function(grade) map_chr(grade, ~pass_or_fail(.))
 map_pass_fail(grade)
 ```
-若你確信你 map 的 list 輸出每個元素只有一個值，且大家都是相同的 class，則你可以依 class 的類型使用：  
+若你確信你 map 的 list 輸出每個元素只有一個值，且大家都是相同的 class，則你可以依 class 的類型使用`map_chr`、`map_lgl`、`map_dbl`、`map_int`，省去 unlist 步驟。
 
-* map_chr  
-* map_lgl  
-* map_dbl、map_int  
-
-省了 unlist 那一步。
-
-#### Internal dispatching的優勢
-當 body 要同時對多個物件同時進行「元素一一處理」時，internal dispatch 便顯得便利：  
+#### __Internal dispatching的優勢__
+當 body 要同時對多個物件同時進行「元素處理」時，internal dispatch 便顯得便利：  
 
 <font color="#0b5395">**範例 5.4.4**：火腿蛋三明治
 ```{r}
@@ -1005,14 +1002,13 @@ toast_withEggHam <- function(toast=NULL, egg=NULL, ham=NULL){
 }
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})
 ```
-**範例 5.4.5**：各系課程規劃
-臺北大學 100~107 學年的開課資料 courseStructure：  
+**範例 5.4.5**：各系課程規劃  
+以 104 學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼。
 ```{r}
+# 臺北大學 100~107 學年的開課資料
 jsonlite::fromJSON("https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1") -> courseStructure
-```
-以100學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼？
-```{r}
-entranceYear <- 100
+
+entranceYear <- 104
 major <- "經濟系"
 allGrades <- paste0(major, 1:4)
 academicYears <- entranceYear + 0:3
@@ -1028,13 +1024,13 @@ map(1:4, ~{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)})
 Iteration in functional: `map`  
 
 * Sequence：`1:4`。  
-* Body：`{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}`, 以 formula (另一種 function 形式)包裝。  
+* Body：`{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}`，以 formula (另一種 function 形式) 包裝。  
 * Output：`list class, length=Sequence length`。</font>
 
 ### for loop
 ```
 output <- vector("{type}", length={len})
-for(.x in {sequence}){
+for (.x in {sequence}) { #不一定要用.x
   {body}
 }
 ```
@@ -1043,7 +1039,7 @@ for(.x in {sequence}){
     + mode：character class，代表 container 所要用來裝的值之 type。  
     + length：integer class，代表 container 要有幾個空位。  
 
-<font color="#0b5395">**範例 5.4.6**：
+<font color="#0b5395">回到**範例 5.4.5**：
 ```{r eval=FALSE}
 # map iteration
 map(1:4, ~{get_courses(academicYears[[.x]], allGrades[[.x]], courseStructure)})
@@ -1055,7 +1051,7 @@ for(i in 1:4){
               courseStructure) -> output[[i]]
 }
 ```
-其中，`1:4`=`1:length(academicYears)`=`seq_along(academicYears)`。  
+其中，`1:4`等於`1:length(academicYears)`等於`seq_along(academicYears)`。  
 
 回到**範例 5.4.4**：火腿蛋三明治</font>
 ```{r eval=FALSE}
@@ -1067,20 +1063,20 @@ for(.x in 1:10){
   toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]]) -> output[[.x]]
 }
 ```
-#### 累計型 output
-<font color="#0b5395">**範例 5.4.7**：Summation  
+#### __累計型 output__
+<font color="#0b5395">**範例 5.4.6**：Summation  
 $$\sum_{i=1}^{10} a_{i}$$ 
 where $a_i \in [1, 100] \cap \mathbb{N}$, $\forall i \in \mathbb{N}$.</font>
 ```{r}
 a <- sample(1:100, 10, replace=T) 
 print(a)
 sum <- 0
-for(.x in 1:10) sum <- sum + a[[.x]] # 指令只有一行，{}符號可省略
+for(.x in 1:10) sum <- sum + a[[.x]] 
 print(sum)
 ```
-#### 長度不一型 output
-<font color="#0b5395">**範例 5.4.8**：  
-每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。</font>
+#### __長度不一型 output__
+<font color="#0b5395">**範例 5.4.7**：  
+每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽 10 次，但每次必須是 3 的倍數才留下來。</font>
 ```{r}
 output <- c()
 for(.x in 1:10){
@@ -1091,12 +1087,12 @@ for(.x in 1:10){
 }
 print(output)
 ```
-#### next、break
-* __next__：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body 直接跳到下一個 sequence 值。  
+#### __next__、**break**
+* __next__：.x 對應元素要符合條件才要進入 body 裡運作；不符合條件者，不執行其以下的 body，直接跳到下一個 sequence 值。  
 * __break__：.x 對應元素若符合條件會完全終止迴圈。  
 
-<font color="#0b5395">**範例 5.4.9**：批改學生作業</font>
-```{r}
+<font color="#0b5395">**範例 5.4.8**：批改學生作業</font>
+```{r warning=FALSE}
 list(list("student A", c(2,3,4,5)),
      list("student B", NA), # 沒交作業
      list("student C", factor(c(2,3,4,5))),
@@ -1125,13 +1121,13 @@ print(output)
 ```
 ### while loop
 ```
-while(continueCondition){
+while (continueCondition) {
   body
 }
 ```
 while 會一直反覆執行 body 直到 conditionCondition 為 FALSE。  
 
-<font color="#0b5395">**範例 5.4.10**：總共要擲幾次硬幣，才能得到五次正面。</font>
+<font color="#0b5395">**範例 5.4.9**：總共要擲幾次硬幣，才能得到五次正面。</font>
 ```{r}
 sum <- 0
 count <- 0
@@ -1139,12 +1135,13 @@ while(sum<5){
   count <- count+1
   newToss <- sample(c("正","反"), 1, replace=T)
   if(newToss == "正") sum <- sum+1
-  print(glue::glue("已擲{count}次得到{sum}次正面"))
+  print(glue::glue("第{count}次：得到{newToss}面"))
 }
+print(glue::glue("總共擲了{count}次"))
 ```
 之前的 (有限) 迴圈也可以用 while 寫：
 
-<font color="#0b5395">回到**範例 5.4.8**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
+<font color="#0b5395">回到**範例 5.4.7**：每次抽一個介於 1 到 100 的整數 (抽出放回) 重複抽10次，但每次必須是 3 的倍數才留下來。
 ```{r}
 # for loop
 set.seed(1000) # 控制sample抽出的數字sequence固定，通常進行方法比對用
@@ -1169,7 +1166,7 @@ while(count <= 10){
 }
 print(output)
 ```
-回到**範例 5.4.7**</font>
+回到**範例 5.4.6**：Summation。</font>
 ```{r}
 a <- sample(1:100, 10, replace=T)
 print(a)
@@ -1215,19 +1212,16 @@ myFun2(c(-11,32,19,20))
 ```
 **練習二**：askSilly_weather 3.0  
 ```{r}
-askSilly_weather2 <- function(locationInput,dateInput){
+askSilly_weather2 <- function(locationInput, dateInput){
   if(!exists("weather_next36hours")){
       jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
       weather_next36hours
     SOAR::Store(weather_next36hours) # 存在.R_cache environment中
   }  
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
-  
   weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
-  (weatherAtLocation$elementName=="MaxT") ->
-    pick_MaxT
-  (weatherAtLocation$elementName=="MinT") ->
-    pick_MinT
+  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
+  (weatherAtLocation$elementName=="MinT") -> pick_MinT
   weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
   weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
@@ -1239,10 +1233,10 @@ askSilly_weather2(c("臺北市","新北市","臺中市"), lubridate::now())
 ```
 請創造 askSilly_weather3，它是 vectorized function。
 ```{r}
-askSilly_weather3 <- function(location, time){
-  map(seq_along(location), ~{askSilly_weather2(location[[.x]], time)})
+askSilly_weather3 <- function(locationInputs, dateInput){
+  map(seq_along(locationInputs), ~{askSilly_weather2(locationInputs[[.x]], dateInput)})
 }
-askSilly_weather3(c("臺北市","新北市","臺中市"), lubridate::now())
+askSilly_weather3(c("臺北市","新北市","臺中市"), lubridate::today())
 ```
 **練習三**：平均值與標準差  
 以下程式隨機自 0-100 抽出 30 個數字：
@@ -1262,31 +1256,31 @@ $$\sqrt{\sum_{i=1}^{30}(a_i-\mu)^2/(30-1)}$$
   sqrt() -> sample_sd
 ```
 **練習四**：現值  
-若利率 $R$ 維持每年不變，則未來 N 年現金流 $a_0$、$a_1$、$a_2$、...、$a_N$ 的現值為：  
+若利率 $R$ 每年維持不變，則未來 N 年現金流 $a_0$、$a_1$、$a_2$、...、$a_N$ 的現值為：  
 $$a_0+\frac{a_1}{1+R}+\frac{a_2}{(1+R)^2}+...+\frac{a_N}{(1+R)^N}$$
-其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。
-執行以下程式得到 20 年的現金流 (介於1萬到5萬)，`a['0']`代表 $a_0$，`a['1']`代表 $a_1$，依此類推。
+其中下標 0 表示今年，1 表示一年後，2 表示二年後，依此類推。  
+執行以下程式得到 20 年的現金流 (介於 1 萬到 5 萬)，`a['0']`代表 $a_0$，`a['1']`代表 $a_1$，依此類推。
 ```{r}
-a <- sample(10000:50000,20,replace=T)
+a <- sample(10000:50000, 20, replace=T)
 names(a) <- 0:19
 R <- 0.03
 ```
-請寫一個函數 DV(a,R)：  
-arguments：  
+請寫一個函數 DV(a, R)，其中
 
-* a：現金流 class numeric。  
-* R：年利率。  
-
-value：回傳現金流的現值。
+* Arguments：  
+    + a：現金流 class numeric。  
+    + R：年利率。  
+* Value：回傳現金流的現值。  
 ```{r}
-DV <- function(a,R){
+DV <- function(a, R){
   value <- 0
-  for (i in seq_along(a)) {
-    value <- value + a[[i]]/(1+R)**i
+  for (i in names(a)) {
+    value <- value + a[i]/(1+R)**as.integer(i)
   }
+  names(value) <- NULL
   return(value)
 }
-DV(a,R)
+DV(a, R)
 ```
 
 
