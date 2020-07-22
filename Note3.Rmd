@@ -10,7 +10,7 @@ output:
       collapsed: false
       smooth_scroll: TRUE
 ---
-<font face="Taipei Sans TC Beta Light">  
+<body style="font-family:Arial, Taipei Sans TC Beta Light;">  
 ```{r include=FALSE}
 library(stringr); library(purrr); library(magrittr); library(lubridate); library(codetools); library(readr); library(dplyr); library(glue)
 ```
@@ -182,7 +182,7 @@ q_d1.2 <- demand(1.2)
 q_d1.2
 ```
 </font>  
-**return**  
+<font size="4">return</font>   
 
 <font color="#0b5395">回到**範例 5.2.1**：需求函數。</font>
 ```{r}
@@ -215,7 +215,6 @@ demand_return(1.2) -> q_d1.2
 askSilly_weather <- function(locationInput, dateInput){
   # 今明36小時天氣預報
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
-  
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
     {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -> weatherAtLocation
   (weatherAtLocation$elementName=="MaxT") %>%
@@ -404,7 +403,6 @@ askSilly_weather <- function(locationInput, dateInput){
   }
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
   locationInput <- str_replace(locationInput, "台", "臺")
-  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
     {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -> weatherAtLocation
   (weatherAtLocation$elementName=="MaxT") %>%
@@ -415,30 +413,31 @@ askSilly_weather <- function(locationInput, dateInput){
 }
 askSilly_weather("台南市", today())
 ```
-**不重複下載**  
+<font size='4'>不重複下載</font>  
 
 * 若每執行一次程式，就要匯入外部檔案，徒增運算時間。  
 
-<font color="#0b5395">**範例 5.3.5**  
+<font color="#0b5395">**範例 5.3.5**：回顧**練習 5.3.4**</font>  
 ```{r}
 # 檢視步驟耗時elapse time
 system.time(
   jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
 )
 ```
-`SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。</font>
+`SOAR::Store(weather_next36hours)`會創造一個 .R_Cache 環境並把 weather_next36hours 放到那裡。  
 ```{r warning=FALSE}
 askSilly_weather2 <- function(locationInput, dateInput){
   if(!exists("weather_next36hours")){ #exist(...) 確認該物件是否存在，...限用字串形式
     jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
     SOAR::Store(weather_next36hours) # 存在.R_cache environment中
-  }  
-  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
-  weather_next36hours$cwbopendata$dataset$location$weatherElement[pick_location][[1]] -> weatherAtLocation
-  (weatherAtLocation$elementName=="MaxT") -> pick_MaxT
-  (weatherAtLocation$elementName=="MinT") -> pick_MinT
-  weatherAtLocation$time[pick_MaxT][[1]]$parameter$parameterName[[1]] -> maxT
-  weatherAtLocation$time[pick_MinT][[1]]$parameter$parameterName[[1]] -> minT
+  }
+  locationInput <- str_replace(locationInput, "台", "臺")
+  (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) %>% 
+    {weather_next36hours$cwbopendata$dataset$location$weatherElement[.][[1]]} -> weatherAtLocation
+  (weatherAtLocation$elementName=="MaxT") %>%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> maxT
+  (weatherAtLocation$elementName=="MinT") %>%
+    {weatherAtLocation$time[.][[1]]$parameter$parameterName[[1]]} -> minT
   glue::glue("{locationInput} {dateInput} 氣溫，最高{maxT}度，最低{minT}度。")
 }
 system.time(askSilly_weather("新北市",today()))
@@ -692,7 +691,7 @@ compute_letterGrade <- function(myGrade){
     as.character(myGrade),
     "(-1,69]"={
       print("-_-")
-    "F"},
+      "F"},
     "(69,79]"={
       print("棒")
       "C"
@@ -856,7 +855,7 @@ dplyr::case_when(
 ### 綜合練習
 <font color="#0b5395">**練習一**：消費者選擇  
 效用函數：  
-$$U(a_1, a_2)=a1^{\alpha}a2^{1-\alpha}-m$$
+$$U(a1, a2)=a1^{\alpha}a2^{1-\alpha}-m$$
 其中 $a1$ 是該商品提供之服務所帶來的愉快程度，$a2$ 是該商品操作簡便性，$\alpha\in(0,1)$，$m$ 是購買此商品所要付出的金額。  
 
 想像你正在考慮從有一系列類似的 App 中挑選購買一個 App，每個 App 可用一組 $(a1,a2,m)$ 的數字組合來代表，n 個 App 可表示成一個集合 $\{(a1_{1},a2_{1},m_{1}),(a1_{2},a2_{2},m_{2}),...,(a1_{n},a2_{n},m_{n})\}$，消費者只選擇這些 App 中效用函數值最高的那個。  
@@ -883,24 +882,27 @@ utility
 ```
 3. 最大效用下消費者會買那一個 App？
 ```{r}
-which.max(utility)
+which.max(utility) %>%
+  {glue("消費者會買第 {.} 個 App")}
 ```
 4. 若 alpha = 0.3，消費者要買那一個 App？
 ```{r}
 Apps_10 %>% 
   map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.3)) %>%
   unlist() %>%
-  which.max()
+  which.max() %>%
+  {glue("消費者會買第 {.} 個 App")}
 ```
 5. 若 alpha = 0.95，消費者要買那一個 App？
 ```{r}
 Apps_10 %>% 
   map(~Ufun(.x[[1]], .x[[2]], .x[[3]], 0.95)) %>%
   unlist() %>%
-  which.max()
+  which.max() %>%
+  {glue("消費者會買第 {.} 個 App")}
 ```
 **練習二**：中文組距  
-原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿200,000元"、"200,000~299,999元"、"300,000元及以上"。  
+原始資料收回後常會依某些數值區間來分成不同組別，且描述手法均類似："未滿200,000元"、"200,000~299,999元"、"300,000元以上"。  
 描述手法：「區間」會有上下限兩個數字，最低與最高的組均只有一個數字。  
 
 1. 請寫一個`str_cut(x, cutpoints)`函數，它能萬用的將 x 轉成依中文組距描述的類別資料。  
@@ -1003,11 +1005,16 @@ toast_withEggHam <- function(toast=NULL, egg=NULL, ham=NULL){
 map_chr(1:10, ~{toast_withEggHam(toast[[.x]], eggs[[.x]], ham[[.x]])})
 ```
 **範例 5.4.5**：各系課程規劃  
-以 104 學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼。
+以 104 學年入學之經濟系學生為對象，找出這群學生大一到大四的系上課程規劃是什麼。  
+
+Iteration in functional: `map`  
+
+* Sequence：`1:4`。  
+* Body：`{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}`，以 formula (另一種 function 形式) 包裝。  
+* Output：`list class, length=Sequence length`。</font>
 ```{r}
 # 臺北大學 100~107 學年的開課資料
 jsonlite::fromJSON("https://www.dropbox.com/s/7myzzdnoor21hye/courseStructure2.json?dl=1") -> courseStructure
-
 entranceYear <- 104
 major <- "經濟系"
 allGrades <- paste0(major, 1:4)
@@ -1021,12 +1028,6 @@ get_courses <- function(acadYear_i, grade_i, courseStructure){
 }
 map(1:4, ~{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)})
 ```
-Iteration in functional: `map`  
-
-* Sequence：`1:4`。  
-* Body：`{get_courses(academicYears[[.]], allGrades[[.]], courseStructure)}`，以 formula (另一種 function 形式) 包裝。  
-* Output：`list class, length=Sequence length`。</font>
-
 ### for loop
 ```
 output <- vector("{type}", length={len})
@@ -1214,8 +1215,7 @@ myFun2(c(-11,32,19,20))
 ```{r}
 askSilly_weather2 <- function(locationInput, dateInput){
   if(!exists("weather_next36hours")){
-      jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") ->
-      weather_next36hours
+      jsonlite::fromJSON("https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/F-C0032-001?Authorization=rdec-key-123-45678-011121314&format=JSON") -> weather_next36hours
     SOAR::Store(weather_next36hours) # 存在.R_cache environment中
   }  
   (weather_next36hours$cwbopendata$dataset$location$locationName == locationInput) -> pick_location
@@ -1239,7 +1239,7 @@ askSilly_weather3 <- function(locationInputs, dateInput){
 askSilly_weather3(c("臺北市","新北市","臺中市"), lubridate::today())
 ```
 **練習三**：平均值與標準差  
-以下程式隨機自 0-100 抽出 30 個數字：
+以下程式隨機自 0-100 抽出 30 個數字 (取後放回)：
 ```{r}
 a <- sample(0:100,30, replace=T)
 print(a)
@@ -1289,4 +1289,4 @@ DV(a, R)
 </font>
 
 ## 期末考
-</font>
+</body>
